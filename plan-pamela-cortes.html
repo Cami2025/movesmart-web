@@ -198,20 +198,28 @@
       grid-template-columns:repeat(4,minmax(0,1fr));
       gap:14px;
     }
-    .info-item{
-      border-radius:18px;
-      padding:18px;
-      min-height:110px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.06);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      font-weight:700;
-      line-height:1.4;
-    }
+ .info-item{
+  border-radius:18px;
+  padding:18px;
+  min-height:110px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.06);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-weight:700;
+  line-height:1.4;
+  text-decoration:none;
+  color:var(--text);
+  transition:transform .2s ease, border-color .2s ease, background .2s ease;
+}
 
+.info-item:hover{
+  transform:translateY(-3px);
+  border-color:rgba(255,255,255,.16);
+  background:rgba(255,255,255,.08);
+}
     .cards{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
@@ -296,15 +304,15 @@
       <div class="stat">⚡ <strong>Enfoque:</strong> Fuerza, movilidad y progresión segura</div>
     </section>
 
-    <section class="panel">
-      <h3>Información del Programa</h3>
-      <div class="info-grid">
-        <div class="info-item">🔎 ¿Cómo usar este programa?</div>
-        <div class="info-item">🗓️ Calendario de Entrenamiento</div>
-        <div class="info-item">⚠️ Regla del Dolor</div>
-        <div class="info-item">📋 Conclusión Profesional</div>
-      </div>
-    </section>
+   <section class="panel">
+  <h3>Información del Programa</h3>
+  <div class="info-grid">
+    <a href="como_usar_este_programa.html" class="info-item">🔎 ¿Cómo usar este programa?</a>
+    <a href="Calendario.html" class="info-item">🗓️ Calendario de Entrenamiento</a>
+    <a href="regla-del-dolor.html" class="info-item">⚠️ Regla del Dolor</a>
+    <a href="conclusion_profesional.html" class="info-item">📋 Conclusión Profesional</a>
+  </div>
+</section>
 
     <section class="cards">
       <a href="rutina-a-pamela-cortes.html" class="big-card green">
