@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plan Juan Ugalde | MoveSmart</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+
+    body {
+      background: linear-gradient(180deg, rgba(8,10,18,.55), rgba(8,10,18,.75)),
+                  url('fondo-preview-rutina.png') center center / cover no-repeat;
+      color: white;
+      min-height: 100vh;
+      padding: 32px 16px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 28px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,.25);
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: rgba(255,255,255,.82);
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 22px;
+      padding: 22px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.22);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: #ffb38f;
+    }
+
+    .card p, .card li {
+      color: rgba(255,255,255,.9);
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .card ul {
+      padding-left: 18px;
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .exercise {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .exercise:last-child {
+      border-bottom: none;
+    }
+
+    .exercise strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #ffffff;
+    }
+
+    .small {
+      color: rgba(255,255,255,.75);
+      font-size: 0.92rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 90, 31, 0.18);
+      border: 1px solid rgba(255, 90, 31, 0.35);
+      color: #ffd5c7;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: .9rem;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1 id="nombre">Cargando plan...</h1>
+      <p class="subtitle" id="resumen">Estamos cargando la información del plan.</p>
+      <div class="badge" id="frecuencia">Frecuencia: ...</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Objetivo</h2>
+        <p id="objetivo"></p>
+      </div>
+
+      <div class="card">
+        <h2>Duración</h2>
+        <p id="duracion"></p>
+      </div>
+
+      <div class="card">
+        <h2>Estrategia</h2>
+        <p id="estrategia"></p>
+      </div>
+
+      <div class="card">
+        <h2>Regla de dolor</h2>
+        <p id="regla_dolor"></p>
+      </div>
+    </div>
+
+    <div class="card section">
+      <h2>Semana 1</h2>
+      <ul id="semana_1"></ul>
+    </div>
+
+    <div class="card section">
+      <h2>Semana 2</h2>
+      <ul id="semana_2"></ul>
+    </div>
+
+    <div class="card section">
+      <h2>Rutina A</h2>
+      <div id="rutina_a"></div>
+    </div>
+
+    <div class="card section">
+      <h2>Rutina B</h2>
+      <div id="rutina_b"></div>
+    </div>
+
+    <div class="card section">
+      <h2>Conclusión profesional</h2>
+      <p id="conclusion"></p>
+    </div>
+  </div>
+
+  <script>
+    async function cargarPlan() {
+      try {
+        const response = await fetch('./data/juan-ugalde.json');
+        const data = await response.json();
+
+        document.getElementById('nombre').textContent = data.nombre || 'Juan Ugalde';
+        document.getElementById('resumen').textContent = data.programa_enfoque || 'Plan MoveSmart';
+        document.getElementById('frecuencia').textContent = 'Frecuencia: ' + (data.frecuencia || '-');
+
+        document.getElementById('objetivo').textContent = data.objetivo || '-';
+        document.getElementById('duracion').textContent = data.duracion || '-';
+        document.getElementById('estrategia').textContent = data.estrategia || '-';
+        document.getElementById('regla_dolor').textContent = data.regla_dolor || '-';
+        document.getElementById('conclusion').textContent = data.conclusion || '-';
+
+        const semana1 = document.getElementById('semana_1');
+        (data.semana_1 || []).forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          semana1.appendChild(li);
+        });
+
+        const semana2 = document.getElementById('semana_2');
+        (data.semana_2 || []).forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          semana2.appendChild(li);
+        });
+
+        const rutinaA = document.getElementById('rutina_a');
+        (data.rutina_a || []).forEach(ej => {
+          const div = document.createElement('div');
+          div.className = 'exercise';
+          div.innerHTML = `
+            <strong>${ej.ejercicio || '-'}</strong>
+            <div class="small">
+              Series: ${ej.series || '-'} · Reps/Tiempo: ${ej.repeticiones || ej.tiempo || '-'} · Descanso: ${ej.descanso || '-'} · RPE: ${ej.rpe || '-'}
+            </div>
+          `;
+          rutinaA.appendChild(div);
+        });
+
+        const rutinaB = document.getElementById('rutina_b');
+        (data.rutina_b || []).forEach(ej => {
+          const div = document.createElement('div');
+          div.className = 'exercise';
+          div.innerHTML = `
+            <strong>${ej.ejercicio || '-'}</strong>
+            <div class="small">
+              Series: ${ej.series || '-'} · Reps/Tiempo: ${ej.repeticiones || ej.tiempo || '-'} · Descanso: ${ej.descanso || '-'} · RPE: ${ej.rpe || '-'}
+            </div>
+          `;
+          rutinaB.appendChild(div);
+        });
+
+      } catch (error) {
+        document.getElementById('nombre').textContent = 'Error al cargar el plan';
+        document.getElementById('resumen').textContent = 'Revisa si el archivo data/juan-ugalde.json está en la ruta correcta.';
+        console.error(error);
+      }
+    }
+
+    cargarPlan();
+  </script>
+</body>
+</html>
