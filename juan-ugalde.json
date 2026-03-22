@@ -1,0 +1,261 @@
+{
+  "schema_version": "movesmart-plan-v1",
+  "client": {
+    "name": "Juan Ugalde",
+    "slug": "juan-ugalde"
+  },
+  "program_summary": {
+    "goal": "salud / energía",
+    "sessions_per_week": 3,
+    "session_duration": "20–30 min",
+    "focus": "adherencia, movilidad y fuerza base",
+    "frequency": "3 sesiones estructuradas por semana (Mié/Vie/Dom)",
+    "strategy": "Fuerza básica de cuerpo completo + cardio de bajo impacto + movilidad. Intensidad objetivo: RPE 4–6.",
+    "pain_rule": "Si aparece dolor lumbar, mareo, presión excesiva o fatiga muy alta, reducir repeticiones, rango o tiempo, pero mantener el hábito con una versión más corta.",
+    "program_focus": "Mejorar energía diaria, tolerancia al esfuerzo, movilidad general y capacidad física básica sin generar fatiga excesiva.",
+    "calendar": {
+      "week_1": [
+        "Mié: Rutina A · Full body base",
+        "Vie: Rutina B · Cardio + movilidad + core básico",
+        "Dom: Rutina A · Full body base",
+        "Opcional: 1 caminata corta o 10–15 min bici suave otro día"
+      ],
+      "week_2": [
+        "Mié: Rutina A · Full body base",
+        "Vie: Rutina B · Cardio + movilidad + core básico",
+        "Dom: Rutina A · Full body base con leve progresión",
+        "Opcional: 1 caminata corta o 10–15 min bici suave otro día"
+      ]
+    },
+    "how_to_use": [
+      "El mes se organiza en 2 semanas de trabajo que se van alternando.",
+      "RPE: Percepción del esfuerzo; usa una escala del 1 al 10, donde 1 es muy suave y 10 es tu máximo esfuerzo.",
+      "Al finalizar cada Rutina A y Rutina B, realizar la secuencia de estiramientos finales.",
+      "Semana 1 → Semana 2 → Semana 1 → Semana 2.",
+      "Priorizar continuidad antes que intensidad.",
+      "Mantener sesiones cortas y sostenibles.",
+      "Evitar llegar al fallo.",
+      "Si termina muy cansado, bajar 1 serie la próxima sesión.",
+      "Objetivo mes 1: moverse mejor, cansarse menos y crear hábito.",
+      "Registra tus datos en la planilla de seguimiento."
+    ]
+  },
+  "routines": {
+    "A": {
+      "title": "Rutina A",
+      "intro": "Calentamiento (5 min): Bicicleta estática o caminadora suave — 5 min",
+      "sections": [
+        {
+          "name": "Bloque Principal",
+          "exercises": [
+            {
+              "exercise": "Puente de glúteos",
+              "sets": "2",
+              "reps": "10",
+              "rest": "30–40 seg",
+              "load": "Peso corporal",
+              "rpe": "4",
+              "video_url": null
+            },
+            {
+              "exercise": "Dead bug",
+              "sets": "2",
+              "reps": "6",
+              "rest": "30–40 seg",
+              "load": "Peso corporal",
+              "rpe": "4",
+              "video_url": null
+            }
+          ]
+        },
+        {
+          "name": "Activación",
+          "exercises": [
+            {
+              "exercise": "Sentarse y pararse de una silla",
+              "sets": "2",
+              "reps": "10",
+              "rest": "60–75 seg",
+              "load": "Peso corporal",
+              "rpe": "5",
+              "video_url": null
+            },
+            {
+              "exercise": "Remo con banda",
+              "sets": "2",
+              "reps": "10",
+              "rest": "60–75 seg",
+              "load": "Banda suave",
+              "rpe": "5",
+              "video_url": null
+            },
+            {
+              "exercise": "Press de pecho con mancuernas",
+              "sets": "2",
+              "reps": "10",
+              "rest": "60 seg",
+              "load": "Mancuernas 3–6 kg",
+              "rpe": "5",
+              "video_url": null
+            },
+            {
+              "exercise": "Peso muerto rumano con mancuerna liviana",
+              "sets": "2",
+              "reps": "8–10",
+              "rest": "60–75 seg",
+              "load": "Mancuernas 5–8 kg",
+              "rpe": "5",
+              "video_url": null
+            },
+            {
+              "exercise": "Caminata del granjero estática o marchando con mancuernas livianas",
+              "sets": "2",
+              "reps": "20–30 seg",
+              "rest": "45–60 seg",
+              "load": "Mancuernas 4–6 kg cada una",
+              "rpe": "5",
+              "video_url": null
+            }
+          ]
+        }
+      ],
+      "cooldown": [
+        "Bicicleta suave — 5 min",
+        "O caminata suave — 5–8 min"
+      ]
+    },
+    "B": {
+      "title": "Rutina B",
+      "intro": "Cardio inicial: Bicicleta estática o caminadora — 8–12 min suave-moderado",
+      "sections": [
+        {
+          "name": "Bloque Principal",
+          "exercises": [
+            {
+              "exercise": "Rotación torácica",
+              "sets": "2",
+              "reps": "6",
+              "rest": "20–30 seg",
+              "load": "Peso corporal",
+              "rpe": "3",
+              "video_url": null
+            },
+            {
+              "exercise": "Estiramiento flexor de cadera",
+              "sets": "2",
+              "reps": "20 seg por lado",
+              "rest": "15 seg",
+              "load": "Peso corporal",
+              "rpe": "3",
+              "video_url": null
+            }
+          ]
+        },
+        {
+          "name": "Movilidad",
+          "exercises": [
+            {
+              "exercise": "Dead bug",
+              "sets": "2",
+              "reps": "6",
+              "rest": "30–40 seg",
+              "load": "Peso corporal",
+              "rpe": "4",
+              "video_url": null
+            },
+            {
+              "exercise": "Plancha inclinada en pared o mesa",
+              "sets": "2",
+              "reps": "20 seg",
+              "rest": "30–40 seg",
+              "load": "Peso corporal",
+              "rpe": "4",
+              "video_url": null
+            },
+            {
+              "exercise": "Pallof press con banda",
+              "sets": "2",
+              "reps": "8",
+              "rest": "30–40 seg",
+              "load": "Banda suave",
+              "rpe": "4",
+              "video_url": null
+            }
+          ]
+        }
+      ],
+      "cooldown": [
+        "Bicicleta suave — 5 min",
+        "O caminata suave — 5–8 min"
+      ]
+    }
+  },
+  "stretches": [
+    {
+      "exercise": "Estiramiento de glúteos",
+      "sets": "2",
+      "reps": "20–25 seg por lado",
+      "rest": "10 seg",
+      "load": "Peso corporal",
+      "rpe": "2",
+      "video_url": null
+    },
+    {
+      "exercise": "Estiramiento de isquiotibiales",
+      "sets": "2",
+      "reps": "20–25 seg por lado",
+      "rest": "10 seg",
+      "load": "Peso corporal",
+      "rpe": "2",
+      "video_url": null
+    },
+    {
+      "exercise": "Estiramiento flexor de cadera",
+      "sets": "2",
+      "reps": "20–25 seg por lado",
+      "rest": "10 seg",
+      "load": "Peso corporal",
+      "rpe": "2",
+      "video_url": null
+    },
+    {
+      "exercise": "Estiramiento de pecho / hombros",
+      "sets": "2",
+      "reps": "20–25 seg por lado",
+      "rest": "10 seg",
+      "load": "Peso corporal",
+      "rpe": "2",
+      "video_url": null
+    }
+  ],
+  "check_in": {
+    "frequency": "1 vez por semana",
+    "fields": [
+      "semana",
+      "sesiones_hechas_0_3",
+      "energia_1_10",
+      "que_molesto",
+      "que_resulto_mejor",
+      "porcentaje_adherencia",
+      "notas_coach"
+    ],
+    "followup_link": null
+  },
+  "conclusion": {
+    "raw_text": "Se propone un programa inicial de 3 días por semana, con sesiones de 20–30 minutos, orientado a mejorar salud general, energía diaria y adherencia al ejercicio. Dado su historial sedentario, baja tolerancia actual al esfuerzo y largo período sin entrenamiento constante, el plan prioriza ejercicios simples, de bajo impacto y fácilmente realizables en casa. La estructura combina fuerza básica de cuerpo completo, cardio suave y trabajo de movilidad/core, buscando mejorar la capacidad física general, reducir el desacondicionamiento, favorecer la funcionalidad diaria y evitar fatiga excesiva o dolor post entrenamiento que interfiera con la continuidad. Objetivo principal del primer mes: instalar el hábito, mejorar sensación de energía, aumentar tolerancia al esfuerzo y generar una base segura para progresar después."
+  },
+  "metadata": {
+    "source_pdf": "Plan_entrenamiento_Juan _Ugalde.pdf",
+    "source_pages": {
+      "overview": 2,
+      "routine_a": 3,
+      "routine_b": 4,
+      "stretches": 5,
+      "check_in": 6,
+      "conclusion": 7
+    },
+    "notes": [
+      "Los PDFs muestran el texto 'Ver video', pero no exponen las URLs; por eso video_url quedó en null."
+    ]
+  }
+}
