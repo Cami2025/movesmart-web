@@ -324,24 +324,22 @@
         <button type="submit" class="btn">Entrar a mi plan</button>
         <div id="message" class="message" aria-live="polite"></div>
       </form>
-
-      <div class="helper">
-        Demo cargada en esta versión:<br>
-        <strong>Nombre:</strong> Pamela Cortés<br>
-        <strong>Clave:</strong> pamela123
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const clients = {
-      "pamela cortes": {
-        password: "pamela123",
-        file: "plan-pamela-cortes.html",
-        displayName: "Pamela Cortés"
-      }
-    };
-
+ <script>
+const clients = {
+  "pamela cortes": {
+    password: "pamela123",
+    redirect: "plan-pamela-cortes.html"
+  },
+  "juan ugalde": {
+    password: "juan123",
+    redirect: "plan-juan-ugalde.html"
+  },
+  "nicole butto": {
+    password: "nicole123",
+    redirect: "plan-nicole-butto.html"
+  }
+};
+</script>
     function normalizeText(value){
       return value
         .toLowerCase()
