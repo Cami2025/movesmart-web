@@ -255,7 +255,9 @@
       -webkit-backdrop-filter:blur(8px);
     }
 
-    .video-modal.active{ display:flex; }
+    .video-modal.active{
+      display:flex;
+    }
 
     .video-box{
       width:min(900px, 100%);
@@ -276,7 +278,9 @@
       border-bottom:1px solid rgba(255,255,255,.08);
     }
 
-    .video-box-head strong{ font-size:1rem; }
+    .video-box-head strong{
+      font-size:1rem;
+    }
 
     .close-video{
       border:none;
@@ -349,7 +353,8 @@
         padding:22px;
       }
 
-      .section-head,.section-body{
+      .section-head,
+      .section-body{
         padding:16px;
       }
 
@@ -568,7 +573,8 @@
         </div>
       </div>
     </section>
- <section class="section">
+
+    <section class="section">
       <div class="section-head">
         <h2>Estiramientos / vuelta a la calma</h2>
         <p>Opcional al final de la sesión para soltar musculatura y favorecer la recuperación.</p>
@@ -625,6 +631,7 @@
             <div class="pill"><span>Zona</span>Tren inferior</div>
           </div>
         </article>
+
         <article class="exercise-card">
           <div>
             <div class="exercise-name">Gemelo contra pared</div>
@@ -642,21 +649,30 @@
           </div>
         </article>
 
-    <div class="note">
-      <strong>Tip MoveSmart:</strong> completa las repeticiones dentro del rango indicado, registra tus cargas
-      y recuerda que la prioridad es técnica primero y progresión después.
-    </div>
+        <div class="note">
+          <strong>Tip MoveSmart:</strong> completa las repeticiones dentro del rango indicado, registra tus cargas
+          y recuerda que la prioridad es técnica primero y progresión después.
+        </div>
+
+      </div>
+    </section>
 
   </div>
 
-<div class="video-modal" id="videoModal" aria-hidden="true">
+  <div class="video-modal" id="videoModal" aria-hidden="true">
     <div class="video-box">
       <div class="video-box-head">
         <strong id="videoTitle">Video de ejercicio</strong>
         <button class="close-video" type="button" id="closeVideo">Cerrar ✕</button>
       </div>
       <div class="video-frame-wrap">
-        <iframe id="videoFrame" src="" title="Video de ejercicio" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+        <iframe
+          id="videoFrame"
+          src=""
+          title="Video de ejercicio"
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowfullscreen>
+        </iframe>
       </div>
     </div>
   </div>
@@ -691,6 +707,7 @@
           }
 
           if (!videoId) return null;
+
           return 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&mute=1&loop=1&playlist=' + videoId + '&rel=0&playsinline=1';
         } catch (err) {
           return null;
@@ -701,11 +718,13 @@
         videoTitle.textContent = title || 'Video de ejercicio';
         videoFrame.src = url;
         videoModal.classList.add('active');
+        videoModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
       }
 
       function hideVideo() {
         videoModal.classList.remove('active');
+        videoModal.setAttribute('aria-hidden', 'true');
         videoFrame.src = '';
         document.body.style.overflow = '';
       }
@@ -732,11 +751,15 @@
         });
       });
 
-      if (closeVideo) closeVideo.addEventListener('click', hideVideo);
+      if (closeVideo) {
+        closeVideo.addEventListener('click', hideVideo);
+      }
 
       if (videoModal) {
         videoModal.addEventListener('click', function (e) {
-          if (e.target === videoModal) hideVideo();
+          if (e.target === videoModal) {
+            hideVideo();
+          }
         });
       }
 
