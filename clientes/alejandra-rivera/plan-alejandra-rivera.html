@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plan Alejandra Rivera | MoveSmart</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.84);
+      --card:rgba(255,255,255,.08);
+      --card-soft:rgba(255,255,255,.05);
+      --border:rgba(255,255,255,.10);
+      --accent:#ff5a1f;
+      --blue:#2f63ff;
+      --green:#1dbf73;
+      --yellow:#d9962b;
+      --navy:#0f1a40;
+      --panel:#dfe5ee;
+      --panel-2:#cfd6e0;
+      --shadow:0 18px 40px rgba(0,0,0,.30);
+      --radius:24px;
+      --container:min(1120px, calc(100% - 32px));
+    }
+    body{
+      font-family:'Segoe UI',sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      background:
+        linear-gradient(180deg, rgba(8,10,18,.72), rgba(8,10,18,.92)),
+        url('fondo-preview-rutina.png') center center / cover no-repeat fixed;
+    }
+    a{color:inherit}
+    .wrap{width:var(--container);margin:0 auto;padding:28px 0 52px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:22px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-badge{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#ff8a3d);font-weight:800;box-shadow:var(--shadow)}
+    .brand-text h1{font-size:1.2rem;line-height:1.1;font-weight:800}
+    .brand-text p{color:var(--muted);font-size:.95rem;margin-top:4px}
+    .back-btn{text-decoration:none;color:white;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:12px 18px;border-radius:16px;font-weight:700;transition:.2s ease}
+    .back-btn:hover{background:rgba(255,255,255,.13);transform:translateY(-2px)}
+    .hero{
+      background:linear-gradient(180deg, rgba(15,17,36,.88), rgba(10,12,24,.90));
+      border:1px solid var(--border);
+      border-radius:32px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:.9rem;margin-bottom:16px
+    }
+    h2{font-size:2rem;line-height:1.06;letter-spacing:-.03em;margin-bottom:10px}
+    .hero p{color:var(--muted);line-height:1.7;max-width:900px}
+    .panel{
+      background:linear-gradient(180deg, rgba(22,18,32,.92), rgba(14,10,22,.92));
+      border:1px solid var(--border);
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+    }
+    .panel-head{
+      background:var(--navy);
+      padding:18px 22px;
+      font-size:1.18rem;
+      font-weight:800;
+    }
+    .panel-body{
+      padding:22px;
+      background:rgba(223,229,238,.98);
+      color:#0f172a;
+    }
+    .muted{color:#475569}
+    .table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:.97rem;
+      background:#eef2f7;
+      overflow:hidden;
+      border-radius:18px;
+    }
+    .table th,.table td{
+      border:1px solid rgba(15,23,42,.10);
+      padding:12px 12px;
+      vertical-align:middle;
+      text-align:left;
+      line-height:1.55;
+    }
+    .table th{background:#d7e0ea;font-weight:800}
+    .table tr:nth-child(even) td{background:#e6edf4}
+    .center{text-align:center}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .card-link{
+      text-decoration:none;color:white;border-radius:24px;overflow:hidden;border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(22,18,32,.92), rgba(14,10,22,.92));box-shadow:var(--shadow);transition:transform .2s ease,border-color .2s ease
+    }
+    .card-link:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.18)}
+    .card-top{padding:16px 18px;font-size:1.05rem;font-weight:800;text-align:center}
+    .card-top.blue{background:var(--blue)}
+    .card-top.green{background:var(--green)}
+    .card-top.yellow{background:var(--yellow)}
+    .card-top.navy{background:#1c2d6f}
+    .card-body{padding:22px 18px;min-height:124px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);line-height:1.7}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+    .stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:18px;text-align:center}
+    .stat strong{display:block;font-size:1.35rem;margin-bottom:6px}
+    .list{padding-left:22px;display:grid;gap:9px;line-height:1.7}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .small{font-size:.92rem}
+    .footer-note{margin-top:12px;color:var(--muted);font-size:.92rem;text-align:center}
+    .section-label{font-size:1rem;font-weight:800;margin:2px 0 12px;color:#0f172a}
+    .subtle-box{
+      background:#edf3f8;border:1px solid rgba(15,23,42,.08);border-radius:18px;padding:16px;margin-top:16px
+    }
+    .steps{display:grid;gap:14px}
+    .step{background:#edf3f8;border:1px solid rgba(15,23,42,.08);border-radius:18px;padding:16px}
+    .step h3{font-size:1rem;margin-bottom:8px}
+    .warning-band{background:#fff6dc;border:1px solid #f1deb3;border-radius:18px;padding:16px}
+    .week-grid{display:grid;grid-template-columns:1fr 1fr}
+    .week-title{background:var(--blue);color:white;padding:16px;text-align:center;font-weight:800}
+    .week-body{background:#e5ebf2;color:#0f172a}
+    .week-col + .week-col{border-left:1px solid rgba(15,23,42,.10)}
+    .row{padding:18px;border-top:1px solid rgba(15,23,42,.10);text-align:center;line-height:1.6}
+    .cta-mini{margin-top:18px;padding:16px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--muted)}
+    .link-btn{display:inline-flex;align-items:center;justify-content:center;margin-top:12px;padding:12px 16px;border-radius:14px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700}
+    @media (max-width: 900px){
+      .topbar{flex-direction:column;align-items:flex-start}
+      .back-btn{width:100%;text-align:center}
+      h2{font-size:1.65rem}
+      .cards,.stats,.grid-2,.week-grid{grid-template-columns:1fr}
+      .week-col + .week-col{border-left:none;border-top:1px solid rgba(15,23,42,.10)}
+      .table{font-size:.9rem}
+      .table th,.table td{padding:10px 8px}
+    }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-badge">M</div>
+        <div class="brand-text">
+          <h1>MoveSmart</h1>
+          <p>Alejandra Rivera · Programa personalizado</p>
+        </div>
+      </div>
+      <a href="#" class="back-btn">← Volver al plan</a>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">✨ Rutina de entrenamiento personalizada</div>
+      <h2>Programa MoveSmart · Alejandra Rivera</h2>
+      <p>Este espacio reúne tu planificación, tus rutinas y las reglas clave del programa en una sola interfaz. La idea es que tengas algo claro, visual y fácil de seguir desde el celular.</p>
+    </section>
+
+    
+<section class="panel">
+  <div class="panel-head">Información del Programa</div>
+  <div class="panel-body">
+    <table class="table">
+      <tbody>
+        <tr><th style="width:180px">Frecuencia</th><td>4 sesiones estructuradas (Mar/Jue/Vie/Sáb) + domingo opcional.</td></tr>
+        <tr><th>Estrategia</th><td>Fuerza como base + cardio complementario. Intensidad objetivo: RPE 6-8.</td></tr>
+        <tr><th>Regla de dolor</th><td>Si hay fatiga post trabajo, reduce volumen pero no canceles. Si dolor de rodilla supera 5/10, baja rango o cambia el ejercicio ese día.</td></tr>
+        <tr><th>Enfoque</th><td>Recomposición corporal: mantener masa muscular y aumentar gasto calórico semanal.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="stats">
+      <div class="stat"><strong>45-60 min</strong><span class="small">duración por sesión</span></div>
+      <div class="stat"><strong>RPE 6-8</strong><span class="small">esfuerzo controlado</span></div>
+      <div class="stat"><strong>4 días base</strong><span class="small">Mar/Jue/Vie/Sáb</span></div>
+      <div class="stat"><strong>+ 1 opcional</strong><span class="small">domingo aeróbico</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head">Acceso al contenido del plan</div>
+  <div class="panel-body">
+    <div class="cards">
+      <a class="card-link" href="como_usar_este_programa.html">
+        <div class="card-top navy">¿Cómo usar este programa?</div>
+        <div class="card-body">Guía breve para progresar, ajustar volumen y registrar tus sesiones sin perder continuidad.</div>
+      </a>
+      <a class="card-link" href="Calendario.html">
+        <div class="card-top blue">Calendario de Entrenamiento</div>
+        <div class="card-body">Semana 1 y Semana 2 con días de pierna, tren superior y domingo opcional.</div>
+      </a>
+      <a class="card-link" href="regla_del_dolor.html">
+        <div class="card-top yellow">Regla del Dolor</div>
+        <div class="card-body">Qué hacer si aparece molestia de rodilla o fatiga después del trabajo.</div>
+      </a>
+      <a class="card-link" href="conclusion_profesional.html">
+        <div class="card-top green">Conclusión Profesional</div>
+        <div class="card-body">El porqué del enfoque: recomposición corporal, fuerza como base y sesiones sostenibles.</div>
+      </a>
+      <a class="card-link" href="rutina-a-alejandra-rivera.html">
+        <div class="card-top blue">Rutina A ▶ Pierna</div>
+        <div class="card-body">Trabajo de fuerza de tren inferior con foco en control de rodilla, glúteos y progresión segura.</div>
+      </a>
+      <a class="card-link" href="rutina-b-alejandra-rivera.html">
+        <div class="card-top green">Rutina B ▶ Tren Superior + Core</div>
+        <div class="card-body">Equilibrio entre empuje, tirón y estabilidad central con cardio final de bajo impacto.</div>
+      </a>
+    </div>
+
+    <div class="subtle-box" style="margin-top:18px">
+      <div class="section-label">Mi seguimiento semanal</div>
+      <p class="muted">Aunque en esta versión se mantiene la misma estructura de Pamela, el check-in del PDF queda integrado dentro de la guía de uso. Registra cada semana: sesiones hechas, energía, dolor de rodilla, qué molestó, qué resultó mejor, % de adherencia y notas del coach.</p>
+      <a class="link-btn" href="como_usar_este_programa.html">Ver guía y check-in</a>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head">Notas rápidas del mes 1</div>
+  <div class="panel-body">
+    <ul class="list">
+      <li>Priorizar progresión de cargas en ejercicios principales.</li>
+      <li>Mantener intensidad RPE 6-8, sin llegar al fallo.</li>
+      <li>Si cuesta ir al gimnasio después del trabajo, hacer una sesión más corta en vez de cancelar.</li>
+      <li>Priorizar control de rodilla y activación del glúteo medio.</li>
+      <li>Mejor una sesión adaptada que una sesión omitida.</li>
+      <li>Objetivo del primer mes: adherencia, mejora técnica y progresión gradual.</li>
+    </ul>
+  </div>
+</section>
+
+
+    <div class="footer-note">Programa MoveSmart · Alejandra Rivera Palma</div>
+  </div>
+</body>
+</html>
