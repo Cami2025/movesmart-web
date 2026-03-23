@@ -275,75 +275,77 @@
         <p id="message" class="message"></p>
       </form>
 
-  <script>
-    const clients = {
-      "pamela cortes": {
-        password: "pamela123",
-        file: "clientes/pamela-cortes/plan-pamela-cortes.html",
-        displayName: "Pamela Cortés"
-      },
-      "juan ugalde": {
-        password: "juan123",
-        file: "clientes/juan-ugalde/plan-juan-ugalde.html",
-        displayName: "Juan Ugalde"
-      },
-      "nicole butto": {
-        password: "nicole123",
-        file: "clientes/nicole-butto/plan-nicole-butto.html",
-        displayName: "Nicole Butto"
-      }
-      "alejandra rivera": {
-        password: "alejandra123",
-        file: "clientes/alejandra-rivera/plan-alendra-rivera.html",
-        displayName: "Alejandra Rivera"
-       };
-    "Carmen Briceño": {
-        password: "carmen123",
-        file: "clientes/carmen-briceño/plan-carmen-briceño.html",
-        displayName: "Carmen Briceño"
-       };
-    "Mercedes Pardo": {
-        password: "mercedes123",
-        file: "clientes/mercedes-pardo/plan-mercedes-pardo.html",
-        displayName: "Mercedes Pardo"
-      
-      function normalizeText(value){
-      return value
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
+<script>
+  const clients = {
+    "pamela cortes": {
+      password: "pamela123",
+      file: "clientes/pamela-cortes/plan-pamela-cortes.html",
+      displayName: "Pamela Cortés"
+    },
+    "juan ugalde": {
+      password: "juan123",
+      file: "clientes/juan-ugalde/plan-juan-ugalde.html",
+      displayName: "Juan Ugalde"
+    },
+    "nicole butto": {
+      password: "nicole123",
+      file: "clientes/nicole-butto/plan-nicole-butto.html",
+      displayName: "Nicole Butto"
+    },
+    "alejandra rivera": {
+      password: "alejandra123",
+      file: "clientes/alejandra-rivera/plan-alejandra-rivera.html",
+      displayName: "Alejandra Rivera"
+    },
+    "carmen briceno": {
+      password: "carmen123",
+      file: "clientes/carmen-briceno/plan-carmen-briceno.html",
+      displayName: "Carmen Briceño"
+    },
+    "mercedes pardo": {
+      password: "mercedes123",
+      file: "clientes/mercedes-pardo/plan-mercedes-pardo.html",
+      displayName: "Mercedes Pardo"
+    }
+  };
+
+  function normalizeText(value) {
+    return value
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  const form = document.getElementById("loginForm");
+  const message = document.getElementById("message");
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const rawName = document.getElementById("clientName").value;
+    const password = document.getElementById("clientPassword").value.trim();
+    const name = normalizeText(rawName);
+    const client = clients[name];
+
+    if (!rawName.trim() || !password) {
+      message.textContent = "Completa tu nombre y tu clave.";
+      message.className = "message error";
+      return;
     }
 
-    const form = document.getElementById("loginForm");
-    const message = document.getElementById("message");
+    if (!client || client.password !== password) {
+      message.textContent = "Nombre o clave incorrectos.";
+      message.className = "message error";
+      return;
+    }
 
-    form.addEventListener("submit", function(event){
-      event.preventDefault();
+    message.textContent = `Acceso correcto. Abriendo el plan de ${client.displayName}...`;
+    message.className = "message ok";
 
-      const rawName = document.getElementById("clientName").value;
-      const password = document.getElementById("clientPassword").value.trim();
-      const name = normalizeText(rawName);
-      const client = clients[name];
-
-      if(!rawName.trim() || !password){
-        message.textContent = "Completa tu nombre y tu clave.";
-        message.className = "message error";
-        return;
-      }
-
-      if(!client || client.password !== password){
-        message.textContent = "Nombre o clave incorrectos.";
-        message.className = "message error";
-        return;
-      }
-
-      message.textContent = `Acceso correcto. Abriendo el plan de ${client.displayName}...`;
-      message.className = "message ok";
-
-      window.location.href = client.file;
-    });
-  </script>
+    window.location.href = client.file;
+  });
+</script>
 </body>
 </html>
