@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plan Nicole Butto | MoveSmart</title>
+  <style>
+:root{
+  --bg1:#090d18;
+  --bg2:#121a2e;
+  --card:rgba(255,255,255,.08);
+  --card-soft:rgba(255,255,255,.05);
+  --border:rgba(255,255,255,.10);
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.82);
+  --accent:#ff5a1f;
+  --blue:#2f63ff;
+  --green:#1dbf73;
+  --yellow:#d9962b;
+  --navy:#17244f;
+  --shadow:0 18px 40px rgba(0,0,0,.35);
+  --radius:24px;
+  --container:min(1120px, calc(100% - 32px));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(47,99,255,.14), transparent 25%),
+    radial-gradient(circle at 82% 18%, rgba(255,90,31,.16), transparent 18%),
+    radial-gradient(circle at 78% 70%, rgba(255,140,80,.12), transparent 18%),
+    linear-gradient(135deg, var(--bg1), var(--bg2));
+  background-attachment:fixed;
+  overflow-x:hidden;
+}
+.wrap{width:var(--container);margin:0 auto;padding:28px 0 48px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-badge{
+  width:44px;height:44px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(135deg, var(--accent), #ff8a3d);font-weight:800;box-shadow:var(--shadow)
+}
+.brand-text h1{font-size:1.25rem;line-height:1.1;font-weight:800}
+.brand-text p{color:var(--muted);font-size:.95rem;margin-top:4px}
+.back-btn{
+  text-decoration:none;color:white;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);padding:12px 18px;border-radius:16px;font-weight:700;transition:.2s ease
+}
+.back-btn:hover{background:rgba(255,255,255,.13);transform:translateY(-2px)}
+.hero{
+  background:linear-gradient(180deg, rgba(24,16,34,.88), rgba(16,12,26,.88));
+  border:1px solid var(--border);border-radius:32px;padding:28px;box-shadow:var(--shadow);margin-bottom:22px
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--muted);
+  font-size:.9rem;margin-bottom:16px
+}
+.hero h2{font-size:2rem;line-height:1.05;margin-bottom:12px;letter-spacing:-.03em}
+.hero p{color:var(--muted);font-size:1rem;line-height:1.7;max-width:860px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0 0 22px}
+.stat, .panel, .big-card{
+  background:rgba(24,16,32,.58);border:1px solid var(--border);box-shadow:var(--shadow);backdrop-filter: blur(8px)
+}
+.stat{border-radius:22px;padding:18px 20px;color:var(--muted);line-height:1.55}
+.panel{border-radius:28px;overflow:hidden;margin-bottom:22px}
+.panel-head{background:var(--navy);padding:18px 22px;font-size:1.2rem;font-weight:800}
+.panel-body{padding:24px}
+.info-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.info-item{
+  border-radius:18px;padding:18px;min-height:110px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;text-align:center;
+  font-weight:700;line-height:1.4;text-decoration:none;color:var(--text);
+  transition:transform .2s ease, border-color .2s ease, background .2s ease
+}
+.info-item:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.08)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.big-card{border-radius:26px;overflow:hidden;transition:transform .22s ease;text-decoration:none;color:white}
+.big-card:hover{transform:translateY(-4px)}
+.head,.foot{padding:20px;text-align:center;font-weight:800}
+.head{font-size:1.3rem}.foot{font-size:1.05rem}
+.img{min-height:220px;display:grid;place-items:center;background:rgba(255,255,255,.04);padding:18px}
+.img p{margin:0;text-align:center;color:var(--muted);line-height:1.7;max-width:28ch}
+.green .head,.green .foot{background:var(--green)}
+.yellow .head,.yellow .foot{background:var(--yellow)}
+.blue .head,.blue .foot{background:var(--blue)}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:14px 12px;border:1px solid rgba(255,255,255,.10);vertical-align:top}
+thead th{background:rgba(47,99,255,.22);text-align:left}
+tbody tr:nth-child(even){background:rgba(255,255,255,.03)}
+ul.clean, ol.clean{padding-left:22px;display:grid;gap:10px;line-height:1.7}
+.grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+.callout{
+  padding:18px 20px;border-radius:20px;background:rgba(47,99,255,.14);
+  border:1px solid rgba(47,99,255,.28);line-height:1.7
+}
+.note{
+  margin-top:22px;padding:16px 18px;border-radius:20px;background:rgba(29,191,115,.12);
+  border:1px solid rgba(29,191,115,.25);color:#dcffe9;line-height:1.7
+}
+.exercise-list{display:grid;gap:14px}
+.exercise-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:22px;padding:18px;
+  display:grid;grid-template-columns:1.25fr .95fr;gap:18px;align-items:center
+}
+.exercise-name{font-size:1.12rem;font-weight:800;margin-bottom:8px}
+.exercise-desc{color:var(--muted);line-height:1.6;font-size:.96rem}
+.exercise-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:10px 12px;font-size:.95rem}
+.pill span{display:block;color:var(--muted);font-size:.82rem;margin-bottom:4px}
+.placeholder-btn{
+  display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);padding:10px 14px;border-radius:14px;
+  color:var(--muted);font-weight:700
+}
+.footer-note{margin-top:18px;color:var(--muted);font-size:.92rem;text-align:center}
+@media (max-width: 980px){
+  .stats,.cards{grid-template-columns:1fr}
+  .info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-2{grid-template-columns:1fr}
+  .exercise-card{grid-template-columns:1fr}
+}
+@media (max-width: 680px){
+  .wrap{padding:18px 0 34px}
+  .topbar{flex-direction:column;align-items:flex-start}
+  .info-grid{grid-template-columns:1fr}
+  .hero,.panel-body{padding:18px}
+}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-badge">M</div>
+        <div class="brand-text">
+          <h1>MoveSmart</h1>
+          <p>Nicole Butto · Programa personalizado</p>
+        </div>
+      </div>
+      <a href="../acceso-clientes.html" class="back-btn">← Volver a acceso</a>
+    </div>
+    
+    <section class="hero">
+      <div class="eyebrow">✨ Rutina de entrenamiento personalizada</div>
+      <h2>Programa MoveSmart – Nicole Butto</h2>
+      <p>
+        Este espacio reúne tu planificación, tus rutinas, el calendario y el seguimiento en una sola interfaz.
+        El plan está orientado a <strong>ganar fuerza</strong>, con foco en <strong>fuerza base en casa, estabilidad lumbo-pélvica y adherencia</strong>.
+      </p>
+    </section>
+
+    <section class="stats">
+      <div class="stat">🎯 <strong>Objetivo:</strong> Ganar fuerza y mejorar control corporal</div>
+      <div class="stat">📅 <strong>Frecuencia:</strong> 3 sesiones por semana · Lunes / Miércoles / Viernes</div>
+      <div class="stat">⚡ <strong>Enfoque:</strong> Full body con mancuernas + core + progresión segura</div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">Información del Programa</div>
+      <div class="panel-body">
+        <div class="info-grid">
+          <a href="como_usar_este_programa.html" class="info-item">🔎 ¿Cómo usar este programa?</a>
+          <a href="Calendario.html" class="info-item">🗓️ Calendario de Entrenamiento</a>
+          <a href="regla-del-dolor.html" class="info-item">⚠️ Regla del Dolor</a>
+          <a href="conclusion_profesional.html" class="info-item">📋 Conclusión Profesional</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cards">
+      <a href="rutina-a-nicole-butto.html" class="big-card green">
+        <div class="head">Ver Rutina A ▶</div>
+        <div class="img">
+          <p>Full body fuerza base con énfasis en aprendizaje técnico, activación y control.</p>
+        </div>
+        <div class="foot">Rutina A · Fuerza Base ▶</div>
+      </a>
+
+      <a href="rutina-b-nicole-butto.html" class="big-card yellow">
+        <div class="head">Ver Rutina B ▶</div>
+        <div class="img">
+          <p>Full body + core, con trabajo de estabilidad, fuerza y control del tronco.</p>
+        </div>
+        <div class="foot">Rutina B · Full Body + Core ▶</div>
+      </a>
+
+      <a href="seguimiento.html" class="big-card blue">
+        <div class="head">Mi Seguimiento ▶</div>
+        <div class="img">
+          <p>Espacio para registrar sesiones hechas, energía, dolor lumbar y adherencia semanal.</p>
+        </div>
+        <div class="foot">Registrar Progreso ▶</div>
+      </a>
+    </section>
+
+    <p class="footer-note">Base del contenido: PDF de Nicole Butto.</p>
+    
+  </div>
+</body>
+</html>
