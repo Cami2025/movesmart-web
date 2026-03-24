@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regla del Dolor | MoveSmart</title>
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+    :root{
+      --bg1:#090d18;
+      --bg2:#11192a;
+      --card:rgba(255,255,255,.08);
+      --card-soft:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+      --text:#ffffff;
+      --text-soft:rgba(255,255,255,.84);
+      --accent:#ff5a1f;
+      --blue:#204aa8;
+      --green:#1dbf73;
+      --amber:#f6a623;
+      --danger:#ff6b6b;
+      --shadow:0 18px 40px rgba(0,0,0,.34);
+      --radius:28px;
+      --wrap:min(1100px, calc(100% - 28px));
+    }
+
+    body{
+      min-height:100vh;
+      font-family:'Segoe UI',sans-serif;
+      color:var(--text);
+      background:
+        linear-gradient(180deg, rgba(5,8,18,.68), rgba(8,10,18,.78)),
+        radial-gradient(circle at top left, rgba(47,99,255,.16), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(255,90,31,.18), transparent 24%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.05), transparent 18%),
+        radial-gradient(circle at 82% 22%, rgba(255,90,31,.10), transparent 18%),
+        radial-gradient(circle at 76% 68%, rgba(32,74,168,.16), transparent 22%);
+    }
+
+    .wrap{
+      width:var(--wrap);
+      margin:auto;
+      padding:24px 0 42px;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      margin-bottom:20px;
+    }
+
+    .back-btn{
+      border:none;
+      background:rgba(255,255,255,.09);
+      border:1px solid var(--border);
+      color:#fff;
+      padding:11px 16px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:700;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    .brand{
+      font-size:1.55rem;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+
+    .brand span{ color:var(--accent); }
+
+    .hero{
+      background:linear-gradient(180deg, rgba(15,21,40,.74), rgba(12,16,29,.72));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:36px;
+      padding:34px 28px;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(255,90,31,.14);
+      color:#ffd9cb;
+      border:1px solid rgba(255,90,31,.24);
+      font-size:.92rem;
+      margin-bottom:14px;
+    }
+
+    h1{
+      font-size:clamp(2.2rem, 4.6vw, 3.8rem);
+      line-height:1.02;
+      margin-bottom:12px;
+      text-wrap:balance;
+    }
+
+    .hero p{
+      max-width:820px;
+      color:var(--text-soft);
+      line-height:1.72;
+      font-size:1.05rem;
+    }
+
+    .score-card{
+      margin-top:20px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:16px;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:20px;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    .panel h2{
+      font-size:1.18rem;
+      margin-bottom:10px;
+    }
+
+    .panel p{
+      color:var(--text-soft);
+      line-height:1.7;
+    }
+
+    .scale{
+      display:grid;
+      grid-template-columns:repeat(11,1fr);
+      gap:8px;
+      margin-top:16px;
+    }
+
+    .scale div{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      padding:10px 6px;
+      text-align:center;
+      font-weight:800;
+    }
+
+    .highlight-3{
+      background:rgba(246,166,35,.18) !important;
+      border-color:rgba(246,166,35,.40) !important;
+    }
+
+    .rules{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:16px;
+      margin-top:22px;
+    }
+
+    .rule-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:26px;
+      padding:22px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    .rule-icon{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-size:1.35rem;
+      margin-bottom:14px;
+      font-weight:900;
+    }
+
+    .rule-card h3{
+      font-size:1.2rem;
+      margin-bottom:9px;
+    }
+
+    .rule-card p{
+      color:var(--text-soft);
+      line-height:1.72;
+    }
+
+    .orange .rule-icon{ background:rgba(255,90,31,.18); color:#ffd4c8; }
+    .blue .rule-icon{ background:rgba(47,99,255,.18); color:#dbe5ff; }
+    .green .rule-icon{ background:rgba(29,191,115,.18); color:#d9ffea; }
+    .red .rule-icon{ background:rgba(255,107,107,.18); color:#ffdede; }
+
+    .action-box{
+      margin-top:22px;
+      background:linear-gradient(180deg, rgba(23,36,78,.80), rgba(14,23,52,.78));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:28px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .action-box h2{
+      margin-bottom:14px;
+      font-size:1.35rem;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .step{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:22px;
+      padding:18px;
+    }
+
+    .step .num{
+      display:inline-grid;
+      place-items:center;
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      background:var(--accent);
+      font-weight:900;
+      margin-bottom:10px;
+    }
+
+    .step strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:1.02rem;
+    }
+
+    .step p{
+      color:var(--text-soft);
+      line-height:1.65;
+      font-size:.97rem;
+    }
+
+    .note{
+      margin-top:20px;
+      background:rgba(29,191,115,.12);
+      border:1px solid rgba(29,191,115,.28);
+      color:#ddffea;
+      border-radius:22px;
+      padding:16px 18px;
+      line-height:1.72;
+    }
+
+    .footer{
+      margin-top:22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      color:rgba(255,255,255,.72);
+      font-size:.95rem;
+    }
+
+    @media (max-width: 920px){
+      .score-card,
+      .rules,
+      .steps{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 680px){
+      .topbar,
+      .footer{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .hero{
+        padding:24px 20px;
+      }
+
+      .panel,
+      .rule-card,
+      .action-box{
+        padding:18px;
+      }
+
+      .scale{
+        grid-template-columns:repeat(6,1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <button class="back-btn" onclick="history.back()">← Volver</button>
+      <div class="brand">Move<span>Smart</span></div>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">⚠️ Guía simple de seguridad</div>
+      <h1>Regla del Dolor</h1>
+      <p>
+        Esta guía resume la regla del dolor del plan de Carmen. La idea principal es sostener el entrenamiento sin agravar la fascitis plantar, ajustando la sesión cuando aparezca molestia en la planta del pie o cuando quede dolor residual claro.
+      </p>
+
+      <div class="score-card">
+        <div class="panel">
+          <h2>Escala de dolor</h2>
+          <p>
+            Usa una escala de 0 a 10 para observar cómo se siente la planta del pie durante la sesión. Si la molestia supera <strong>3/10</strong>, aumenta con las repeticiones o deja dolor residual claro, el ejercicio debe ajustarse.
+          </p>
+          <div class="scale">
+            <div>0</div>
+            <div>1</div>
+            <div>2</div>
+            <div class="highlight-3">3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Objetivo de esta regla</h2>
+          <p>
+            Entrenar de manera segura, mantener continuidad y evitar sobrecargas innecesarias sobre el pie. No se trata de aguantar dolor, sino de adaptar la sesión para que siga siendo útil y sostenible.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="rules">
+      <article class="rule-card orange">
+        <div class="rule-icon">1</div>
+        <h3>Si la molestia supera 3/10</h3>
+        <p>
+          Reduce rango, carga, tiempo de apoyo o cambia el ejercicio por una variante que el pie tolere mejor ese día.
+        </p>
+      </article>
+
+      <article class="rule-card red">
+        <div class="rule-icon">2</div>
+        <h3>Si el dolor aumenta con repeticiones</h3>
+        <p>
+          No sigas insistiendo en el mismo patrón. Ajusta de inmediato para evitar que la sesión termine irritando más la zona.
+        </p>
+      </article>
+
+      <article class="rule-card blue">
+        <div class="rule-icon">3</div>
+        <h3>Si queda dolor residual claro</h3>
+        <p>
+          Toma eso como señal de que el estímulo fue excesivo para el pie y disminuye la carga o el volumen en la próxima sesión.
+        </p>
+      </article>
+
+      <article class="rule-card green">
+        <div class="rule-icon">4</div>
+        <h3>Prioriza bajo impacto</h3>
+        <p>
+          El enfoque del programa es fuerza general, core y cardio de bajo impacto. La bicicleta suave es preferible cuando el pie está más sensible.
+        </p>
+      </article>
+    </section>
+
+    <section class="action-box">
+      <h2>Qué hacer si aparece dolor o molestia durante la rutina</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <strong>Evalúa la intensidad</strong>
+          <p>Observa la molestia con una escala del 0 al 10 para decidir si puedes seguir igual o necesitas ajustar.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <strong>Ajusta el ejercicio</strong>
+          <p>Reduce rango, baja carga, acorta el tiempo de apoyo o cambia a una variante más tolerable para la planta del pie.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <strong>Evita agravar</strong>
+          <p>Si el dolor sigue subiendo o queda claramente peor, elimina solo ese bloque y prioriza una alternativa de bajo impacto.</p>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Recuerda:</strong> mejor una sesión adaptada que una sesión omitida. El objetivo del primer mes es adherencia, tolerancia al esfuerzo y progresión segura.
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>Camila Alvarez Cortés · Terapeuta en Actividad Física y Salud</div>
+      <div>MoveSmart</div>
+    </div>
+  </div>
+</body>
+</html>
