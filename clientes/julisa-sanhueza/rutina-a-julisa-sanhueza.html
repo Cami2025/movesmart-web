@@ -32,18 +32,16 @@
       min-height:100vh;
     }
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 16% 18%, rgba(73,58,146,.18), transparent 30%),
-        radial-gradient(circle at 82% 18%, rgba(243,107,42,.20), transparent 20%),
-        radial-gradient(ellipse at 82% 22%, rgba(255,120,55,.18), transparent 24%),
-        radial-gradient(ellipse at 78% 50%, rgba(255,120,55,.10), transparent 18%),
-        linear-gradient(90deg, rgba(6,8,18,.18) 0%, rgba(6,8,18,.04) 38%, rgba(6,8,18,.10) 100%);
-      z-index:0;
+   
+      body{
+      font-family:'Segoe UI',sans-serif;
+      color:#fff;
+      background-image: url('fondo-preview-rutina.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
     }
 
     .wrap{
@@ -517,7 +515,7 @@
             <div class="pill"><span>Series</span>3</div>
             <div class="pill"><span>Reps</span>8–10</div>
             <div class="pill"><span>Descanso</span>60–75 seg</div>
-            <div class="pill"><span>Carga</span>Liviana a moderada</div>
+            <div class="pill"><span>Carga</span>Peso Corporal</div>
             <div class="pill"><span>RPE</span>6</div>
           </div>
         </article>
@@ -534,24 +532,27 @@
             <div class="pill"><span>Series</span>3</div>
             <div class="pill"><span>Reps</span>8</div>
             <div class="pill"><span>Descanso</span>60–75 seg</div>
-            <div class="pill"><span>Carga</span>Liviana</div>
+            <div class="pill"><span>Carga</span>8–12 kg por mancuerna</div>
             <div class="pill"><span>RPE</span>6</div>
           </div>
         </article>
 
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Remo sentado en máquina o polea</div>
+            <div class="exercise-name">Remo sentado en máquina o con bandas</div>
             <p class="exercise-desc">Lleva el movimiento con control, manteniendo postura estable y foco en técnica y tracción limpia.</p>
             <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=QdlygCkqMkM">
-              ▶ Ver video
+              ▶ Ver video en máquina
+            </button>
+             <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=cRmuo81YQes">
+              ▶ Ver video con bandas
             </button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>3</div>
             <div class="pill"><span>Reps</span>10</div>
             <div class="pill"><span>Descanso</span>60 seg</div>
-            <div class="pill"><span>Carga</span>Liviana a moderada</div>
+            <div class="pill"><span>Carga</span>15–25 kg máquina / banda media si es en casa</div>
             <div class="pill"><span>RPE</span>6</div>
           </div>
         </article>
@@ -560,7 +561,7 @@
           <div>
             <div class="exercise-name">Press de pecho en máquina o mancuernas sentado/inclinado</div>
             <p class="exercise-desc">Movimiento estable y controlado, priorizando alineación y confianza al entrenar sola.</p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/shorts/DfzDjXCO2Nw">
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=y9XAsTx3XxQ">
               ▶ Ver video
             </button>
           </div>
@@ -568,7 +569,7 @@
             <div class="pill"><span>Series</span>2–3</div>
             <div class="pill"><span>Reps</span>8–10</div>
             <div class="pill"><span>Descanso</span>60 seg</div>
-            <div class="pill"><span>Carga</span>Liviana</div>
+            <div class="pill"><span>Carga</span>6–10 kg por mancuerna</div>
             <div class="pill"><span>RPE</span>6</div>
           </div>
         </article>
