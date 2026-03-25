@@ -32,18 +32,16 @@
       min-height:100vh;
     }
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 16% 18%, rgba(73,58,146,.18), transparent 30%),
-        radial-gradient(circle at 82% 18%, rgba(243,107,42,.20), transparent 20%),
-        radial-gradient(ellipse at 82% 22%, rgba(255,120,55,.18), transparent 24%),
-        radial-gradient(ellipse at 78% 50%, rgba(255,120,55,.10), transparent 18%),
-        linear-gradient(90deg, rgba(6,8,18,.18) 0%, rgba(6,8,18,.04) 38%, rgba(6,8,18,.10) 100%);
-      z-index:0;
+   
+      body{
+      font-family:'Segoe UI',sans-serif;
+      color:#fff;
+      background-image: url('fondo-preview-rutina.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      position: relative;
     }
 
     .wrap{
