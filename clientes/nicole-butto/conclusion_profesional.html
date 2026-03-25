@@ -26,15 +26,13 @@
 html,body{min-height:100%}
 body{
   font-family:Inter,Segoe UI,Arial,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 15% 20%, rgba(47,99,255,.14), transparent 25%),
-    radial-gradient(circle at 82% 18%, rgba(255,90,31,.16), transparent 18%),
-    radial-gradient(circle at 78% 70%, rgba(255,140,80,.12), transparent 18%),
-    linear-gradient(135deg, var(--bg1), var(--bg2));
-  background-attachment:fixed;
-  overflow-x:hidden;
-}
+ color:var(--text);
+      min-height:100vh;
+      background:
+        linear-gradient(180deg, rgba(10,10,20,.72), rgba(10,10,20,.88)),
+        url('fondo-preview-rutina.png') center center / cover no-repeat fixed;
+    }
+
 .wrap{width:var(--container);margin:0 auto;padding:28px 0 48px}
 .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
 .brand{display:flex;align-items:center;gap:12px}
