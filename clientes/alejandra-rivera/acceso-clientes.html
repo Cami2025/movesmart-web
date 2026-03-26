@@ -312,7 +312,7 @@
   <div class="page">
     <section class="panel">
       <div class="topbar">
-        <a href="index.html" class="back-btn">← Volver</a>
+        <a href="../index.html" class="back-btn">← Volver</a>
         <div class="brand">Move<span>Smart</span></div>
       </div>
 
@@ -320,7 +320,7 @@
       <h1>Tu espacio de <span class="accent">entrenamiento</span> en un lugar más simple</h1>
 
       <p class="lead">
-        En vez de enviar PDFs largos, aquí cada persona entra con su nombre y clave para ver su plan,
+        En vez de enviar PDFs largos, aquí la clienta entra con su nombre y su clave para ver su plan,
         sus rutinas y su seguimiento en una interfaz más clara y amigable.
       </p>
 
@@ -329,7 +329,7 @@
           <div class="icon">👤</div>
           <div>
             <h3>Plan por persona</h3>
-            <p>Cada cliente entra a su programa con contenido personalizado.</p>
+            <p>El programa de Julisa queda ordenado dentro de una carpeta con contenido personalizado.</p>
           </div>
         </div>
 
@@ -337,7 +337,7 @@
           <div class="icon">📋</div>
           <div>
             <h3>Rutinas más ordenadas</h3>
-            <p>Las secciones del programa quedan visibles sin depender de un PDF complicado.</p>
+            <p>Las secciones del programa quedan visibles sin depender de un PDF largo o confuso.</p>
           </div>
         </div>
 
@@ -345,7 +345,7 @@
           <div class="icon">✨</div>
           <div>
             <h3>Mismo estilo MoveSmart</h3>
-            <p>Todo mantiene la misma línea visual de tu página principal para que se vea profesional.</p>
+            <p>Todo mantiene la misma línea visual para que se vea profesional y coherente.</p>
           </div>
         </div>
       </div>
@@ -359,7 +359,7 @@
       <form id="loginForm">
         <div class="form-group">
           <label for="clientName">Nombre del cliente</label>
-          <input id="clientName" type="text" placeholder="Ej: Juan Ugalde" autocomplete="name" />
+          <input id="clientName" type="text" placeholder="Ej: Julisa Sanhueza" autocomplete="name" />
         </div>
 
         <div class="form-group">
@@ -374,20 +374,21 @@
       <div class="hint">
         <strong>Importante</strong>
         <p>
-          Los nombres pueden escribirse con o sin mayúsculas y con o sin tilde.
-          El sistema los normaliza automáticamente.
+          Dejé esta página porque el plan base la referencia. Puedes cambiar la clave en el script si quieres usar otra distinta.
         </p>
       </div>
     </section>
   </div>
 
-      "alejandra rivera": {
+  <script>
+    const clients = {
+    "nicole butto": {
         password: "alejandra123",
-        file: "alejandra-rivera/plan-alejandra-rivera.html",
+        file: "plan-alejandra-rivera.html",
         displayName: "Alejandra Rivera"
-      },
-   }
-      
+      }
+    };
+
     function normalizeText(value) {
       return value
         .toLowerCase()
