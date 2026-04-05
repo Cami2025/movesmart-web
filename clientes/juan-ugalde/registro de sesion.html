@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -52,8 +53,6 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 34px 28px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 24px 60px rgba(0,0,0,0.35);
     }
 
@@ -82,11 +81,48 @@
     }
 
     .rutina-checkin-subtitle {
-      margin-bottom: 30px;
+      margin-bottom: 22px;
       color: rgba(255,255,255,0.78);
       font-size: 1rem;
       line-height: 1.55;
       max-width: 700px;
+    }
+
+    .recompensa-box {
+      margin-bottom: 28px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,140,0,0.08);
+      border: 1px solid rgba(255,140,0,0.18);
+      box-shadow: 0 10px 30px rgba(255,140,0,0.08);
+    }
+
+    .recompensa-title {
+      margin-bottom: 12px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #ffd4a3;
+    }
+
+    .recompensa-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .recompensa-grid span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 50px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: .93rem;
+      line-height: 1.35;
     }
 
     .rutina-checkin-form {
@@ -105,6 +141,12 @@
       font-size: 1rem;
       font-weight: 600;
       color: #ffffff;
+    }
+
+    .checkin-helper {
+      color: rgba(255,255,255,0.72);
+      font-size: 0.92rem;
+      line-height: 1.5;
     }
 
     .checkin-grid {
@@ -186,15 +228,9 @@
     }
 
     @keyframes moverManito {
-      0% {
-        transform: translateX(0);
-      }
-      50% {
-        transform: translateX(8px);
-      }
-      100% {
-        transform: translateX(0);
-      }
+      0% { transform: translateX(0); }
+      50% { transform: translateX(8px); }
+      100% { transform: translateX(0); }
     }
 
     .checkin-range {
@@ -231,6 +267,37 @@
     .checkin-textarea:focus {
       border-color: #ff8c00;
       box-shadow: 0 0 0 1px rgba(255,140,0,0.18);
+    }
+
+    .camera-upload-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px dashed rgba(255,140,0,0.55);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .camera-upload-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.07);
+      border-color: #ff8c00;
+    }
+
+    .camera-icon {
+      font-size: 1.2rem;
+    }
+
+    .foto-nombre {
+      font-size: 0.9rem;
+      color: #9cffb0;
     }
 
     .checkin-boton {
@@ -278,7 +345,8 @@
       }
 
       .checkin-grid-2,
-      .checkin-grid-3 {
+      .checkin-grid-3,
+      .recompensa-grid {
         grid-template-columns: 1fr;
       }
 
@@ -296,10 +364,23 @@
     <div class="rutina-checkin-contenido">
       <div class="rutina-checkin-card">
         <span class="rutina-checkin-kicker">Cierre de sesión</span>
-        <h2 class="rutina-checkin-title">¿Cómo te fue hoy?</h2>
+        <h2 class="rutina-checkin-title">Tu constancia tiene recompensa</h2>
         <p class="rutina-checkin-subtitle">
-          Registra tu sesión en menos de 20 segundos para hacer seguimiento de tu progreso y ajustar tu plan si es necesario.
+          Registra tu sesión y comparte una foto de tu entreno para participar por la ruleta de beneficios MoveSmart.
         </p>
+
+        <div class="recompensa-box">
+          <p class="recompensa-title">Participa por la ruleta de beneficios MoveSmart:</p>
+          <div class="recompensa-grid">
+            <span>17% de descuento en tu próxima renovación</span>
+            <span>Rutina bonus exclusiva</span>
+            <span>Mini guía de hábitos</span>
+            <span>Mini guía de movilidad</span>
+            <span>Mini guía de recuperación</span>
+            <span>Mini guía de motivación</span>
+            <span>Doble oportunidad para la próxima ruleta</span>
+          </div>
+        </div>
 
         <form id="checkinForm" class="rutina-checkin-form">
 
@@ -401,6 +482,29 @@
             ></textarea>
           </div>
 
+          <div class="checkin-bloque">
+            <label class="checkin-label">Comparte una foto de tu entreno</label>
+            <p class="checkin-helper">
+              Sube una foto de tu sesión de hoy para participar por la ruleta de beneficios MoveSmart.
+            </p>
+
+            <input
+              type="file"
+              id="fotoEntreno"
+              name="foto_entreno"
+              accept="image/*"
+              capture="environment"
+              hidden
+            >
+
+            <label for="fotoEntreno" class="camera-upload-btn">
+              <span class="camera-icon">📷</span>
+              <span>Tomar o subir foto</span>
+            </label>
+
+            <p id="fotoNombre" class="foto-nombre hidden"></p>
+          </div>
+
           <input type="hidden" name="cliente" value="NOMBRE_CLIENTE">
           <input type="hidden" name="rutina" value="Rutina A">
           <input type="hidden" name="semana" value="Semana 1">
@@ -424,6 +528,8 @@
     const zonaBlock = document.getElementById("zonaBlock");
     const form = document.getElementById("checkinForm");
     const mensajeFinal = document.getElementById("mensajeFinal");
+    const fotoEntreno = document.getElementById("fotoEntreno");
+    const fotoNombre = document.getElementById("fotoNombre");
 
     esfuerzo.addEventListener("input", () => {
       esfuerzoValor.textContent = esfuerzo.value;
@@ -441,6 +547,18 @@
       });
     });
 
+    if (fotoEntreno) {
+      fotoEntreno.addEventListener("change", () => {
+        if (fotoEntreno.files && fotoEntreno.files.length > 0) {
+          fotoNombre.textContent = "Foto seleccionada: " + fotoEntreno.files[0].name;
+          fotoNombre.classList.remove("hidden");
+        } else {
+          fotoNombre.textContent = "";
+          fotoNombre.classList.add("hidden");
+        }
+      });
+    }
+
     form.addEventListener("submit", function(e) {
       e.preventDefault();
 
@@ -449,6 +567,9 @@
       form.reset();
       esfuerzoValor.textContent = "5";
       zonaBlock.classList.add("hidden");
+      fotoNombre.textContent = "";
+      fotoNombre.classList.add("hidden");
+      fechaActual.value = new Date().toLocaleDateString("es-CL");
     });
   </script>
 
