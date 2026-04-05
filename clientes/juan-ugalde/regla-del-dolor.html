@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +7,7 @@
   <title>Regla del Dolor | MoveSmart</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
+    a{color:inherit;text-decoration:none}
 
     :root{
       --bg1:#090d18;
@@ -25,15 +27,30 @@
       --wrap:min(1100px, calc(100% - 28px));
     }
 
- body{
-      color:var(--text);
+    body{
       min-height:100vh;
+      font-family:'Segoe UI',sans-serif;
+      color:var(--text);
       background:
-        linear-gradient(180deg, rgba(10,10,20,.72), rgba(10,10,20,.88)),
-        url('fondo-preview-rutina.png') center center / cover no-repeat fixed;
+        linear-gradient(180deg, rgba(5,8,18,.68), rgba(8,10,18,.78)),
+        radial-gradient(circle at top left, rgba(47,99,255,.16), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(255,90,31,.18), transparent 24%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
     }
-   
-     .wrap{
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.05), transparent 18%),
+        radial-gradient(circle at 82% 22%, rgba(255,90,31,.10), transparent 18%),
+        radial-gradient(circle at 76% 68%, rgba(32,74,168,.16), transparent 22%);
+    }
+
+    .wrap{
       width:var(--wrap);
       margin:auto;
       padding:24px 0 42px;
@@ -63,9 +80,10 @@
     }
 
     .brand{
-      font-size:1.55rem;
-      font-weight:900;
-      letter-spacing:.2px;
+      font-size:clamp(2rem, 5vw, 3rem);
+      line-height:1;
+      font-weight:800;
+      letter-spacing:-.04em;
     }
 
     .brand span{ color:var(--accent); }
@@ -95,8 +113,9 @@
     }
 
     h1{
-      font-size:clamp(2.2rem, 4.6vw, 3.8rem);
+      font-size:clamp(2rem, 4vw, 3.4rem);
       line-height:1.02;
+      letter-spacing:-.04em;
       margin-bottom:12px;
       text-wrap:balance;
     }
@@ -302,7 +321,7 @@
 <body>
   <div class="wrap">
     <div class="topbar">
-      <a href="plan-juan-ugalde.html" class="back">← Volver al plan</a>
+      <a href="plan-juan-ugalde.html" class="back-btn">← Volver al plan</a>
       <div class="brand">Move<span>Smart</span></div>
     </div>
 
