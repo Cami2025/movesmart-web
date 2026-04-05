@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -89,20 +88,21 @@
     }
 
     .recompensa-box {
-  margin-bottom: 28px;
-  padding: 18px;
-  border-radius: 20px;
-  background: rgba(255, 221, 87, 0.15);
-  border: 1px solid rgba(255, 221, 87, 0.45);
-  box-shadow: 0 10px 30px rgba(255, 221, 87, 0.18);
-}
+      margin-bottom: 28px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 221, 87, 0.15);
+      border: 1px solid rgba(255, 221, 87, 0.45);
+      box-shadow: 0 10px 30px rgba(255, 221, 87, 0.18);
+    }
 
-.recompensa-title {
-  margin-bottom: 12px;
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: #ffe66d;
-}
+    .recompensa-title {
+      margin-bottom: 12px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #ffe66d;
+    }
+
     .recompensa-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0,1fr));
@@ -504,9 +504,9 @@
             <p id="fotoNombre" class="foto-nombre hidden"></p>
           </div>
 
-          <input type="hidden" name="cliente" value="NOMBRE_CLIENTE">
+          <input type="hidden" name="cliente" value="Juan Ugalde">
           <input type="hidden" name="rutina" value="Rutina A">
-          <input type="hidden" name="semana" value="Semana 1">
+          <input type="hidden" name="semana" id="semanaCalculada">
           <input type="hidden" name="fecha" id="fechaActual">
 
           <button type="submit" class="checkin-boton">✅ Registrar mi sesión</button>
@@ -523,6 +523,7 @@
     const esfuerzo = document.getElementById("esfuerzo");
     const esfuerzoValor = document.getElementById("esfuerzoValor");
     const fechaActual = document.getElementById("fechaActual");
+    const semanaCalculada = document.getElementById("semanaCalculada");
     const dolorRadios = document.querySelectorAll('input[name="dolor"]');
     const zonaBlock = document.getElementById("zonaBlock");
     const form = document.getElementById("checkinForm");
@@ -534,7 +535,40 @@
       esfuerzoValor.textContent = esfuerzo.value;
     });
 
-    fechaActual.value = new Date().toLocaleDateString("es-CL");
+    function formatearFechaLocal(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function obtenerSemanaPorFecha(fechaStr) {
+      const fecha = new Date(fechaStr + "T00:00:00");
+
+      const s1Inicio = new Date("2026-04-08T00:00:00");
+      const s1Fin = new Date("2026-04-12T23:59:59");
+
+      const s2Inicio = new Date("2026-04-13T00:00:00");
+      const s2Fin = new Date("2026-04-19T23:59:59");
+
+      const s3Inicio = new Date("2026-04-20T00:00:00");
+      const s3Fin = new Date("2026-04-26T23:59:59");
+
+      const s4Inicio = new Date("2026-04-27T00:00:00");
+      const s4Fin = new Date("2026-05-02T23:59:59");
+
+      if (fecha >= s1Inicio && fecha <= s1Fin) return "Semana 1";
+      if (fecha >= s2Inicio && fecha <= s2Fin) return "Semana 2";
+      if (fecha >= s3Inicio && fecha <= s3Fin) return "Semana 3";
+      if (fecha >= s4Inicio && fecha <= s4Fin) return "Semana 4";
+
+      return "Fuera de ciclo";
+    }
+
+    const hoy = new Date();
+    const fechaHoy = formatearFechaLocal(hoy);
+    fechaActual.value = fechaHoy;
+    semanaCalculada.value = obtenerSemanaPorFecha(fechaHoy);
 
     dolorRadios.forEach(radio => {
       radio.addEventListener("change", () => {
@@ -542,6 +576,7 @@
           zonaBlock.classList.remove("hidden");
         } else {
           zonaBlock.classList.add("hidden");
+          document.querySelectorAll('input[name="zona"]').forEach(input => input.checked = false);
         }
       });
     });
@@ -561,6 +596,10 @@
     form.addEventListener("submit", function(e) {
       e.preventDefault();
 
+      const fechaHoyActualizada = formatearFechaLocal(new Date());
+      fechaActual.value = fechaHoyActualizada;
+      semanaCalculada.value = obtenerSemanaPorFecha(fechaHoyActualizada);
+
       mensajeFinal.classList.remove("hidden");
 
       form.reset();
@@ -568,7 +607,10 @@
       zonaBlock.classList.add("hidden");
       fotoNombre.textContent = "";
       fotoNombre.classList.add("hidden");
-      fechaActual.value = new Date().toLocaleDateString("es-CL");
+
+      const nuevaFecha = formatearFechaLocal(new Date());
+      fechaActual.value = nuevaFecha;
+      semanaCalculada.value = obtenerSemanaPorFecha(nuevaFecha);
     });
   </script>
 
