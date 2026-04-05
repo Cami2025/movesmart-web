@@ -301,9 +301,6 @@
 
     .preview-foto-wrap {
       margin-top: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
       padding: 10px;
       border-radius: 16px;
       background: rgba(255,255,255,0.05);
@@ -559,14 +556,14 @@
           </div>
 
           <input type="hidden" name="cliente" value="Juan Ugalde">
-          <input type="hidden" name="rutina" value="Rutina B">
+          <input type="hidden" name="rutina" value="Rutina A">
           <input type="hidden" name="semana" id="semanaCalculada">
           <input type="hidden" name="fecha" id="fechaActual">
 
           <button type="submit" class="checkin-boton" id="submitBtn">✅ Registrar mi sesión</button>
 
           <p id="mensajeCarga" class="checkin-carga hidden">
-            Enviando tu registro, espera un momento...
+            Enviando, espera un momento...
           </p>
 
           <p id="mensajeFinal" class="checkin-exito hidden">
@@ -719,12 +716,9 @@
             <span>Foto seleccionada</span>
           `;
 
-          const reader = new FileReader();
-          reader.onload = function(event) {
-            previewFoto.src = event.target.result;
-            previewFotoWrap.classList.remove("hidden");
-          };
-          reader.readAsDataURL(file);
+          const imageUrl = URL.createObjectURL(file);
+          previewFoto.src = imageUrl;
+          previewFotoWrap.classList.remove("hidden");
 
         } else {
           resetFotoUI();
