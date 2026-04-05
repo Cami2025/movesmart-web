@@ -325,6 +325,13 @@
       font-weight: 600;
     }
 
+    .checkin-error {
+      margin-top: 8px;
+      text-align: center;
+      color: #ffb3b3;
+      font-weight: 600;
+    }
+
     .hidden {
       display: none;
     }
@@ -386,7 +393,7 @@
           <div class="checkin-bloque">
             <p class="checkin-label">¿Terminaste la rutina?</p>
             <div class="checkin-grid checkin-grid-3">
-              <input type="radio" name="completada" id="full" value="Sí, completa" hidden>
+              <input type="radio" name="completada" id="full" value="Sí, completa" hidden required>
               <label for="full" class="checkin-opcion">✅ Sí, completa</label>
 
               <input type="radio" name="completada" id="partial" value="Sí, parcial" hidden>
@@ -400,7 +407,7 @@
           <div class="checkin-bloque">
             <p class="checkin-label">¿Cómo te sentiste?</p>
             <div class="checkin-grid checkin-grid-2">
-              <input type="radio" name="sensacion" id="muybien" value="Muy bien" hidden>
+              <input type="radio" name="sensacion" id="muybien" value="Muy bien" hidden required>
               <label for="muybien" class="checkin-opcion">😄 Muy bien</label>
 
               <input type="radio" name="sensacion" id="bien" value="Bien" hidden>
@@ -440,7 +447,7 @@
           <div class="checkin-bloque">
             <p class="checkin-label">¿Tuviste molestia o dolor?</p>
             <div class="checkin-grid checkin-grid-3">
-              <input type="radio" name="dolor" id="nodolor" value="No" hidden>
+              <input type="radio" name="dolor" id="nodolor" value="No" hidden required>
               <label for="nodolor" class="checkin-opcion">✅ No</label>
 
               <input type="radio" name="dolor" id="leve" value="Sí, leve" hidden>
@@ -505,14 +512,18 @@
           </div>
 
           <input type="hidden" name="cliente" value="Juan Ugalde">
-          <input type="hidden" name="rutina" value="Rutina B">
+          <input type="hidden" name="rutina" value="Rutina A">
           <input type="hidden" name="semana" id="semanaCalculada">
           <input type="hidden" name="fecha" id="fechaActual">
 
-          <button type="submit" class="checkin-boton">✅ Registrar mi sesión</button>
+          <button type="submit" class="checkin-boton" id="submitBtn">✅ Registrar mi sesión</button>
 
           <p id="mensajeFinal" class="checkin-exito hidden">
             ¡Gracias! Tu seguimiento fue enviado correctamente.
+          </p>
+
+          <p id="mensajeError" class="checkin-error hidden">
+            Hubo un problema al enviar tu seguimiento.
           </p>
         </form>
       </div>
@@ -520,6 +531,8 @@
   </section>
 
   <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_UMTK7xMlUfmTPm94khFhKeYUO_anRj7L_ZLNZ6wfqnXazdPzKzIJ7tASvSt8t_4g9Q/exec";
+
     const esfuerzo = document.getElementById("esfuerzo");
     const esfuerzoValor = document.getElementById("esfuerzoValor");
     const fechaActual = document.getElementById("fechaActual");
@@ -528,8 +541,10 @@
     const zonaBlock = document.getElementById("zonaBlock");
     const form = document.getElementById("checkinForm");
     const mensajeFinal = document.getElementById("mensajeFinal");
+    const mensajeError = document.getElementById("mensajeError");
     const fotoEntreno = document.getElementById("fotoEntreno");
     const fotoNombre = document.getElementById("fotoNombre");
+    const submitBtn = document.getElementById("submitBtn");
 
     esfuerzo.addEventListener("input", () => {
       esfuerzoValor.textContent = esfuerzo.value;
@@ -565,6 +580,15 @@
       return "Fuera de ciclo";
     }
 
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
     const hoy = new Date();
     const fechaHoy = formatearFechaLocal(hoy);
     fechaActual.value = fechaHoy;
@@ -593,24 +617,80 @@
       });
     }
 
-    form.addEventListener("submit", function(e) {
+    form.addEventListener("submit", async function(e) {
       e.preventDefault();
+
+      mensajeFinal.classList.add("hidden");
+      mensajeError.classList.add("hidden");
 
       const fechaHoyActualizada = formatearFechaLocal(new Date());
       fechaActual.value = fechaHoyActualizada;
       semanaCalculada.value = obtenerSemanaPorFecha(fechaHoyActualizada);
 
-      mensajeFinal.classList.remove("hidden");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Enviando...";
 
-      form.reset();
-      esfuerzoValor.textContent = "5";
-      zonaBlock.classList.add("hidden");
-      fotoNombre.textContent = "";
-      fotoNombre.classList.add("hidden");
+      try {
+        let fotoBase64 = "";
+        let fotoTipo = "";
+        let fotoNombreArchivo = "";
 
-      const nuevaFecha = formatearFechaLocal(new Date());
-      fechaActual.value = nuevaFecha;
-      semanaCalculada.value = obtenerSemanaPorFecha(nuevaFecha);
+        if (fotoEntreno.files && fotoEntreno.files.length > 0) {
+          const file = fotoEntreno.files[0];
+          fotoBase64 = await toBase64(file);
+          fotoTipo = file.type;
+          fotoNombreArchivo = file.name;
+        }
+
+        const payload = {
+          fecha: fechaActual.value,
+          semana: semanaCalculada.value,
+          cliente: form.cliente.value,
+          rutina: form.rutina.value,
+          completada: form.completada.value,
+          sensacion: form.sensacion.value,
+          esfuerzo: form.esfuerzo.value,
+          dolor: form.dolor.value,
+          zona: form.zona.value || "",
+          comentario: form.comentario.value || "",
+          fotoBase64: fotoBase64,
+          fotoTipo: fotoTipo,
+          fotoNombre: fotoNombreArchivo
+        };
+
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+          mensajeFinal.classList.remove("hidden");
+          form.reset();
+          esfuerzoValor.textContent = "5";
+          zonaBlock.classList.add("hidden");
+          fotoNombre.textContent = "";
+          fotoNombre.classList.add("hidden");
+
+          const nuevaFecha = formatearFechaLocal(new Date());
+          fechaActual.value = nuevaFecha;
+          semanaCalculada.value = obtenerSemanaPorFecha(nuevaFecha);
+        } else {
+          mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
+          mensajeError.classList.remove("hidden");
+        }
+      } catch (error) {
+        mensajeError.textContent = "No se pudo enviar el formulario. Revisa la implementación del Apps Script.";
+        mensajeError.classList.remove("hidden");
+        console.error(error);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "✅ Registrar mi sesión";
+      }
     });
   </script>
 
