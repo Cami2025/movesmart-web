@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Check-in rutina | MoveSmart</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0b0b0d;
+      color: #ffffff;
+    }
+
+    .rutina-checkin-final {
+      position: relative;
+      min-height: 100vh;
+      padding: 80px 20px;
+      background-image: url("assets/img/fondo-checkin.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rutina-checkin-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(8,8,10,0.72) 0%, rgba(8,8,10,0.90) 100%);
+      z-index: 1;
+    }
+
+    .rutina-checkin-contenido {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .rutina-checkin-card {
+      background: rgba(18, 18, 22, 0.62);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 34px 28px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+
+    .rutina-checkin-kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ff9a1f;
+      font-weight: 700;
+    }
+
+    .rutina-checkin-title {
+      margin-bottom: 10px;
+      font-size: 2.2rem;
+      line-height: 1.1;
+      color: #ffffff;
+    }
+
+    .rutina-checkin-subtitle {
+      margin-bottom: 30px;
+      color: rgba(255,255,255,0.78);
+      font-size: 1rem;
+      line-height: 1.55;
+      max-width: 700px;
+    }
+
+    .rutina-checkin-form {
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .checkin-bloque {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .checkin-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .checkin-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .checkin-grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .checkin-grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .checkin-opcion {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 14px 12px;
+      text-align: center;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #f5f5f5;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.96rem;
+      line-height: 1.35;
+    }
+
+    .checkin-opcion:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,140,0,0.65);
+      background: rgba(255,255,255,0.07);
+    }
+
+    input[type="radio"]:checked + .checkin-opcion {
+      background: rgba(255,140,0,0.16);
+      border-color: #ff8c00;
+      color: #ffffff;
+      box-shadow: 0 0 0 1px rgba(255,140,0,0.24);
+    }
+
+    .checkin-range-wrap {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px 16px 16px;
+    }
+
+    .checkin-range-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .checkin-slider-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: #ffb45c;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-align: center;
+      opacity: 0.95;
+    }
+
+    .checkin-slider-hand {
+      font-size: 1.2rem;
+      animation: moverManito 1.4s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes moverManito {
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(8px);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .checkin-range {
+      width: 100%;
+      accent-color: #ff8c00;
+      cursor: pointer;
+    }
+
+    .checkin-scale {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.42);
+    }
+
+    .checkin-textarea {
+      width: 100%;
+      min-height: 96px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+      color: #ffffff;
+      resize: vertical;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .checkin-textarea::placeholder {
+      color: rgba(255,255,255,0.42);
+    }
+
+    .checkin-textarea:focus {
+      border-color: #ff8c00;
+      box-shadow: 0 0 0 1px rgba(255,140,0,0.18);
+    }
+
+    .checkin-boton {
+      width: 100%;
+      padding: 16px 18px;
+      border: none;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ff8c00, #ff6a00);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 12px 32px rgba(255,140,0,0.24);
+    }
+
+    .checkin-boton:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .checkin-exito {
+      margin-top: 8px;
+      text-align: center;
+      color: #9cffb0;
+      font-weight: 600;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .rutina-checkin-final {
+        padding: 50px 16px;
+      }
+
+      .rutina-checkin-card {
+        padding: 24px 18px;
+        border-radius: 22px;
+      }
+
+      .rutina-checkin-title {
+        font-size: 1.75rem;
+      }
+
+      .checkin-grid-2,
+      .checkin-grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .checkin-slider-hint {
+        font-size: 0.88rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="rutina-checkin-final">
+    <div class="rutina-checkin-overlay"></div>
+
+    <div class="rutina-checkin-contenido">
+      <div class="rutina-checkin-card">
+        <span class="rutina-checkin-kicker">Cierre de sesión</span>
+        <h2 class="rutina-checkin-title">¿Cómo te fue hoy?</h2>
+        <p class="rutina-checkin-subtitle">
+          Registra tu sesión en menos de 20 segundos para hacer seguimiento de tu progreso y ajustar tu plan si es necesario.
+        </p>
+
+        <form id="checkinForm" class="rutina-checkin-form">
+
+          <div class="checkin-bloque">
+            <p class="checkin-label">¿Terminaste la rutina?</p>
+            <div class="checkin-grid checkin-grid-3">
+              <input type="radio" name="completada" id="full" value="Sí, completa" hidden>
+              <label for="full" class="checkin-opcion">✅ Sí, completa</label>
+
+              <input type="radio" name="completada" id="partial" value="Sí, parcial" hidden>
+              <label for="partial" class="checkin-opcion">🟡 Sí, parcial</label>
+
+              <input type="radio" name="completada" id="nope" value="No pude terminarla" hidden>
+              <label for="nope" class="checkin-opcion">⚪ No pude</label>
+            </div>
+          </div>
+
+          <div class="checkin-bloque">
+            <p class="checkin-label">¿Cómo te sentiste?</p>
+            <div class="checkin-grid checkin-grid-2">
+              <input type="radio" name="sensacion" id="muybien" value="Muy bien" hidden>
+              <label for="muybien" class="checkin-opcion">😄 Muy bien</label>
+
+              <input type="radio" name="sensacion" id="bien" value="Bien" hidden>
+              <label for="bien" class="checkin-opcion">🙂 Bien</label>
+
+              <input type="radio" name="sensacion" id="masomenos" value="Más o menos" hidden>
+              <label for="masomenos" class="checkin-opcion">😐 Más o menos</label>
+
+              <input type="radio" name="sensacion" id="mal" value="Mal" hidden>
+              <label for="mal" class="checkin-opcion">😣 Mal</label>
+            </div>
+          </div>
+
+          <div class="checkin-bloque">
+            <label for="esfuerzo" class="checkin-label">Esfuerzo percibido</label>
+            <div class="checkin-range-wrap">
+              <div class="checkin-range-top">
+                <span>Suave</span>
+                <strong><span id="esfuerzoValor">5</span>/10</strong>
+                <span>Muy intenso</span>
+              </div>
+
+              <div class="checkin-slider-hint">
+                <span class="checkin-slider-hand">👉</span>
+                <span>Desliza para marcar tu esfuerzo</span>
+              </div>
+
+              <input type="range" id="esfuerzo" name="esfuerzo" min="1" max="10" value="5" class="checkin-range">
+
+              <div class="checkin-scale">
+                <span>1</span>
+                <span>10</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="checkin-bloque">
+            <p class="checkin-label">¿Tuviste molestia o dolor?</p>
+            <div class="checkin-grid checkin-grid-3">
+              <input type="radio" name="dolor" id="nodolor" value="No" hidden>
+              <label for="nodolor" class="checkin-opcion">✅ No</label>
+
+              <input type="radio" name="dolor" id="leve" value="Sí, leve" hidden>
+              <label for="leve" class="checkin-opcion">🟡 Sí, leve</label>
+
+              <input type="radio" name="dolor" id="moderado" value="Sí, moderado" hidden>
+              <label for="moderado" class="checkin-opcion">🔴 Sí, moderado</label>
+            </div>
+          </div>
+
+          <div class="checkin-bloque hidden" id="zonaBlock">
+            <p class="checkin-label">¿Dónde sentiste la molestia?</p>
+            <div class="checkin-grid checkin-grid-2">
+              <input type="radio" name="zona" id="pierna" value="Pierna" hidden>
+              <label for="pierna" class="checkin-opcion">Pierna</label>
+
+              <input type="radio" name="zona" id="rodilla" value="Rodilla" hidden>
+              <label for="rodilla" class="checkin-opcion">Rodilla</label>
+
+              <input type="radio" name="zona" id="tobillo" value="Tobillo / pie" hidden>
+              <label for="tobillo" class="checkin-opcion">Tobillo / pie</label>
+
+              <input type="radio" name="zona" id="espalda" value="Espalda" hidden>
+              <label for="espalda" class="checkin-opcion">Espalda</label>
+
+              <input type="radio" name="zona" id="otra" value="Otra" hidden>
+              <label for="otra" class="checkin-opcion">Otra</label>
+            </div>
+          </div>
+
+          <div class="checkin-bloque">
+            <label for="comentario" class="checkin-label">Comentario opcional</label>
+            <textarea
+              id="comentario"
+              name="comentario"
+              class="checkin-textarea"
+              placeholder="Ej: me costó la última serie o sentí una leve molestia en el tobillo..."
+            ></textarea>
+          </div>
+
+          <input type="hidden" name="cliente" value="NOMBRE_CLIENTE">
+          <input type="hidden" name="rutina" value="Rutina A">
+          <input type="hidden" name="semana" value="Semana 1">
+          <input type="hidden" name="fecha" id="fechaActual">
+
+          <button type="submit" class="checkin-boton">✅ Registrar mi sesión</button>
+
+          <p id="mensajeFinal" class="checkin-exito hidden">
+            ¡Gracias! Tu seguimiento fue enviado correctamente.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const esfuerzo = document.getElementById("esfuerzo");
+    const esfuerzoValor = document.getElementById("esfuerzoValor");
+    const fechaActual = document.getElementById("fechaActual");
+    const dolorRadios = document.querySelectorAll('input[name="dolor"]');
+    const zonaBlock = document.getElementById("zonaBlock");
+    const form = document.getElementById("checkinForm");
+    const mensajeFinal = document.getElementById("mensajeFinal");
+
+    esfuerzo.addEventListener("input", () => {
+      esfuerzoValor.textContent = esfuerzo.value;
+    });
+
+    fechaActual.value = new Date().toLocaleDateString("es-CL");
+
+    dolorRadios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        if (radio.value === "Sí, leve" || radio.value === "Sí, moderado") {
+          zonaBlock.classList.remove("hidden");
+        } else {
+          zonaBlock.classList.add("hidden");
+        }
+      });
+    });
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      mensajeFinal.classList.remove("hidden");
+
+      form.reset();
+      esfuerzoValor.textContent = "5";
+      zonaBlock.classList.add("hidden");
+    });
+  </script>
+
+</body>
+</html>
