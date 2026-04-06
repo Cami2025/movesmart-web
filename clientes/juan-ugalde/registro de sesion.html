@@ -815,6 +815,18 @@
           <p id="mensajeError" class="checkin-error hidden">
             Hubo un problema al enviar tu seguimiento.
           </p>
+
+          <div id="ruletaEstadoBox" class="hidden" style="margin-top: 18px; padding: 18px; border-radius: 18px; background: rgba(255,140,0,0.10); border: 1px solid rgba(255,140,0,0.35); text-align: center;">
+            <p id="ruletaEstadoTexto" style="margin-bottom: 12px; color: #ffe0b2; font-weight: 700;">
+              Puedes girar tu ruleta
+            </p>
+
+            <button type="button" id="girarRuletaBtn" class="checkin-boton" style="max-width: 320px; margin: 0 auto;">
+              🎯 Girar ruleta
+            </button>
+
+            <p id="ruletaPremioTexto" class="checkin-exito hidden" style="margin-top: 12px;"></p>
+          </div>
         </form>
       </div>
     </div>
@@ -979,6 +991,74 @@
       });
     }
 
+    async function consultarEstadoRuleta() {
+      try {
+        const cliente = form.cliente.value;
+        const response = await fetch(`${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`);
+        const result = await response.json();
+
+        if (!result.ok) return;
+
+        if (result.yaUsada) {
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.textContent = "🎁 Tu ruleta de este ciclo ya fue utilizada.";
+          girarRuletaBtn.classList.add("hidden");
+          ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio || "Premio asignado"}`;
+          ruletaPremioTexto.classList.remove("hidden");
+          return;
+        }
+
+        if (result.habilitada) {
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.textContent = "🎉 Puedes girar tu ruleta";
+          girarRuletaBtn.classList.remove("hidden");
+          ruletaPremioTexto.classList.add("hidden");
+          ruletaPremioTexto.textContent = "";
+        } else {
+          ruletaEstadoBox.classList.add("hidden");
+          girarRuletaBtn.classList.remove("hidden");
+          ruletaPremioTexto.classList.add("hidden");
+          ruletaPremioTexto.textContent = "";
+        }
+      } catch (error) {
+        console.error("Error consultando ruleta:", error);
+      }
+    }
+
+    async function girarRuleta() {
+      try {
+        const cliente = form.cliente.value;
+
+        girarRuletaBtn.disabled = true;
+        girarRuletaBtn.textContent = "Girando...";
+
+        const response = await fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
+        const result = await response.json();
+
+        if (result.ok) {
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.textContent = "🎉 Tu ruleta fue girada correctamente";
+          girarRuletaBtn.classList.add("hidden");
+          ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio}`;
+          ruletaPremioTexto.classList.remove("hidden");
+        } else {
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.textContent = result.message || "Aún no puedes girar la ruleta.";
+        }
+      } catch (error) {
+        console.error("Error al girar ruleta:", error);
+        ruletaEstadoBox.classList.remove("hidden");
+        ruletaEstadoTexto.textContent = "Hubo un problema al girar la ruleta.";
+      } finally {
+        girarRuletaBtn.disabled = false;
+        girarRuletaBtn.textContent = "🎯 Girar ruleta";
+      }
+    }
+
+    if (girarRuletaBtn) {
+      girarRuletaBtn.addEventListener("click", girarRuleta);
+    }
+
     form.addEventListener("submit", async function(e) {
       e.preventDefault();
 
@@ -1046,6 +1126,8 @@
           const nuevaFecha = obtenerFechaChile();
           fechaActual.value = nuevaFecha;
           semanaCalculada.value = obtenerSemanaPorFecha(nuevaFecha);
+
+          await consultarEstadoRuleta();
         } else {
           mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
           mensajeError.classList.remove("hidden");
@@ -1060,6 +1142,8 @@
         mensajeCarga.classList.add("hidden");
       }
     });
+
+    consultarEstadoRuleta();
   </script>
 
 </body>
