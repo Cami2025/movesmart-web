@@ -602,11 +602,13 @@
       esfuerzoValor.textContent = esfuerzo.value;
     });
 
-    function formatearFechaLocal(date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
+    function obtenerFechaChile() {
+      return new Intl.DateTimeFormat("sv-SE", {
+        timeZone: "America/Santiago",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).format(new Date());
     }
 
     function obtenerSemanaPorFecha(fechaStr) {
@@ -685,8 +687,7 @@
       `;
     }
 
-    const hoy = new Date();
-    const fechaHoy = formatearFechaLocal(hoy);
+    const fechaHoy = obtenerFechaChile();
     fechaActual.value = fechaHoy;
     semanaCalculada.value = obtenerSemanaPorFecha(fechaHoy);
 
@@ -733,7 +734,7 @@
       mensajeError.classList.add("hidden");
       mensajeCarga.classList.add("hidden");
 
-      const fechaHoyActualizada = formatearFechaLocal(new Date());
+      const fechaHoyActualizada = obtenerFechaChile();
       fechaActual.value = fechaHoyActualizada;
       semanaCalculada.value = obtenerSemanaPorFecha(fechaHoyActualizada);
 
@@ -790,7 +791,7 @@
           zonaBlock.classList.add("hidden");
           resetFotoUI();
 
-          const nuevaFecha = formatearFechaLocal(new Date());
+          const nuevaFecha = obtenerFechaChile();
           fechaActual.value = nuevaFecha;
           semanaCalculada.value = obtenerSemanaPorFecha(nuevaFecha);
         } else {
