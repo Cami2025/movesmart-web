@@ -55,7 +55,6 @@
       box-shadow: 0 24px 60px rgba(0,0,0,0.35);
     }
 
-
     .top-actions {
       margin-bottom: 18px;
     }
@@ -111,45 +110,199 @@
       margin-bottom: 22px;
       color: rgba(255,255,255,0.78);
       font-size: 1rem;
-      line-height: 1.55;
-      max-width: 700px;
+      line-height: 1.7;
+      max-width: 720px;
+    }
+
+    .word-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .inline-arrow {
+      display: inline-block;
+      color: #ff3b30;
+      font-size: 1.45rem;
+      font-weight: 900;
+      line-height: 1;
+      transform-origin: center;
+      animation: flechaInline 1s ease-in-out infinite;
+      text-shadow:
+        0 0 10px rgba(255, 59, 48, 0.55),
+        0 0 22px rgba(255, 59, 48, 0.25);
+      -webkit-text-stroke: 0.4px rgba(255,255,255,0.08);
+    }
+
+    @keyframes flechaInline {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.82;
+      }
+      50% {
+        transform: translateY(6px) scale(1.08);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.82;
+      }
     }
 
     .recompensa-box {
-      margin-bottom: 28px;
-      padding: 18px;
-      border-radius: 20px;
-      background: rgba(255, 221, 87, 0.15);
-      border: 1px solid rgba(255, 221, 87, 0.45);
-      box-shadow: 0 10px 30px rgba(255, 221, 87, 0.18);
+      margin-bottom: 34px;
+      padding: 24px 18px 30px;
+      border-radius: 24px;
+      background: rgba(255, 221, 87, 0.10);
+      border: 1px solid rgba(255, 221, 87, 0.30);
+      box-shadow: 0 10px 30px rgba(255, 221, 87, 0.12);
     }
 
     .recompensa-title {
-      margin-bottom: 12px;
-      font-size: 0.98rem;
+      margin-bottom: 18px;
+      font-size: 1rem;
       font-weight: 700;
       color: #ffe66d;
+      text-align: center;
     }
 
-    .recompensa-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
+    .ruleta-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .ruleta-stage {
+      position: relative;
+      width: 460px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       gap: 10px;
     }
 
-    .recompensa-grid span {
+    .ruleta-pointer {
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 28px solid #ff4d3d;
+      filter: drop-shadow(0 4px 12px rgba(255, 77, 61, 0.45));
+      z-index: 3;
+      margin-bottom: -6px;
+    }
+
+    .ruleta-beneficios {
+      position: relative;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 10px solid rgba(255, 191, 73, 0.45);
+      box-shadow:
+        0 0 0 6px rgba(255,255,255,0.04),
+        0 16px 40px rgba(0,0,0,0.30);
+      background:
+        conic-gradient(
+          from -90deg,
+          rgba(255,140,0,0.90) 0deg 51.42deg,
+          rgba(255,120,0,0.72) 51.42deg 102.84deg,
+          rgba(255,177,79,0.88) 102.84deg 154.26deg,
+          rgba(255,106,0,0.72) 154.26deg 205.68deg,
+          rgba(255,140,0,0.88) 205.68deg 257.10deg,
+          rgba(255,120,0,0.72) 257.10deg 308.52deg,
+          rgba(255,177,79,0.88) 308.52deg 360deg
+        );
+    }
+
+    .ruleta-beneficios::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.00) 55%),
+        repeating-conic-gradient(
+          from -90deg,
+          rgba(255,255,255,0.18) 0deg 1deg,
+          transparent 1deg 51.42deg
+        );
+      pointer-events: none;
+    }
+
+    .ruleta-beneficios::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 24px rgba(0,0,0,0.14);
+      pointer-events: none;
+    }
+
+    .ruleta-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 112px;
+      font-size: 0.8rem;
+      line-height: 1.18;
+      text-align: center;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.28);
+      transform-origin: center center;
+      z-index: 2;
+    }
+
+    .label-1 { transform: translate(-50%, -50%) rotate(-64.29deg) translateY(-142px) rotate(64.29deg); }
+    .label-2 { transform: translate(-50%, -50%) rotate(-12.87deg) translateY(-142px) rotate(12.87deg); }
+    .label-3 { transform: translate(-50%, -50%) rotate(38.55deg) translateY(-142px) rotate(-38.55deg); }
+    .label-4 { transform: translate(-50%, -50%) rotate(89.97deg) translateY(-142px) rotate(-89.97deg); }
+    .label-5 { transform: translate(-50%, -50%) rotate(141.39deg) translateY(-142px) rotate(-141.39deg); }
+    .label-6 { transform: translate(-50%, -50%) rotate(192.81deg) translateY(-142px) rotate(-192.81deg); }
+    .label-7 { transform: translate(-50%, -50%) rotate(244.23deg) translateY(-142px) rotate(-244.23deg); }
+
+    .ruleta-centro {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 132px;
+      height: 132px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffb45c, #ff7a00 70%, #ff6300 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      min-height: 50px;
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      padding: 18px;
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.15;
       color: #fff;
-      font-size: .93rem;
-      line-height: 1.35;
+      box-shadow:
+        0 10px 30px rgba(255,140,0,0.32),
+        0 0 0 8px rgba(255,255,255,0.08);
+      z-index: 3;
+      animation: pulsoCentro 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulsoCentro {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.04); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .ruleta-note {
+      margin-top: 10px;
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.70);
+      text-align: center;
     }
 
     .rutina-checkin-form {
@@ -411,8 +564,7 @@
       }
 
       .checkin-grid-2,
-      .checkin-grid-3,
-      .recompensa-grid {
+      .checkin-grid-3 {
         grid-template-columns: 1fr;
       }
 
@@ -427,6 +579,46 @@
       .preview-foto-img {
         max-width: 100%;
       }
+
+      .inline-arrow {
+        font-size: 1.55rem;
+      }
+
+      .ruleta-stage {
+        width: 100%;
+        max-width: 360px;
+      }
+
+      .ruleta-pointer {
+        border-left-width: 14px;
+        border-right-width: 14px;
+        border-top-width: 22px;
+      }
+
+      .ruleta-beneficios {
+        width: 340px;
+        height: 340px;
+      }
+
+      .ruleta-label {
+        width: 82px;
+        font-size: 0.62rem;
+      }
+
+      .label-1 { transform: translate(-50%, -50%) rotate(-64.29deg) translateY(-112px) rotate(64.29deg); }
+      .label-2 { transform: translate(-50%, -50%) rotate(-12.87deg) translateY(-112px) rotate(12.87deg); }
+      .label-3 { transform: translate(-50%, -50%) rotate(38.55deg) translateY(-112px) rotate(-38.55deg); }
+      .label-4 { transform: translate(-50%, -50%) rotate(89.97deg) translateY(-112px) rotate(-89.97deg); }
+      .label-5 { transform: translate(-50%, -50%) rotate(141.39deg) translateY(-112px) rotate(-141.39deg); }
+      .label-6 { transform: translate(-50%, -50%) rotate(192.81deg) translateY(-112px) rotate(-192.81deg); }
+      .label-7 { transform: translate(-50%, -50%) rotate(244.23deg) translateY(-112px) rotate(-244.23deg); }
+
+      .ruleta-centro {
+        width: 104px;
+        height: 104px;
+        font-size: 0.86rem;
+        padding: 12px;
+      }
     }
   </style>
 </head>
@@ -440,22 +632,41 @@
         <div class="top-actions">
           <a href="acceso-clientes.html" class="back-access-btn">← Volver a Acceso Clientes</a>
         </div>
+
         <span class="rutina-checkin-kicker">Cierre de sesión</span>
         <h2 class="rutina-checkin-title">Tu constancia tiene recompensa</h2>
+
         <p class="rutina-checkin-subtitle">
-          Registra tu sesión y comparte una foto de tu entreno para participar por la ruleta de beneficios MoveSmart.
+          Registra tu sesión acá
+          <span class="word-arrow">abajo <span class="inline-arrow">⬇</span></span>
+          y comparte una foto de tu entreno. Cada registro suma avance y, al completar el ciclo completo de entrenamientos, se activa tu ruleta de beneficios MoveSmart.
         </p>
 
         <div class="recompensa-box">
-          <p class="recompensa-title">Participa por la ruleta de beneficios MoveSmart:</p>
-          <div class="recompensa-grid">
-            <span>15% de descuento en tu próxima renovación</span>
-            <span>Rutina bonus exclusiva</span>
-            <span>Mini guía de hábitos</span>
-            <span>Mini guía de movilidad</span>
-            <span>Mini guía de recuperación</span>
-            <span>Mini guía de motivación</span>
-            <span>Doble oportunidad para la próxima ruleta</span>
+          <p class="recompensa-title">
+            Cada sesión registrada te acerca a tu premio final.
+          </p>
+
+          <div class="ruleta-wrap">
+            <div class="ruleta-stage">
+              <div class="ruleta-pointer"></div>
+
+              <div class="ruleta-beneficios">
+                <div class="ruleta-label label-1">15% de descuento</div>
+                <div class="ruleta-label label-2">Rutina bonus</div>
+                <div class="ruleta-label label-3">Guía de hábitos</div>
+                <div class="ruleta-label label-4">Guía de movilidad</div>
+                <div class="ruleta-label label-5">Guía de recuperación</div>
+                <div class="ruleta-label label-6">Guía de motivación</div>
+                <div class="ruleta-label label-7">Doble oportunidad</div>
+
+                <div class="ruleta-centro">Ruleta MoveSmart</div>
+              </div>
+
+              <p class="ruleta-note">
+                La ruleta se activa al completar el ciclo completo de entrenamientos.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -562,7 +773,7 @@
           <div class="checkin-bloque">
             <label class="checkin-label">Comparte una foto de tu entreno</label>
             <p class="checkin-helper">
-              Sube una foto de tu sesión de hoy para participar por la ruleta de beneficios MoveSmart.
+              Sube una foto de tu sesión de hoy para registrar tu avance en el ciclo MoveSmart.
             </p>
 
             <input
