@@ -597,6 +597,11 @@
     const previewFoto = document.getElementById("previewFoto");
     const submitBtn = document.getElementById("submitBtn");
     const fotoUploadLabel = document.getElementById("fotoUploadLabel");
+    const rutinaHidden = document.getElementById("rutinaHidden");
+
+    const params = new URLSearchParams(window.location.search);
+    const rutinaParam = params.get("rutina") || "Rutina A";
+    rutinaHidden.value = rutinaParam;
 
     esfuerzo.addEventListener("input", () => {
       esfuerzoValor.textContent = esfuerzo.value;
