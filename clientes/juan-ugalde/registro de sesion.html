@@ -815,18 +815,6 @@
           <p id="mensajeError" class="checkin-error hidden">
             Hubo un problema al enviar tu seguimiento.
           </p>
-
-          <div id="ruletaEstadoBox" class="hidden" style="margin-top: 18px; padding: 18px; border-radius: 18px; background: rgba(255,140,0,0.10); border: 1px solid rgba(255,140,0,0.35); text-align: center;">
-            <p id="ruletaEstadoTexto" style="margin-bottom: 12px; color: #ffe0b2; font-weight: 700;">
-              Puedes girar tu ruleta
-            </p>
-
-            <button type="button" id="girarRuletaBtn" class="checkin-boton" style="max-width: 320px; margin: 0 auto;">
-              🎯 Girar ruleta
-            </button>
-
-            <p id="ruletaPremioTexto" class="checkin-exito hidden" style="margin-top: 12px;"></p>
-          </div>
         </form>
       </div>
     </div>
@@ -834,6 +822,7 @@
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_UMTK7xMlUfmTPm94khFhKeYUO_anRj7L_ZLNZ6wfqnXazdPzKzIJ7tASvSt8t_4g9Q/exec";
+    const RULETA_URL = "https://script.google.com/macros/s/AKfycbz_gsPg_sDJjx7AbsZ-nP9R-6DTLsVeTWd4hGt3wn77YV3deVDGWXoZJtwUt-71fMZ1kg/exec";
 
     const esfuerzo = document.getElementById("esfuerzo");
     const esfuerzoValor = document.getElementById("esfuerzoValor");
@@ -873,7 +862,7 @@
     function obtenerSemanaPorFecha(fechaStr) {
       const fecha = new Date(fechaStr + "T00:00:00");
 
-      const s1Inicio = new Date("2026-04-06T00:00:00");
+      const s1Inicio = new Date("2026-04-08T00:00:00");
       const s1Fin = new Date("2026-04-12T23:59:59");
 
       const s2Inicio = new Date("2026-04-13T00:00:00");
