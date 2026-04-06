@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Check-in rutina | MoveSmart</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
+        url('fondo-preview-rutina.png') center center / cover no-repeat fixed;
+      color: #ffffff;
+    }
+
+    .rutina-checkin-final {
+      position: relative;
+      min-height: 100vh;
+      padding: 80px 20px;
+      background: transparent;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rutina-checkin-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(8,10,18,.46) 0%, rgba(8,10,18,.78) 100%);
+      z-index: 1;
+    }
+
+    .rutina-checkin-contenido {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .rutina-checkin-card {
+      background: rgba(24,16,32,.58);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 34px 28px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+
+    .top-actions {
+      margin-bottom: 18px;
+    }
+
+    .back-access-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #ffffff;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+    }
+
+    .back-access-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+      border-color: rgba(255,140,0,0.65);
+    }
+
+    .rutina-checkin-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.08);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffb27f;
+      font-weight: 700;
+    }
+
+    .rutina-checkin-title {
+      margin-bottom: 10px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.02;
+      letter-spacing: -.04em;
+      color: #ffffff;
+    }
+
+    .rutina-checkin-subtitle {
+      margin-bottom: 22px;
+      color: rgba(255,255,255,0.78);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 720px;
+    }
+
+    .word-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .inline-arrow {
+      display: inline-block;
+      color: #ff3b30;
+      font-size: 1.45rem;
+      font-weight: 900;
+      line-height: 1;
+      transform-origin: center;
+      animation: flechaInline 1s ease-in-out infinite;
+      text-shadow:
+        0 0 10px rgba(255, 59, 48, 0.55),
+        0 0 22px rgba(255, 59, 48, 0.25);
+      -webkit-text-stroke: 0.4px rgba(255,255,255,0.08);
+    }
+
+    @keyframes flechaInline {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.82;
+      }
+      50% {
+        transform: translateY(6px) scale(1.08);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.82;
+      }
+    }
+
+    .recompensa-box {
+      margin-bottom: 34px;
+      padding: 24px 18px 30px;
+      border-radius: 24px;
+      background: rgba(255, 221, 87, 0.10);
+      border: 1px solid rgba(255, 221, 87, 0.30);
+      box-shadow: 0 10px 30px rgba(255, 221, 87, 0.12);
+    }
+
+    .recompensa-title {
+      margin-bottom: 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffe66d;
+      text-align: center;
+    }
+
+    .ruleta-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .ruleta-stage {
+      position: relative;
+      width: 460px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ruleta-pointer {
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 28px solid #ff4d3d;
+      filter: drop-shadow(0 4px 12px rgba(255, 77, 61, 0.45));
+      z-index: 3;
+      margin-bottom: -6px;
+    }
+
+    .ruleta-beneficios {
+      position: relative;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 10px solid rgba(255, 191, 73, 0.45);
+      box-shadow:
+        0 0 0 6px rgba(255,255,255,0.04),
+        0 16px 40px rgba(0,0,0,0.30);
+      background:
+        conic-gradient(
+          from -90deg,
+          rgba(255,140,0,0.90) 0deg 51.42deg,
+          rgba(255,120,0,0.72) 51.42deg 102.84deg,
+          rgba(255,177,79,0.88) 102.84deg 154.26deg,
+          rgba(255,106,0,0.72) 154.26deg 205.68deg,
+          rgba(255,140,0,0.88) 205.68deg 257.10deg,
+          rgba(255,120,0,0.72) 257.10deg 308.52deg,
+          rgba(255,177,79,0.88) 308.52deg 360deg
+        );
+      transition: transform 5.2s cubic-bezier(0.17, 0.67, 0.14, 1);
+      will-change: transform;
+    }
+
+    .ruleta-beneficios::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.00) 55%),
+        repeating-conic-gradient(
+          from -90deg,
+          rgba(255,255,255,0.18) 0deg 1deg,
+          transparent 1deg 51.42deg
+        );
+      pointer-events: none;
+    }
+
+    .ruleta-beneficios::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 24px rgba(0,0,0,0.14);
+      pointer-events: none;
+    }
+
+    .ruleta-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 112px;
+      font-size: 0.8rem;
+      line-height: 1.18;
+      text-align: center;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.28);
+      transform-origin: center center;
+      z-index: 2;
+    }
+
+    .label-1 { transform: translate(-50%, -50%) rotate(-64.29deg) translateY(-142px) rotate(64.29deg); }
+    .label-2 { transform: translate(-50%, -50%) rotate(-12.87deg) translateY(-142px) rotate(12.87deg); }
+    .label-3 { transform: translate(-50%, -50%) rotate(38.55deg) translateY(-142px) rotate(-38.55deg); }
+    .label-4 { transform: translate(-50%, -50%) rotate(89.97deg) translateY(-142px) rotate(-89.97deg); }
+    .label-5 { transform: translate(-50%, -50%) rotate(141.39deg) translateY(-142px) rotate(-141.39deg); }
+    .label-6 { transform: translate(-50%, -50%) rotate(192.81deg) translateY(-142px) rotate(-192.81deg); }
+    .label-7 { transform: translate(-50%, -50%) rotate(244.23deg) translateY(-142px) rotate(-244.23deg); }
+
+    .ruleta-centro {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 132px;
+      height: 132px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffb45c, #ff7a00 70%, #ff6300 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px;
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1.15;
+      color: #fff;
+      box-shadow:
+        0 10px 30px rgba(255,140,0,0.32),
+        0 0 0 8px rgba(255,255,255,0.08);
+      z-index: 3;
+      animation: pulsoCentro 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulsoCentro {
+      0% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.04); }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .ruleta-note {
+      margin-top: 10px;
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.70);
+      text-align: center;
+    }
+
+    .rutina-checkin-form {
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .checkin-bloque {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .checkin-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .checkin-helper {
+      color: rgba(255,255,255,0.72);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .checkin-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .checkin-grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .checkin-grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .checkin-opcion {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 14px 12px;
+      text-align: center;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #f5f5f5;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.96rem;
+      line-height: 1.35;
+    }
+
+    .checkin-opcion:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,140,0,0.65);
+      background: rgba(255,255,255,0.07);
+    }
+
+    input[type="radio"]:checked + .checkin-opcion {
+      background: rgba(255,140,0,0.16);
+      border-color: #ff8c00;
+      color: #ffffff;
+      box-shadow: 0 0 0 1px rgba(255,140,0,0.24);
+    }
+
+    .checkin-range-wrap {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px 16px 16px;
+    }
+
+    .checkin-range-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .checkin-slider-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: #ffb45c;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-align: center;
+      opacity: 0.95;
+    }
+
+    .checkin-slider-hand {
+      font-size: 1.2rem;
+      animation: moverManito 1.4s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes moverManito {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(8px); }
+      100% { transform: translateX(0); }
+    }
+
+    .checkin-range {
+      width: 100%;
+      accent-color: #ff8c00;
+      cursor: pointer;
+    }
+
+    .checkin-scale {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.42);
+    }
+
+    .checkin-textarea {
+      width: 100%;
+      min-height: 96px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+      color: #ffffff;
+      resize: vertical;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .checkin-textarea::placeholder {
+      color: rgba(255,255,255,0.42);
+    }
+
+    .checkin-textarea:focus {
+      border-color: #ff8c00;
+      box-shadow: 0 0 0 1px rgba(255,140,0,0.18);
+    }
+
+    .camera-upload-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px dashed rgba(255,140,0,0.55);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .camera-upload-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.07);
+      border-color: #ff8c00;
+    }
+
+    .camera-icon {
+      font-size: 1.2rem;
+    }
+
+    .foto-nombre {
+      font-size: 0.9rem;
+      color: #9cffb0;
+    }
+
+    .preview-foto-wrap {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      max-width: 220px;
+    }
+
+    .preview-foto-img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      object-fit: cover;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    .checkin-boton {
+      width: 100%;
+      padding: 16px 18px;
+      border: none;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ff8c00, #ff6a00);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 12px 32px rgba(255,140,0,0.24);
+    }
+
+    .checkin-boton:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .checkin-boton:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .checkin-exito {
+      margin-top: 8px;
+      text-align: center;
+      color: #9cffb0;
+      font-weight: 600;
+    }
+
+    .checkin-error {
+      margin-top: 8px;
+      text-align: center;
+      color: #ffb3b3;
+      font-weight: 600;
+    }
+
+    .checkin-carga {
+      margin-top: 8px;
+      text-align: center;
+      color: #ffd59c;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .rutina-checkin-final {
+        padding: 50px 16px;
+      }
+
+      .rutina-checkin-card {
+        padding: 24px 18px;
+        border-radius: 22px;
+      }
+
+      .rutina-checkin-title {
+        font-size: 1.75rem;
+      }
+
+      .checkin-grid-2,
+      .checkin-grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .checkin-slider-hint {
+        font-size: 0.88rem;
+      }
+
+      .preview-foto-wrap {
+        max-width: 100%;
+      }
+
+      .preview-foto-img {
+        max-width: 100%;
+      }
+
+      .inline-arrow {
+        font-size: 1.55rem;
+      }
+
+      .ruleta-stage {
+        width: 100%;
+        max-width: 360px;
+      }
+
+      .ruleta-pointer {
+        border-left-width: 14px;
+        border-right-width: 14px;
+        border-top-width: 22px;
+      }
+
+      .ruleta-beneficios {
+        width: 340px;
+        height: 340px;
+      }
+
+      .ruleta-label {
+        width: 82px;
+        font-size: 0.62rem;
+      }
+
+      .label-1 { transform: translate(-50%, -50%) rotate(-64.29deg) translateY(-112px) rotate(64.29deg); }
+      .label-2 { transform: translate(-50%, -50%) rotate(-12.87deg) translateY(-112px) rotate(12.87deg); }
+      .label-3 { transform: translate(-50%, -50%) rotate(38.55deg) translateY(-112px) rotate(-38.55deg); }
+      .label-4 { transform: translate(-50%, -50%) rotate(89.97deg) translateY(-112px) rotate(-89.97deg); }
+      .label-5 { transform: translate(-50%, -50%) rotate(141.39deg) translateY(-112px) rotate(-141.39deg); }
+      .label-6 { transform: translate(-50%, -50%) rotate(192.81deg) translateY(-112px) rotate(-192.81deg); }
+      .label-7 { transform: translate(-50%, -50%) rotate(244.23deg) translateY(-112px) rotate(-244.23deg); }
+
+      .ruleta-centro {
+        width: 104px;
+        height: 104px;
+        font-size: 0.86rem;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="rutina-checkin-final">
+    <div class="rutina-checkin-overlay"></div>
+
+    <div class="rutina-checkin-contenido">
+      <div class="rutina-checkin-card">
+        <div class="top-actions">
+          <a href="acceso-clientes.html" class="back-access-btn">← Volver a Acceso Clientes</a>
+        </div>
+
+        <span class="rutina-checkin-kicker">Cierre de sesión</span>
+        <h2 class="rutina-checkin-title">Tu constancia tiene recompensa</h2>
+
+        <p class="rutina-checkin-subtitle">
+          Registra tu sesión acá
+          <span class="word-arrow">abajo <span class="inline-arrow">⬇</span></span>
+          y comparte una foto de tu entreno. Cada registro suma avance y, al completar el ciclo completo de entrenamientos, se activa tu ruleta de beneficios MoveSmart.
+        </p>
+
+        <div class="recompensa-box">
+          <p class="recompensa-title">
+            Cada sesión registrada te acerca a tu premio final.
+          </p>
+
+          <div class="ruleta-wrap">
+            <div class="ruleta-stage">
+              <div class="ruleta-pointer"></div>
+
+              <div class="ruleta-beneficios">
+                <div class="ruleta-label label-1">15% de descuento</div>
+                <div class="ruleta-label label-2">Rutina bonus</div>
+                <div class="ruleta-label label-3">Guía de hábitos</div>
+                <div class="ruleta-label label-4">Guía de movilidad</div>
+                <div class="ruleta-label label-5">Guía de recuperación</div>
+                <div class="ruleta-label label-6">Guía de motivación</div>
+                <div class="ruleta-label label-7">Doble oportunidad</div>
+
+                <div class="ruleta-centro">Ruleta MoveSmart</div>
+              </div>
+
+              <p class="ruleta-note">
+                La ruleta se activa al completar el ciclo completo de entrenamientos.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <form id="checkinForm" class="rutina-checkin-form">
+
+          <div class="checkin-bloque">
+            <p class="checkin-label">¿Terminaste la rutina?</p>
+            <div class="checkin-grid checkin-grid-3">
+              <input type="radio" name="completada" id="full" value="Sí, completa" hidden required>
+              <label for="full" class="checkin-opcion">✅ Sí, completa</label>
+
+              <input type="radio" name="completada" id="partial" value="Sí, parcial" hidden>
+              <label for="partial" class="checkin-opcion">🟡 Sí, parcial</label>
+
+              <input type="radio" name="completada" id="nope" value="No pude terminarla" hidden>
+              <label for="nope" class="checkin-opcion">⚪ No pude</label>
+            </div>
+          </div>
+
+          <div class="checkin-bloque">
+            <p class="checkin-label">¿Cómo te sentiste?</p>
+            <div class="checkin-grid checkin-grid-2">
+              <input type="radio" name="sensacion" id="muybien" value="Muy bien" hidden required>
+              <label for="muybien" class="checkin-opcion">😄 Muy bien</label>
+
+              <input type="radio" name="sensacion" id="bien" value="Bien" hidden>
+              <label for="bien" class="checkin-opcion">🙂 Bien</label>
+
+              <input type="radio" name="sensacion" id="masomenos" value="Más o menos" hidden>
+              <label for="masomenos" class="checkin-opcion">😐 Más o menos</label>
+
+              <input type="radio" name="sensacion" id="mal" value="Mal" hidden>
+              <label for="mal" class="checkin-opcion">😣 Mal</label>
+            </div>
+          </div>
+
+          <div class="checkin-bloque">
+            <label for="esfuerzo" class="checkin-label">Esfuerzo percibido</label>
+            <div class="checkin-range-wrap">
+              <div class="checkin-range-top">
+                <span>Suave</span>
+                <strong><span id="esfuerzoValor">5</span>/10</strong>
+                <span>Muy intenso</span>
+              </div>
+
+              <div class="checkin-slider-hint">
+                <span class="checkin-slider-hand">👉</span>
+                <span>Desliza para marcar tu esfuerzo</span>
+              </div>
+
+              <input type="range" id="esfuerzo" name="esfuerzo" min="1" max="10" value="5" class="checkin-range">
+
+              <div class="checkin-scale">
+                <span>1</span>
+                <span>10</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="checkin-bloque">
+            <p class="checkin-label">¿Tuviste molestia o dolor?</p>
+            <div class="checkin-grid checkin-grid-3">
+              <input type="radio" name="dolor" id="nodolor" value="No" hidden required>
+              <label for="nodolor" class="checkin-opcion">✅ No</label>
+
+              <input type="radio" name="dolor" id="leve" value="Sí, leve" hidden>
+              <label for="leve" class="checkin-opcion">🟡 Sí, leve</label>
+
+              <input type="radio" name="dolor" id="moderado" value="Sí, moderado" hidden>
+              <label for="moderado" class="checkin-opcion">🔴 Sí, moderado</label>
+            </div>
+          </div>
+
+          <div class="checkin-bloque hidden" id="zonaBlock">
+            <p class="checkin-label">¿Dónde sentiste la molestia?</p>
+            <div class="checkin-grid checkin-grid-2">
+              <input type="radio" name="zona" id="pierna" value="Pierna" hidden>
+              <label for="pierna" class="checkin-opcion">Pierna</label>
+
+              <input type="radio" name="zona" id="rodilla" value="Rodilla" hidden>
+              <label for="rodilla" class="checkin-opcion">Rodilla</label>
+
+              <input type="radio" name="zona" id="tobillo" value="Tobillo / pie" hidden>
+              <label for="tobillo" class="checkin-opcion">Tobillo / pie</label>
+
+              <input type="radio" name="zona" id="espalda" value="Espalda" hidden>
+              <label for="espalda" class="checkin-opcion">Espalda</label>
+
+              <input type="radio" name="zona" id="otra" value="Otra" hidden>
+              <label for="otra" class="checkin-opcion">Otra</label>
+            </div>
+          </div>
+
+          <div class="checkin-bloque">
+            <label for="comentario" class="checkin-label">Comentario opcional</label>
+            <textarea
+              id="comentario"
+              name="comentario"
+              class="checkin-textarea"
+              placeholder="Ej: me costó la última serie o sentí una leve molestia en el tobillo..."
+            ></textarea>
+          </div>
+
+          <div class="checkin-bloque">
+            <label class="checkin-label">Comparte una foto de tu entreno</label>
+            <p class="checkin-helper">
+              Sube una foto de tu sesión de hoy para registrar tu avance en el ciclo MoveSmart.
+            </p>
+
+            <input
+              type="file"
+              id="fotoEntreno"
+              name="foto_entreno"
+              accept="image/*"
+              capture="environment"
+              hidden
+            >
+
+            <label for="fotoEntreno" class="camera-upload-btn" id="fotoUploadLabel">
+              <span class="camera-icon">📷</span>
+              <span>Tomar o subir foto</span>
+            </label>
+
+            <p id="fotoNombre" class="foto-nombre hidden"></p>
+
+            <div id="previewFotoWrap" class="preview-foto-wrap hidden">
+              <img id="previewFoto" class="preview-foto-img" alt="Vista previa de la foto subida">
+            </div>
+          </div>
+
+          <input type="hidden" name="cliente" value="Juan Ugalde">
+          <input type="hidden" name="rutina" id="rutinaHidden" value="">
+          <input type="hidden" name="semana" id="semanaCalculada">
+          <input type="hidden" name="fecha" id="fechaActual">
+
+          <button type="submit" class="checkin-boton" id="submitBtn">✅ Registrar mi sesión</button>
+
+          <p id="mensajeCarga" class="checkin-carga hidden">
+            Enviando, espera un momento...
+          </p>
+
+          <p id="mensajeFinal" class="checkin-exito hidden">
+            ¡Gracias! Tu seguimiento fue enviado correctamente.
+          </p>
+
+          <p id="mensajeError" class="checkin-error hidden">
+            Hubo un problema al enviar tu seguimiento.
+          </p>
+
+          <div id="ruletaEstadoBox" class="hidden" style="margin-top: 18px; padding: 18px; border-radius: 18px; background: rgba(255,140,0,0.10); border: 1px solid rgba(255,140,0,0.35); text-align: center;">
+            <p id="ruletaEstadoTexto" style="margin-bottom: 12px; color: #ffe0b2; font-weight: 700;">
+              Puedes girar tu ruleta
+            </p>
+
+            <button type="button" id="girarRuletaBtn" class="checkin-boton" style="max-width: 320px; margin: 0 auto;">
+              🎯 Girar ruleta
+            </button>
+
+            <p id="ruletaPremioTexto" class="checkin-exito hidden" style="margin-top: 12px;"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_UMTK7xMlUfmTPm94khFhKeYUO_anRj7L_ZLNZ6wfqnXazdPzKzIJ7tASvSt8t_4g9Q/exec";
+    const RULETA_URL = "https://script.google.com/macros/s/AKfycbz_gsPg_sDJjx7AbsZ-nP9R-6DTLsVeTWd4hGt3wn77YV3deVDGWXoZJtwUt-71fMZ1kg/exec";
+
+    const esfuerzo = document.getElementById("esfuerzo");
+    const esfuerzoValor = document.getElementById("esfuerzoValor");
+    const fechaActual = document.getElementById("fechaActual");
+    const semanaCalculada = document.getElementById("semanaCalculada");
+    const dolorRadios = document.querySelectorAll('input[name="dolor"]');
+    const zonaBlock = document.getElementById("zonaBlock");
+    const form = document.getElementById("checkinForm");
+    const mensajeFinal = document.getElementById("mensajeFinal");
+    const mensajeError = document.getElementById("mensajeError");
+    const mensajeCarga = document.getElementById("mensajeCarga");
+    const fotoEntreno = document.getElementById("fotoEntreno");
+    const fotoNombre = document.getElementById("fotoNombre");
+    const previewFotoWrap = document.getElementById("previewFotoWrap");
+    const previewFoto = document.getElementById("previewFoto");
+    const submitBtn = document.getElementById("submitBtn");
+    const fotoUploadLabel = document.getElementById("fotoUploadLabel");
+    const rutinaHidden = document.getElementById("rutinaHidden");
+    const ruletaEstadoBox = document.getElementById("ruletaEstadoBox");
+    const ruletaEstadoTexto = document.getElementById("ruletaEstadoTexto");
+    const girarRuletaBtn = document.getElementById("girarRuletaBtn");
+    const ruletaPremioTexto = document.getElementById("ruletaPremioTexto");
+    const ruletaStage = document.querySelector(".ruleta-stage");
+    const ruletaBeneficios = document.querySelector(".ruleta-beneficios");
+
+    let autoRuletaLanzada = false;
+    let ruletaGirando = false;
+    let currentRotation = 0;
+
+    const params = new URLSearchParams(window.location.search);
+    const rutinaParam = params.get("rutina") || "Rutina A";
+    rutinaHidden.value = rutinaParam;
+
+    esfuerzo.addEventListener("input", () => {
+      esfuerzoValor.textContent = esfuerzo.value;
+    });
+
+    function obtenerFechaChile() {
+      return new Intl.DateTimeFormat("sv-SE", {
+        timeZone: "America/Santiago",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      }).format(new Date());
+    }
+
+    function obtenerSemanaPorFecha(fechaStr) {
+      const fecha = new Date(fechaStr + "T00:00:00");
+
+      const s1Inicio = new Date("2026-04-06T00:00:00");
+      const s1Fin = new Date("2026-04-12T23:59:59");
+
+      const s2Inicio = new Date("2026-04-13T00:00:00");
+      const s2Fin = new Date("2026-04-19T23:59:59");
+
+      const s3Inicio = new Date("2026-04-20T00:00:00");
+      const s3Fin = new Date("2026-04-26T23:59:59");
+
+      const s4Inicio = new Date("2026-04-27T00:00:00");
+      const s4Fin = new Date("2026-05-02T23:59:59");
+
+      if (fecha >= s1Inicio && fecha <= s1Fin) return "Semana 1";
+      if (fecha >= s2Inicio && fecha <= s2Fin) return "Semana 2";
+      if (fecha >= s3Inicio && fecha <= s3Fin) return "Semana 3";
+      if (fecha >= s4Inicio && fecha <= s4Fin) return "Semana 4";
+
+      return "Fuera de ciclo";
+    }
+
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+          const img = new Image();
+
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const maxWidth = 1200;
+
+            let width = img.width;
+            let height = img.height;
+
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.8);
+            resolve(compressedBase64);
+          };
+
+          img.onerror = reject;
+          img.src = event.target.result;
+        };
+
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function resetFotoUI() {
+      fotoNombre.textContent = "";
+      fotoNombre.classList.add("hidden");
+
+      previewFoto.src = "";
+      previewFotoWrap.classList.add("hidden");
+
+      fotoUploadLabel.style.borderColor = "rgba(255,140,0,0.55)";
+      fotoUploadLabel.style.background = "rgba(255,255,255,0.05)";
+      fotoUploadLabel.innerHTML = `
+        <span class="camera-icon">📷</span>
+        <span>Tomar o subir foto</span>
+      `;
+    }
+
+    const fechaHoy = obtenerFechaChile();
+    fechaActual.value = fechaHoy;
+    semanaCalculada.value = obtenerSemanaPorFecha(fechaHoy);
+
+    dolorRadios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        if (radio.value === "Sí, leve" || radio.value === "Sí, moderado") {
+          zonaBlock.classList.remove("hidden");
+        } else {
+          zonaBlock.classList.add("hidden");
+          document.querySelectorAll('input[name="zona"]').forEach(input => input.checked = false);
+        }
+      });
+    });
+
+    if (fotoEntreno) {
+      fotoEntreno.addEventListener("change", () => {
+        if (fotoEntreno.files && fotoEntreno.files.length > 0) {
+          const file = fotoEntreno.files[0];
+
+          fotoNombre.textContent = "✅ Foto cargada: " + file.name;
+          fotoNombre.classList.remove("hidden");
+
+          fotoUploadLabel.style.borderColor = "#22c55e";
+          fotoUploadLabel.style.background = "rgba(34, 197, 94, 0.10)";
+          fotoUploadLabel.innerHTML = `
+            <span class="camera-icon">✅</span>
+            <span>Foto seleccionada</span>
+          `;
+
+          const imageUrl = URL.createObjectURL(file);
+          previewFoto.src = imageUrl;
+          previewFotoWrap.classList.remove("hidden");
+
+        } else {
+          resetFotoUI();
+        }
+      });
+    }
+
+    function obtenerAnguloPremio(premio) {
+      const angulos = {
+        "15% de descuento": 64.29,
+        "Rutina bonus": 12.87,
+        "Guía de hábitos": 321.45,
+        "Guía de movilidad": 270.03,
+        "Guía de recuperación": 218.61,
+        "Guía de motivación": 167.19,
+        "Doble oportunidad": 115.77
+      };
+
+      return angulos[premio] ?? 0;
+    }
+
+    function animarRuletaHastaPremio(premio) {
+      if (!ruletaBeneficios) return;
+
+      const anguloPremio = obtenerAnguloPremio(premio);
+      const vueltasExtra = 360 * 6;
+      currentRotation = currentRotation + vueltasExtra + anguloPremio;
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+    }
+
+    async function consultarEstadoRuleta() {
+      try {
+        const cliente = form.cliente.value;
+        const response = await fetch(`${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`);
+        const result = await response.json();
+
+        if (!result.ok) return;
+
+        if (result.yaUsada) {
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.textContent = "🎁 Tu ruleta de este ciclo ya fue utilizada.";
+          girarRuletaBtn.classList.add("hidden");
+          ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio || "Premio asignado"}`;
+          ruletaPremioTexto.classList.remove("hidden");
+
+          if (ruletaStage) {
+            ruletaStage.scrollIntoView({
+              behavior: "smooth",
+              block: "center"
+            });
+          }
+
+          if (result.premio && !autoRuletaLanzada) {
+            autoRuletaLanzada = true;
+            setTimeout(() => {
+              animarRuletaHastaPremio(result.premio);
+            }, 600);
+          }
+          return;
+        }
+
+        if (result.habilitada) {
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.textContent = "🎉 ¡Cumpliste los requisitos! Tu ruleta se activó.";
+          girarRuletaBtn.classList.remove("hidden");
+          ruletaPremioTexto.classList.add("hidden");
+          ruletaPremioTexto.textContent = "";
+
+          if (ruletaStage) {
+            ruletaStage.scrollIntoView({
+              behavior: "smooth",
+              block: "center"
+            });
+          }
+
+          if (!autoRuletaLanzada) {
+            autoRuletaLanzada = true;
+            setTimeout(() => {
+              girarRuleta();
+            }, 1400);
+          }
+        } else {
+          ruletaEstadoBox.classList.add("hidden");
+          girarRuletaBtn.classList.remove("hidden");
+          ruletaPremioTexto.classList.add("hidden");
+          ruletaPremioTexto.textContent = "";
+        }
+      } catch (error) {
+        console.error("Error consultando ruleta:", error);
+      }
+    }
+
+    async function girarRuleta() {
+      if (ruletaGirando) return;
+
+      try {
+        const cliente = form.cliente.value;
+
+        ruletaGirando = true;
+        girarRuletaBtn.disabled = true;
+        girarRuletaBtn.textContent = "Girando...";
+
+        if (ruletaStage) {
+          ruletaStage.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+        }
+
+        const response = await fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
+        const result = await response.json();
+
+        if (result.ok) {
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.textContent = "🎉 Tu ruleta fue girada correctamente";
+
+          animarRuletaHastaPremio(result.premio);
+
+          setTimeout(() => {
+            girarRuletaBtn.classList.add("hidden");
+            ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio}`;
+            ruletaPremioTexto.classList.remove("hidden");
+          }, 5300);
+        } else {
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.textContent = result.message || "Aún no puedes girar la ruleta.";
+        }
+      } catch (error) {
+        console.error("Error al girar ruleta:", error);
+        ruletaEstadoBox.classList.remove("hidden");
+        ruletaEstadoTexto.textContent = "Hubo un problema al girar la ruleta.";
+      } finally {
+        setTimeout(() => {
+          ruletaGirando = false;
+          girarRuletaBtn.disabled = false;
+          girarRuletaBtn.textContent = "🎯 Girar ruleta";
+        }, 5300);
+      }
+    }
+
+    if (girarRuletaBtn) {
+      girarRuletaBtn.addEventListener("click", girarRuleta);
+    }
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      mensajeFinal.classList.add("hidden");
+      mensajeError.classList.add("hidden");
+      mensajeCarga.classList.add("hidden");
+
+      const fechaHoyActualizada = obtenerFechaChile();
+      fechaActual.value = fechaHoyActualizada;
+      semanaCalculada.value = obtenerSemanaPorFecha(fechaHoyActualizada);
+
+      submitBtn.disabled = true;
+      mensajeCarga.classList.remove("hidden");
+
+      try {
+        let fotoBase64 = "";
+        let fotoTipo = "";
+        let fotoNombreArchivo = "";
+
+        if (fotoEntreno.files && fotoEntreno.files.length > 0) {
+          submitBtn.textContent = "Preparando foto...";
+          const file = fotoEntreno.files[0];
+          fotoBase64 = await toBase64(file);
+          fotoTipo = "image/jpeg";
+          fotoNombreArchivo = file.name;
+        }
+
+        submitBtn.textContent = "Enviando, espera un momento...";
+
+        const payload = {
+          fecha: fechaActual.value,
+          semana: semanaCalculada.value,
+          cliente: form.cliente.value,
+          rutina: form.rutina.value,
+          completada: form.completada.value,
+          sensacion: form.sensacion.value,
+          esfuerzo: form.esfuerzo.value,
+          dolor: form.dolor.value,
+          zona: form.zona.value || "",
+          comentario: form.comentario.value || "",
+          fotoBase64: fotoBase64,
+          fotoTipo: fotoTipo,
+          fotoNombre: fotoNombreArchivo
+        };
+
+        submitBtn.textContent = "Guardando registro...";
+
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+          mensajeFinal.classList.remove("hidden");
+          form.reset();
+          esfuerzoValor.textContent = "5";
+          zonaBlock.classList.add("hidden");
+          resetFotoUI();
+
+          const nuevaFecha = obtenerFechaChile();
+          fechaActual.value = nuevaFecha;
+          semanaCalculada.value = obtenerSemanaPorFecha(nuevaFecha);
+
+          await consultarEstadoRuleta();
+        } else {
+          mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
+          mensajeError.classList.remove("hidden");
+        }
+      } catch (error) {
+        mensajeError.textContent = "No se pudo enviar el formulario. Revisa la implementación del Apps Script.";
+        mensajeError.classList.remove("hidden");
+        console.error(error);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "✅ Registrar mi sesión";
+        mensajeCarga.classList.add("hidden");
+      }
+    });
+
+    consultarEstadoRuleta();
+  </script>
+
+</body>
+</html>
