@@ -548,7 +548,55 @@
     }
 
     .hidden {
-      display: none;
+      display: none !important;
+    }
+
+    .ruleta-fullscreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(8, 10, 18, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .ruleta-fullscreen-card {
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      padding: 34px 26px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,140,0,0.18), rgba(24,16,32,0.92));
+      border: 1px solid rgba(255, 180, 92, 0.35);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+    }
+
+    .ruleta-fullscreen-icon {
+      font-size: 3rem;
+      margin-bottom: 14px;
+    }
+
+    .ruleta-fullscreen-title {
+      font-size: clamp(1.7rem, 4vw, 2.7rem);
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .ruleta-fullscreen-subtitle {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 24px;
+    }
+
+    .ruleta-fullscreen-btn {
+      max-width: 320px;
+      margin: 0 auto;
     }
 
     @media (max-width: 768px) {
@@ -620,6 +668,23 @@
         height: 104px;
         font-size: 0.86rem;
         padding: 12px;
+      }
+
+      .ruleta-fullscreen-card {
+        padding: 28px 18px;
+        border-radius: 22px;
+      }
+
+      .ruleta-fullscreen-icon {
+        font-size: 2.4rem;
+      }
+
+      .ruleta-fullscreen-title {
+        font-size: 1.55rem;
+      }
+
+      .ruleta-fullscreen-subtitle {
+        font-size: 0.98rem;
       }
     }
   </style>
@@ -834,6 +899,22 @@
     </div>
   </section>
 
+  <div id="ruletaFullscreen" class="ruleta-fullscreen hidden">
+    <div class="ruleta-fullscreen-card">
+      <div class="ruleta-fullscreen-icon">🎉</div>
+      <h3 class="ruleta-fullscreen-title">
+        Por tu disciplina y constancia has desbloqueado la ruleta MoveSmart
+      </h3>
+      <p class="ruleta-fullscreen-subtitle">
+        Aprieta el botón para girarla y descubrir tu premio.
+      </p>
+
+      <button type="button" id="girarRuletaFullscreenBtn" class="checkin-boton ruleta-fullscreen-btn">
+        🎯 Girar ruleta
+      </button>
+    </div>
+  </div>
+
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_UMTK7xMlUfmTPm94khFhKeYUO_anRj7L_ZLNZ6wfqnXazdPzKzIJ7tASvSt8t_4g9Q/exec";
     const RULETA_URL = "https://script.google.com/macros/s/AKfycbz_gsPg_sDJjx7AbsZ-nP9R-6DTLsVeTWd4hGt3wn77YV3deVDGWXoZJtwUt-71fMZ1kg/exec";
@@ -861,6 +942,8 @@
     const ruletaPremioTexto = document.getElementById("ruletaPremioTexto");
     const ruletaStage = document.querySelector(".ruleta-stage");
     const ruletaBeneficios = document.querySelector(".ruleta-beneficios");
+    const ruletaFullscreen = document.getElementById("ruletaFullscreen");
+    const girarRuletaFullscreenBtn = document.getElementById("girarRuletaFullscreenBtn");
 
     let autoRuletaLanzada = false;
     let ruletaGirando = false;
@@ -1039,6 +1122,10 @@
           ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio || "Premio asignado"}`;
           ruletaPremioTexto.classList.remove("hidden");
 
+          if (ruletaFullscreen) {
+            ruletaFullscreen.classList.add("hidden");
+          }
+
           if (ruletaStage) {
             ruletaStage.scrollIntoView({
               behavior: "smooth",
@@ -1065,18 +1152,20 @@
           ruletaPremioTexto.classList.add("hidden");
           ruletaPremioTexto.textContent = "";
 
-          if (ruletaStage) {
-            ruletaStage.scrollIntoView({
-              behavior: "smooth",
-              block: "center"
-            });
+          if (ruletaFullscreen) {
+            ruletaFullscreen.classList.remove("hidden");
           }
 
+          return;
         } else {
           ruletaEstadoBox.classList.add("hidden");
           girarRuletaBtn.classList.remove("hidden");
           ruletaPremioTexto.classList.add("hidden");
           ruletaPremioTexto.textContent = "";
+
+          if (ruletaFullscreen) {
+            ruletaFullscreen.classList.add("hidden");
+          }
         }
       } catch (error) {
         console.error("Error consultando ruleta:", error);
@@ -1092,6 +1181,11 @@
         ruletaGirando = true;
         girarRuletaBtn.disabled = true;
         girarRuletaBtn.textContent = "Girando...";
+
+        if (girarRuletaFullscreenBtn) {
+          girarRuletaFullscreenBtn.disabled = true;
+          girarRuletaFullscreenBtn.textContent = "Girando...";
+        }
 
         if (ruletaStage) {
           ruletaStage.scrollIntoView({
@@ -1112,6 +1206,10 @@
           animarRuletaHastaPremio(result.premio);
 
           setTimeout(() => {
+            if (ruletaFullscreen) {
+              ruletaFullscreen.classList.add("hidden");
+            }
+
             girarRuletaBtn.classList.add("hidden");
             ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio}`;
             ruletaPremioTexto.classList.remove("hidden");
@@ -1121,6 +1219,10 @@
           ruletaEstadoTexto.innerHTML = `
             <p>${result.message || "Aún no puedes girar la ruleta."}</p>
           `;
+
+          if (ruletaFullscreen) {
+            ruletaFullscreen.classList.add("hidden");
+          }
         }
       } catch (error) {
         console.error("Error al girar ruleta:", error);
@@ -1128,17 +1230,32 @@
         ruletaEstadoTexto.innerHTML = `
           <p>Hubo un problema al girar la ruleta.</p>
         `;
+
+        if (ruletaFullscreen) {
+          ruletaFullscreen.classList.add("hidden");
+        }
       } finally {
         setTimeout(() => {
           ruletaGirando = false;
           girarRuletaBtn.disabled = false;
           girarRuletaBtn.textContent = "🎯 Girar ruleta";
+
+          if (girarRuletaFullscreenBtn) {
+            girarRuletaFullscreenBtn.disabled = false;
+            girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
+          }
         }, 5300);
       }
     }
 
     if (girarRuletaBtn) {
       girarRuletaBtn.addEventListener("click", girarRuleta);
+    }
+
+    if (girarRuletaFullscreenBtn) {
+      girarRuletaFullscreenBtn.addEventListener("click", async () => {
+        await girarRuleta();
+      });
     }
 
     form.addEventListener("submit", async function(e) {
