@@ -602,31 +602,27 @@
         girarRuletaFullscreenBtn.disabled = true;
         girarRuletaFullscreenBtn.textContent = "Girando...";
 
-       ruletaFullscreen.classList.add("hidden");
+        ruletaFullscreen.classList.add("hidden");
 
-// sin scroll suave para que se sienta inmediato
-if (ruletaStage) {
-  ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
-}
+        if (ruletaStage) {
+          ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
+        }
 
-// pequeño giro inmediato mientras llega la respuesta
-currentRotation = currentRotation + 360 * 2;
-ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+        currentRotation = currentRotation + 360 * 2;
+        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
-// pedir premio al script
-const response = await fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
-const result = await response.json();
+        const response = await fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
+        const result = await response.json();
 
-if (result.ok) {
-  // completar el giro real hacia el premio
-  setTimeout(() => {
-    animarRuletaHastaPremio(result.premio);
-  }, 120);
+        if (result.ok) {
+          setTimeout(() => {
+            animarRuletaHastaPremio(result.premio);
+          }, 120);
 
-  setTimeout(() => {
-    mostrarPremio(result.premio);
-  }, 6020);
-} else {
+          setTimeout(() => {
+            mostrarPremio(result.premio);
+          }, 6020);
+        } else {
           mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
           mensajeError.classList.remove("hidden");
         }
