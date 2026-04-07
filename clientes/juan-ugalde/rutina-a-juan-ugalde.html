@@ -255,9 +255,7 @@
       -webkit-backdrop-filter:blur(8px);
     }
 
-    .video-modal.active{
-      display:flex;
-    }
+    .video-modal.active{ display:flex; }
 
     .video-box{
       width:min(900px, 100%);
@@ -278,9 +276,7 @@
       border-bottom:1px solid rgba(255,255,255,.08);
     }
 
-    .video-box-head strong{
-      font-size:1rem;
-    }
+    .video-box-head strong{ font-size:1rem; }
 
     .close-video{
       border:none;
@@ -330,54 +326,6 @@
       -webkit-backdrop-filter:blur(8px);
     }
 
-    .finish-session-wrap{
-      margin-top:22px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:14px;
-      text-align:center;
-    }
-
-    .finish-session-text{
-      max-width:620px;
-      color:rgba(255,255,255,.82);
-      line-height:1.6;
-      font-size:1rem;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      padding:14px 18px;
-      border-radius:18px;
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
-    }
-
-    .finish-session-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      min-width:280px;
-      padding:16px 22px;
-      border-radius:18px;
-      text-decoration:none;
-      font-weight:800;
-      font-size:1rem;
-      color:#fff;
-      background:linear-gradient(135deg, #ff8c00, #ff5a1f);
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow:0 12px 32px rgba(255,90,31,.24);
-      transition:transform .2s ease, opacity .2s ease, box-shadow .2s ease;
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
-    }
-
-    .finish-session-btn:hover{
-      transform:translateY(-1px);
-      opacity:.96;
-      box-shadow:0 16px 36px rgba(255,90,31,.30);
-    }
-
     @media (max-width: 900px){
       .quick-stats{
         grid-template-columns:repeat(2,1fr);
@@ -409,11 +357,6 @@
         flex-direction:column;
         align-items:flex-start;
       }
-
-      .finish-session-btn,
-      .finish-session-text{
-        width:100%;
-      }
     }
   </style>
 </head>
@@ -426,29 +369,29 @@
     </div>
 
     <section class="hero">
-      <div class="eyebrow">Rutina personalizada · Abril</div>
-      <h1>Rutina A · Rehabilitación de rodilla</h1>
+      <div class="eyebrow">Rutina personalizada</div>
+      <h1>Rutina A · Full Body Base</h1>
       <p class="subtitle">
-        Rutina enfocada en mejorar el control de la rodilla, fortalecer la musculatura de apoyo
-        y recuperar confianza al moverse. La idea es terminar sintiéndote mejor o igual, no peor.
+        Aprendizaje técnico, fuerza general básica y activación. Una rutina clara,
+        simple y amigable para seguir desde el celular o computador.
       </p>
 
       <div class="quick-stats">
         <div class="stat">
           <small>Duración</small>
-          <strong>20–25 min</strong>
+          <strong>20–30 min</strong>
         </div>
         <div class="stat">
           <small>Intensidad</small>
-          <strong>RPE 3–5</strong>
+          <strong>RPE 4–6</strong>
         </div>
         <div class="stat">
           <small>Material</small>
-          <strong>Banda, bici o caminata</strong>
+          <strong>Silla, banda y mancuernas</strong>
         </div>
         <div class="stat">
           <small>Objetivo</small>
-          <strong>Control, estabilidad y tolerancia de carga</strong>
+          <strong>Fuerza base y control del movimiento</strong>
         </div>
       </div>
     </section>
@@ -456,76 +399,38 @@
     <section class="section">
       <div class="section-head">
         <h2>Calentamiento</h2>
-        <p>Empieza suave para preparar la articulación y entrar mejor a la sesión.</p>
+        <p>Empieza suave para preparar el cuerpo y entrar mejor a la sesión.</p>
       </div>
       <div class="section-body">
         <div class="simple-card">
           <strong>Bicicleta estática o caminata suave</strong><br>
-          5–8 minutos · RPE 3
+          5 minutos
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="section-head">
-        <h2>Bloque principal</h2>
-        <p>Trabajo progresivo para rodilla, cadera y estabilidad, con foco en control y tolerancia.</p>
+        <h2>Activación</h2>
+        <p>Ejercicios iniciales para activar glúteos, core y control corporal.</p>
       </div>
       <div class="section-body">
 
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Extensión de rodilla sentado</div>
-            <p class="exercise-desc">
-              Extiende la rodilla con control, pausa un segundo arriba y baja lento. Evita hacerlo con tirón.
-            </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/shorts/_CYERLDR4z0">
-              ▶ Ver video
-            </button>
-          </div>
-          <div class="exercise-meta">
-            <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>8–10 por lado</div>
-            <div class="pill"><span>Descanso</span>30–40 seg</div>
-            <div class="pill"><span>Carga</span>Banda suave</div>
-            <div class="pill"><span>RPE</span>3–4</div>
-          </div>
-        </article>
-
-        <article class="exercise-card">
-          <div>
-            <div class="exercise-name">Terminal Knee Extension con banda</div>
-            <p class="exercise-desc">
-              Coloca la banda detrás de la rodilla, flexiona apenas y luego extiende apretando cuádriceps.
-              Busca control, no velocidad.
-            </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=bpynZ0dqAmI&t=6s">
-              ▶ Ver video
-            </button>
-          </div>
-          <div class="exercise-meta">
-            <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>10–12 por lado</div>
-            <div class="pill"><span>Descanso</span>30–40 seg</div>
-            <div class="pill"><span>Carga</span>Banda suave</div>
-            <div class="pill"><span>RPE</span>3–4</div>
-          </div>
-        </article>
-
-        <article class="exercise-card">
-          <div>
             <div class="exercise-name">Puente de glúteos</div>
             <p class="exercise-desc">
-              Eleva la cadera de forma controlada, empujando con los pies y activando glúteos. Mantén el movimiento simple y cómodo.
+              Busca una ejecución controlada, activando glúteos sin apurar el movimiento.
             </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=FfXq0AUz_Xw">
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/shorts/FfXq0AUz_Xw">
               ▶ Ver video
             </button>
           </div>
+
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>8–10</div>
-            <div class="pill"><span>Descanso</span>45 seg</div>
+            <div class="pill"><span>Reps</span>10</div>
+            <div class="pill"><span>Descanso</span>30 seg</div>
             <div class="pill"><span>Carga</span>Peso corporal</div>
             <div class="pill"><span>RPE</span>4</div>
           </div>
@@ -533,39 +438,19 @@
 
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Caminata lateral con banda</div>
+            <div class="exercise-name">Dead bug</div>
             <p class="exercise-desc">
-              Da pasos cortos manteniendo tensión constante en la banda. Evita que las rodillas colapsen hacia adentro.
+              Mantén abdomen activo y controla la zona lumbar durante todo el ejercicio.
             </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=9AHnDT4mqrg">
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=XkTtXA3-IqU">
               ▶ Ver video
             </button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>6–8 pasos por lado</div>
-            <div class="pill"><span>Descanso</span>45–60 seg</div>
-            <div class="pill"><span>Carga</span>Minibanda suave</div>
-            <div class="pill"><span>RPE</span>4–5</div>
-          </div>
-        </article>
-
-        <article class="exercise-card">
-          <div>
-            <div class="exercise-name">Peso muerto rumano con banda</div>
-            <p class="exercise-desc">
-              Lleva la carga hacia la cadera más que hacia la rodilla. Mantén espalda larga, movimiento corto y bien controlado.
-            </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=wmtbtxQcPLc">
-              ▶ Ver video
-            </button>
-          </div>
-          <div class="exercise-meta">
-            <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>8</div>
-            <div class="pill"><span>Descanso</span>60 seg</div>
-            <div class="pill"><span>Carga</span>Banda liviana</div>
-            <div class="pill"><span>RPE</span>4</div>
+            <div class="pill"><span>Reps</span>6</div>
+            <div class="pill"><span>Descanso</span>30 seg</div>
+            <div class="pill"><span>Carga</span>Peso corporal</div>
           </div>
         </article>
 
@@ -574,50 +459,127 @@
 
     <section class="section">
       <div class="section-head">
-        <h2>Estabilidad</h2>
-        <p>Un bloque corto para reforzar control y confianza al cargar la pierna.</p>
+        <h2>Bloque principal</h2>
+        <p>La parte central de la rutina, enfocada en fuerza base y técnica.</p>
       </div>
       <div class="section-body">
+
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Equilibrio con apoyo</div>
-            <p class="exercise-desc">
-              Mantén apoyo en una pared o silla si lo necesitas. La idea es buscar control, no dificultad máxima.
-            </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=5OKF9DJcP6M">
+            <div class="exercise-name">Sentarse y pararse desde silla</div>
+            <p class="exercise-desc">Sube y baja con control, apoyando bien los pies.</p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=EyUOWdpinSo">
               ▶ Ver video
             </button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>20–30 seg por lado</div>
-            <div class="pill"><span>Descanso</span>30 seg</div>
-            <div class="pill"><span>Carga</span>Apoyo asistido</div>
-            <div class="pill"><span>RPE</span>3–4</div>
+            <div class="pill"><span>Reps</span>10</div>
+            <div class="pill"><span>Descanso</span>60 seg</div>
+            <div class="pill"><span>Carga</span>Peso corporal</div>
+            <div class="pill"><span>RPE</span>5</div>
           </div>
         </article>
+
+        <article class="exercise-card">
+          <div>
+            <div class="exercise-name">Remo con banda elástica</div>
+            <p class="exercise-desc">Lleva los codos hacia atrás con postura estable.</p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=TkftBHOyPYI">
+              ▶ Ver video
+            </button>
+          </div>
+          <div class="exercise-meta">
+            <div class="pill"><span>Series</span>2</div>
+            <div class="pill"><span>Reps</span>10</div>
+            <div class="pill"><span>Descanso</span>60 seg</div>
+            <div class="pill"><span>Carga</span>Banda suave-moderada</div>
+            <div class="pill"><span>RPE</span>5</div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <div>
+            <div class="exercise-name">Press de pecho con mancuernas</div>
+            <p class="exercise-desc">Movimiento estable, controlado y sin apurar la bajada.</p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=y9XAsTx3XxQ">
+              ▶ Ver video
+            </button>
+          </div>
+          <div class="exercise-meta">
+            <div class="pill"><span>Series</span>2</div>
+            <div class="pill"><span>Reps</span>10</div>
+            <div class="pill"><span>Descanso</span>60 seg</div>
+            <div class="pill"><span>Carga</span>2–4 kg c/u</div>
+            <div class="pill"><span>RPE</span>5</div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <div>
+            <div class="exercise-name">Peso muerto rumano con mancuernas livianas</div>
+            <p class="exercise-desc">Mantén espalda neutra y prioriza técnica antes que carga.</p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=x7W2BOKWWKs">
+              ▶ Ver video
+            </button>
+          </div>
+          <div class="exercise-meta">
+            <div class="pill"><span>Series</span>2</div>
+            <div class="pill"><span>Reps</span>10</div>
+            <div class="pill"><span>Descanso</span>60 seg</div>
+            <div class="pill"><span>Carga</span>4–6 kg c/u</div>
+            <div class="pill"><span>RPE</span>5</div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <div>
+            <div class="exercise-name">Caminata del granjero estática o marchando con mancuernas livianas</div>
+            <p class="exercise-desc">Mantén espalda neutra y prioriza técnica antes que carga.</p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/shorts/RPPlJ-6kT-U">
+              ▶ Ver video
+            </button>
+          </div>
+          <div class="exercise-meta">
+            <div class="pill"><span>Series</span>2</div>
+            <div class="pill"><span>Reps</span>20-30 seg</div>
+            <div class="pill"><span>Descanso</span>60 seg</div>
+            <div class="pill"><span>Carga</span>Mancuernas 4–6 kg cada una/u</div>
+            <div class="pill"><span>RPE</span>5</div>
+          </div>
+        </article>
+
       </div>
     </section>
 
     <section class="section">
       <div class="section-head">
-        <h2>Vuelta a la calma</h2>
-        <p>Cierra la sesión bajando intensidad y dejando la articulación tranquila.</p>
+        <h2>Bloque final</h2>
+        <p>Cierre suave de la sesión para bajar pulsaciones.</p>
       </div>
       <div class="section-body">
         <div class="simple-card">
-          <strong>Bicicleta o caminata suave</strong><br>
-          3–5 minutos · RPE 2–3
+          <strong>Caminata suave o bicicleta</strong><br>
+          3–5 minutos
         </div>
+      </div>
+    </section>
+        <section class="section">
+      <div class="section-head">
+        <h2>Estiramientos / vuelta a la calma</h2>
+        <p>Opcional al final de la sesión para soltar musculatura y favorecer la recuperación.</p>
+      </div>
+      <div class="section-body">
 
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Estiramiento de cuádriceps</div>
-            <p class="exercise-desc">
-              Busca una tensión suave en la parte frontal del muslo sin arquear la espalda ni perder equilibrio.
-              Mantén el abdomen activo y sostén la posición con comodidad.
-            </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=boJBuKVUwG0">
+            <div class="exercise-name">Estiramiento de glúteos</div>
+            <p class="exercise-desc">Mantén una tensión suave, sin rebotes ni dolor.</p>
+            <button
+              class="video-btn open-video"
+              type="button"
+              data-video="https://www.youtube.com/watch?v=bpynZ0dqAmI"
+            >
               ▶ Ver video
             </button>
           </div>
@@ -633,11 +595,12 @@
         <article class="exercise-card">
           <div>
             <div class="exercise-name">Estiramiento de isquiotibiales</div>
-            <p class="exercise-desc">
-              Inclínate hasta sentir una tensión moderada detrás del muslo, manteniendo la espalda larga y sin forzar.
-              Respira profundo y evita los rebotes.
-            </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/shorts/uXF9niUANJ4">
+            <p class="exercise-desc">Respira profundo y busca relajación progresiva del músculo.</p>
+            <button
+              class="video-btn open-video"
+              type="button"
+              data-video="https://www.youtube.com/shorts/uXF9niUANJ4"
+            >
               ▶ Ver video
             </button>
           </div>
@@ -652,12 +615,13 @@
 
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Estiramiento de pantorrilla</div>
-            <p class="exercise-desc">
-              Apoya las manos en la pared y lleva una pierna atrás para sentir tensión suave en la pantorrilla.
-              Mantén el talón apoyado y evita compensar con el tronco.
-            </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=TyZAmDcD6mM">
+            <div class="exercise-name">Estiramiento flexor de cadera</div>
+            <p class="exercise-desc">Mantén pelvis neutra y evita arquear demasiado la espalda.</p>
+            <button
+              class="video-btn open-video"
+              type="button"
+              data-video="https://www.youtube.com/watch?v=8xZlzcMAtVQ"
+            >
               ▶ Ver video
             </button>
           </div>
@@ -670,17 +634,34 @@
           </div>
         </article>
 
-        <div class="finish-session-wrap">
-          <p class="finish-session-text">
-            Cuando termines esta sesión, presiona el botón de abajo para registrar cómo te fue.
-          </p>
+        <article class="exercise-card">
+          <div>
+            <div class="exercise-name">Estiramiento de pecho / hombros</div>
+            <p class="exercise-desc">Abre el pecho con suavidad y mantén respiración tranquila.</p>
+            <button
+              class="video-btn open-video"
+              type="button"
+              data-video="https://www.youtube.com/watch?v=TufwPKlp31w"
+            >
+              ▶ Ver video
+            </button>
+          </div>
+          <div class="exercise-meta">
+            <div class="pill"><span>Series</span>2</div>
+            <div class="pill"><span>Reps</span>20–25 seg por lado</div>
+            <div class="pill"><span>Descanso</span>10 seg</div>
+            <div class="pill"><span>Carga</span>Peso corporal</div>
+            <div class="pill"><span>RPE</span>2</div>
+          </div>
+        </article>
 
-          <a href="registro de sesion.html?rutina=Rutina%20A" class="finish-session-btn">
-            ✅ Finalicé mi sesión
-          </a>
-        </div>
       </div>
     </section>
+
+    <div class="note">
+      <strong>Tip MoveSmart:</strong> prioriza la calidad del movimiento. Si algo molesta,
+      ajusta rango, carga o repeticiones.
+    </div>
 
   </div>
 
@@ -688,16 +669,10 @@
     <div class="video-box">
       <div class="video-box-head">
         <strong id="videoTitle">Video de ejercicio</strong>
-        <button class="close-video" id="closeVideo" type="button">Cerrar ✕</button>
+        <button class="close-video" type="button" id="closeVideo">Cerrar ✕</button>
       </div>
       <div class="video-frame-wrap">
-        <iframe
-          id="videoFrame"
-          src=""
-          title="Video de ejercicio"
-          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-          allowfullscreen>
-        </iframe>
+        <iframe id="videoFrame" src="" title="Video de ejercicio" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -725,14 +700,13 @@
             videoId = parsed.pathname.replace('/', '').trim();
           } else if (host === 'youtube.com' || host === 'm.youtube.com') {
             if (parsed.pathname.startsWith('/shorts/')) {
-              videoId = parsed.pathname.split('/shorts/')[1]?.split('/')[0] || '';
+              videoId = parsed.pathname.split('/shorts/')[1].split('/')[0];
             } else if (parsed.pathname === '/watch') {
               videoId = parsed.searchParams.get('v') || '';
             }
           }
 
           if (!videoId) return null;
-
           return 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&mute=1&loop=1&playlist=' + videoId + '&rel=0&playsinline=1';
         } catch (err) {
           return null;
@@ -743,18 +717,16 @@
         videoTitle.textContent = title || 'Video de ejercicio';
         videoFrame.src = url;
         videoModal.classList.add('active');
-        videoModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
       }
 
       function hideVideo() {
         videoModal.classList.remove('active');
-        videoModal.setAttribute('aria-hidden', 'true');
         videoFrame.src = '';
         document.body.style.overflow = '';
       }
 
-      document.querySelectorAll('.video-btn, .open-video').forEach(function (button) {
+      document.querySelectorAll('.video-btn').forEach(function (button) {
         button.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
@@ -763,7 +735,9 @@
           const nameEl = card ? card.querySelector('.exercise-name') : null;
           const title = nameEl ? nameEl.textContent.trim() : 'Video de ejercicio';
 
-          const rawUrl = button.getAttribute('data-video');
+          const dataVideo = button.getAttribute('data-video');
+          const hrefVideo = button.getAttribute('href');
+          const rawUrl = dataVideo || hrefVideo;
           const embedUrl = toEmbedUrl(rawUrl);
 
           if (embedUrl) {
@@ -774,15 +748,11 @@
         });
       });
 
-      if (closeVideo) {
-        closeVideo.addEventListener('click', hideVideo);
-      }
+      if (closeVideo) closeVideo.addEventListener('click', hideVideo);
 
       if (videoModal) {
         videoModal.addEventListener('click', function (e) {
-          if (e.target === videoModal) {
-            hideVideo();
-          }
+          if (e.target === videoModal) hideVideo();
         });
       }
 
@@ -793,5 +763,6 @@
       });
     })();
   </script>
+
 </body>
 </html>
