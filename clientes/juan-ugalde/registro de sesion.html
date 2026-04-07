@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -95,7 +96,7 @@
           rgba(255,120,0,0.72) 257.10deg 308.52deg,
           rgba(255,177,79,0.88) 308.52deg 360deg
         );
-      transition: transform 3.2s cubic-bezier(0.12, 0.75, 0.15, 1);
+      transition: transform 5.8s cubic-bezier(0.12, 0.75, 0.15, 1);
       will-change: transform;
     }
     .ruleta-beneficios::before {
@@ -555,7 +556,7 @@
     function animarRuletaHastaPremio(premio) {
       if (!ruletaBeneficios) return;
       const anguloPremio = obtenerAnguloPremio(premio);
-      const vueltasExtra = 360 * 4;
+      const vueltasExtra = 360 * 7;
       currentRotation = currentRotation + vueltasExtra + anguloPremio;
       ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
     }
@@ -616,7 +617,7 @@
 
           setTimeout(() => {
             mostrarPremio(result.premio);
-          }, 3300);
+          }, 5900);
         } else {
           mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
           mensajeError.classList.remove("hidden");
@@ -630,7 +631,7 @@
           ruletaGirando = false;
           girarRuletaFullscreenBtn.disabled = false;
           girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-        }, 3400);
+        }, 6000);
       }
     }
 
