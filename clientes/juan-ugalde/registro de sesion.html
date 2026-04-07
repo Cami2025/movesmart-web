@@ -547,67 +547,6 @@
       font-size: 0.95rem;
     }
 
-
-    .ruleta-desbloqueo-titulo {
-      margin-bottom: 10px;
-      font-size: clamp(1.5rem, 3.8vw, 2.5rem);
-      line-height: 1.15;
-      font-weight: 900;
-      color: #fff3d6;
-      text-align: center;
-      text-shadow: 0 8px 24px rgba(0,0,0,0.28);
-    }
-
-    .ruleta-desbloqueo-subtitulo {
-      margin-bottom: 16px;
-      font-size: 1.02rem;
-      line-height: 1.65;
-      color: rgba(255,255,255,0.88);
-      text-align: center;
-    }
-
-    .ruleta-cta-aviso {
-      margin-top: 14px;
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #ffe66d;
-      text-align: center;
-      letter-spacing: 0.01em;
-      animation: pulsoAviso 1.2s ease-in-out infinite;
-    }
-
-    .ruleta-premio-grande {
-      margin-top: 16px;
-      padding: 18px 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.14);
-      text-align: center;
-    }
-
-    .ruleta-premio-label {
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #ffd59c;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .ruleta-premio-valor {
-      font-size: clamp(1.5rem, 4vw, 2.4rem);
-      line-height: 1.15;
-      font-weight: 900;
-      color: #ffffff;
-      text-shadow: 0 8px 24px rgba(0,0,0,0.24);
-    }
-
-    @keyframes pulsoAviso {
-      0% { transform: scale(1); opacity: 0.92; }
-      50% { transform: scale(1.03); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.92; }
-    }
-
     .hidden {
       display: none;
     }
@@ -879,27 +818,16 @@
             Hubo un problema al enviar tu seguimiento.
           </p>
 
-          <div id="ruletaEstadoBox" class="hidden" style="margin-top: 18px; padding: 22px 18px; border-radius: 24px; background: rgba(255,140,0,0.12); border: 1px solid rgba(255,140,0,0.35); text-align: center; box-shadow: 0 12px 30px rgba(255,140,0,0.12);">
-            <p id="ruletaEstadoTitulo" class="ruleta-desbloqueo-titulo">
-              Por tu disciplina y constancia desbloqueaste la ruleta
-            </p>
+          <div id="ruletaEstadoBox" class="hidden" style="margin-top: 18px; padding: 18px; border-radius: 18px; background: rgba(255,140,0,0.10); border: 1px solid rgba(255,140,0,0.35); text-align: center;">
+            <div id="ruletaEstadoTexto" style="margin-bottom: 12px; color: #ffe0b2; font-weight: 700; line-height: 1.5;">
+              <p>Puedes girar tu ruleta</p>
+            </div>
 
-            <p id="ruletaEstadoTexto" class="ruleta-desbloqueo-subtitulo">
-              Aprieta el botón y gira tu ruleta MoveSmart.
-            </p>
-
-            <button type="button" id="girarRuletaBtn" class="checkin-boton" style="max-width: 340px; margin: 0 auto;">
-              🎯 Aprieta aquí para girar tu ruleta
+            <button type="button" id="girarRuletaBtn" class="checkin-boton" style="max-width: 320px; margin: 0 auto;">
+              🎯 Girar ruleta
             </button>
 
-            <p id="ruletaCtaAviso" class="ruleta-cta-aviso hidden">
-              👆 Aprieta el botón para comenzar
-            </p>
-
-            <div id="ruletaPremioWrap" class="ruleta-premio-grande hidden">
-              <p class="ruleta-premio-label">Tu premio es</p>
-              <p id="ruletaPremioValor" class="ruleta-premio-valor"></p>
-            </div>
+            <p id="ruletaPremioTexto" class="checkin-exito hidden" style="margin-top: 12px;"></p>
           </div>
         </form>
       </div>
@@ -928,15 +856,13 @@
     const fotoUploadLabel = document.getElementById("fotoUploadLabel");
     const rutinaHidden = document.getElementById("rutinaHidden");
     const ruletaEstadoBox = document.getElementById("ruletaEstadoBox");
-    const ruletaEstadoTitulo = document.getElementById("ruletaEstadoTitulo");
     const ruletaEstadoTexto = document.getElementById("ruletaEstadoTexto");
     const girarRuletaBtn = document.getElementById("girarRuletaBtn");
-    const ruletaCtaAviso = document.getElementById("ruletaCtaAviso");
-    const ruletaPremioWrap = document.getElementById("ruletaPremioWrap");
-    const ruletaPremioValor = document.getElementById("ruletaPremioValor");
+    const ruletaPremioTexto = document.getElementById("ruletaPremioTexto");
     const ruletaStage = document.querySelector(".ruleta-stage");
     const ruletaBeneficios = document.querySelector(".ruleta-beneficios");
 
+    let autoRuletaLanzada = false;
     let ruletaGirando = false;
     let currentRotation = 0;
 
@@ -1083,6 +1009,7 @@
         "Guía de motivación": 167.19,
         "Doble oportunidad": 115.77
       };
+
       return angulos[premio] ?? 0;
     }
 
@@ -1105,12 +1032,12 @@
 
         if (result.yaUsada) {
           ruletaEstadoBox.classList.remove("hidden");
-          ruletaEstadoTitulo.textContent = "Tu ruleta ya fue utilizada";
-          ruletaEstadoTexto.textContent = "Ya tienes un premio asignado en este ciclo.";
+          ruletaEstadoTexto.innerHTML = `
+            <p>🎁 Tu ruleta de este ciclo ya fue utilizada.</p>
+          `;
           girarRuletaBtn.classList.add("hidden");
-          ruletaCtaAviso.classList.add("hidden");
-          ruletaPremioValor.textContent = result.premio || "Premio asignado";
-          ruletaPremioWrap.classList.remove("hidden");
+          ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio || "Premio asignado"}`;
+          ruletaPremioTexto.classList.remove("hidden");
 
           if (ruletaStage) {
             ruletaStage.scrollIntoView({
@@ -1119,7 +1046,8 @@
             });
           }
 
-          if (result.premio) {
+          if (result.premio && !autoRuletaLanzada) {
+            autoRuletaLanzada = true;
             setTimeout(() => {
               animarRuletaHastaPremio(result.premio);
             }, 600);
@@ -1129,12 +1057,13 @@
 
         if (result.habilitada) {
           ruletaEstadoBox.classList.remove("hidden");
-          ruletaEstadoTitulo.textContent = "Por tu disciplina y constancia desbloqueaste la ruleta";
-          ruletaEstadoTexto.textContent = "Aprieta el botón y gira tu ruleta MoveSmart.";
+          ruletaEstadoTexto.innerHTML = `
+            <p>🎉 Por tu disciplina y constancia has desbloqueado la ruleta MoveSmart.</p>
+            <p style="margin-top: 8px; font-weight: 600; color: #fff3cd;">Aprieta para girarla.</p>
+          `;
           girarRuletaBtn.classList.remove("hidden");
-          ruletaCtaAviso.classList.remove("hidden");
-          ruletaPremioWrap.classList.add("hidden");
-          ruletaPremioValor.textContent = "";
+          ruletaPremioTexto.classList.add("hidden");
+          ruletaPremioTexto.textContent = "";
 
           if (ruletaStage) {
             ruletaStage.scrollIntoView({
@@ -1142,11 +1071,12 @@
               block: "center"
             });
           }
+
         } else {
           ruletaEstadoBox.classList.add("hidden");
-          ruletaCtaAviso.classList.add("hidden");
-          ruletaPremioWrap.classList.add("hidden");
-          ruletaPremioValor.textContent = "";
+          girarRuletaBtn.classList.remove("hidden");
+          ruletaPremioTexto.classList.add("hidden");
+          ruletaPremioTexto.textContent = "";
         }
       } catch (error) {
         console.error("Error consultando ruleta:", error);
@@ -1162,9 +1092,6 @@
         ruletaGirando = true;
         girarRuletaBtn.disabled = true;
         girarRuletaBtn.textContent = "Girando...";
-        ruletaEstadoTitulo.textContent = "¡Tu ruleta ya está girando!";
-        ruletaEstadoTexto.textContent = "Espera a ver qué premio te tocó.";
-        ruletaCtaAviso.classList.add("hidden");
 
         if (ruletaStage) {
           ruletaStage.scrollIntoView({
@@ -1177,34 +1104,35 @@
         const result = await response.json();
 
         if (result.ok) {
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.innerHTML = `
+            <p>🎉 Tu ruleta fue girada correctamente.</p>
+          `;
+
           animarRuletaHastaPremio(result.premio);
 
           setTimeout(() => {
             girarRuletaBtn.classList.add("hidden");
-            ruletaPremioValor.textContent = result.premio;
-            ruletaPremioWrap.classList.remove("hidden");
+            ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio}`;
+            ruletaPremioTexto.classList.remove("hidden");
           }, 5300);
         } else {
-          ruletaEstadoTitulo.textContent = "Todavía no se puede girar la ruleta";
-          ruletaEstadoTexto.textContent = result.message || "Aún no puedes girar la ruleta.";
-          girarRuletaBtn.disabled = false;
-          girarRuletaBtn.textContent = "🎯 Aprieta aquí para girar tu ruleta";
-          ruletaGirando = false;
+          ruletaEstadoBox.classList.remove("hidden");
+          ruletaEstadoTexto.innerHTML = `
+            <p>${result.message || "Aún no puedes girar la ruleta."}</p>
+          `;
         }
       } catch (error) {
         console.error("Error al girar ruleta:", error);
-        ruletaEstadoTitulo.textContent = "Hubo un problema";
-        ruletaEstadoTexto.textContent = "No se pudo girar la ruleta en este momento.";
-        girarRuletaBtn.disabled = false;
-        girarRuletaBtn.textContent = "🎯 Aprieta aquí para girar tu ruleta";
-        ruletaGirando = false;
+        ruletaEstadoBox.classList.remove("hidden");
+        ruletaEstadoTexto.innerHTML = `
+          <p>Hubo un problema al girar la ruleta.</p>
+        `;
       } finally {
         setTimeout(() => {
-          if (ruletaGirando) {
-            ruletaGirando = false;
-            girarRuletaBtn.disabled = false;
-            girarRuletaBtn.textContent = "🎯 Aprieta aquí para girar tu ruleta";
-          }
+          ruletaGirando = false;
+          girarRuletaBtn.disabled = false;
+          girarRuletaBtn.textContent = "🎯 Girar ruleta";
         }, 5300);
       }
     }
@@ -1296,6 +1224,8 @@
         mensajeCarga.classList.add("hidden");
       }
     });
+
+    consultarEstadoRuleta();
   </script>
 
 </body>
