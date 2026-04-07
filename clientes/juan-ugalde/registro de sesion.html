@@ -4,47 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Check-in rutina | MoveSmart</title>
-
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
         linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
         url('fondo-preview-rutina.png') center center / cover no-repeat fixed;
-      color: #ffffff;
+      color: #fff;
     }
-
     .rutina-checkin-final {
-      position: relative;
-      min-height: 100vh;
-      padding: 80px 20px;
-      background: transparent;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative; min-height: 100vh; padding: 80px 20px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
     }
-
     .rutina-checkin-overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(180deg, rgba(8,10,18,.46) 0%, rgba(8,10,18,.78) 100%);
       z-index: 1;
     }
-
-    .rutina-checkin-contenido {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 860px;
-    }
-
+    .rutina-checkin-contenido { position: relative; z-index: 2; width: 100%; max-width: 860px; }
     .rutina-checkin-card {
       background: rgba(24,16,32,.58);
       border: 1px solid rgba(255,255,255,0.08);
@@ -54,158 +32,58 @@
       padding: 34px 28px;
       box-shadow: 0 24px 60px rgba(0,0,0,0.35);
     }
-
-    .top-actions {
-      margin-bottom: 18px;
-    }
-
+    .top-actions { margin-bottom: 18px; }
     .back-access-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 16px;
-      border-radius: 14px;
-      text-decoration: none;
-      color: #ffffff;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.10);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 16px; border-radius: 14px; text-decoration: none; color: #fff;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.10);
       font-weight: 700;
-      transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
     }
-
-    .back-access-btn:hover {
-      transform: translateY(-1px);
-      opacity: 0.96;
-      border-color: rgba(255,140,0,0.65);
-    }
-
     .rutina-checkin-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.08);
-      font-size: 0.82rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #ffb27f;
-      font-weight: 700;
+      display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;
+      padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.08); font-size: .82rem; letter-spacing: .08em;
+      text-transform: uppercase; color: #ffb27f; font-weight: 700;
     }
-
     .rutina-checkin-title {
-      margin-bottom: 10px;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.02;
-      letter-spacing: -.04em;
-      color: #ffffff;
+      margin-bottom: 10px; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.02;
+      letter-spacing: -.04em; color: #fff;
     }
-
     .rutina-checkin-subtitle {
-      margin-bottom: 22px;
-      color: rgba(255,255,255,0.78);
-      font-size: 1rem;
-      line-height: 1.7;
+      margin-bottom: 22px; color: rgba(255,255,255,0.78); font-size: 1rem; line-height: 1.7;
       max-width: 720px;
     }
-
-    .word-arrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
+    .word-arrow { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font-weight: 800; }
     .inline-arrow {
-      display: inline-block;
-      color: #ff3b30;
-      font-size: 1.45rem;
-      font-weight: 900;
-      line-height: 1;
-      transform-origin: center;
+      display: inline-block; color: #ff3b30; font-size: 1.45rem; font-weight: 900;
       animation: flechaInline 1s ease-in-out infinite;
-      text-shadow:
-        0 0 10px rgba(255, 59, 48, 0.55),
-        0 0 22px rgba(255, 59, 48, 0.25);
-      -webkit-text-stroke: 0.4px rgba(255,255,255,0.08);
     }
-
     @keyframes flechaInline {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0.82;
-      }
-      50% {
-        transform: translateY(6px) scale(1.08);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(0) scale(1);
-        opacity: 0.82;
-      }
+      0% { transform: translateY(0) scale(1); opacity: .82; }
+      50% { transform: translateY(6px) scale(1.08); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: .82; }
     }
-
     .recompensa-box {
-      margin-bottom: 34px;
-      padding: 24px 18px 30px;
-      border-radius: 24px;
-      background: rgba(255, 221, 87, 0.10);
-      border: 1px solid rgba(255, 221, 87, 0.30);
+      margin-bottom: 34px; padding: 24px 18px 30px; border-radius: 24px;
+      background: rgba(255, 221, 87, 0.10); border: 1px solid rgba(255, 221, 87, 0.30);
       box-shadow: 0 10px 30px rgba(255, 221, 87, 0.12);
     }
-
     .recompensa-title {
-      margin-bottom: 18px;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #ffe66d;
-      text-align: center;
+      margin-bottom: 18px; font-size: 1rem; font-weight: 700; color: #ffe66d; text-align: center;
     }
-
-    .ruleta-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 8px;
-    }
-
+    .ruleta-wrap { display: flex; justify-content: center; align-items: center; margin-top: 8px; }
     .ruleta-stage {
-      position: relative;
-      width: 460px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
+      position: relative; width: 460px; display: flex; flex-direction: column; align-items: center; gap: 10px;
     }
-
     .ruleta-pointer {
-      width: 0;
-      height: 0;
-      border-left: 18px solid transparent;
-      border-right: 18px solid transparent;
-      border-top: 28px solid #ff4d3d;
+      width: 0; height: 0; border-left: 18px solid transparent; border-right: 18px solid transparent;
+      border-top: 28px solid #ff4d3d; z-index: 3; margin-bottom: -6px;
       filter: drop-shadow(0 4px 12px rgba(255, 77, 61, 0.45));
-      z-index: 3;
-      margin-bottom: -6px;
     }
-
     .ruleta-beneficios {
-      position: relative;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      overflow: hidden;
+      position: relative; width: 420px; height: 420px; border-radius: 50%; overflow: hidden;
       border: 10px solid rgba(255, 191, 73, 0.45);
-      box-shadow:
-        0 0 0 6px rgba(255,255,255,0.04),
-        0 16px 40px rgba(0,0,0,0.30);
+      box-shadow: 0 0 0 6px rgba(255,255,255,0.04), 0 16px 40px rgba(0,0,0,0.30);
       background:
         conic-gradient(
           from -90deg,
@@ -217,50 +95,26 @@
           rgba(255,120,0,0.72) 257.10deg 308.52deg,
           rgba(255,177,79,0.88) 308.52deg 360deg
         );
-      transition: transform 5.2s cubic-bezier(0.17, 0.67, 0.14, 1);
+      transition: transform 3.2s cubic-bezier(0.12, 0.75, 0.15, 1);
       will-change: transform;
     }
-
     .ruleta-beneficios::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
       background:
         radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.00) 55%),
-        repeating-conic-gradient(
-          from -90deg,
-          rgba(255,255,255,0.18) 0deg 1deg,
-          transparent 1deg 51.42deg
-        );
+        repeating-conic-gradient(from -90deg, rgba(255,255,255,0.18) 0deg 1deg, transparent 1deg 51.42deg);
       pointer-events: none;
     }
-
     .ruleta-beneficios::after {
-      content: "";
-      position: absolute;
-      inset: 14px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: inset 0 0 24px rgba(0,0,0,0.14);
+      content: ""; position: absolute; inset: 14px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12); box-shadow: inset 0 0 24px rgba(0,0,0,0.14);
       pointer-events: none;
     }
-
     .ruleta-label {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 112px;
-      font-size: 0.8rem;
-      line-height: 1.18;
-      text-align: center;
-      font-weight: 700;
-      color: #fff;
+      position: absolute; top: 50%; left: 50%; width: 112px; font-size: .8rem; line-height: 1.18;
+      text-align: center; font-weight: 700; color: #fff; transform-origin: center center; z-index: 2;
       text-shadow: 0 2px 6px rgba(0,0,0,0.28);
-      transform-origin: center center;
-      z-index: 2;
     }
-
     .label-1 { transform: translate(-50%, -50%) rotate(-64.29deg) translateY(-142px) rotate(64.29deg); }
     .label-2 { transform: translate(-50%, -50%) rotate(-12.87deg) translateY(-142px) rotate(12.87deg); }
     .label-3 { transform: translate(-50%, -50%) rotate(38.55deg) translateY(-142px) rotate(-38.55deg); }
@@ -268,393 +122,108 @@
     .label-5 { transform: translate(-50%, -50%) rotate(141.39deg) translateY(-142px) rotate(-141.39deg); }
     .label-6 { transform: translate(-50%, -50%) rotate(192.81deg) translateY(-142px) rotate(-192.81deg); }
     .label-7 { transform: translate(-50%, -50%) rotate(244.23deg) translateY(-142px) rotate(-244.23deg); }
-
     .ruleta-centro {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 132px;
-      height: 132px;
-      transform: translate(-50%, -50%);
+      position: absolute; top: 50%; left: 50%; width: 132px; height: 132px; transform: translate(-50%, -50%);
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #ffb45c, #ff7a00 70%, #ff6300 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 18px;
-      font-weight: 800;
-      font-size: 1rem;
-      line-height: 1.15;
-      color: #fff;
-      box-shadow:
-        0 10px 30px rgba(255,140,0,0.32),
-        0 0 0 8px rgba(255,255,255,0.08);
-      z-index: 3;
-      animation: pulsoCentro 2.2s ease-in-out infinite;
+      display: flex; align-items: center; justify-content: center; text-align: center; padding: 18px;
+      font-weight: 800; font-size: 1rem; line-height: 1.15; color: #fff; z-index: 3;
+      box-shadow: 0 10px 30px rgba(255,140,0,0.32), 0 0 0 8px rgba(255,255,255,0.08);
     }
-
-    @keyframes pulsoCentro {
-      0% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.04); }
-      100% { transform: translate(-50%, -50%) scale(1); }
-    }
-
-    .ruleta-note {
-      margin-top: 10px;
-      font-size: 0.86rem;
-      color: rgba(255,255,255,0.70);
-      text-align: center;
-    }
-
-    .rutina-checkin-form {
-      display: flex;
-      flex-direction: column;
-      gap: 26px;
-    }
-
-    .checkin-bloque {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .checkin-label {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #ffffff;
-    }
-
-    .checkin-helper {
-      color: rgba(255,255,255,0.72);
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }
-
-    .checkin-grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .checkin-grid-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .checkin-grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
+    .ruleta-note { margin-top: 10px; font-size: .86rem; color: rgba(255,255,255,0.70); text-align: center; }
+    .rutina-checkin-form { display: flex; flex-direction: column; gap: 26px; }
+    .checkin-bloque { display: flex; flex-direction: column; gap: 12px; }
+    .checkin-label { font-size: 1rem; font-weight: 600; color: #fff; }
+    .checkin-helper { color: rgba(255,255,255,0.72); font-size: .92rem; line-height: 1.5; }
+    .checkin-grid { display: grid; gap: 12px; }
+    .checkin-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .checkin-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .checkin-opcion {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 58px;
-      padding: 14px 12px;
-      text-align: center;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.10);
-      color: #f5f5f5;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 0.96rem;
-      line-height: 1.35;
+      display: flex; align-items: center; justify-content: center; min-height: 58px; padding: 14px 12px;
+      text-align: center; border-radius: 16px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10); color: #f5f5f5; cursor: pointer; font-size: .96rem;
     }
-
-    .checkin-opcion:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255,140,0,0.65);
-      background: rgba(255,255,255,0.07);
-    }
-
     input[type="radio"]:checked + .checkin-opcion {
-      background: rgba(255,140,0,0.16);
-      border-color: #ff8c00;
-      color: #ffffff;
-      box-shadow: 0 0 0 1px rgba(255,140,0,0.24);
+      background: rgba(255,140,0,0.16); border-color: #ff8c00; color: #fff; box-shadow: 0 0 0 1px rgba(255,140,0,0.24);
     }
-
     .checkin-range-wrap {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 18px 16px 16px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 18px 16px 16px;
     }
-
-    .checkin-range-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.78);
-    }
-
-    .checkin-slider-hint {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 10px;
-      color: #ffb45c;
-      font-size: 0.92rem;
-      font-weight: 600;
-      text-align: center;
-      opacity: 0.95;
-    }
-
-    .checkin-slider-hand {
-      font-size: 1.2rem;
-      animation: moverManito 1.4s ease-in-out infinite;
-      display: inline-block;
-    }
-
-    @keyframes moverManito {
-      0% { transform: translateX(0); }
-      50% { transform: translateX(8px); }
-      100% { transform: translateX(0); }
-    }
-
-    .checkin-range {
-      width: 100%;
-      accent-color: #ff8c00;
-      cursor: pointer;
-    }
-
-    .checkin-scale {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 8px;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.42);
-    }
-
+    .checkin-range-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: .95rem; color: rgba(255,255,255,0.78); }
+    .checkin-slider-hint { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; color: #ffb45c; font-size: .92rem; font-weight: 600; }
+    .checkin-slider-hand { font-size: 1.2rem; animation: moverManito 1.4s ease-in-out infinite; display: inline-block; }
+    @keyframes moverManito { 0% { transform: translateX(0);} 50% { transform: translateX(8px);} 100% { transform: translateX(0);} }
+    .checkin-range { width: 100%; accent-color: #ff8c00; cursor: pointer; }
+    .checkin-scale { display: flex; justify-content: space-between; margin-top: 8px; font-size: .8rem; color: rgba(255,255,255,0.42); }
     .checkin-textarea {
-      width: 100%;
-      min-height: 96px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.05);
-      color: #ffffff;
-      resize: vertical;
-      font-size: 0.95rem;
-      outline: none;
+      width: 100%; min-height: 96px; padding: 14px 16px; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); color: #fff; resize: vertical;
     }
-
-    .checkin-textarea::placeholder {
-      color: rgba(255,255,255,0.42);
-    }
-
-    .checkin-textarea:focus {
-      border-color: #ff8c00;
-      box-shadow: 0 0 0 1px rgba(255,140,0,0.18);
-    }
-
     .camera-upload-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 58px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px dashed rgba(255,140,0,0.55);
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 58px; padding: 14px 16px;
+      border-radius: 16px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,140,0,0.55); color: #fff; cursor: pointer;
       text-align: center;
     }
-
-    .camera-upload-btn:hover {
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.07);
-      border-color: #ff8c00;
-    }
-
-    .camera-icon {
-      font-size: 1.2rem;
-    }
-
-    .foto-nombre {
-      font-size: 0.9rem;
-      color: #9cffb0;
-    }
-
+    .foto-nombre { font-size: .9rem; color: #9cffb0; }
     .preview-foto-wrap {
-      margin-top: 12px;
-      padding: 10px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      max-width: 220px;
+      margin-top: 12px; padding: 10px; border-radius: 16px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08); max-width: 220px;
     }
-
     .preview-foto-img {
-      width: 100%;
-      max-width: 200px;
-      height: auto;
-      border-radius: 12px;
-      display: block;
-      object-fit: cover;
+      width: 100%; max-width: 200px; height: auto; border-radius: 12px; display: block; object-fit: cover;
       box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }
-
-    .checkin-boton {
-      width: 100%;
-      padding: 16px 18px;
-      border: none;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #ff8c00, #ff6a00);
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-      box-shadow: 0 12px 32px rgba(255,140,0,0.24);
+    .checkin-boton, .claim-premio-btn {
+      width: 100%; padding: 16px 18px; border: none; border-radius: 18px;
+      background: linear-gradient(135deg, #ff8c00, #ff6a00); color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer;
+      box-shadow: 0 12px 32px rgba(255,140,0,0.24); text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
     }
-
-    .checkin-boton:hover {
-      transform: translateY(-1px);
-      opacity: 0.96;
-    }
-
-    .checkin-boton:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-
-    .checkin-exito {
-      margin-top: 8px;
-      text-align: center;
-      color: #9cffb0;
-      font-weight: 600;
-    }
-
-    .checkin-error {
-      margin-top: 8px;
-      text-align: center;
-      color: #ffb3b3;
-      font-weight: 600;
-    }
-
-    .checkin-carga {
-      margin-top: 8px;
-      text-align: center;
-      color: #ffd59c;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .hidden {
-      display: none !important;
-    }
+    .checkin-boton:disabled { opacity: .7; cursor: not-allowed; }
+    .checkin-exito { margin-top: 8px; text-align: center; color: #9cffb0; font-weight: 600; }
+    .checkin-error { margin-top: 8px; text-align: center; color: #ffb3b3; font-weight: 600; }
+    .checkin-carga { margin-top: 8px; text-align: center; color: #ffd59c; font-weight: 600; font-size: .95rem; }
+    .hidden { display: none !important; }
 
     .ruleta-fullscreen {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: rgba(8, 10, 18, 0.88);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
+      position: fixed; inset: 0; z-index: 9999; background: rgba(8, 10, 18, 0.90);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center; padding: 24px;
     }
-
-    .ruleta-fullscreen-card {
-      width: 100%;
-      max-width: 680px;
-      text-align: center;
-      padding: 34px 26px;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,140,0,0.18), rgba(24,16,32,0.92));
-      border: 1px solid rgba(255, 180, 92, 0.35);
-      box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+    .ruleta-fullscreen-card, .premio-fullscreen-card {
+      width: 100%; max-width: 700px; text-align: center; padding: 34px 26px; border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,140,0,0.18), rgba(24,16,32,0.95));
+      border: 1px solid rgba(255,180,92,0.35); box-shadow: 0 24px 70px rgba(0,0,0,0.45);
     }
-
-    .ruleta-fullscreen-icon {
-      font-size: 3rem;
-      margin-bottom: 14px;
+    .ruleta-fullscreen-title, .premio-fullscreen-title {
+      font-size: clamp(1.7rem, 4vw, 2.7rem); line-height: 1.15; color: #fff; margin-bottom: 14px;
     }
-
-    .ruleta-fullscreen-title {
-      font-size: clamp(1.7rem, 4vw, 2.7rem);
-      line-height: 1.15;
-      color: #fff;
-      margin-bottom: 14px;
+    .ruleta-fullscreen-subtitle, .premio-fullscreen-subtitle {
+      font-size: 1.05rem; line-height: 1.6; color: rgba(255,255,255,0.82); margin-bottom: 24px;
     }
-
-    .ruleta-fullscreen-subtitle {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.82);
-      margin-bottom: 24px;
+    .ruleta-fullscreen-icon, .premio-fullscreen-icon { font-size: 3rem; margin-bottom: 14px; }
+    .premio-fullscreen-box {
+      margin: 18px auto 24px; max-width: 520px; padding: 18px 20px; border-radius: 22px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #ffe7bf; font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 800;
     }
-
-    .ruleta-fullscreen-btn {
-      max-width: 320px;
-      margin: 0 auto;
+    .premio-actions { display: grid; gap: 14px; max-width: 360px; margin: 0 auto; }
+    .premio-secundario-btn {
+      width: 100%; padding: 14px 18px; border-radius: 18px; background: rgba(255,255,255,0.08);
+      color: #fff; border: 1px solid rgba(255,255,255,0.12); cursor: pointer; font-weight: 700;
     }
 
     @media (max-width: 768px) {
-      .rutina-checkin-final {
-        padding: 50px 16px;
-      }
-
-      .rutina-checkin-card {
-        padding: 24px 18px;
-        border-radius: 22px;
-      }
-
-      .rutina-checkin-title {
-        font-size: 1.75rem;
-      }
-
-      .checkin-grid-2,
-      .checkin-grid-3 {
-        grid-template-columns: 1fr;
-      }
-
-      .checkin-slider-hint {
-        font-size: 0.88rem;
-      }
-
-      .preview-foto-wrap {
-        max-width: 100%;
-      }
-
-      .preview-foto-img {
-        max-width: 100%;
-      }
-
-      .inline-arrow {
-        font-size: 1.55rem;
-      }
-
-      .ruleta-stage {
-        width: 100%;
-        max-width: 360px;
-      }
-
-      .ruleta-pointer {
-        border-left-width: 14px;
-        border-right-width: 14px;
-        border-top-width: 22px;
-      }
-
-      .ruleta-beneficios {
-        width: 340px;
-        height: 340px;
-      }
-
-      .ruleta-label {
-        width: 82px;
-        font-size: 0.62rem;
-      }
-
+      .rutina-checkin-final { padding: 50px 16px; }
+      .rutina-checkin-card { padding: 24px 18px; border-radius: 22px; }
+      .rutina-checkin-title { font-size: 1.75rem; }
+      .checkin-grid-2, .checkin-grid-3 { grid-template-columns: 1fr; }
+      .preview-foto-wrap, .preview-foto-img { max-width: 100%; }
+      .inline-arrow { font-size: 1.55rem; }
+      .ruleta-stage { width: 100%; max-width: 360px; }
+      .ruleta-pointer { border-left-width: 14px; border-right-width: 14px; border-top-width: 22px; }
+      .ruleta-beneficios { width: 340px; height: 340px; }
+      .ruleta-label { width: 82px; font-size: .62rem; }
       .label-1 { transform: translate(-50%, -50%) rotate(-64.29deg) translateY(-112px) rotate(64.29deg); }
       .label-2 { transform: translate(-50%, -50%) rotate(-12.87deg) translateY(-112px) rotate(12.87deg); }
       .label-3 { transform: translate(-50%, -50%) rotate(38.55deg) translateY(-112px) rotate(-38.55deg); }
@@ -662,38 +231,17 @@
       .label-5 { transform: translate(-50%, -50%) rotate(141.39deg) translateY(-112px) rotate(-141.39deg); }
       .label-6 { transform: translate(-50%, -50%) rotate(192.81deg) translateY(-112px) rotate(-192.81deg); }
       .label-7 { transform: translate(-50%, -50%) rotate(244.23deg) translateY(-112px) rotate(-244.23deg); }
-
-      .ruleta-centro {
-        width: 104px;
-        height: 104px;
-        font-size: 0.86rem;
-        padding: 12px;
-      }
-
-      .ruleta-fullscreen-card {
-        padding: 28px 18px;
-        border-radius: 22px;
-      }
-
-      .ruleta-fullscreen-icon {
-        font-size: 2.4rem;
-      }
-
-      .ruleta-fullscreen-title {
-        font-size: 1.55rem;
-      }
-
-      .ruleta-fullscreen-subtitle {
-        font-size: 0.98rem;
-      }
+      .ruleta-centro { width: 104px; height: 104px; font-size: .86rem; padding: 12px; }
+      .ruleta-fullscreen-card, .premio-fullscreen-card { padding: 28px 18px; border-radius: 22px; }
+      .ruleta-fullscreen-title, .premio-fullscreen-title { font-size: 1.55rem; }
+      .ruleta-fullscreen-subtitle, .premio-fullscreen-subtitle { font-size: .98rem; }
+      .ruleta-fullscreen-icon, .premio-fullscreen-icon { font-size: 2.4rem; }
     }
   </style>
 </head>
 <body>
-
   <section class="rutina-checkin-final">
     <div class="rutina-checkin-overlay"></div>
-
     <div class="rutina-checkin-contenido">
       <div class="rutina-checkin-card">
         <div class="top-actions">
@@ -710,9 +258,7 @@
         </p>
 
         <div class="recompensa-box">
-          <p class="recompensa-title">
-            Cada sesión registrada te acerca a tu premio final.
-          </p>
+          <p class="recompensa-title">Cada sesión registrada te acerca a tu premio final.</p>
 
           <div class="ruleta-wrap">
             <div class="ruleta-stage">
@@ -726,19 +272,15 @@
                 <div class="ruleta-label label-5">Guía de recuperación</div>
                 <div class="ruleta-label label-6">Guía de motivación</div>
                 <div class="ruleta-label label-7">Doble oportunidad</div>
-
                 <div class="ruleta-centro">Ruleta MoveSmart</div>
               </div>
 
-              <p class="ruleta-note">
-                La ruleta se activa al completar el ciclo completo de entrenamientos.
-              </p>
+              <p class="ruleta-note">La ruleta se activa al completar el ciclo completo de entrenamientos.</p>
             </div>
           </div>
         </div>
 
         <form id="checkinForm" class="rutina-checkin-form">
-
           <div class="checkin-bloque">
             <p class="checkin-label">¿Terminaste la rutina?</p>
             <div class="checkin-grid checkin-grid-3">
@@ -778,18 +320,12 @@
                 <strong><span id="esfuerzoValor">5</span>/10</strong>
                 <span>Muy intenso</span>
               </div>
-
               <div class="checkin-slider-hint">
                 <span class="checkin-slider-hand">👉</span>
                 <span>Desliza para marcar tu esfuerzo</span>
               </div>
-
               <input type="range" id="esfuerzo" name="esfuerzo" min="1" max="10" value="5" class="checkin-range">
-
-              <div class="checkin-scale">
-                <span>1</span>
-                <span>10</span>
-              </div>
+              <div class="checkin-scale"><span>1</span><span>10</span></div>
             </div>
           </div>
 
@@ -829,28 +365,14 @@
 
           <div class="checkin-bloque">
             <label for="comentario" class="checkin-label">Comentario opcional</label>
-            <textarea
-              id="comentario"
-              name="comentario"
-              class="checkin-textarea"
-              placeholder="Ej: me costó la última serie o sentí una leve molestia en el tobillo..."
-            ></textarea>
+            <textarea id="comentario" name="comentario" class="checkin-textarea" placeholder="Ej: me costó la última serie o sentí una leve molestia en el tobillo..."></textarea>
           </div>
 
           <div class="checkin-bloque">
             <label class="checkin-label">Comparte una foto de tu entreno</label>
-            <p class="checkin-helper">
-              Sube una foto de tu sesión de hoy para registrar tu avance en el ciclo MoveSmart.
-            </p>
+            <p class="checkin-helper">Sube una foto de tu sesión de hoy para registrar tu avance en el ciclo MoveSmart.</p>
 
-            <input
-              type="file"
-              id="fotoEntreno"
-              name="foto_entreno"
-              accept="image/*"
-              capture="environment"
-              hidden
-            >
+            <input type="file" id="fotoEntreno" name="foto_entreno" accept="image/*" capture="environment" hidden>
 
             <label for="fotoEntreno" class="camera-upload-btn" id="fotoUploadLabel">
               <span class="camera-icon">📷</span>
@@ -871,29 +393,9 @@
 
           <button type="submit" class="checkin-boton" id="submitBtn">✅ Registrar mi sesión</button>
 
-          <p id="mensajeCarga" class="checkin-carga hidden">
-            Enviando, espera un momento...
-          </p>
-
-          <p id="mensajeFinal" class="checkin-exito hidden">
-            ¡Gracias! Tu seguimiento fue enviado correctamente.
-          </p>
-
-          <p id="mensajeError" class="checkin-error hidden">
-            Hubo un problema al enviar tu seguimiento.
-          </p>
-
-          <div id="ruletaEstadoBox" class="hidden" style="margin-top: 18px; padding: 18px; border-radius: 18px; background: rgba(255,140,0,0.10); border: 1px solid rgba(255,140,0,0.35); text-align: center;">
-            <div id="ruletaEstadoTexto" style="margin-bottom: 12px; color: #ffe0b2; font-weight: 700; line-height: 1.5;">
-              <p>Puedes girar tu ruleta</p>
-            </div>
-
-            <button type="button" id="girarRuletaBtn" class="checkin-boton" style="max-width: 320px; margin: 0 auto;">
-              🎯 Girar ruleta
-            </button>
-
-            <p id="ruletaPremioTexto" class="checkin-exito hidden" style="margin-top: 12px;"></p>
-          </div>
+          <p id="mensajeCarga" class="checkin-carga hidden">Enviando, espera un momento...</p>
+          <p id="mensajeFinal" class="checkin-exito hidden">¡Gracias! Tu seguimiento fue enviado correctamente.</p>
+          <p id="mensajeError" class="checkin-error hidden">Hubo un problema al enviar tu seguimiento.</p>
         </form>
       </div>
     </div>
@@ -902,22 +404,29 @@
   <div id="ruletaFullscreen" class="ruleta-fullscreen hidden">
     <div class="ruleta-fullscreen-card">
       <div class="ruleta-fullscreen-icon">🎉</div>
-      <h3 class="ruleta-fullscreen-title">
-        Por tu disciplina y constancia has desbloqueado la ruleta MoveSmart
-      </h3>
-      <p class="ruleta-fullscreen-subtitle">
-        Aprieta el botón para girarla y descubrir tu premio.
-      </p>
+      <h3 class="ruleta-fullscreen-title">Por tu disciplina y constancia has desbloqueado la ruleta MoveSmart</h3>
+      <p class="ruleta-fullscreen-subtitle">Aprieta el botón para girarla y descubrir tu premio.</p>
+      <button type="button" id="girarRuletaFullscreenBtn" class="checkin-boton">🎯 Girar ruleta</button>
+    </div>
+  </div>
 
-      <button type="button" id="girarRuletaFullscreenBtn" class="checkin-boton ruleta-fullscreen-btn">
-        🎯 Girar ruleta
-      </button>
+  <div id="premioFullscreen" class="ruleta-fullscreen hidden">
+    <div class="premio-fullscreen-card">
+      <div class="premio-fullscreen-icon">🏆</div>
+      <h3 class="premio-fullscreen-title">¡Ya tienes tu premio!</h3>
+      <p class="premio-fullscreen-subtitle">Esto fue lo que ganaste:</p>
+      <div id="premioGanadoBox" class="premio-fullscreen-box">Premio</div>
+      <div class="premio-actions">
+        <a id="claimPremioBtn" class="claim-premio-btn" href="#" target="_blank" rel="noopener noreferrer">🎁 Aprieta acá para reclamar tu premio</a>
+        <button type="button" id="cerrarPremioBtn" class="premio-secundario-btn">Cerrar</button>
+      </div>
     </div>
   </div>
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_UMTK7xMlUfmTPm94khFhKeYUO_anRj7L_ZLNZ6wfqnXazdPzKzIJ7tASvSt8t_4g9Q/exec";
     const RULETA_URL = "https://script.google.com/macros/s/AKfycbz_gsPg_sDJjx7AbsZ-nP9R-6DTLsVeTWd4hGt3wn77YV3deVDGWXoZJtwUt-71fMZ1kg/exec";
+    const CLAIM_PREMIO_URL = "#";
 
     const esfuerzo = document.getElementById("esfuerzo");
     const esfuerzoValor = document.getElementById("esfuerzoValor");
@@ -936,18 +445,21 @@
     const submitBtn = document.getElementById("submitBtn");
     const fotoUploadLabel = document.getElementById("fotoUploadLabel");
     const rutinaHidden = document.getElementById("rutinaHidden");
-    const ruletaEstadoBox = document.getElementById("ruletaEstadoBox");
-    const ruletaEstadoTexto = document.getElementById("ruletaEstadoTexto");
-    const girarRuletaBtn = document.getElementById("girarRuletaBtn");
-    const ruletaPremioTexto = document.getElementById("ruletaPremioTexto");
-    const ruletaStage = document.querySelector(".ruleta-stage");
     const ruletaBeneficios = document.querySelector(".ruleta-beneficios");
+    const ruletaStage = document.querySelector(".ruleta-stage");
+
     const ruletaFullscreen = document.getElementById("ruletaFullscreen");
     const girarRuletaFullscreenBtn = document.getElementById("girarRuletaFullscreenBtn");
+    const premioFullscreen = document.getElementById("premioFullscreen");
+    const premioGanadoBox = document.getElementById("premioGanadoBox");
+    const claimPremioBtn = document.getElementById("claimPremioBtn");
+    const cerrarPremioBtn = document.getElementById("cerrarPremioBtn");
 
     let autoRuletaLanzada = false;
     let ruletaGirando = false;
     let currentRotation = 0;
+
+    claimPremioBtn.href = CLAIM_PREMIO_URL;
 
     const params = new URLSearchParams(window.location.search);
     const rutinaParam = params.get("rutina") || "Rutina A";
@@ -968,16 +480,12 @@
 
     function obtenerSemanaPorFecha(fechaStr) {
       const fecha = new Date(fechaStr + "T00:00:00");
-
       const s1Inicio = new Date("2026-04-06T00:00:00");
       const s1Fin = new Date("2026-04-12T23:59:59");
-
       const s2Inicio = new Date("2026-04-13T00:00:00");
       const s2Fin = new Date("2026-04-19T23:59:59");
-
       const s3Inicio = new Date("2026-04-20T00:00:00");
       const s3Fin = new Date("2026-04-26T23:59:59");
-
       const s4Inicio = new Date("2026-04-27T00:00:00");
       const s4Fin = new Date("2026-05-02T23:59:59");
 
@@ -985,21 +493,17 @@
       if (fecha >= s2Inicio && fecha <= s2Fin) return "Semana 2";
       if (fecha >= s3Inicio && fecha <= s3Fin) return "Semana 3";
       if (fecha >= s4Inicio && fecha <= s4Fin) return "Semana 4";
-
       return "Fuera de ciclo";
     }
 
     function toBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
-
         reader.onload = (event) => {
           const img = new Image();
-
           img.onload = () => {
             const canvas = document.createElement("canvas");
             const maxWidth = 1200;
-
             let width = img.width;
             let height = img.height;
 
@@ -1010,18 +514,13 @@
 
             canvas.width = width;
             canvas.height = height;
-
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
-
-            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.8);
-            resolve(compressedBase64);
+            resolve(canvas.toDataURL("image/jpeg", 0.8));
           };
-
           img.onerror = reject;
           img.src = event.target.result;
         };
-
         reader.onerror = reject;
         reader.readAsDataURL(file);
       });
@@ -1030,16 +529,109 @@
     function resetFotoUI() {
       fotoNombre.textContent = "";
       fotoNombre.classList.add("hidden");
-
       previewFoto.src = "";
       previewFotoWrap.classList.add("hidden");
-
       fotoUploadLabel.style.borderColor = "rgba(255,140,0,0.55)";
       fotoUploadLabel.style.background = "rgba(255,255,255,0.05)";
       fotoUploadLabel.innerHTML = `
         <span class="camera-icon">📷</span>
         <span>Tomar o subir foto</span>
       `;
+    }
+
+    function obtenerAnguloPremio(premio) {
+      const angulos = {
+        "15% de descuento": 64.29,
+        "Rutina bonus": 12.87,
+        "Guía de hábitos": 321.45,
+        "Guía de movilidad": 270.03,
+        "Guía de recuperación": 218.61,
+        "Guía de motivación": 167.19,
+        "Doble oportunidad": 115.77
+      };
+      return angulos[premio] ?? 0;
+    }
+
+    function animarRuletaHastaPremio(premio) {
+      if (!ruletaBeneficios) return;
+      const anguloPremio = obtenerAnguloPremio(premio);
+      const vueltasExtra = 360 * 4;
+      currentRotation = currentRotation + vueltasExtra + anguloPremio;
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+    }
+
+    function mostrarPremio(premio) {
+      premioGanadoBox.textContent = premio || "Premio asignado";
+      premioFullscreen.classList.remove("hidden");
+    }
+
+    async function consultarEstadoRuleta() {
+      try {
+        const cliente = form.cliente.value;
+        const response = await fetch(`${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`);
+        const result = await response.json();
+        if (!result.ok) return;
+
+        if (result.yaUsada) {
+          if (result.premio && !autoRuletaLanzada) {
+            autoRuletaLanzada = true;
+            setTimeout(() => {
+              animarRuletaHastaPremio(result.premio);
+            }, 200);
+          }
+          return;
+        }
+
+        if (result.habilitada) {
+          ruletaFullscreen.classList.remove("hidden");
+        } else {
+          ruletaFullscreen.classList.add("hidden");
+        }
+      } catch (error) {
+        console.error("Error consultando ruleta:", error);
+      }
+    }
+
+    async function girarRuleta() {
+      if (ruletaGirando) return;
+
+      try {
+        const cliente = form.cliente.value;
+        ruletaGirando = true;
+
+        girarRuletaFullscreenBtn.disabled = true;
+        girarRuletaFullscreenBtn.textContent = "Girando...";
+
+        ruletaFullscreen.classList.add("hidden");
+
+        if (ruletaStage) {
+          ruletaStage.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+
+        const response = await fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
+        const result = await response.json();
+
+        if (result.ok) {
+          animarRuletaHastaPremio(result.premio);
+
+          setTimeout(() => {
+            mostrarPremio(result.premio);
+          }, 3300);
+        } else {
+          mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
+          mensajeError.classList.remove("hidden");
+        }
+      } catch (error) {
+        console.error("Error al girar ruleta:", error);
+        mensajeError.textContent = "Hubo un problema al girar la ruleta.";
+        mensajeError.classList.remove("hidden");
+      } finally {
+        setTimeout(() => {
+          ruletaGirando = false;
+          girarRuletaFullscreenBtn.disabled = false;
+          girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
+        }, 3400);
+      }
     }
 
     const fechaHoy = obtenerFechaChile();
@@ -1061,202 +653,27 @@
       fotoEntreno.addEventListener("change", () => {
         if (fotoEntreno.files && fotoEntreno.files.length > 0) {
           const file = fotoEntreno.files[0];
-
           fotoNombre.textContent = "✅ Foto cargada: " + file.name;
           fotoNombre.classList.remove("hidden");
-
           fotoUploadLabel.style.borderColor = "#22c55e";
           fotoUploadLabel.style.background = "rgba(34, 197, 94, 0.10)";
           fotoUploadLabel.innerHTML = `
             <span class="camera-icon">✅</span>
             <span>Foto seleccionada</span>
           `;
-
           const imageUrl = URL.createObjectURL(file);
           previewFoto.src = imageUrl;
           previewFotoWrap.classList.remove("hidden");
-
         } else {
           resetFotoUI();
         }
       });
     }
 
-    function obtenerAnguloPremio(premio) {
-      const angulos = {
-        "15% de descuento": 64.29,
-        "Rutina bonus": 12.87,
-        "Guía de hábitos": 321.45,
-        "Guía de movilidad": 270.03,
-        "Guía de recuperación": 218.61,
-        "Guía de motivación": 167.19,
-        "Doble oportunidad": 115.77
-      };
-
-      return angulos[premio] ?? 0;
-    }
-
-    function animarRuletaHastaPremio(premio) {
-      if (!ruletaBeneficios) return;
-
-      const anguloPremio = obtenerAnguloPremio(premio);
-      const vueltasExtra = 360 * 6;
-      currentRotation = currentRotation + vueltasExtra + anguloPremio;
-      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-    }
-
-    async function consultarEstadoRuleta() {
-      try {
-        const cliente = form.cliente.value;
-        const response = await fetch(`${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`);
-        const result = await response.json();
-
-        if (!result.ok) return;
-
-        if (result.yaUsada) {
-          ruletaEstadoBox.classList.remove("hidden");
-          ruletaEstadoTexto.innerHTML = `
-            <p>🎁 Tu ruleta de este ciclo ya fue utilizada.</p>
-          `;
-          girarRuletaBtn.classList.add("hidden");
-          ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio || "Premio asignado"}`;
-          ruletaPremioTexto.classList.remove("hidden");
-
-          if (ruletaFullscreen) {
-            ruletaFullscreen.classList.add("hidden");
-          }
-
-          if (ruletaStage) {
-            ruletaStage.scrollIntoView({
-              behavior: "smooth",
-              block: "center"
-            });
-          }
-
-          if (result.premio && !autoRuletaLanzada) {
-            autoRuletaLanzada = true;
-            setTimeout(() => {
-              animarRuletaHastaPremio(result.premio);
-            }, 600);
-          }
-          return;
-        }
-
-        if (result.habilitada) {
-          ruletaEstadoBox.classList.remove("hidden");
-          ruletaEstadoTexto.innerHTML = `
-            <p>🎉 Por tu disciplina y constancia has desbloqueado la ruleta MoveSmart.</p>
-            <p style="margin-top: 8px; font-weight: 600; color: #fff3cd;">Aprieta para girarla.</p>
-          `;
-          girarRuletaBtn.classList.remove("hidden");
-          ruletaPremioTexto.classList.add("hidden");
-          ruletaPremioTexto.textContent = "";
-
-          if (ruletaFullscreen) {
-            ruletaFullscreen.classList.remove("hidden");
-          }
-
-          return;
-        } else {
-          ruletaEstadoBox.classList.add("hidden");
-          girarRuletaBtn.classList.remove("hidden");
-          ruletaPremioTexto.classList.add("hidden");
-          ruletaPremioTexto.textContent = "";
-
-          if (ruletaFullscreen) {
-            ruletaFullscreen.classList.add("hidden");
-          }
-        }
-      } catch (error) {
-        console.error("Error consultando ruleta:", error);
-      }
-    }
-
-    async function girarRuleta() {
-      if (ruletaGirando) return;
-
-      try {
-        const cliente = form.cliente.value;
-
-        ruletaGirando = true;
-        girarRuletaBtn.disabled = true;
-        girarRuletaBtn.textContent = "Girando...";
-
-        if (girarRuletaFullscreenBtn) {
-          girarRuletaFullscreenBtn.disabled = true;
-          girarRuletaFullscreenBtn.textContent = "Girando...";
-        }
-
-        if (ruletaStage) {
-          ruletaStage.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-        }
-
-        const response = await fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
-        const result = await response.json();
-
-        if (result.ok) {
-          ruletaEstadoBox.classList.remove("hidden");
-          ruletaEstadoTexto.innerHTML = `
-            <p>🎉 Tu ruleta fue girada correctamente.</p>
-          `;
-
-          animarRuletaHastaPremio(result.premio);
-
-          setTimeout(() => {
-            if (ruletaFullscreen) {
-              ruletaFullscreen.classList.add("hidden");
-            }
-
-            girarRuletaBtn.classList.add("hidden");
-            ruletaPremioTexto.textContent = `Premio obtenido: ${result.premio}`;
-            ruletaPremioTexto.classList.remove("hidden");
-          }, 5300);
-        } else {
-          ruletaEstadoBox.classList.remove("hidden");
-          ruletaEstadoTexto.innerHTML = `
-            <p>${result.message || "Aún no puedes girar la ruleta."}</p>
-          `;
-
-          if (ruletaFullscreen) {
-            ruletaFullscreen.classList.add("hidden");
-          }
-        }
-      } catch (error) {
-        console.error("Error al girar ruleta:", error);
-        ruletaEstadoBox.classList.remove("hidden");
-        ruletaEstadoTexto.innerHTML = `
-          <p>Hubo un problema al girar la ruleta.</p>
-        `;
-
-        if (ruletaFullscreen) {
-          ruletaFullscreen.classList.add("hidden");
-        }
-      } finally {
-        setTimeout(() => {
-          ruletaGirando = false;
-          girarRuletaBtn.disabled = false;
-          girarRuletaBtn.textContent = "🎯 Girar ruleta";
-
-          if (girarRuletaFullscreenBtn) {
-            girarRuletaFullscreenBtn.disabled = false;
-            girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-          }
-        }, 5300);
-      }
-    }
-
-    if (girarRuletaBtn) {
-      girarRuletaBtn.addEventListener("click", girarRuleta);
-    }
-
-    if (girarRuletaFullscreenBtn) {
-      girarRuletaFullscreenBtn.addEventListener("click", async () => {
-        await girarRuleta();
-      });
-    }
+    girarRuletaFullscreenBtn.addEventListener("click", girarRuleta);
+    cerrarPremioBtn.addEventListener("click", () => {
+      premioFullscreen.classList.add("hidden");
+    });
 
     form.addEventListener("submit", async function(e) {
       e.preventDefault();
@@ -1307,9 +724,7 @@
 
         const response = await fetch(SCRIPT_URL, {
           method: "POST",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload)
         });
 
@@ -1344,6 +759,5 @@
 
     consultarEstadoRuleta();
   </script>
-
 </body>
 </html>
