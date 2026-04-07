@@ -548,15 +548,15 @@
       </div>
       <div class="section-body">
 
+       
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Estiramiento de glúteos</div>
-            <p class="exercise-desc">Mantén una tensión suave, sin rebotes ni dolor.</p>
-            <button
-              class="video-btn open-video"
-              type="button"
-              data-video="https://www.youtube.com/watch?v=bpynZ0dqAmI"
-            >
+            <div class="exercise-name">Estiramiento de cuádriceps</div>
+            <p class="exercise-desc">
+              Busca una tensión suave en la parte frontal del muslo sin arquear la espalda ni perder equilibrio.
+              Mantén el abdomen activo y sostén la posición con comodidad.
+            </p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=boJBuKVUwG0">
               ▶ Ver video
             </button>
           </div>
@@ -572,12 +572,11 @@
         <article class="exercise-card">
           <div>
             <div class="exercise-name">Estiramiento de isquiotibiales</div>
-            <p class="exercise-desc">Respira profundo y busca relajación progresiva del músculo.</p>
-            <button
-              class="video-btn open-video"
-              type="button"
-              data-video="https://www.youtube.com/shorts/uXF9niUANJ4"
-            >
+            <p class="exercise-desc">
+              Inclínate hasta sentir una tensión moderada detrás del muslo, manteniendo la espalda larga y sin forzar.
+              Respira profundo y evita los rebotes.
+            </p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/shorts/uXF9niUANJ4">
               ▶ Ver video
             </button>
           </div>
@@ -592,13 +591,12 @@
 
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Estiramiento flexor de cadera</div>
-            <p class="exercise-desc">Mantén pelvis neutra y evita arquear demasiado la espalda.</p>
-            <button
-              class="video-btn open-video"
-              type="button"
-              data-video="https://www.youtube.com/watch?v=8xZlzcMAtVQ"
-            >
+            <div class="exercise-name">Estiramiento de pantorrilla</div>
+            <p class="exercise-desc">
+              Apoya las manos en la pared y lleva una pierna atrás para sentir tensión suave en la pantorrilla.
+              Mantén el talón apoyado y evita compensar con el tronco.
+            </p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=TyZAmDcD6mM">
               ▶ Ver video
             </button>
           </div>
@@ -611,34 +609,17 @@
           </div>
         </article>
 
-        <article class="exercise-card">
-          <div>
-            <div class="exercise-name">Estiramiento de pecho / hombros</div>
-            <p class="exercise-desc">Abre el pecho con suavidad y mantén respiración tranquila.</p>
-            <button
-              class="video-btn open-video"
-              type="button"
-              data-video="https://www.youtube.com/watch?v=TufwPKlp31w"
-            >
-              ▶ Ver video
-            </button>
-          </div>
-          <div class="exercise-meta">
-            <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>20–25 seg por lado</div>
-            <div class="pill"><span>Descanso</span>10 seg</div>
-            <div class="pill"><span>Carga</span>Peso corporal</div>
-            <div class="pill"><span>RPE</span>2</div>
-          </div>
-        </article>
+        <div class="finish-session-wrap">
+          <p class="finish-session-text">
+            Cuando termines esta sesión, presiona el botón de abajo para registrar cómo te fue.
+          </p>
 
+          <a href="registro de sesion.html?rutina=Rutina%20A" class="finish-session-btn">
+            ✅ Finalicé mi sesión
+          </a>
+        </div>
       </div>
     </section>
-
-    <div class="note">
-      <strong>Tip MoveSmart:</strong> prioriza la calidad del movimiento. Si algo molesta,
-      ajusta rango, carga o repeticiones.
-    </div>
 
   </div>
 
@@ -646,10 +627,16 @@
     <div class="video-box">
       <div class="video-box-head">
         <strong id="videoTitle">Video de ejercicio</strong>
-        <button class="close-video" type="button" id="closeVideo">Cerrar ✕</button>
+        <button class="close-video" id="closeVideo" type="button">Cerrar ✕</button>
       </div>
       <div class="video-frame-wrap">
-        <iframe id="videoFrame" src="" title="Video de ejercicio" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+        <iframe
+          id="videoFrame"
+          src=""
+          title="Video de ejercicio"
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowfullscreen>
+        </iframe>
       </div>
     </div>
   </div>
@@ -677,13 +664,14 @@
             videoId = parsed.pathname.replace('/', '').trim();
           } else if (host === 'youtube.com' || host === 'm.youtube.com') {
             if (parsed.pathname.startsWith('/shorts/')) {
-              videoId = parsed.pathname.split('/shorts/')[1].split('/')[0];
+              videoId = parsed.pathname.split('/shorts/')[1]?.split('/')[0] || '';
             } else if (parsed.pathname === '/watch') {
               videoId = parsed.searchParams.get('v') || '';
             }
           }
 
           if (!videoId) return null;
+
           return 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&mute=1&loop=1&playlist=' + videoId + '&rel=0&playsinline=1';
         } catch (err) {
           return null;
@@ -694,16 +682,18 @@
         videoTitle.textContent = title || 'Video de ejercicio';
         videoFrame.src = url;
         videoModal.classList.add('active');
+        videoModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
       }
 
       function hideVideo() {
         videoModal.classList.remove('active');
+        videoModal.setAttribute('aria-hidden', 'true');
         videoFrame.src = '';
         document.body.style.overflow = '';
       }
 
-      document.querySelectorAll('.video-btn').forEach(function (button) {
+      document.querySelectorAll('.video-btn, .open-video').forEach(function (button) {
         button.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
@@ -712,9 +702,7 @@
           const nameEl = card ? card.querySelector('.exercise-name') : null;
           const title = nameEl ? nameEl.textContent.trim() : 'Video de ejercicio';
 
-          const dataVideo = button.getAttribute('data-video');
-          const hrefVideo = button.getAttribute('href');
-          const rawUrl = dataVideo || hrefVideo;
+          const rawUrl = button.getAttribute('data-video');
           const embedUrl = toEmbedUrl(rawUrl);
 
           if (embedUrl) {
@@ -725,11 +713,15 @@
         });
       });
 
-      if (closeVideo) closeVideo.addEventListener('click', hideVideo);
+      if (closeVideo) {
+        closeVideo.addEventListener('click', hideVideo);
+      }
 
       if (videoModal) {
         videoModal.addEventListener('click', function (e) {
-          if (e.target === videoModal) hideVideo();
+          if (e.target === videoModal) {
+            hideVideo();
+          }
         });
       }
 
@@ -740,6 +732,5 @@
       });
     })();
   </script>
-
 </body>
 </html>
