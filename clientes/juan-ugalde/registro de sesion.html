@@ -592,32 +592,62 @@
       }
     }
 
-    async function girarRuleta() {
-      if (ruletaGirando) return;
+   async function girarRuleta() {
+  if (ruletaGirando) return;
 
-      try {
-        const cliente = form.cliente.value;
-        ruletaGirando = true;
+  try {
+    const cliente = form.cliente.value;
+    ruletaGirando = true;
 
-        girarRuletaFullscreenBtn.disabled = true;
-        girarRuletaFullscreenBtn.textContent = "Girando...";
+    girarRuletaFullscreenBtn.disabled = true;
+    girarRuletaFullscreenBtn.textContent = "Girando...";
 
-        ruletaFullscreen.classList.add("hidden");
+    ruletaFullscreen.classList.add("hidden");
 
-        if (ruletaStage) {
-          ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
-        }
+    if (ruletaStage) {
+      ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
+    }
 
-        const response = await fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
-        const result = await response.json();
+    // pequeño movimiento instantáneo para que se sienta inmediato
+    ruletaBeneficios.style.transition = "transform 0.18s ease-out";
+    currentRotation = currentRotation + 8;
+    ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
-        if (result.ok) {
-          animarRuletaHastaPremio(result.premio);
+    const responsePromise = fetch(
+      `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
+    );
 
-          setTimeout(() => {
-            mostrarPremio(result.premio);
-          }, 10020);
-        } else {
+    setTimeout(() => {
+      ruletaBeneficios.style.transition = "transform 10s cubic-bezier(0.12, 0.75, 0.15, 1)";
+    }, 30);
+
+    const response = await responsePromise;
+    const result = await response.json();
+
+    if (result.ok) {
+      requestAnimationFrame(() => {
+        animarRuletaHastaPremio(result.premio);
+      });
+
+      setTimeout(() => {
+        mostrarPremio(result.premio);
+      }, 10020);
+    } else {
+      mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
+      mensajeError.classList.remove("hidden");
+    }
+  } catch (error) {
+    console.error("Error al girar ruleta:", error);
+    mensajeError.textContent = "Hubo un problema al girar la ruleta.";
+    mensajeError.classList.remove("hidden");
+  } finally {
+    setTimeout(() => {
+      ruletaGirando = false;
+      girarRuletaFullscreenBtn.disabled = false;
+      girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
+    }, 10000);
+  }
+}} else {
           mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
           mensajeError.classList.remove("hidden");
         }
