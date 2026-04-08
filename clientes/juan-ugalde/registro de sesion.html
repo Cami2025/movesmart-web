@@ -95,7 +95,7 @@
           rgba(255,120,0,0.72) 257.10deg 308.52deg,
           rgba(255,177,79,0.88) 308.52deg 360deg
         );
-      transition: transform 5.8s cubic-bezier(0.12, 0.75, 0.15, 1);
+      transition: transform 10s cubic-bezier(0.12, 0.75, 0.15, 1);
       will-change: transform;
     }
     .ruleta-beneficios::before {
@@ -555,7 +555,7 @@
     function animarRuletaHastaPremio(premio) {
       if (!ruletaBeneficios) return;
       const anguloPremio = obtenerAnguloPremio(premio);
-      const vueltasExtra = 360 * 7;
+      const vueltasExtra = 360 * 1;
       currentRotation = currentRotation + vueltasExtra + anguloPremio;
       ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
     }
@@ -608,8 +608,6 @@
           ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
         }
 
-        currentRotation = currentRotation + 360 * 2;
-        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
         const response = await fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
         const result = await response.json();
@@ -621,7 +619,7 @@
 
           setTimeout(() => {
             mostrarPremio(result.premio);
-          }, 6020);
+          }, 10020);
         } else {
           mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
           mensajeError.classList.remove("hidden");
@@ -635,7 +633,7 @@
           ruletaGirando = false;
           girarRuletaFullscreenBtn.disabled = false;
           girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-        }, 6000);
+        }, 10000);
       }
     }
 
