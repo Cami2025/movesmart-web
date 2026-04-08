@@ -609,18 +609,24 @@
         }
 
 
-        const response = await fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
-        const result = await response.json();
+        const responsePromise = fetch(`${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`);
 
-        if (result.ok) {
-          setTimeout(() => {
-            animarRuletaHastaPremio(result.premio);
-          }, 120);
+// empieza a girar altiro con una vuelta visual
+currentRotation = currentRotation + 360;
+ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
-          setTimeout(() => {
-            mostrarPremio(result.premio);
-          }, 10020);
-        } else {
+const response = await responsePromise;
+const result = await response.json();
+
+if (result.ok) {
+  setTimeout(() => {
+    animarRuletaHastaPremio(result.premio);
+  }, 150);
+
+  setTimeout(() => {
+    mostrarPremio(result.premio);
+  }, 10020);
+} else {
           mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
           mensajeError.classList.remove("hidden");
         }
