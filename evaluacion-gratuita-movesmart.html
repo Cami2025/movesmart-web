@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluación Gratuita | MoveSmart</title>
+  <meta name="description" content="Formulario de evaluación inicial MoveSmart" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0c0812; --card:rgba(24,16,32,.62); --border:rgba(255,255,255,.10);
+      --text:#f7f2fb; --muted:#d5c9dd; --accent:#ff5a1f; --accent-2:#ff8b4f;
+      --container:min(1100px, calc(100% - 32px)); --shadow:0 22px 50px rgba(0,0,0,.32);
+    }
+    body{
+      font-family:'Segoe UI', Inter, system-ui, sans-serif; color:var(--text);
+      background:linear-gradient(180deg, rgba(8,10,18,.45), rgba(8,10,18,.70)), url('fondo-preview-rutina.png') center/cover no-repeat fixed;
+      min-height:100vh; overflow-x:hidden;
+    }
+    body::before{
+      content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(73,58,146,.18), transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(243,107,42,.18), transparent 20%),
+        linear-gradient(90deg, rgba(6,8,18,.18) 0%, rgba(6,8,18,.04) 38%, rgba(6,8,18,.10) 100%);
+    }
+    .wrap{width:var(--container); margin:0 auto; padding:28px 0 48px; position:relative; z-index:1;}
+    a{color:inherit; text-decoration:none}
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px;}
+    .back{display:inline-flex; align-items:center; min-height:46px; padding:0 18px; border-radius:14px; background:rgba(255,255,255,.06); border:1px solid var(--border); font-weight:700;}
+    .brand{font-size:clamp(1.9rem, 4vw, 2.8rem); font-weight:800; letter-spacing:-.03em;}
+    .brand span{color:var(--accent)}
+    .hero,.section,.submit-card{background:rgba(24,16,32,.62); border:1px solid var(--border); box-shadow:var(--shadow); backdrop-filter:blur(10px);}
+    .hero{border-radius:32px; padding:30px; margin-bottom:22px;}
+    .eyebrow{display:inline-flex; padding:10px 14px; border-radius:999px; background:rgba(255,255,255,.07); border:1px solid var(--border); font-weight:700; margin-bottom:14px; color:var(--muted); font-size:.95rem;}
+    .hero h1{font-size:clamp(2rem, 4vw, 3.5rem); line-height:1.02; letter-spacing:-.04em; margin-bottom:12px;}
+    .hero p,.section-head p,.helper,.mini{color:var(--muted); line-height:1.7}
+    .notice{margin-top:18px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px;}
+    .mini{border-radius:18px; padding:16px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08);}
+    .mini strong{display:block; color:var(--text); margin-bottom:6px;}
+    form{display:grid; gap:18px}
+    .section{border-radius:28px; overflow:hidden;}
+    .section-head{background:rgba(23,36,79,.88); padding:18px 22px;}
+    .section-head h2{font-size:1.2rem; margin-bottom:4px;}
+    .section-body{padding:20px; display:grid; gap:16px;}
+    .field{border-radius:22px; padding:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);}
+    .title{display:block; font-size:1rem; font-weight:700; margin-bottom:12px; line-height:1.45;}
+    .req{color:#ff9b8a; margin-left:4px}
+    input[type="text"],input[type="number"],input[type="email"],input[type="tel"],textarea{
+      width:100%; border:none; outline:none; color:#17151d; background:rgba(255,255,255,.92); border-radius:16px; padding:14px 16px; font:inherit;
+    }
+    textarea{min-height:110px; resize:vertical}
+    .options{display:grid; gap:12px}
+    .option{display:flex; align-items:flex-start; gap:10px; color:var(--muted); line-height:1.5}
+    .option input{margin-top:3px; accent-color:var(--accent); width:18px; height:18px; flex:0 0 auto;}
+    .inline-other{display:grid; grid-template-columns:auto 1fr; gap:10px; align-items:center}
+    .submit-card{border-radius:26px; padding:22px;}
+    .submit-card h3{font-size:1.25rem; margin-bottom:8px;}
+    .actions{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+    button{border:none; cursor:pointer; border-radius:16px; padding:14px 22px; font:inherit; font-weight:800}
+    .primary{background:linear-gradient(180deg, var(--accent), var(--accent-2)); color:white;}
+    .secondary{background:rgba(255,255,255,.08); color:white; border:1px solid rgba(255,255,255,.10);}
+    .status{display:none; border-radius:18px; padding:14px 16px; line-height:1.6; font-weight:600;}
+    .status.show{display:block}.status.ok{background:rgba(29,191,115,.12); border:1px solid rgba(29,191,115,.22); color:#d7ffea;}
+    .status.error{background:rgba(255,107,107,.12); border:1px solid rgba(255,107,107,.22); color:#ffe1e1;}
+    @media (max-width:860px){.notice{grid-template-columns:1fr}.actions{flex-direction:column;align-items:stretch}button{width:100%}}
+    @media (max-width:640px){.wrap{padding:18px 0 34px}.topbar{flex-direction:column;align-items:flex-start}.hero,.section-body,.submit-card{padding:18px}.section-head{padding:16px 18px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <a href="index.html" class="back">← Volver</a>
+      <h1 class="brand">Move<span>Smart</span></h1>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">📝 Evaluación gratuita</div>
+      <h1>Ficha de evaluación inicial</h1>
+      <p>Completar este formulario te tomará menos de 5 minutos. La información entregada es confidencial y será utilizada exclusivamente para analizar tu punto de partida y elaborar una propuesta de entrenamiento personalizada.</p>
+      <div class="notice">
+        <div class="mini"><strong>100% personalizado</strong>Tus respuestas me ayudan a entender tu objetivo, contexto y disponibilidad real.</div>
+        <div class="mini"><strong>Proceso claro</strong>Responde con calma. Esta evaluación me ayuda a entender tu contexto antes de diseñar tu propuesta.</div>
+        <div class="mini"><strong>Hecho a tu medida</strong>Con esta información puedo adaptar mejor el plan a tu objetivo, tu tiempo y tu nivel actual.</div>
+      </div>
+    </section>
+
+    <form id="evaluationForm">
+      <section class="section"><div class="section-head"><h2>🚶 Datos básicos</h2><p>Información general para entender tu punto de partida.</p></div><div class="section-body">
+        <div class="field"><label class="title" for="fullName">Nombre y apellido <span class="req">*</span></label><input id="fullName" name="fullName" type="text" required></div>
+        <div class="field"><label class="title" for="age">Edad <span class="req">*</span></label><input id="age" name="age" type="number" min="10" max="100" required></div>
+        <div class="field"><label class="title" for="heightCm">Estatura (cm) <span class="req">*</span></label><input id="heightCm" name="heightCm" type="number" min="100" max="250" required></div>
+        <div class="field"><label class="title" for="weightKg">Peso (opcional)</label><input id="weightKg" name="weightKg" type="number" min="30" max="250"></div>
+        <div class="field"><span class="title">Actividad diaria <span class="req">*</span></span><div class="options">
+          <label class="option"><input type="radio" name="dailyActivity" value="Sedentaria (sentada casi todo el día)" required> Sedentaria (sentada casi todo el día)</label>
+          <label class="option"><input type="radio" name="dailyActivity" value="Mixta (algo de movimiento)"> Mixta (algo de movimiento)</label>
+          <label class="option"><input type="radio" name="dailyActivity" value="Activa (camino mucho/turnos)"> Activa (camino mucho/turnos)</label>
+          <label class="option"><input type="radio" name="dailyActivity" value="Turnos rotativos"> Turnos rotativos</label>
+        </div></div>
+      </div></section>
+
+      <section class="section"><div class="section-head"><h2>🎯 Objetivo</h2><p>Lo principal que quieres trabajar en esta etapa.</p></div><div class="section-body">
+        <div class="field"><span class="title">Objetivo principal (elige 1) <span class="req">*</span></span><div class="options">
+          <label class="option"><input type="radio" name="mainGoal" value="Salud / energía" required> Salud / energía</label>
+          <label class="option"><input type="radio" name="mainGoal" value="Bajar grasa"> Bajar grasa</label>
+          <label class="option"><input type="radio" name="mainGoal" value="Tonificar / recomposición"> Tonificar / recomposición</label>
+          <label class="option"><input type="radio" name="mainGoal" value="Ganar fuerza"> Ganar fuerza</label>
+          <label class="option"><input type="radio" name="mainGoal" value="Volver a entrenar (después de pausa)"> Volver a entrenar (después de pausa)</label>
+        </div></div>
+        <div class="field"><label class="title" for="goalReason">¿Por qué ese objetivo? <span class="req">*</span></label><textarea id="goalReason" name="goalReason" required></textarea></div>
+      </div></section>
+
+      <section class="section"><div class="section-head"><h2>🩺 Salud y seguridad (PAR-Q)</h2><p>Para orientar el plan con más seguridad.</p></div><div class="section-body">
+        <div class="field"><span class="title">¿Dolor en el pecho al hacer ejercicio? <span class="req">*</span></span><div class="options"><label class="option"><input type="radio" name="chestPain" value="Sí" required> Sí</label><label class="option"><input type="radio" name="chestPain" value="No"> No</label></div></div>
+        <div class="field"><span class="title">¿Condición médica que requiera control (presión/corazón/etc.)? <span class="req">*</span></span><div class="options"><label class="option"><input type="radio" name="medicalCondition" value="Sí" required> Sí</label><label class="option"><input type="radio" name="medicalCondition" value="No"> No</label></div></div>
+        <div class="field"><span class="title">¿Mareos o desmayos con esfuerzo? <span class="req">*</span></span><div class="options"><label class="option"><input type="radio" name="dizziness" value="Sí" required> Sí</label><label class="option"><input type="radio" name="dizziness" value="No"> No</label></div></div>
+        <div class="field"><span class="title">¿Lesión o dolor actual? <span class="req">*</span></span><div class="options"><label class="option"><input type="radio" name="currentPain" value="Sí" required> Sí</label><label class="option"><input type="radio" name="currentPain" value="No"> No</label></div></div>
+        <div class="field"><label class="title" for="painDetails">Si respondiste “Sí” en lesión/dolor: ¿Dónde y desde cuándo?</label><textarea id="painDetails" name="painDetails"></textarea></div>
+        <div class="field"><span class="title">¿Cirugía en el último año? <span class="req">*</span></span><div class="options"><label class="option"><input type="radio" name="surgeryLastYear" value="Sí" required> Sí</label><label class="option"><input type="radio" name="surgeryLastYear" value="No"> No</label></div></div>
+        <div class="field"><span class="title">¿Tomas medicamentos relevantes para el ejercicio? <span class="req">*</span></span><div class="options"><label class="option"><input type="radio" name="relevantMedication" value="Sí" required> Sí</label><label class="option"><input type="radio" name="relevantMedication" value="No"> No</label></div></div>
+        <div class="field"><label class="title" for="medicationDetails">Si respondiste “Sí” en medicamentos: ¿Cuáles?</label><textarea id="medicationDetails" name="medicationDetails"></textarea></div>
+        <div class="field"><label class="title" for="painfulMovement">¿Hay algún movimiento que no puedas hacer sin dolor?</label><textarea id="painfulMovement" name="painfulMovement"></textarea></div>
+      </div></section>
+
+      <section class="section"><div class="section-head"><h2>🏋️ Experiencia</h2><p>Para ajustar mejor el nivel de inicio.</p></div><div class="section-body">
+        <div class="field"><span class="title">¿Has entrenado antes? <span class="req">*</span></span><div class="options">
+          <label class="option"><input type="radio" name="trainingExperience" value="Nunca" required> Nunca</label>
+          <label class="option"><input type="radio" name="trainingExperience" value="Sí, pero pausé"> Sí, pero pausé</label>
+          <label class="option"><input type="radio" name="trainingExperience" value="Sí, entreno actualmente"> Sí, entreno actualmente</label>
+        </div></div>
+        <div class="field"><span class="title">¿Qué tipo de entrenamiento has hecho? <span class="req">*</span></span><div class="options">
+          <label class="option"><input type="checkbox" name="trainingTypes" value="Casa"> Casa</label>
+          <label class="option"><input type="checkbox" name="trainingTypes" value="Gimnasio"> Gimnasio</label>
+          <label class="option"><input type="checkbox" name="trainingTypes" value="Clases (spinning, zumba, etc.)"> Clases (spinning, zumba, etc.)</label>
+          <label class="option"><input type="checkbox" name="trainingTypes" value="Running/caminar"> Running/caminar</label>
+          <label class="option"><input type="checkbox" name="trainingTypes" value="Fuerza"> Fuerza</label>
+          <div class="inline-other"><label class="option"><input type="checkbox" name="trainingTypes" value="Otros"> Otros</label><input type="text" id="trainingTypesOther" name="trainingTypesOther" placeholder="Especifica si marcaste otros"></div>
+        </div></div>
+        <div class="field"><label class="title" for="timeWithoutTraining">¿Hace cuánto no entrenas? (si aplica)</label><input id="timeWithoutTraining" name="timeWithoutTraining" type="text"></div>
+      </div></section>
+
+      <section class="section"><div class="section-head"><h2>🧰 Lugar y equipamiento</h2><p>Para adaptar la propuesta a tu contexto real.</p></div><div class="section-body">
+        <div class="field"><span class="title">¿Dónde entrenarás? <span class="req">*</span></span><div class="options">
+          <label class="option"><input type="radio" name="trainingPlace" value="Casa" required> Casa</label>
+          <label class="option"><input type="radio" name="trainingPlace" value="Gimnasio"> Gimnasio</label>
+          <div class="inline-other"><label class="option"><input type="radio" name="trainingPlace" value="Otros"> Otros</label><input type="text" id="trainingPlaceOther" name="trainingPlaceOther" placeholder="Especifica si marcaste otros"></div>
+        </div></div>
+        <div class="field"><span class="title">¿Qué implementos tienes? <span class="req">*</span></span><div class="options">
+          <label class="option"><input type="checkbox" name="equipment" value="Ninguno"> Ninguno</label>
+          <label class="option"><input type="checkbox" name="equipment" value="Bandas elásticas"> Bandas elásticas</label>
+          <label class="option"><input type="checkbox" name="equipment" value="Mancuernas"> Mancuernas</label>
+          <label class="option"><input type="checkbox" name="equipment" value="Máquinas / pesas"> Máquinas / pesas</label>
+          <label class="option"><input type="checkbox" name="equipment" value="Mat/colchoneta"> Mat/colchoneta</label>
+          <label class="option"><input type="checkbox" name="equipment" value="Bicicleta estática / caminadora (si tiene)"> Bicicleta estática / caminadora (si tiene)</label>
+        </div></div>
+      </div></section>
+
+      <section class="section"><div class="section-head"><h2>📅 Disponibilidad</h2><p>Para construir una estructura sostenible.</p></div><div class="section-body">
+        <div class="field"><span class="title">Días disponibles (ideal 3) <span class="req">*</span></span><div class="options">
+          <label class="option"><input type="checkbox" name="availableDays" value="Lunes"> Lunes</label>
+          <label class="option"><input type="checkbox" name="availableDays" value="Martes"> Martes</label>
+          <label class="option"><input type="checkbox" name="availableDays" value="Miércoles"> Miércoles</label>
+          <label class="option"><input type="checkbox" name="availableDays" value="Jueves"> Jueves</label>
+          <label class="option"><input type="checkbox" name="availableDays" value="Viernes"> Viernes</label>
+          <label class="option"><input type="checkbox" name="availableDays" value="Sábado"> Sábado</label>
+          <label class="option"><input type="checkbox" name="availableDays" value="Domingo"> Domingo</label>
+        </div><div class="helper">Recomendación: marca al menos 3 días.</div></div>
+        <div class="field"><span class="title">Tiempo por sesión <span class="req">*</span></span><div class="options">
+          <label class="option"><input type="radio" name="sessionTime" value="20–30 min" required> 20–30 min</label>
+          <label class="option"><input type="radio" name="sessionTime" value="30–45 min"> 30–45 min</label>
+          <label class="option"><input type="radio" name="sessionTime" value="45–60 min"> 45–60 min</label>
+        </div></div>
+      </div></section>
+
+      <section class="section"><div class="section-head"><h2>💬 Preferencias y seguimiento</h2><p>Para que el proceso también sea sostenible en la práctica.</p></div><div class="section-body">
+        <div class="field"><label class="title" for="likesDislikes">¿Qué te gusta / no te gusta del ejercicio?</label><textarea id="likesDislikes" name="likesDislikes"></textarea></div>
+        <div class="field"><label class="title" for="consistencyDifficulty">¿Qué es lo que más te cuesta para ser constante? <span class="req">*</span></label><textarea id="consistencyDifficulty" name="consistencyDifficulty" required></textarea></div>
+        <div class="field"><span class="title">📲 Seguimiento semanal por WhatsApp <span class="req">*</span></span><div class="helper" style="margin:0 0 12px 0">El seguimiento se realiza los lunes entre 18:00 y 20:00.</div><div class="options">
+          <label class="option"><input type="radio" name="weeklyFollowUp" value="18:00–19:00" required> 18:00–19:00</label>
+          <label class="option"><input type="radio" name="weeklyFollowUp" value="19:00–20:00"> 19:00–20:00</label>
+          <label class="option"><input type="radio" name="weeklyFollowUp" value="Me adapto al horario disponible"> Me adapto al horario disponible</label>
+        </div></div>
+        <div class="field"><span class="title">📩 ¿Por qué medio prefieres recibir tu propuesta de entrenamiento? <span class="req">*</span></span><div class="options">
+          <label class="option"><input type="radio" name="contactMethod" value="Correo electrónico" required> Correo electrónico</label>
+          <label class="option"><input type="radio" name="contactMethod" value="WhatsApp"> WhatsApp</label>
+        </div></div>
+        <div class="field"><label class="title" for="emailAddress">✉️ Si elegiste correo electrónico, escríbelo aquí</label><input id="emailAddress" name="emailAddress" type="email" placeholder="ejemplo@correo.com"></div>
+        <div class="field"><label class="title" for="whatsappNumber">📱 Si elegiste WhatsApp, escribe tu número en este formato: +56912345678</label><input id="whatsappNumber" name="whatsappNumber" type="tel" placeholder="+56912345678"></div>
+      </div></section>
+
+      <div class="submit-card">
+        <h3>Enviar evaluación</h3>
+        <p>Este HTML ya quedó diseñado para MoveSmart y preparado para conectarse a Google Sheets mediante Apps Script. Solo faltará pegar la URL del script cuando hagamos ese paso.</p>
+        <div id="formStatus" class="status"></div>
+        <div class="actions">
+          <button type="submit" class="primary">Enviar evaluación</button>
+          <button type="button" class="secondary" id="resetBtn">Limpiar formulario</button>
+        </div>
+        <div class="helper" style="margin-top:14px">En el siguiente paso conectamos este formulario a tu Google Sheets.</div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT";
+    const form = document.getElementById("evaluationForm");
+    const statusBox = document.getElementById("formStatus");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function showStatus(message, type) {
+      statusBox.className = "status show " + type;
+      statusBox.textContent = message;
+    }
+    function getCheckboxValues(name) {
+      return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(i => i.value);
+    }
+    function getRadioValue(name) {
+      const selected = document.querySelector(`input[name="${name}"]:checked`);
+      return selected ? selected.value : "";
+    }
+    function validateCustomFields() {
+      const trainingTypes = getCheckboxValues("trainingTypes");
+      const equipment = getCheckboxValues("equipment");
+      const availableDays = getCheckboxValues("availableDays");
+      const contactMethod = getRadioValue("contactMethod");
+      const email = document.getElementById("emailAddress").value.trim();
+      const whatsapp = document.getElementById("whatsappNumber").value.trim();
+
+      if (trainingTypes.length === 0) return showStatus("Marca al menos una opción en “¿Qué tipo de entrenamiento has hecho?”.", "error"), false;
+      if (equipment.length === 0) return showStatus("Marca al menos una opción en “¿Qué implementos tienes?”.", "error"), false;
+      if (availableDays.length === 0) return showStatus("Marca al menos un día disponible.", "error"), false;
+      if (contactMethod === "Correo electrónico" && !email) return showStatus("Elegiste correo electrónico, así que debes escribir tu email.", "error"), false;
+      if (contactMethod === "WhatsApp" && !whatsapp) return showStatus("Elegiste WhatsApp, así que debes escribir tu número.", "error"), false;
+      if (whatsapp && !/^\+?\d{8,15}$/.test(whatsapp)) return showStatus("Revisa el formato del WhatsApp. Ejemplo: +56912345678", "error"), false;
+      return true;
+    }
+    function buildPayload() {
+      return {
+        submittedAt:new Date().toISOString(),
+        fullName:fullName.value.trim(), age:age.value.trim(), heightCm:heightCm.value.trim(), weightKg:weightKg.value.trim(),
+        dailyActivity:getRadioValue("dailyActivity"), mainGoal:getRadioValue("mainGoal"), goalReason:goalReason.value.trim(),
+        chestPain:getRadioValue("chestPain"), medicalCondition:getRadioValue("medicalCondition"), dizziness:getRadioValue("dizziness"),
+        currentPain:getRadioValue("currentPain"), painDetails:painDetails.value.trim(), surgeryLastYear:getRadioValue("surgeryLastYear"),
+        relevantMedication:getRadioValue("relevantMedication"), medicationDetails:medicationDetails.value.trim(), painfulMovement:painfulMovement.value.trim(),
+        trainingExperience:getRadioValue("trainingExperience"), trainingTypes:getCheckboxValues("trainingTypes"), trainingTypesOther:trainingTypesOther.value.trim(),
+        timeWithoutTraining:timeWithoutTraining.value.trim(), trainingPlace:getRadioValue("trainingPlace"), trainingPlaceOther:trainingPlaceOther.value.trim(),
+        equipment:getCheckboxValues("equipment"), availableDays:getCheckboxValues("availableDays"), sessionTime:getRadioValue("sessionTime"),
+        likesDislikes:likesDislikes.value.trim(), consistencyDifficulty:consistencyDifficulty.value.trim(), weeklyFollowUp:getRadioValue("weeklyFollowUp"),
+        contactMethod:getRadioValue("contactMethod"), emailAddress:emailAddress.value.trim(), whatsappNumber:whatsappNumber.value.trim()
+      };
+    }
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      statusBox.className = "status"; statusBox.textContent = "";
+      if (!form.reportValidity()) return;
+      if (!validateCustomFields()) return;
+      const payload = buildPayload();
+      if (APPS_SCRIPT_URL === "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT") {
+        showStatus("El formulario ya está listo. Solo falta pegar la URL de tu Apps Script para que envíe a Google Sheets.", "ok");
+        console.log(payload); return;
+      }
+      try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+          method:"POST", mode:"cors", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error("No se pudo enviar.");
+        showStatus("Tu evaluación fue enviada correctamente. Pronto recibirás tu propuesta MoveSmart.", "ok");
+        form.reset();
+      } catch (error) {
+        showStatus("Hubo un problema al enviar el formulario. Revisa la URL del Apps Script o intenta nuevamente.", "error");
+      }
+    });
+    resetBtn.addEventListener("click", () => { form.reset(); statusBox.className = "status"; statusBox.textContent = ""; });
+  </script>
+</body>
+</html>
