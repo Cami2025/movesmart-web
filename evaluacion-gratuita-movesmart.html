@@ -237,16 +237,16 @@
     function buildPayload() {
       return {
         submittedAt:new Date().toISOString(),
-        fullName:fullName.value.trim(), age:age.value.trim(), heightCm:heightCm.value.trim(), weightKg:weightKg.value.trim(),
-        dailyActivity:getRadioValue("dailyActivity"), mainGoal:getRadioValue("mainGoal"), goalReason:goalReason.value.trim(),
+        fullName:document.getElementById("fullName").value.trim(), age:document.getElementById("age").value.trim(), heightCm:document.getElementById("heightCm").value.trim(), weightKg:document.getElementById("weightKg").value.trim(),
+        dailyActivity:getRadioValue("dailyActivity"), mainGoal:getRadioValue("mainGoal"), goalReason:document.getElementById("goalReason").value.trim(),
         chestPain:getRadioValue("chestPain"), medicalCondition:getRadioValue("medicalCondition"), dizziness:getRadioValue("dizziness"),
-        currentPain:getRadioValue("currentPain"), painDetails:painDetails.value.trim(), surgeryLastYear:getRadioValue("surgeryLastYear"),
-        relevantMedication:getRadioValue("relevantMedication"), medicationDetails:medicationDetails.value.trim(), painfulMovement:painfulMovement.value.trim(),
-        trainingExperience:getRadioValue("trainingExperience"), trainingTypes:getCheckboxValues("trainingTypes"), trainingTypesOther:trainingTypesOther.value.trim(),
-        timeWithoutTraining:timeWithoutTraining.value.trim(), trainingPlace:getRadioValue("trainingPlace"), trainingPlaceOther:trainingPlaceOther.value.trim(),
+        currentPain:getRadioValue("currentPain"), painDetails:document.getElementById("painDetails").value.trim(), surgeryLastYear:getRadioValue("surgeryLastYear"),
+        relevantMedication:getRadioValue("relevantMedication"), medicationDetails:document.getElementById("medicationDetails").value.trim(), painfulMovement:document.getElementById("painfulMovement").value.trim(),
+        trainingExperience:getRadioValue("trainingExperience"), trainingTypes:getCheckboxValues("trainingTypes"), trainingTypesOther:document.getElementById("trainingTypesOther").value.trim(),
+        timeWithoutTraining:document.getElementById("timeWithoutTraining").value.trim(), trainingPlace:getRadioValue("trainingPlace"), trainingPlaceOther:document.getElementById("trainingPlaceOther").value.trim(),
         equipment:getCheckboxValues("equipment"), availableDays:getCheckboxValues("availableDays"), sessionTime:getRadioValue("sessionTime"),
-        likesDislikes:likesDislikes.value.trim(), consistencyDifficulty:consistencyDifficulty.value.trim(), weeklyFollowUp:getRadioValue("weeklyFollowUp"),
-        contactMethod:getRadioValue("contactMethod"), emailAddress:emailAddress.value.trim(), whatsappNumber:whatsappNumber.value.trim()
+        likesDislikes:document.getElementById("likesDislikes").value.trim(), consistencyDifficulty:document.getElementById("consistencyDifficulty").value.trim(), weeklyFollowUp:getRadioValue("weeklyFollowUp"),
+        contactMethod:getRadioValue("contactMethod"), emailAddress:document.getElementById("emailAddress").value.trim(), whatsappNumber:document.getElementById("whatsappNumber").value.trim()
       };
     }
     form.addEventListener("submit", async (event) => {
@@ -260,14 +260,20 @@
         console.log(payload); return;
       }
       try {
-        const response = await fetch(APPS_SCRIPT_URL, {
-          method:"POST", mode:"cors", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)
+        await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(payload)
         });
-        if (!response.ok) throw new Error("No se pudo enviar.");
+
         showStatus("Tu evaluación fue enviada correctamente. Pronto recibirás tu propuesta MoveSmart.", "ok");
         form.reset();
       } catch (error) {
         showStatus("Hubo un problema al enviar el formulario. Revisa la URL del Apps Script o intenta nuevamente.", "error");
+        console.error(error);
       }
     });
     resetBtn.addEventListener("click", () => { form.reset(); statusBox.className = "status"; statusBox.textContent = ""; });
