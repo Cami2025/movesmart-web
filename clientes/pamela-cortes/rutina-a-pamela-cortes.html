@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -314,49 +315,61 @@
       -webkit-backdrop-filter:blur(8px);
     }
 
-    .note{
+    .finish-session-wrap{
       margin-top:22px;
-      background:rgba(29,191,115,.12);
-      border:1px solid rgba(29,191,115,.25);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+    }
+
+    .finish-session-text{
+      width:100%;
+      text-align:center;
+      font-size:1rem;
+      line-height:1.6;
+      color:var(--text-soft);
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
       border-radius:22px;
-      padding:16px 18px;
-      color:#dcffe9;
-      line-height:1.7;
+      padding:22px 18px;
       backdrop-filter:blur(8px);
       -webkit-backdrop-filter:blur(8px);
     }
 
-    @media (max-width: 900px){
-      .quick-stats{
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .exercise-card{
-        grid-template-columns:1fr;
-      }
+    .finish-session-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      text-decoration:none;
+      background:linear-gradient(180deg,#ff8a1f,#ff5a1f);
+      color:#fff;
+      font-weight:800;
+      font-size:1.05rem;
+      padding:18px 28px;
+      border-radius:20px;
+      box-shadow:0 14px 30px rgba(255,90,31,.28);
+      border:none;
+      min-width:320px;
     }
 
-    @media (max-width: 640px){
-      .quick-stats{
-        grid-template-columns:1fr;
-      }
+    .finish-session-btn:hover{
+      transform:translateY(-1px);
+    }
 
-      .wrap{
-        padding:18px 0 28px;
-      }
+    @media (max-width: 900px){
+      .quick-stats{ grid-template-columns:repeat(2,1fr); }
+      .exercise-card{ grid-template-columns:1fr; }
+    }
 
-      .hero{
-        padding:22px;
-      }
-
-      .section-head,.section-body{
-        padding:16px;
-      }
-
-      .topbar{
-        flex-direction:column;
-        align-items:flex-start;
-      }
+    @media (max-width:640px){
+      .quick-stats{ grid-template-columns:1fr; }
+      .wrap{ padding:18px 0 28px; }
+      .hero{ padding:22px; }
+      .section-head,.section-body{ padding:16px; }
+      .topbar{ flex-direction:column; align-items:flex-start; }
+      .finish-session-btn{ width:100%; min-width:unset; }
     }
   </style>
 </head>
@@ -369,17 +382,17 @@
     </div>
 
     <section class="hero">
-      <div class="eyebrow">Rutina personalizada</div>
-      <h1>Rutina A · Full Body Base</h1>
+      <div class="eyebrow">Rutina personalizada · Mes 2</div>
+      <h1>Rutina A · Fuerza base + estabilidad izquierda</h1>
       <p class="subtitle">
-        Aprendizaje técnico, fuerza general básica y activación. Una rutina clara,
-        simple y amigable para seguir desde el celular o computador.
+        Rutina enfocada en progresar la fuerza general mientras mejoras el control de cadera,
+        equilibrio y estabilidad del lado izquierdo. El foco no es solo entrenar más, sino moverte mejor.
       </p>
 
       <div class="quick-stats">
         <div class="stat">
           <small>Duración</small>
-          <strong>20–30 min</strong>
+          <strong>25–30 min</strong>
         </div>
         <div class="stat">
           <small>Intensidad</small>
@@ -387,11 +400,11 @@
         </div>
         <div class="stat">
           <small>Material</small>
-          <strong>Silla, banda y mancuernas</strong>
+          <strong>Silla, banda, mancuernas y colchoneta</strong>
         </div>
         <div class="stat">
           <small>Objetivo</small>
-          <strong>Fuerza base y control del movimiento</strong>
+          <strong>Fuerza base, control unilateral y menor carga lumbar</strong>
         </div>
       </div>
     </section>
@@ -399,12 +412,12 @@
     <section class="section">
       <div class="section-head">
         <h2>Calentamiento</h2>
-        <p>Empieza suave para preparar el cuerpo y entrar mejor a la sesión.</p>
+        <p>Empieza suave para preparar cadera, tronco y respiración antes del trabajo principal.</p>
       </div>
       <div class="section-body">
         <div class="simple-card">
           <strong>Bicicleta estática o caminata suave</strong><br>
-          5 minutos
+          5–6 minutos
         </div>
       </div>
     </section>
@@ -412,21 +425,19 @@
     <section class="section">
       <div class="section-head">
         <h2>Activación</h2>
-        <p>Ejercicios iniciales para activar glúteos, core y control corporal.</p>
+        <p>Primer bloque orientado a activar glúteos, abdomen y control del apoyo izquierdo.</p>
       </div>
       <div class="section-body">
 
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Puente de glúteos</div>
+            <div class="exercise-name">Puente de glúteos con pausa</div>
             <p class="exercise-desc">
-              Busca una ejecución controlada, activando glúteos sin apurar el movimiento.
+              Eleva la cadera de forma controlada, aprieta glúteos arriba y mantén una pausa de 2 segundos.
+              Evita arquear la zona lumbar y prioriza sentir el trabajo en glúteos.
             </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/shorts/FfXq0AUz_Xw">
-              ▶ Ver video
-            </button>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/shorts/FfXq0AUz_Xw">▶ Ver video</button>
           </div>
-
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
             <div class="pill"><span>Reps</span>10</div>
@@ -438,19 +449,37 @@
 
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Dead bug</div>
+            <div class="exercise-name">Clamshell con banda</div>
             <p class="exercise-desc">
-              Mantén abdomen activo y controla la zona lumbar durante todo el ejercicio.
+              Mantén pelvis estable y abre la rodilla sin girarte hacia atrás. Busca sentir glúteo medio,
+              especialmente del lado izquierdo, con movimiento corto y controlado.
             </p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=XkTtXA3-IqU">
-              ▶ Ver video
-            </button>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=vsQugiJgZZE">▶ Ver video</button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>6</div>
+            <div class="pill"><span>Reps</span>12 por lado</div>
             <div class="pill"><span>Descanso</span>30 seg</div>
-            <div class="pill"><span>Carga</span>Peso corporal</div>
+            <div class="pill"><span>Carga</span>Minibanda suave</div>
+            <div class="pill"><span>RPE</span>4</div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <div>
+            <div class="exercise-name">Equilibrio unipodal asistido</div>
+            <p class="exercise-desc">
+              Apóyate levemente en pared o silla si lo necesitas. La prioridad es sostener una postura estable,
+              con especial atención al apoyo del pie izquierdo.
+            </p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=5OKF9DJcP6M">▶ Ver video</button>
+          </div>
+          <div class="exercise-meta">
+            <div class="pill"><span>Series</span>2</div>
+            <div class="pill"><span>Reps</span>20–25 seg por lado</div>
+            <div class="pill"><span>Descanso</span>30 seg</div>
+            <div class="pill"><span>Carga</span>Apoyo asistido</div>
+            <div class="pill"><span>RPE</span>4</div>
           </div>
         </article>
 
@@ -460,23 +489,24 @@
     <section class="section">
       <div class="section-head">
         <h2>Bloque principal</h2>
-        <p>La parte central de la rutina, enfocada en fuerza base y técnica.</p>
+        <p>Trabajo de fuerza base con progresión suave, más control de cadera y menos compensación lumbar.</p>
       </div>
       <div class="section-body">
 
         <article class="exercise-card">
           <div>
-            <div class="exercise-name">Sentarse y pararse desde silla</div>
-            <p class="exercise-desc">Sube y baja con control, apoyando bien los pies.</p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=EyUOWdpinSo">
-              ▶ Ver video
-            </button>
+            <div class="exercise-name">Sentarse y pararse desde silla con tempo</div>
+            <p class="exercise-desc">
+              Siéntate y ponte de pie con control, usando una bajada lenta de 3 segundos.
+              Apoya bien ambos pies y evita dejar que el tronco haga todo el trabajo.
+            </p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=EyUOWdpinSo">▶ Ver video</button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>10</div>
+            <div class="pill"><span>Reps</span>8–10</div>
             <div class="pill"><span>Descanso</span>60 seg</div>
-            <div class="pill"><span>Carga</span>Peso corporal</div>
+            <div class="pill"><span>Carga</span>Peso corporal o mancuerna liviana</div>
             <div class="pill"><span>RPE</span>5</div>
           </div>
         </article>
@@ -484,14 +514,15 @@
         <article class="exercise-card">
           <div>
             <div class="exercise-name">Remo con banda elástica</div>
-            <p class="exercise-desc">Lleva los codos hacia atrás con postura estable.</p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=TkftBHOyPYI">
-              ▶ Ver video
-            </button>
+            <p class="exercise-desc">
+              Lleva los codos hacia atrás con postura estable y pecho abierto. Mantén abdomen activo
+              para evitar compensar con la zona lumbar.
+            </p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=TkftBHOyPYI">▶ Ver video</button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>10</div>
+            <div class="pill"><span>Reps</span>10–12</div>
             <div class="pill"><span>Descanso</span>60 seg</div>
             <div class="pill"><span>Carga</span>Banda suave-moderada</div>
             <div class="pill"><span>RPE</span>5</div>
@@ -501,16 +532,17 @@
         <article class="exercise-card">
           <div>
             <div class="exercise-name">Press de pecho con mancuernas</div>
-            <p class="exercise-desc">Movimiento estable, controlado y sin apurar la bajada.</p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=y9XAsTx3XxQ">
-              ▶ Ver video
-            </button>
+            <p class="exercise-desc">
+              Movimiento estable y controlado, sin apurar la bajada. Mantén costillas controladas y evita
+              arquear de más la espalda baja.
+            </p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=y9XAsTx3XxQ">▶ Ver video</button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
             <div class="pill"><span>Reps</span>10</div>
             <div class="pill"><span>Descanso</span>60 seg</div>
-            <div class="pill"><span>Carga</span>Mancuernas 2–4 kg c/u</div>
+            <div class="pill"><span>Carga</span>Mancuernas 3–5 kg c/u</div>
             <div class="pill"><span>RPE</span>5</div>
           </div>
         </article>
@@ -518,17 +550,36 @@
         <article class="exercise-card">
           <div>
             <div class="exercise-name">Peso muerto rumano con mancuernas livianas</div>
-            <p class="exercise-desc">Mantén espalda neutra y prioriza técnica antes que carga.</p>
-            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=x7W2BOKWWKs">
-              ▶ Ver video
-            </button>
+            <p class="exercise-desc">
+              Lleva la cadera hacia atrás con espalda neutra y movimiento corto. El objetivo es sentir glúteos e isquios,
+              no tensión en la zona lumbar.
+            </p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=x7W2BOKWWKs">▶ Ver video</button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>10</div>
+            <div class="pill"><span>Reps</span>8–10</div>
             <div class="pill"><span>Descanso</span>60 seg</div>
             <div class="pill"><span>Carga</span>Mancuernas 4–6 kg c/u</div>
             <div class="pill"><span>RPE</span>5</div>
+          </div>
+        </article>
+
+        <article class="exercise-card">
+          <div>
+            <div class="exercise-name">Peso muerto a una pierna asistido</div>
+            <p class="exercise-desc">
+              Usa apoyo en pared o silla para mejorar el control. Da prioridad al lado izquierdo,
+              cuidando que la pelvis se mantenga estable y el movimiento salga desde la cadera.
+            </p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=2QvQ1b5mL8k">▶ Ver video</button>
+          </div>
+          <div class="exercise-meta">
+            <div class="pill"><span>Series</span>2</div>
+            <div class="pill"><span>Reps</span>6–8 por lado</div>
+            <div class="pill"><span>Descanso</span>45–60 seg</div>
+            <div class="pill"><span>Carga</span>Asistido o mancuerna muy liviana</div>
+            <div class="pill"><span>RPE</span>5–6</div>
           </div>
         </article>
 
@@ -538,7 +589,7 @@
     <section class="section">
       <div class="section-head">
         <h2>Bloque final</h2>
-        <p>Cierre suave de la sesión para bajar pulsaciones.</p>
+        <p>Cierra la sesión de forma suave para bajar pulsaciones y soltar tensión.</p>
       </div>
       <div class="section-body">
         <div class="simple-card">
@@ -547,24 +598,19 @@
         </div>
       </div>
     </section>
-        <section class="section">
+
+    <section class="section">
       <div class="section-head">
         <h2>Estiramientos / vuelta a la calma</h2>
-        <p>Opcional al final de la sesión para soltar musculatura y favorecer la recuperación.</p>
+        <p>Opcional al final para favorecer recuperación, especialmente en glúteos, cadera y cadena posterior.</p>
       </div>
       <div class="section-body">
 
         <article class="exercise-card">
           <div>
             <div class="exercise-name">Estiramiento de glúteos</div>
-            <p class="exercise-desc">Mantén una tensión suave, sin rebotes ni dolor.</p>
-            <button
-              class="video-btn open-video"
-              type="button"
-              data-video="https://www.youtube.com/watch?v=bpynZ0dqAmI"
-            >
-              ▶ Ver video
-            </button>
+            <p class="exercise-desc">Mantén una tensión suave, sin rebotes ni dolor, y deja que la respiración te ayude a soltar la zona.</p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=bpynZ0dqAmI">▶ Ver video</button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
@@ -578,14 +624,8 @@
         <article class="exercise-card">
           <div>
             <div class="exercise-name">Estiramiento de isquiotibiales</div>
-            <p class="exercise-desc">Respira profundo y busca relajación progresiva del músculo.</p>
-            <button
-              class="video-btn open-video"
-              type="button"
-              data-video="https://www.youtube.com/shorts/uXF9niUANJ4"
-            >
-              ▶ Ver video
-            </button>
+            <p class="exercise-desc">Respira profundo y busca relajación progresiva del músculo sin forzar el rango.</p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/shorts/uXF9niUANJ4">▶ Ver video</button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
@@ -599,14 +639,8 @@
         <article class="exercise-card">
           <div>
             <div class="exercise-name">Estiramiento flexor de cadera</div>
-            <p class="exercise-desc">Mantén pelvis neutra y evita arquear demasiado la espalda.</p>
-            <button
-              class="video-btn open-video"
-              type="button"
-              data-video="https://www.youtube.com/watch?v=8xZlzcMAtVQ"
-            >
-              ▶ Ver video
-            </button>
+            <p class="exercise-desc">Mantén pelvis neutra y evita arquear la espalda. Busca una sensación cómoda delante de la cadera.</p>
+            <button class="video-btn open-video" type="button" data-video="https://www.youtube.com/watch?v=8xZlzcMAtVQ">▶ Ver video</button>
           </div>
           <div class="exercise-meta">
             <div class="pill"><span>Series</span>2</div>
@@ -617,34 +651,16 @@
           </div>
         </article>
 
-        <article class="exercise-card">
-          <div>
-            <div class="exercise-name">Estiramiento de pecho / hombros</div>
-            <p class="exercise-desc">Abre el pecho con suavidad y mantén respiración tranquila.</p>
-            <button
-              class="video-btn open-video"
-              type="button"
-              data-video="https://www.youtube.com/watch?v=TufwPKlp31w"
-            >
-              ▶ Ver video
-            </button>
-          </div>
-          <div class="exercise-meta">
-            <div class="pill"><span>Series</span>2</div>
-            <div class="pill"><span>Reps</span>20–25 seg por lado</div>
-            <div class="pill"><span>Descanso</span>10 seg</div>
-            <div class="pill"><span>Carga</span>Peso corporal</div>
-            <div class="pill"><span>RPE</span>2</div>
-          </div>
-        </article>
-
+        <div class="finish-session-wrap">
+          <p class="finish-session-text">
+            Cuando termines esta sesión, presiona el botón de abajo para registrar cómo te fue.
+          </p>
+          <a href="registro de sesion.html?rutina=Rutina%20A" class="finish-session-btn">
+            ✅ Finalicé mi sesión
+          </a>
+        </div>
       </div>
     </section>
-
-    <div class="note">
-      <strong>Tip MoveSmart:</strong> prioriza la calidad del movimiento. Si algo molesta,
-      ajusta rango, carga o repeticiones.
-    </div>
 
   </div>
 
