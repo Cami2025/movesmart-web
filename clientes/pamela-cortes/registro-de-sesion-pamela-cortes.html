@@ -482,23 +482,22 @@
     }
 
     function obtenerSemanaPorFecha(fechaStr) {
-      const fecha = new Date(fechaStr + "T00:00:00");
-      const s1Inicio = new Date("2026-05-04T00:00:00");
-      const s1Fin = new Date("2026-05-10T23:59:59");
-      const s2Inicio = new Date("2026-05-11T00:00:00");
-      const s2Fin = new Date("2026-05-17T23:59:59");
-      const s3Inicio = new Date("2026-05-18T00:00:00");
-      const s3Fin = new Date("2026-05-24T23:59:59");
-      const s4Inicio = new Date("2026-05-25T00:00:00");
-      const s4Fin = new Date("2026-05-31T23:59:59");
+  const fecha = new Date(fechaStr + "T00:00:00");
+  const s1Inicio = new Date("2026-05-04T00:00:00");
+  const s1Fin = new Date("2026-05-10T23:59:59");
+  const s2Inicio = new Date("2026-05-11T00:00:00");
+  const s2Fin = new Date("2026-05-17T23:59:59");
+  const s3Inicio = new Date("2026-05-18T00:00:00");
+  const s3Fin = new Date("2026-05-24T23:59:59");
+  const s4Inicio = new Date("2026-05-25T00:00:00");
+  const s4Fin = new Date("2026-05-31T23:59:59");
 
-      if (fecha >= s1Inicio && fecha <= s1Fin) return "Semana 1";
-      if (fecha >= s2Inicio && fecha <= s2Fin) return "Semana 2";
-      if (fecha >= s3Inicio && fecha <= s3Fin) return "Semana 3";
-      if (fecha >= s4Inicio && fecha <= s4Fin) return "Semana 4";
-      return "Fuera de ciclo";
-    }
-
+  if (fecha >= s1Inicio && fecha <= s1Fin) return "Semana 1";
+  if (fecha >= s2Inicio && fecha <= s2Fin) return "Semana 2";
+  if (fecha >= s3Inicio && fecha <= s3Fin) return "Semana 3";
+  if (fecha >= s4Inicio && fecha <= s4Fin) return "Semana 4";
+  return "Fuera de ciclo";
+}
     function toBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
