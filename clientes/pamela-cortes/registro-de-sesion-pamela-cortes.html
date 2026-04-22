@@ -427,9 +427,9 @@
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZg1ydVq9M1AL5GvpqkJxYEyyjz15Af2su3XyHgrsKJOq_5SMoo_xpXITMEU0tkrDq/exec";
-    const RULETA_URL = "https://script.google.com/macros/s/AKfycbwfMPF21e58JEReRI3LDNI2yVZHV7J2xywdBkONOaTQYioSs_2e1pM-E0VL4mkmBwwm/exec";
-    const CLAIM_PREMIO_URL = "#";
+    const SCRIPT_ = "https://script.google.com/macros/s/AKfycbyZg1ydVq9M1AL5GvpqkJxYEyyjz15Af2su3XyHgrsKJOq_5SMoo_xpXITMEU0tkrDq/exec";
+    const RULETA_ = "https://script.google.com/macros/s/AKfycbxthBnrGTQThgOOE6qz6Sb2e8NtamPZ6MXURJI87Su64UOP_SyJavYmC5AYprXYjgIu/exec";
+    const CLAIM_PREMIO_ = "#";
 
     const esfuerzo = document.getElementById("esfuerzo");
     const esfuerzoValor = document.getElementById("esfuerzoValor");
@@ -462,7 +462,7 @@
     let ruletaGirando = false;
     let currentRotation = 0;
 
-    claimPremioBtn.href = CLAIM_PREMIO_URL;
+    claimPremioBtn.href = CLAIM_PREMIO_;
 
     const params = new URLSearchParams(window.location.search);
     const rutinaParam = params.get("rutina") || "Rutina A";
