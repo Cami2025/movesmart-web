@@ -254,7 +254,7 @@
         <p class="rutina-checkin-subtitle">
           Registra tu sesión acá
           <span class="word-arrow">abajo <span class="inline-arrow">⬇</span></span>
-          y comparte una foto de tu entreno. Cada registro suma avance y, al completar el ciclo de mayo, se activa tu ruleta de beneficios MoveSmart.
+          y comparte una foto de tu entreno. Cada registro suma avance y, al completar el ciclo, se activa tu ruleta de beneficios MoveSmart.
         </p>
 
         <div class="recompensa-box">
@@ -275,7 +275,7 @@
                 <div class="ruleta-centro">Ruleta MoveSmart</div>
               </div>
 
-              <p class="ruleta-note">La ruleta se activa al completar el ciclo completo de mayo 2026.</p>
+              <p class="ruleta-note">La ruleta se activa cuando se cumplen los requisitos configurados.</p>
             </div>
           </div>
         </div>
@@ -373,7 +373,7 @@
 
           <div class="checkin-bloque">
             <label class="checkin-label">Comparte una foto de tu entreno</label>
-            <p class="checkin-helper">Sube una foto de tu sesión de hoy para registrar tu avance en el ciclo MoveSmart de mayo.</p>
+            <p class="checkin-helper">Sube una foto de tu sesión de hoy para registrar tu avance.</p>
 
             <input type="file" id="fotoEntreno" name="foto_entreno" accept="image/*" capture="environment" hidden>
 
@@ -427,9 +427,9 @@
   </div>
 
   <script>
-    const SCRIPT_ = "https://script.google.com/macros/s/AKfycbyZg1ydVq9M1AL5GvpqkJxYEyyjz15Af2su3XyHgrsKJOq_5SMoo_xpXITMEU0tkrDq/exec";
-    const RULETA_ = "https://script.google.com/macros/s/AKfycbxthBnrGTQThgOOE6qz6Sb2e8NtamPZ6MXURJI87Su64UOP_SyJavYmC5AYprXYjgIu/exec";
-    const CLAIM_PREMIO_ = "#";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZg1ydVq9M1AL5GvpqkJxYEyyjz15Af2su3XyHgrsKJOq_5SMoo_xpXITMEU0tkrDq/exec";
+    const RULETA_URL = "https://script.google.com/macros/s/AKfycbxthBnrGTQThgOOE6qz6Sb2e8NtamPZ6MXURJI87Su64UOP_SyJavYmC5AYprXYjgIu/exec";
+    const CLAIM_PREMIO_URL = "#";
 
     const esfuerzo = document.getElementById("esfuerzo");
     const esfuerzoValor = document.getElementById("esfuerzoValor");
@@ -462,7 +462,7 @@
     let ruletaGirando = false;
     let currentRotation = 0;
 
-    claimPremioBtn.href = CLAIM_PREMIO_;
+    claimPremioBtn.href = CLAIM_PREMIO_URL;
 
     const params = new URLSearchParams(window.location.search);
     const rutinaParam = params.get("rutina") || "Rutina A";
@@ -480,14 +480,16 @@
         day: "2-digit"
       }).format(new Date());
     }
-function obtenerSemanaPorFecha(fechaStr) {
-  const fecha = new Date(fechaStr + "T00:00:00");
-  const s1Inicio = new Date("2026-04-21T00:00:00");
-  const s1Fin = new Date("2026-04-27T23:59:59");
 
-  if (fecha >= s1Inicio && fecha <= s1Fin) return "Semana 1";
-  return "Fuera de ciclo";
-}
+    function obtenerSemanaPorFecha(fechaStr) {
+      const fecha = new Date(fechaStr + "T00:00:00");
+      const s1Inicio = new Date("2026-04-21T00:00:00");
+      const s1Fin = new Date("2026-04-27T23:59:59");
+
+      if (fecha >= s1Inicio && fecha <= s1Fin) return "Semana 1";
+      return "Fuera de ciclo";
+    }
+
     function toBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -562,7 +564,11 @@ function obtenerSemanaPorFecha(fechaStr) {
         const cliente = form.cliente.value;
         const response = await fetch(`${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`);
         const result = await response.json();
-        if (!result.ok) return;
+
+        if (!result.ok) {
+          console.error("Estado ruleta no OK:", result);
+          return;
+        }
 
         if (result.yaUsada) {
           if (result.premio && !autoRuletaLanzada) {
@@ -626,6 +632,7 @@ function obtenerSemanaPorFecha(fechaStr) {
         } else {
           mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
           mensajeError.classList.remove("hidden");
+          console.error("Resultado ruleta no OK:", result);
         }
       } catch (error) {
         console.error("Error al girar ruleta:", error);
@@ -751,6 +758,7 @@ function obtenerSemanaPorFecha(fechaStr) {
         } else {
           mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
           mensajeError.classList.remove("hidden");
+          console.error("Resultado respuestas no OK:", result);
         }
       } catch (error) {
         mensajeError.textContent = "No se pudo enviar el formulario. Revisa la implementación del Apps Script.";
