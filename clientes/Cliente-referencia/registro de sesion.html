@@ -564,10 +564,11 @@ function toBase64(file) {
       ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
     }
 
-    function mostrarPremio(premio) {
-      premioGanadoBox.textContent = premio || "Premio asignado";
-      premioFullscreen.classList.remove("hidden");
-    }
+    function mostrarPremio(premio, urlPremio) {
+  premioGanadoBox.textContent = premio || "Premio asignado";
+  claimPremioBtn.href = urlPremio || CLAIM_PREMIO_URL || "#";
+  premioFullscreen.classList.remove("hidden");
+}
 
     async function consultarEstadoRuleta() {
       try {
