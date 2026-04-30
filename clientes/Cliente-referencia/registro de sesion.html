@@ -580,9 +580,9 @@ function toBase64(file) {
         if (result.yaUsada) {
           if (result.premio && !autoRuletaLanzada) {
             autoRuletaLanzada = true;
-            setTimeout(() => {
-              animarRuletaHastaPremio(result.premio);
-            }, 200);
+           setTimeout(() => {
+  mostrarPremio(result.premio, result.url_premio);
+}, 10020);
           }
           return;
         }
