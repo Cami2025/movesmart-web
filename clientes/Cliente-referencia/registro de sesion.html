@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -478,36 +479,45 @@
       }).format(new Date());
     }
 
-   function obtenerSemanaPorFecha(fechaStr) {
-  const fecha = new Date(fechaStr + "T00:00:00");
+    async function obtenerSemanaDesdeScript() {
+      const cliente = form.cliente.value;
+      const fecha = obtenerFechaChile();
 
-  const s1Inicio = new Date("2026-04-30T00:00:00");
-  const s1Fin = new Date("2026-05-06T23:59:59");
+      fechaActual.value = fecha;
 
-  const s2Inicio = new Date("2026-05-07T00:00:00");
-  const s2Fin = new Date("2026-05-13T23:59:59");
+      try {
+        const response = await fetch(
+          `${RULETA_URL}?action=calcularSemana&cliente=${encodeURIComponent(cliente)}&fecha=${encodeURIComponent(fecha)}`
+        );
 
-  const s3Inicio = new Date("2026-05-14T00:00:00");
-  const s3Fin = new Date("2026-05-20T23:59:59");
+        const result = await response.json();
 
-  const s4Inicio = new Date("2026-05-21T00:00:00");
-  const s4Fin = new Date("2026-05-27T23:59:59");
+        if (result.ok) {
+          semanaCalculada.value = result.semana || "Fuera de ciclo";
+          return result.semana || "Fuera de ciclo";
+        }
 
-  if (fecha >= s1Inicio && fecha <= s1Fin) return "Semana 1";
-  if (fecha >= s2Inicio && fecha <= s2Fin) return "Semana 2";
-  if (fecha >= s3Inicio && fecha <= s3Fin) return "Semana 3";
-  if (fecha >= s4Inicio && fecha <= s4Fin) return "Semana 4";
-  return "Fuera de ciclo";
-}
+        console.error("No se pudo calcular la semana:", result.message);
+        semanaCalculada.value = "Fuera de ciclo";
+        return "Fuera de ciclo";
+      } catch (error) {
+        console.error("Error calculando semana:", error);
+        semanaCalculada.value = "Fuera de ciclo";
+        return "Fuera de ciclo";
+      }
+    }
 
-function toBase64(file) {
+    function toBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
+
         reader.onload = (event) => {
           const img = new Image();
+
           img.onload = () => {
             const canvas = document.createElement("canvas");
             const maxWidth = 320;
+
             let width = img.width;
             let height = img.height;
 
@@ -518,13 +528,17 @@ function toBase64(file) {
 
             canvas.width = width;
             canvas.height = height;
+
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
+
             resolve(canvas.toDataURL("image/jpeg", 0.2));
           };
+
           img.onerror = reject;
           img.src = event.target.result;
         };
+
         reader.onerror = reject;
         reader.readAsDataURL(file);
       });
@@ -548,42 +562,52 @@ function toBase64(file) {
         "15% de descuento": 64.29,
         "Rutina bonus": 12.87,
         "Guía de hábitos": 321.45,
+        "Premio de hábito": 321.45,
         "Guía de movilidad": 270.03,
         "Guía de recuperación": 218.61,
         "Guía de motivación": 167.19,
         "Doble oportunidad": 115.77
       };
+
       return angulos[premio] ?? 0;
     }
 
     function animarRuletaHastaPremio(premio) {
       if (!ruletaBeneficios) return;
+
       const anguloPremio = obtenerAnguloPremio(premio);
       const vueltasExtra = 360 * 1;
+
       currentRotation = currentRotation + vueltasExtra + anguloPremio;
       ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
     }
 
     function mostrarPremio(premio, urlPremio) {
-  premioGanadoBox.textContent = premio || "Premio asignado";
-  claimPremioBtn.href = urlPremio || CLAIM_PREMIO_URL || "#";
-  premioFullscreen.classList.remove("hidden");
-}
+      premioGanadoBox.textContent = premio || "Premio asignado";
+      claimPremioBtn.href = urlPremio || CLAIM_PREMIO_URL || "#";
+      premioFullscreen.classList.remove("hidden");
+    }
 
     async function consultarEstadoRuleta() {
       try {
         const cliente = form.cliente.value;
         const response = await fetch(`${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`);
         const result = await response.json();
-        if (!result.ok) return;
+
+        if (!result.ok) {
+          console.error("Estado ruleta:", result.message);
+          return;
+        }
 
         if (result.yaUsada) {
           if (result.premio && !autoRuletaLanzada) {
             autoRuletaLanzada = true;
-           setTimeout(() => {
-  mostrarPremio(result.premio, result.url_premio);
-}, 10020);
+
+            setTimeout(() => {
+              mostrarPremio(result.premio, result.url_premio);
+            }, 300);
           }
+
           return;
         }
 
@@ -634,7 +658,7 @@ function toBase64(file) {
           });
 
           setTimeout(() => {
-            mostrarPremio(result.premio);
+            mostrarPremio(result.premio, result.url_premio);
           }, 10020);
         } else {
           mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
@@ -653,10 +677,6 @@ function toBase64(file) {
       }
     }
 
-    const fechaHoy = obtenerFechaChile();
-    fechaActual.value = fechaHoy;
-    semanaCalculada.value = obtenerSemanaPorFecha(fechaHoy);
-
     dolorRadios.forEach(radio => {
       radio.addEventListener("change", () => {
         if (radio.value === "Sí, leve" || radio.value === "Sí, moderado") {
@@ -672,14 +692,17 @@ function toBase64(file) {
       fotoEntreno.addEventListener("change", () => {
         if (fotoEntreno.files && fotoEntreno.files.length > 0) {
           const file = fotoEntreno.files[0];
+
           fotoNombre.textContent = "✅ Foto cargada: " + file.name;
           fotoNombre.classList.remove("hidden");
+
           fotoUploadLabel.style.borderColor = "#22c55e";
           fotoUploadLabel.style.background = "rgba(34, 197, 94, 0.10)";
           fotoUploadLabel.innerHTML = `
             <span class="camera-icon">✅</span>
             <span>Foto seleccionada</span>
           `;
+
           const imageUrl = URL.createObjectURL(file);
           previewFoto.src = imageUrl;
           previewFotoWrap.classList.remove("hidden");
@@ -690,6 +713,7 @@ function toBase64(file) {
     }
 
     girarRuletaFullscreenBtn.addEventListener("click", girarRuleta);
+
     cerrarPremioBtn.addEventListener("click", () => {
       premioFullscreen.classList.add("hidden");
     });
@@ -701,20 +725,19 @@ function toBase64(file) {
       mensajeError.classList.add("hidden");
       mensajeCarga.classList.add("hidden");
 
-      const fechaHoyActualizada = obtenerFechaChile();
-      fechaActual.value = fechaHoyActualizada;
-      semanaCalculada.value = obtenerSemanaPorFecha(fechaHoyActualizada);
-
       submitBtn.disabled = true;
       mensajeCarga.classList.remove("hidden");
 
       try {
+        await obtenerSemanaDesdeScript();
+
         let fotoBase64 = "";
         let fotoTipo = "";
         let fotoNombreArchivo = "";
 
         if (fotoEntreno.files && fotoEntreno.files.length > 0) {
           submitBtn.textContent = "Preparando foto...";
+
           const file = fotoEntreno.files[0];
           fotoBase64 = await toBase64(file);
           fotoTipo = "image/jpeg";
@@ -751,6 +774,7 @@ function toBase64(file) {
 
         if (result.ok) {
           mensajeFinal.classList.remove("hidden");
+
           form.reset();
           esfuerzoValor.textContent = "5";
           zonaBlock.classList.add("hidden");
@@ -758,7 +782,7 @@ function toBase64(file) {
 
           const nuevaFecha = obtenerFechaChile();
           fechaActual.value = nuevaFecha;
-          semanaCalculada.value = obtenerSemanaPorFecha(nuevaFecha);
+          await obtenerSemanaDesdeScript();
 
           await consultarEstadoRuleta();
         } else {
@@ -776,6 +800,7 @@ function toBase64(file) {
       }
     });
 
+    obtenerSemanaDesdeScript();
     consultarEstadoRuleta();
   </script>
 </body>
