@@ -425,359 +425,390 @@
     </div>
   </div>
 
-  <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyz1yGm8YUSkcjnG-OczJY1FPvZf9jpvPr1sXl6mIv6r7tQYnjQWt34zLaSmI-l8t9wPA/exec";
-    const RULETA_URL = "https://script.google.com/macros/s/AKfycbxthBnrGTQThgOOE6qz6Sb2e8NtamPZ6MXURJI87Su64UOP_SyJavYmC5AYprXYjgIu/exec";
-    const CLAIM_PREMIO_URL = "#";
+ <script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyz1yGm8YUSkcjnG-OczJY1FPvZf9jpvPr1sXl6mIv6r7tQYnjQWt34zLaSmI-l8t9wPA/exec";
+  const RULETA_URL = "https://script.google.com/macros/s/AKfycbyz1yGm8YUSkcjnG-OczJY1FPvZf9jpvPr1sXl6mIv6r7tQYnjQWt34zLaSmI-l8t9wPA/exec";
+  const CLAIM_PREMIO_URL = "#";
 
-    const esfuerzo = document.getElementById("esfuerzo");
-    const esfuerzoValor = document.getElementById("esfuerzoValor");
-    const fechaActual = document.getElementById("fechaActual");
-    const semanaCalculada = document.getElementById("semanaCalculada");
-    const dolorRadios = document.querySelectorAll('input[name="dolor"]');
-    const zonaBlock = document.getElementById("zonaBlock");
-    const form = document.getElementById("checkinForm");
-    const mensajeFinal = document.getElementById("mensajeFinal");
-    const mensajeError = document.getElementById("mensajeError");
-    const mensajeCarga = document.getElementById("mensajeCarga");
-    const fotoEntreno = document.getElementById("fotoEntreno");
-    const fotoNombre = document.getElementById("fotoNombre");
-    const previewFotoWrap = document.getElementById("previewFotoWrap");
-    const previewFoto = document.getElementById("previewFoto");
-    const submitBtn = document.getElementById("submitBtn");
-    const fotoUploadLabel = document.getElementById("fotoUploadLabel");
-    const rutinaHidden = document.getElementById("rutinaHidden");
-    const ruletaBeneficios = document.querySelector(".ruleta-beneficios");
-    const ruletaStage = document.querySelector(".ruleta-stage");
+  const esfuerzo = document.getElementById("esfuerzo");
+  const esfuerzoValor = document.getElementById("esfuerzoValor");
+  const fechaActual = document.getElementById("fechaActual");
+  const semanaCalculada = document.getElementById("semanaCalculada");
+  const dolorRadios = document.querySelectorAll('input[name="dolor"]');
+  const zonaBlock = document.getElementById("zonaBlock");
+  const form = document.getElementById("checkinForm");
+  const mensajeFinal = document.getElementById("mensajeFinal");
+  const mensajeError = document.getElementById("mensajeError");
+  const mensajeCarga = document.getElementById("mensajeCarga");
+  const fotoEntreno = document.getElementById("fotoEntreno");
+  const fotoNombre = document.getElementById("fotoNombre");
+  const previewFotoWrap = document.getElementById("previewFotoWrap");
+  const previewFoto = document.getElementById("previewFoto");
+  const submitBtn = document.getElementById("submitBtn");
+  const fotoUploadLabel = document.getElementById("fotoUploadLabel");
+  const rutinaHidden = document.getElementById("rutinaHidden");
+  const ruletaBeneficios = document.querySelector(".ruleta-beneficios");
+  const ruletaStage = document.querySelector(".ruleta-stage");
 
-    const ruletaFullscreen = document.getElementById("ruletaFullscreen");
-    const girarRuletaFullscreenBtn = document.getElementById("girarRuletaFullscreenBtn");
-    const premioFullscreen = document.getElementById("premioFullscreen");
-    const premioGanadoBox = document.getElementById("premioGanadoBox");
-    const claimPremioBtn = document.getElementById("claimPremioBtn");
-    const cerrarPremioBtn = document.getElementById("cerrarPremioBtn");
+  const ruletaFullscreen = document.getElementById("ruletaFullscreen");
+  const girarRuletaFullscreenBtn = document.getElementById("girarRuletaFullscreenBtn");
+  const premioFullscreen = document.getElementById("premioFullscreen");
+  const premioGanadoBox = document.getElementById("premioGanadoBox");
+  const claimPremioBtn = document.getElementById("claimPremioBtn");
+  const cerrarPremioBtn = document.getElementById("cerrarPremioBtn");
 
-    let autoRuletaLanzada = false;
-    let ruletaGirando = false;
-    let currentRotation = 0;
+  let autoRuletaLanzada = false;
+  let ruletaGirando = false;
+  let currentRotation = 0;
 
-    claimPremioBtn.href = CLAIM_PREMIO_URL;
+  claimPremioBtn.href = CLAIM_PREMIO_URL;
 
-    const params = new URLSearchParams(window.location.search);
-    const rutinaParam = params.get("rutina") || "Rutina A";
-    rutinaHidden.value = rutinaParam;
+  const params = new URLSearchParams(window.location.search);
+  const rutinaParam = params.get("rutina") || "Rutina A";
+  rutinaHidden.value = rutinaParam;
 
-    esfuerzo.addEventListener("input", () => {
-      esfuerzoValor.textContent = esfuerzo.value;
-    });
+  esfuerzo.addEventListener("input", () => {
+    esfuerzoValor.textContent = esfuerzo.value;
+  });
 
-    function obtenerFechaChile() {
-      return new Intl.DateTimeFormat("sv-SE", {
-        timeZone: "America/Santiago",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-      }).format(new Date());
-    }
+  function obtenerFechaChile() {
+    return new Intl.DateTimeFormat("sv-SE", {
+      timeZone: "America/Santiago",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).format(new Date());
+  }
 
-   function obtenerSemanaPorFecha(fechaStr) {
-  const fecha = new Date(fechaStr + "T00:00:00");
-  const s1Inicio = new Date("2026-05-04T00:00:00");
-  const s1Fin = new Date("2026-05-10T23:59:59");
-  const s2Inicio = new Date("2026-05-11T00:00:00");
-  const s2Fin = new Date("2026-05-17T23:59:59");
-  const s3Inicio = new Date("2026-05-18T00:00:00");
-  const s3Fin = new Date("2026-05-24T23:59:59");
-  const s4Inicio = new Date("2026-05-25T00:00:00");
-  const s4Fin = new Date("2026-05-31T23:59:59");
+  async function obtenerSemanaDesdeScript() {
+    const cliente = form.cliente.value;
+    const fecha = obtenerFechaChile();
 
-  if (fecha >= s1Inicio && fecha <= s1Fin) return "Semana 1";
-  if (fecha >= s2Inicio && fecha <= s2Fin) return "Semana 2";
-  if (fecha >= s3Inicio && fecha <= s3Fin) return "Semana 3";
-  if (fecha >= s4Inicio && fecha <= s4Fin) return "Semana 4";
-  return "Fuera de ciclo";
-}
+    fechaActual.value = fecha;
 
-    function toBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement("canvas");
-            const maxWidth = 320;
-            let width = img.width;
-            let height = img.height;
+    try {
+      const response = await fetch(
+        `${RULETA_URL}?action=calcularSemana&cliente=${encodeURIComponent(cliente)}&fecha=${encodeURIComponent(fecha)}`
+      );
 
-            if (width > maxWidth) {
-              height = Math.round((height * maxWidth) / width);
-              width = maxWidth;
-            }
+      const result = await response.json();
 
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL("image/jpeg", 0.2));
-          };
-          img.onerror = reject;
-          img.src = event.target.result;
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    function resetFotoUI() {
-      fotoNombre.textContent = "";
-      fotoNombre.classList.add("hidden");
-      previewFoto.src = "";
-      previewFotoWrap.classList.add("hidden");
-      fotoUploadLabel.style.borderColor = "rgba(255,140,0,0.55)";
-      fotoUploadLabel.style.background = "rgba(255,255,255,0.05)";
-      fotoUploadLabel.innerHTML = `
-        <span class="camera-icon">📷</span>
-        <span>Tomar o subir foto</span>
-      `;
-    }
-
-    function obtenerAnguloPremio(premio) {
-      const angulos = {
-        "15% de descuento": 64.29,
-        "Rutina bonus": 12.87,
-        "Guía de hábitos": 321.45,
-        "Guía de movilidad": 270.03,
-        "Guía de recuperación": 218.61,
-        "Guía de motivación": 167.19,
-        "Doble oportunidad": 115.77
-      };
-      return angulos[premio] ?? 0;
-    }
-
-    function animarRuletaHastaPremio(premio) {
-      if (!ruletaBeneficios) return;
-      const anguloPremio = obtenerAnguloPremio(premio);
-      const vueltasExtra = 360 * 1;
-      currentRotation = currentRotation + vueltasExtra + anguloPremio;
-      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-    }
-
-    function mostrarPremio(premio) {
-      premioGanadoBox.textContent = premio || "Premio asignado";
-      premioFullscreen.classList.remove("hidden");
-    }
-
-    async function consultarEstadoRuleta() {
-      try {
-        const cliente = form.cliente.value;
-        const response = await fetch(`${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`);
-        const result = await response.json();
-
-        if (!result.ok) {
-          console.error("Estado ruleta no OK:", result);
-          return;
-        }
-
-        if (result.yaUsada) {
-          if (result.premio && !autoRuletaLanzada) {
-            autoRuletaLanzada = true;
-            setTimeout(() => {
-              animarRuletaHastaPremio(result.premio);
-            }, 200);
-          }
-          return;
-        }
-
-        if (result.habilitada) {
-          ruletaFullscreen.classList.remove("hidden");
-        } else {
-          ruletaFullscreen.classList.add("hidden");
-        }
-      } catch (error) {
-        console.error("Error consultando ruleta:", error);
+      if (result.ok) {
+        semanaCalculada.value = result.semana || "Fuera de ciclo";
+        return result.semana || "Fuera de ciclo";
       }
+
+      console.error("No se pudo calcular la semana:", result.message);
+      semanaCalculada.value = "Fuera de ciclo";
+      return "Fuera de ciclo";
+    } catch (error) {
+      console.error("Error calculando semana:", error);
+      semanaCalculada.value = "Fuera de ciclo";
+      return "Fuera de ciclo";
     }
+  }
 
-    async function girarRuleta() {
-      if (ruletaGirando) return;
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
 
-      try {
-        const cliente = form.cliente.value;
-        ruletaGirando = true;
+      reader.onload = (event) => {
+        const img = new Image();
 
-        girarRuletaFullscreenBtn.disabled = true;
-        girarRuletaFullscreenBtn.textContent = "Girando...";
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const maxWidth = 320;
 
-        ruletaFullscreen.classList.add("hidden");
+          let width = img.width;
+          let height = img.height;
 
-        if (ruletaStage) {
-          ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
-        }
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
 
-        ruletaBeneficios.style.transition = "transform 0.18s ease-out";
-        currentRotation = currentRotation + 8;
-        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+          canvas.width = width;
+          canvas.height = height;
 
-        const responsePromise = fetch(
-          `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
-        );
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
 
-        setTimeout(() => {
-          ruletaBeneficios.style.transition = "transform 10s cubic-bezier(0.12, 0.75, 0.15, 1)";
-        }, 30);
+          resolve(canvas.toDataURL("image/jpeg", 0.2));
+        };
 
-        const response = await responsePromise;
-        const result = await response.json();
+        img.onerror = reject;
+        img.src = event.target.result;
+      };
 
-        if (result.ok) {
-          requestAnimationFrame(() => {
-            animarRuletaHastaPremio(result.premio);
-          });
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function resetFotoUI() {
+    fotoNombre.textContent = "";
+    fotoNombre.classList.add("hidden");
+    previewFoto.src = "";
+    previewFotoWrap.classList.add("hidden");
+    fotoUploadLabel.style.borderColor = "rgba(255,140,0,0.55)";
+    fotoUploadLabel.style.background = "rgba(255,255,255,0.05)";
+    fotoUploadLabel.innerHTML = `
+      <span class="camera-icon">📷</span>
+      <span>Tomar o subir foto</span>
+    `;
+  }
+
+  function obtenerAnguloPremio(premio) {
+    const angulos = {
+      "15% de descuento": 64.29,
+      "Rutina bonus": 12.87,
+      "Guía de hábitos": 321.45,
+      "Premio de hábito": 321.45,
+      "Guía de movilidad": 270.03,
+      "Guía de recuperación": 218.61,
+      "Guía de motivación": 167.19,
+      "Doble oportunidad": 115.77
+    };
+
+    return angulos[premio] ?? 0;
+  }
+
+  function animarRuletaHastaPremio(premio) {
+    if (!ruletaBeneficios) return;
+
+    const anguloPremio = obtenerAnguloPremio(premio);
+    const vueltasExtra = 360 * 1;
+
+    currentRotation = currentRotation + vueltasExtra + anguloPremio;
+    ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+  }
+
+  function mostrarPremio(premio, urlPremio) {
+    premioGanadoBox.textContent = premio || "Premio asignado";
+    claimPremioBtn.href = urlPremio || CLAIM_PREMIO_URL || "#";
+    premioFullscreen.classList.remove("hidden");
+  }
+
+  async function consultarEstadoRuleta() {
+    try {
+      const cliente = form.cliente.value;
+      const response = await fetch(
+        `${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`
+      );
+
+      const result = await response.json();
+
+      if (!result.ok) {
+        console.error("Estado ruleta:", result.message);
+        return;
+      }
+
+      if (result.yaUsada) {
+        if (result.premio && !autoRuletaLanzada) {
+          autoRuletaLanzada = true;
 
           setTimeout(() => {
-            mostrarPremio(result.premio);
-          }, 10020);
-        } else {
-          mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
-          mensajeError.classList.remove("hidden");
-          console.error("Resultado ruleta no OK:", result);
+            mostrarPremio(result.premio, result.url_premio);
+          }, 300);
         }
-      } catch (error) {
-        console.error("Error al girar ruleta:", error);
-        mensajeError.textContent = "Hubo un problema al girar la ruleta.";
-        mensajeError.classList.remove("hidden");
-      } finally {
-        setTimeout(() => {
-          ruletaGirando = false;
-          girarRuletaFullscreenBtn.disabled = false;
-          girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-        }, 10000);
+
+        return;
       }
+
+      if (result.habilitada) {
+        ruletaFullscreen.classList.remove("hidden");
+      } else {
+        ruletaFullscreen.classList.add("hidden");
+      }
+    } catch (error) {
+      console.error("Error consultando ruleta:", error);
     }
+  }
 
-    const fechaHoy = obtenerFechaChile();
-    fechaActual.value = fechaHoy;
-    semanaCalculada.value = obtenerSemanaPorFecha(fechaHoy);
+  async function girarRuleta() {
+    if (ruletaGirando) return;
 
-    dolorRadios.forEach(radio => {
-      radio.addEventListener("change", () => {
-        if (radio.value === "Sí, leve" || radio.value === "Sí, moderado") {
-          zonaBlock.classList.remove("hidden");
-        } else {
-          zonaBlock.classList.add("hidden");
-          document.querySelectorAll('input[name="zona"]').forEach(input => input.checked = false);
-        }
-      });
-    });
+    try {
+      const cliente = form.cliente.value;
+      ruletaGirando = true;
 
-    if (fotoEntreno) {
-      fotoEntreno.addEventListener("change", () => {
-        if (fotoEntreno.files && fotoEntreno.files.length > 0) {
-          const file = fotoEntreno.files[0];
-          fotoNombre.textContent = "✅ Foto cargada: " + file.name;
-          fotoNombre.classList.remove("hidden");
-          fotoUploadLabel.style.borderColor = "#22c55e";
-          fotoUploadLabel.style.background = "rgba(34, 197, 94, 0.10)";
-          fotoUploadLabel.innerHTML = `
-            <span class="camera-icon">✅</span>
-            <span>Foto seleccionada</span>
-          `;
-          const imageUrl = URL.createObjectURL(file);
-          previewFoto.src = imageUrl;
-          previewFotoWrap.classList.remove("hidden");
-        } else {
-          resetFotoUI();
-        }
-      });
-    }
+      girarRuletaFullscreenBtn.disabled = true;
+      girarRuletaFullscreenBtn.textContent = "Girando...";
 
-    girarRuletaFullscreenBtn.addEventListener("click", girarRuleta);
-    cerrarPremioBtn.addEventListener("click", () => {
-      premioFullscreen.classList.add("hidden");
-    });
+      ruletaFullscreen.classList.add("hidden");
 
-    form.addEventListener("submit", async function(e) {
-      e.preventDefault();
+      if (ruletaStage) {
+        ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
+      }
 
-      mensajeFinal.classList.add("hidden");
-      mensajeError.classList.add("hidden");
-      mensajeCarga.classList.add("hidden");
+      ruletaBeneficios.style.transition = "transform 0.18s ease-out";
+      currentRotation = currentRotation + 8;
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
-      const fechaHoyActualizada = obtenerFechaChile();
-      fechaActual.value = fechaHoyActualizada;
-      semanaCalculada.value = obtenerSemanaPorFecha(fechaHoyActualizada);
+      const responsePromise = fetch(
+        `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
+      );
 
-      submitBtn.disabled = true;
-      mensajeCarga.classList.remove("hidden");
+      setTimeout(() => {
+        ruletaBeneficios.style.transition = "transform 10s cubic-bezier(0.12, 0.75, 0.15, 1)";
+      }, 30);
 
-      try {
-        let fotoBase64 = "";
-        let fotoTipo = "";
-        let fotoNombreArchivo = "";
+      const response = await responsePromise;
+      const result = await response.json();
 
-        if (fotoEntreno.files && fotoEntreno.files.length > 0) {
-          submitBtn.textContent = "Preparando foto...";
-          const file = fotoEntreno.files[0];
-          fotoBase64 = await toBase64(file);
-          fotoTipo = "image/jpeg";
-          fotoNombreArchivo = file.name;
-        }
-
-        submitBtn.textContent = "Enviando, espera un momento...";
-
-        const payload = {
-          fecha: fechaActual.value,
-          semana: semanaCalculada.value,
-          cliente: form.cliente.value,
-          rutina: form.rutina.value,
-          completada: form.completada.value,
-          sensacion: form.sensacion.value,
-          esfuerzo: form.esfuerzo.value,
-          dolor: form.dolor.value,
-          zona: form.zona.value || "",
-          comentario: form.comentario.value || "",
-          fotoBase64: fotoBase64,
-          fotoTipo: fotoTipo,
-          fotoNombre: fotoNombreArchivo
-        };
-
-        submitBtn.textContent = "Guardando registro...";
-
-        const response = await fetch(SCRIPT_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
+      if (result.ok) {
+        requestAnimationFrame(() => {
+          animarRuletaHastaPremio(result.premio);
         });
 
-        const result = await response.json();
-
-        if (result.ok) {
-          mensajeFinal.classList.remove("hidden");
-          form.reset();
-          esfuerzoValor.textContent = "5";
-          zonaBlock.classList.add("hidden");
-          resetFotoUI();
-
-          const nuevaFecha = obtenerFechaChile();
-          fechaActual.value = nuevaFecha;
-          semanaCalculada.value = obtenerSemanaPorFecha(nuevaFecha);
-
-          await consultarEstadoRuleta();
-        } else {
-          mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
-          mensajeError.classList.remove("hidden");
-          console.error("Resultado respuestas no OK:", result);
-        }
-      } catch (error) {
-        mensajeError.textContent = "No se pudo enviar el formulario. Revisa la implementación del Apps Script.";
+        setTimeout(() => {
+          mostrarPremio(result.premio, result.url_premio);
+        }, 10020);
+      } else {
+        mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
         mensajeError.classList.remove("hidden");
-        console.error(error);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "✅ Registrar mi sesión";
-        mensajeCarga.classList.add("hidden");
+        console.error("Resultado ruleta no OK:", result);
+      }
+    } catch (error) {
+      console.error("Error al girar ruleta:", error);
+      mensajeError.textContent = "Hubo un problema al girar la ruleta.";
+      mensajeError.classList.remove("hidden");
+    } finally {
+      setTimeout(() => {
+        ruletaGirando = false;
+        girarRuletaFullscreenBtn.disabled = false;
+        girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
+      }, 10000);
+    }
+  }
+
+  dolorRadios.forEach(radio => {
+    radio.addEventListener("change", () => {
+      if (radio.value === "Sí, leve" || radio.value === "Sí, moderado") {
+        zonaBlock.classList.remove("hidden");
+      } else {
+        zonaBlock.classList.add("hidden");
+        document.querySelectorAll('input[name="zona"]').forEach(input => input.checked = false);
       }
     });
+  });
+
+  if (fotoEntreno) {
+    fotoEntreno.addEventListener("change", () => {
+      if (fotoEntreno.files && fotoEntreno.files.length > 0) {
+        const file = fotoEntreno.files[0];
+
+        fotoNombre.textContent = "✅ Foto cargada: " + file.name;
+        fotoNombre.classList.remove("hidden");
+
+        fotoUploadLabel.style.borderColor = "#22c55e";
+        fotoUploadLabel.style.background = "rgba(34, 197, 94, 0.10)";
+        fotoUploadLabel.innerHTML = `
+          <span class="camera-icon">✅</span>
+          <span>Foto seleccionada</span>
+        `;
+
+        const imageUrl = URL.createObjectURL(file);
+        previewFoto.src = imageUrl;
+        previewFotoWrap.classList.remove("hidden");
+      } else {
+        resetFotoUI();
+      }
+    });
+  }
+
+  girarRuletaFullscreenBtn.addEventListener("click", girarRuleta);
+
+  cerrarPremioBtn.addEventListener("click", () => {
+    premioFullscreen.classList.add("hidden");
+  });
+
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    mensajeFinal.classList.add("hidden");
+    mensajeError.classList.add("hidden");
+    mensajeCarga.classList.add("hidden");
+
+    submitBtn.disabled = true;
+    mensajeCarga.classList.remove("hidden");
+
+    try {
+      await obtenerSemanaDesdeScript();
+
+      let fotoBase64 = "";
+      let fotoTipo = "";
+      let fotoNombreArchivo = "";
+
+      if (fotoEntreno.files && fotoEntreno.files.length > 0) {
+        submitBtn.textContent = "Preparando foto...";
+
+        const file = fotoEntreno.files[0];
+        fotoBase64 = await toBase64(file);
+        fotoTipo = "image/jpeg";
+        fotoNombreArchivo = file.name;
+      }
+
+      submitBtn.textContent = "Enviando, espera un momento...";
+
+      const payload = {
+        fecha: fechaActual.value,
+        semana: semanaCalculada.value,
+        cliente: form.cliente.value,
+        rutina: form.rutina.value,
+        completada: form.completada.value,
+        sensacion: form.sensacion.value,
+        esfuerzo: form.esfuerzo.value,
+        dolor: form.dolor.value,
+        zona: form.zona.value || "",
+        comentario: form.comentario.value || "",
+        fotoBase64: fotoBase64,
+        fotoTipo: fotoTipo,
+        fotoNombre: fotoNombreArchivo
+      };
+
+      submitBtn.textContent = "Guardando registro...";
+
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (result.ok) {
+        mensajeFinal.classList.remove("hidden");
+
+        form.reset();
+        esfuerzoValor.textContent = "5";
+        zonaBlock.classList.add("hidden");
+        resetFotoUI();
+
+        const nuevaFecha = obtenerFechaChile();
+        fechaActual.value = nuevaFecha;
+        await obtenerSemanaDesdeScript();
+
+        await consultarEstadoRuleta();
+      } else {
+        mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
+        mensajeError.classList.remove("hidden");
+        console.error("Resultado respuestas no OK:", result);
+      }
+    } catch (error) {
+      mensajeError.textContent = "No se pudo enviar el formulario. Revisa la implementación del Apps Script.";
+      mensajeError.classList.remove("hidden");
+      console.error(error);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "✅ Registrar mi sesión";
+      mensajeCarga.classList.add("hidden");
+    }
+  });
+
+  obtenerSemanaDesdeScript();
+  consultarEstadoRuleta();
+</script>
 
     consultarEstadoRuleta();
   </script>
