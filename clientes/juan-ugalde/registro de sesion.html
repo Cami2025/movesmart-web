@@ -605,7 +605,7 @@
       }
     }
 
-   async function girarRuleta() {
+  async function girarRuleta() {
   if (ruletaGirando) return;
 
   const cliente = form.cliente.value;
@@ -622,58 +622,89 @@
     ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
   }
 
-  try {
-    // Primero pedimos el premio al script.
-    // Todavía NO mostramos el premio.
-    const response = await fetch(
-      `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
-    );
+  // 1) Giro inmediato apenas se aprieta el botón
+  ruletaBeneficios.style.transition = "none";
+  currentRotation = currentRotation % 360;
+  ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
-    const result = await response.json();
+  // Forzar al navegador a aplicar el estado inicial antes de animar
+  void ruletaBeneficios.offsetHeight;
 
-    if (!result.ok) {
-      mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
-      mensajeError.classList.remove("hidden");
-      console.error("Resultado ruleta no OK:", result);
+  ruletaBeneficios.style.transition = "transform 13s cubic-bezier(0.12, 0.75, 0.15, 1)";
+
+  // Giro visual inmediato mientras el script responde
+  currentRotation = currentRotation + (360 * 6);
+  ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+
+  let premioMostrado = false;
+  let result = null;
+
+  const mostrarPremioDespuesDelGiro = () => {
+    if (premioMostrado || !result || !result.ok) return;
+    premioMostrado = true;
+
+    setTimeout(() => {
+      mostrarPremio(result.premio, result.url_premio);
 
       ruletaGirando = false;
       girarRuletaFullscreenBtn.disabled = false;
       girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-      return;
-    }
+    }, 700);
+  };
 
-    const anguloPremio = obtenerAnguloPremio(result.premio);
-    const vueltas = 360 * 8;
+  try {
+    // 2) Mientras ya está girando, pedimos el premio al script
+    const response = await fetch(
+      `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
+    );
 
-    // Reinicia la ruleta para evitar que se quede pegada.
-    ruletaBeneficios.style.transition = "none";
-    currentRotation = currentRotation % 360;
-    ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+    result = await response.json();
 
-    // Forzamos al navegador a aplicar el estado inicial.
-    void ruletaBeneficios.offsetHeight;
-
-    // Giro real hasta el premio.
-    ruletaBeneficios.style.transition = "transform 13s cubic-bezier(0.12, 0.75, 0.15, 1)";
-    currentRotation = currentRotation + vueltas + anguloPremio;
-    ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-
-    // Seguridad: si transitionend no dispara, igual mostramos premio después.
-    let premioMostrado = false;
-
-    const mostrarPremioDespuesDelGiro = () => {
-      if (premioMostrado) return;
-      premioMostrado = true;
-
+    if (!result.ok) {
       setTimeout(() => {
-        mostrarPremio(result.premio, result.url_premio);
+        mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
+        mensajeError.classList.remove("hidden");
 
         ruletaGirando = false;
         girarRuletaFullscreenBtn.disabled = false;
         girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-      }, 700);
-    };
+      }, 800);
 
+      console.error("Resultado ruleta no OK:", result);
+      return;
+    }
+
+    // 3) Ajustamos el destino final hacia el premio mientras sigue girando
+    const anguloPremio = obtenerAnguloPremio(result.premio);
+    currentRotation = currentRotation + (360 * 2) + anguloPremio;
+    ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+
+    // 4) Cuando termine realmente la transición, mostramos el premio
+    ruletaBeneficios.addEventListener("transitionend", function alTerminarGiro(event) {
+      if (event.propertyName !== "transform") return;
+
+      ruletaBeneficios.removeEventListener("transitionend", alTerminarGiro);
+      mostrarPremioDespuesDelGiro();
+    });
+
+    // Seguridad por si transitionend no dispara
+    setTimeout(() => {
+      mostrarPremioDespuesDelGiro();
+    }, 14200);
+
+  } catch (error) {
+    console.error("Error al girar ruleta:", error);
+
+    setTimeout(() => {
+      mensajeError.textContent = "Hubo un problema al girar la ruleta.";
+      mensajeError.classList.remove("hidden");
+
+      ruletaGirando = false;
+      girarRuletaFullscreenBtn.disabled = false;
+      girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
+    }, 800);
+  }
+}
     ruletaBeneficios.addEventListener("transitionend", function alTerminarGiro(event) {
       if (event.propertyName !== "transform") return;
 
