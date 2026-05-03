@@ -254,7 +254,7 @@
         <p class="rutina-checkin-subtitle">
           Registra tu sesión acá
           <span class="word-arrow">abajo <span class="inline-arrow">⬇</span></span>
-          y comparte una foto de tu entreno. Cada registro suma avance y, al completar el ciclo completo de entrenamientos, se activa tu ruleta de beneficios MoveSmart.
+          y comparte una foto de tu entreno. Cada registro suma avance y, al completar el ciclo, se activa tu ruleta de beneficios MoveSmart.
         </p>
 
         <div class="recompensa-box">
@@ -275,8 +275,7 @@
                 <div class="ruleta-centro">Ruleta MoveSmart</div>
               </div>
 
-              <p class="ruleta-note">La ruleta se activa al completar el ciclo completo de entrenamientos.</p>
-            </div>
+              
           </div>
         </div>
 
@@ -296,7 +295,7 @@
           </div>
 
           <div class="checkin-bloque">
-            <p class="checkin-label">¿Cómo te sentiste?</p>
+            <p class="checkin-label">¿Cómo te sentiste hoy?</p>
             <div class="checkin-grid checkin-grid-2">
               <input type="radio" name="sensacion" id="muybien" value="Muy bien" hidden required>
               <label for="muybien" class="checkin-opcion">😄 Muy bien</label>
@@ -346,17 +345,20 @@
           <div class="checkin-bloque hidden" id="zonaBlock">
             <p class="checkin-label">¿Dónde sentiste la molestia?</p>
             <div class="checkin-grid checkin-grid-2">
-              <input type="radio" name="zona" id="pierna" value="Pierna" hidden>
-              <label for="pierna" class="checkin-opcion">Pierna</label>
+              <input type="radio" name="zona" id="lumbar" value="Zona lumbar" hidden>
+              <label for="lumbar" class="checkin-opcion">Zona lumbar</label>
 
-              <input type="radio" name="zona" id="rodilla" value="Rodilla" hidden>
-              <label for="rodilla" class="checkin-opcion">Rodilla</label>
+              <input type="radio" name="zona" id="gluteo" value="Glúteo / piriforme" hidden>
+              <label for="gluteo" class="checkin-opcion">Glúteo / piriforme</label>
 
-              <input type="radio" name="zona" id="tobillo" value="Tobillo / pie" hidden>
-              <label for="tobillo" class="checkin-opcion">Tobillo / pie</label>
+              <input type="radio" name="zona" id="cadera" value="Cadera" hidden>
+              <label for="cadera" class="checkin-opcion">Cadera</label>
 
-              <input type="radio" name="zona" id="espalda" value="Espalda" hidden>
-              <label for="espalda" class="checkin-opcion">Espalda</label>
+              <input type="radio" name="zona" id="piernaizq" value="Pierna izquierda" hidden>
+              <label for="piernaizq" class="checkin-opcion">Pierna izquierda</label>
+
+              <input type="radio" name="zona" id="pieizq" value="Pie izquierdo / equilibrio" hidden>
+              <label for="pieizq" class="checkin-opcion">Pie izquierdo / equilibrio</label>
 
               <input type="radio" name="zona" id="otra" value="Otra" hidden>
               <label for="otra" class="checkin-opcion">Otra</label>
@@ -365,12 +367,12 @@
 
           <div class="checkin-bloque">
             <label for="comentario" class="checkin-label">Comentario opcional</label>
-            <textarea id="comentario" name="comentario" class="checkin-textarea" placeholder="Ej: me costó la última serie o sentí una leve molestia en el tobillo..."></textarea>
+            <textarea id="comentario" name="comentario" class="checkin-textarea" placeholder="Ej: me sentí más estable en el lado izquierdo, me costó mantener el equilibrio o apareció una molestia leve en glúteo/lumbar..."></textarea>
           </div>
 
           <div class="checkin-bloque">
             <label class="checkin-label">Comparte una foto de tu entreno</label>
-            <p class="checkin-helper">Sube una foto de tu sesión de hoy para registrar tu avance en el ciclo MoveSmart.</p>
+            <p class="checkin-helper">Sube una foto de tu sesión de hoy para registrar tu avance.</p>
 
             <input type="file" id="fotoEntreno" name="foto_entreno" accept="image/*" capture="environment" hidden>
 
@@ -386,7 +388,7 @@
             </div>
           </div>
 
-          <input type="hidden" name="cliente" value="Juan Ugalde">
+          <input type="hidden" name="cliente" value="Pamela Cortés">
           <input type="hidden" name="rutina" id="rutinaHidden" value="">
           <input type="hidden" name="semana" id="semanaCalculada">
           <input type="hidden" name="fecha" id="fechaActual">
@@ -424,8 +426,8 @@
   </div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxv7cE9N36CMIYoZFvuHN9iTm_DIXW1-sKbyBh4XzYy_BV9kPFVEfullxSDtCAGKUYKaA/exec";
-    const RULETA_URL = "https://script.google.com/macros/s/AKfycbwZUVkpSksNeoSTINrIiZ_8j_KNB9SHcFxM-nvKgmhJwYgCDu_Hgr012jBvcA4LPeIg1w/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyz1yGm8YUSkcjnG-OczJY1FPvZf9jpvPr1sXl6mIv6r7tQYnjQWt34zLaSmI-l8t9wPA/exec";
+    const RULETA_URL = "https://script.google.com/macros/s/AKfycbyz1yGm8YUSkcjnG-OczJY1FPvZf9jpvPr1sXl6mIv6r7tQYnjQWt34zLaSmI-l8t9wPA/exec";
     const CLAIM_PREMIO_URL = "#";
 
     const esfuerzo = document.getElementById("esfuerzo");
@@ -478,32 +480,45 @@
       }).format(new Date());
     }
 
-    function obtenerSemanaPorFecha(fechaStr) {
-      const fecha = new Date(fechaStr + "T00:00:00");
-      const s1Inicio = new Date("2026-04-06T00:00:00");
-      const s1Fin = new Date("2026-04-12T23:59:59");
-      const s2Inicio = new Date("2026-04-13T00:00:00");
-      const s2Fin = new Date("2026-04-19T23:59:59");
-      const s3Inicio = new Date("2026-04-20T00:00:00");
-      const s3Fin = new Date("2026-04-26T23:59:59");
-      const s4Inicio = new Date("2026-04-27T00:00:00");
-      const s4Fin = new Date("2026-05-02T23:59:59");
+    async function obtenerSemanaDesdeScript() {
+      const cliente = form.cliente.value;
+      const fecha = obtenerFechaChile();
 
-      if (fecha >= s1Inicio && fecha <= s1Fin) return "Semana 1";
-      if (fecha >= s2Inicio && fecha <= s2Fin) return "Semana 2";
-      if (fecha >= s3Inicio && fecha <= s3Fin) return "Semana 3";
-      if (fecha >= s4Inicio && fecha <= s4Fin) return "Semana 4";
-      return "Fuera de ciclo";
+      fechaActual.value = fecha;
+
+      try {
+        const response = await fetch(
+          `${RULETA_URL}?action=calcularSemana&cliente=${encodeURIComponent(cliente)}&fecha=${encodeURIComponent(fecha)}`
+        );
+
+        const result = await response.json();
+
+        if (result.ok) {
+          semanaCalculada.value = result.semana || "Fuera de ciclo";
+          return result.semana || "Fuera de ciclo";
+        }
+
+        console.error("No se pudo calcular la semana:", result.message);
+        semanaCalculada.value = "Fuera de ciclo";
+        return "Fuera de ciclo";
+      } catch (error) {
+        console.error("Error calculando semana:", error);
+        semanaCalculada.value = "Fuera de ciclo";
+        return "Fuera de ciclo";
+      }
     }
 
     function toBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
+
         reader.onload = (event) => {
           const img = new Image();
+
           img.onload = () => {
             const canvas = document.createElement("canvas");
             const maxWidth = 320;
+
             let width = img.width;
             let height = img.height;
 
@@ -514,13 +529,17 @@
 
             canvas.width = width;
             canvas.height = height;
+
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
+
             resolve(canvas.toDataURL("image/jpeg", 0.2));
           };
+
           img.onerror = reject;
           img.src = event.target.result;
         };
+
         reader.onerror = reject;
         reader.readAsDataURL(file);
       });
@@ -544,41 +563,55 @@
         "15% de descuento": 64.29,
         "Rutina bonus": 12.87,
         "Guía de hábitos": 321.45,
+        "Premio de hábito": 321.45,
         "Guía de movilidad": 270.03,
         "Guía de recuperación": 218.61,
         "Guía de motivación": 167.19,
         "Doble oportunidad": 115.77
       };
+
       return angulos[premio] ?? 0;
     }
 
     function animarRuletaHastaPremio(premio) {
       if (!ruletaBeneficios) return;
+
       const anguloPremio = obtenerAnguloPremio(premio);
       const vueltasExtra = 360 * 1;
+
       currentRotation = currentRotation + vueltasExtra + anguloPremio;
       ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
     }
 
-    function mostrarPremio(premio) {
+    function mostrarPremio(premio, urlPremio) {
       premioGanadoBox.textContent = premio || "Premio asignado";
+      claimPremioBtn.href = urlPremio || CLAIM_PREMIO_URL || "#";
       premioFullscreen.classList.remove("hidden");
     }
 
     async function consultarEstadoRuleta() {
       try {
         const cliente = form.cliente.value;
-        const response = await fetch(`${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`);
+        const response = await fetch(
+          `${RULETA_URL}?action=estadoRuleta&cliente=${encodeURIComponent(cliente)}`
+        );
+
         const result = await response.json();
-        if (!result.ok) return;
+
+        if (!result.ok) {
+          console.error("Estado ruleta:", result.message);
+          return;
+        }
 
         if (result.yaUsada) {
           if (result.premio && !autoRuletaLanzada) {
             autoRuletaLanzada = true;
+
             setTimeout(() => {
-              animarRuletaHastaPremio(result.premio);
-            }, 200);
+              mostrarPremio(result.premio, result.url_premio);
+            }, 300);
           }
+
           return;
         }
 
@@ -629,11 +662,12 @@
           });
 
           setTimeout(() => {
-            mostrarPremio(result.premio);
+            mostrarPremio(result.premio, result.url_premio);
           }, 10020);
         } else {
           mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
           mensajeError.classList.remove("hidden");
+          console.error("Resultado ruleta no OK:", result);
         }
       } catch (error) {
         console.error("Error al girar ruleta:", error);
@@ -647,10 +681,6 @@
         }, 10000);
       }
     }
-
-    const fechaHoy = obtenerFechaChile();
-    fechaActual.value = fechaHoy;
-    semanaCalculada.value = obtenerSemanaPorFecha(fechaHoy);
 
     dolorRadios.forEach(radio => {
       radio.addEventListener("change", () => {
@@ -667,14 +697,17 @@
       fotoEntreno.addEventListener("change", () => {
         if (fotoEntreno.files && fotoEntreno.files.length > 0) {
           const file = fotoEntreno.files[0];
+
           fotoNombre.textContent = "✅ Foto cargada: " + file.name;
           fotoNombre.classList.remove("hidden");
+
           fotoUploadLabel.style.borderColor = "#22c55e";
           fotoUploadLabel.style.background = "rgba(34, 197, 94, 0.10)";
           fotoUploadLabel.innerHTML = `
             <span class="camera-icon">✅</span>
             <span>Foto seleccionada</span>
           `;
+
           const imageUrl = URL.createObjectURL(file);
           previewFoto.src = imageUrl;
           previewFotoWrap.classList.remove("hidden");
@@ -685,6 +718,7 @@
     }
 
     girarRuletaFullscreenBtn.addEventListener("click", girarRuleta);
+
     cerrarPremioBtn.addEventListener("click", () => {
       premioFullscreen.classList.add("hidden");
     });
@@ -696,20 +730,19 @@
       mensajeError.classList.add("hidden");
       mensajeCarga.classList.add("hidden");
 
-      const fechaHoyActualizada = obtenerFechaChile();
-      fechaActual.value = fechaHoyActualizada;
-      semanaCalculada.value = obtenerSemanaPorFecha(fechaHoyActualizada);
-
       submitBtn.disabled = true;
       mensajeCarga.classList.remove("hidden");
 
       try {
+        await obtenerSemanaDesdeScript();
+
         let fotoBase64 = "";
         let fotoTipo = "";
         let fotoNombreArchivo = "";
 
         if (fotoEntreno.files && fotoEntreno.files.length > 0) {
           submitBtn.textContent = "Preparando foto...";
+
           const file = fotoEntreno.files[0];
           fotoBase64 = await toBase64(file);
           fotoTipo = "image/jpeg";
@@ -746,6 +779,7 @@
 
         if (result.ok) {
           mensajeFinal.classList.remove("hidden");
+
           form.reset();
           esfuerzoValor.textContent = "5";
           zonaBlock.classList.add("hidden");
@@ -753,12 +787,13 @@
 
           const nuevaFecha = obtenerFechaChile();
           fechaActual.value = nuevaFecha;
-          semanaCalculada.value = obtenerSemanaPorFecha(nuevaFecha);
+          await obtenerSemanaDesdeScript();
 
           await consultarEstadoRuleta();
         } else {
           mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
           mensajeError.classList.remove("hidden");
+          console.error("Resultado respuestas no OK:", result);
         }
       } catch (error) {
         mensajeError.textContent = "No se pudo enviar el formulario. Revisa la implementación del Apps Script.";
@@ -771,6 +806,7 @@
       }
     });
 
+    obtenerSemanaDesdeScript();
     consultarEstadoRuleta();
   </script>
 </body>
