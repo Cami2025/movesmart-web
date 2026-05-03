@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -635,7 +634,21 @@
         ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
       }
 
+      // 1) Giro inmediato visual: parte altiro, sin esperar al Apps Script.
+      const anguloInicialAleatorio = Math.floor(Math.random() * 360);
+      const vueltasIniciales = 360 * 3;
+
+      ruletaBeneficios.style.transition = "none";
+      currentRotation = currentRotation % 360;
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+      ruletaBeneficios.offsetHeight; // fuerza repaint para que el navegador aplique el reset
+
+      ruletaBeneficios.style.transition = "transform 2s linear";
+      currentRotation = currentRotation + vueltasIniciales + anguloInicialAleatorio;
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+
       try {
+        // 2) Mientras ya está girando, pedimos el premio real al Apps Script.
         const response = await fetch(
           `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
         );
@@ -652,16 +665,13 @@
           return;
         }
 
+        // 3) Cuando ya sabemos el premio, ajustamos el destino final para que caiga donde corresponde.
         const anguloPremio = obtenerAnguloPremio(result.premio);
-        const vueltas = 360 * 8;
+        const vueltasFinales = 360 * 8;
+        const baseFinal = Math.ceil(currentRotation / 360) * 360;
 
-        ruletaBeneficios.style.transition = "none";
-        currentRotation = currentRotation % 360;
-        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-        ruletaBeneficios.offsetHeight;
-
-        ruletaBeneficios.style.transition = "transform 13s cubic-bezier(0.12, 0.75, 0.15, 1)";
-        currentRotation = currentRotation + vueltas + anguloPremio;
+        ruletaBeneficios.style.transition = "transform 8s cubic-bezier(0.12, 0.75, 0.15, 1)";
+        currentRotation = baseFinal + vueltasFinales + anguloPremio;
         ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
         ruletaBeneficios.addEventListener("transitionend", function alTerminarGiro(event) {
@@ -675,7 +685,7 @@
             ruletaGirando = false;
             girarRuletaFullscreenBtn.disabled = false;
             girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-          }, 800);
+          }, 500);
         });
 
       } catch (error) {
