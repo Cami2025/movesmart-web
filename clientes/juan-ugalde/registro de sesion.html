@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />F
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Check-in rutina | MoveSmart</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -95,7 +95,7 @@
           rgba(255,120,0,0.72) 257.10deg 308.52deg,
           rgba(255,177,79,0.88) 308.52deg 360deg
         );
-      transition: transform 10s cubic-bezier(0.12, 0.75, 0.15, 1);
+      transition: transform 12s cubic-bezier(0.12, 0.75, 0.15, 1);
       will-change: transform;
     }
     .ruleta-beneficios::before {
@@ -274,8 +274,7 @@
                 <div class="ruleta-label label-7">Doble oportunidad</div>
                 <div class="ruleta-centro">Ruleta MoveSmart</div>
               </div>
-
-              
+            </div>
           </div>
         </div>
 
@@ -573,16 +572,6 @@
       return angulos[premio] ?? 0;
     }
 
-    function animarRuletaHastaPremio(premio) {
-      if (!ruletaBeneficios) return;
-
-      const anguloPremio = obtenerAnguloPremio(premio);
-      const vueltasExtra = 360 * 1;
-
-      currentRotation = currentRotation + vueltasExtra + anguloPremio;
-      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-    }
-
     function mostrarPremio(premio, urlPremio) {
       premioGanadoBox.textContent = premio || "Premio asignado";
       claimPremioBtn.href = urlPremio || CLAIM_PREMIO_URL || "#";
@@ -628,57 +617,65 @@
     async function girarRuleta() {
       if (ruletaGirando) return;
 
+      const cliente = form.cliente.value;
+      ruletaGirando = true;
+
+      girarRuletaFullscreenBtn.disabled = true;
+      girarRuletaFullscreenBtn.textContent = "Girando...";
+
+      ruletaFullscreen.classList.add("hidden");
+      mensajeError.classList.add("hidden");
+
+      if (ruletaStage) {
+        ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
+      }
+
+      ruletaBeneficios.style.transition = "none";
+      currentRotation = currentRotation % 360;
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+      ruletaBeneficios.offsetHeight;
+
+      ruletaBeneficios.style.transition = "transform 12s cubic-bezier(0.12, 0.75, 0.15, 1)";
+      currentRotation = currentRotation + (360 * 6);
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+
       try {
-        const cliente = form.cliente.value;
-        ruletaGirando = true;
-
-        girarRuletaFullscreenBtn.disabled = true;
-        girarRuletaFullscreenBtn.textContent = "Girando...";
-
-        ruletaFullscreen.classList.add("hidden");
-
-        if (ruletaStage) {
-          ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
-        }
-
-        ruletaBeneficios.style.transition = "transform 0.18s ease-out";
-        currentRotation = currentRotation + 8;
-        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-
-        const responsePromise = fetch(
+        const response = await fetch(
           `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
         );
 
-        setTimeout(() => {
-          ruletaBeneficios.style.transition = "transform 10s cubic-bezier(0.12, 0.75, 0.15, 1)";
-        }, 30);
-
-        const response = await responsePromise;
         const result = await response.json();
 
-        if (result.ok) {
-          requestAnimationFrame(() => {
-            animarRuletaHastaPremio(result.premio);
-          });
-
+        if (!result.ok) {
           setTimeout(() => {
-            mostrarPremio(result.premio, result.url_premio);
-          }, 10020);
-        } else {
-          mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
-          mensajeError.classList.remove("hidden");
+            mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
+            mensajeError.classList.remove("hidden");
+          }, 800);
           console.error("Resultado ruleta no OK:", result);
+          return;
         }
+
+        const anguloPremio = obtenerAnguloPremio(result.premio);
+        currentRotation = currentRotation + 360 + anguloPremio;
+        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+
+        setTimeout(() => {
+          mostrarPremio(result.premio, result.url_premio);
+        }, 12200);
+
       } catch (error) {
         console.error("Error al girar ruleta:", error);
-        mensajeError.textContent = "Hubo un problema al girar la ruleta.";
-        mensajeError.classList.remove("hidden");
+
+        setTimeout(() => {
+          mensajeError.textContent = "Hubo un problema al girar la ruleta.";
+          mensajeError.classList.remove("hidden");
+        }, 800);
       } finally {
         setTimeout(() => {
           ruletaGirando = false;
           girarRuletaFullscreenBtn.disabled = false;
           girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-        }, 10000);
+        }, 12500);
       }
     }
 
@@ -789,7 +786,8 @@
           fechaActual.value = nuevaFecha;
           await obtenerSemanaDesdeScript();
 
-          await consultarEstadoRuleta();
+          ruletaFullscreen.classList.remove("hidden");
+          consultarEstadoRuleta();
         } else {
           mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
           mensajeError.classList.remove("hidden");
