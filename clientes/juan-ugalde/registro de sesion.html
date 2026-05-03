@@ -130,7 +130,6 @@
       font-weight: 800; font-size: 1rem; line-height: 1.15; color: #fff; z-index: 3;
       box-shadow: 0 10px 30px rgba(255,140,0,0.32), 0 0 0 8px rgba(255,255,255,0.08);
     }
-    .ruleta-note { margin-top: 10px; font-size: .86rem; color: rgba(255,255,255,0.70); text-align: center; }
     .rutina-checkin-form { display: flex; flex-direction: column; gap: 26px; }
     .checkin-bloque { display: flex; flex-direction: column; gap: 12px; }
     .checkin-label { font-size: 1rem; font-weight: 600; color: #fff; }
@@ -593,14 +592,6 @@
         }
 
         if (result.yaUsada) {
-          if (result.premio && !autoRuletaLanzada) {
-            autoRuletaLanzada = true;
-
-            setTimeout(() => {
-              mostrarPremio(result.premio, result.url_premio);
-            }, 300);
-          }
-
           return;
         }
 
@@ -661,7 +652,7 @@
 
         setTimeout(() => {
           mostrarPremio(result.premio, result.url_premio);
-        }, 12200);
+        }, 14500);
 
       } catch (error) {
         console.error("Error al girar ruleta:", error);
@@ -675,7 +666,7 @@
           ruletaGirando = false;
           girarRuletaFullscreenBtn.disabled = false;
           girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-        }, 12500);
+        }, 15000);
       }
     }
 
