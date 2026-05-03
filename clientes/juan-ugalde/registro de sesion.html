@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -95,7 +96,7 @@
           rgba(255,120,0,0.72) 257.10deg 308.52deg,
           rgba(255,177,79,0.88) 308.52deg 360deg
         );
-      transition: transform 12s cubic-bezier(0.12, 0.75, 0.15, 1);
+      transition: transform 10s cubic-bezier(0.12, 0.75, 0.15, 1);
       will-change: transform;
     }
     .ruleta-beneficios::before {
@@ -130,6 +131,7 @@
       font-weight: 800; font-size: 1rem; line-height: 1.15; color: #fff; z-index: 3;
       box-shadow: 0 10px 30px rgba(255,140,0,0.32), 0 0 0 8px rgba(255,255,255,0.08);
     }
+    .ruleta-note { margin-top: 10px; font-size: .86rem; color: rgba(255,255,255,0.70); text-align: center; }
     .rutina-checkin-form { display: flex; flex-direction: column; gap: 26px; }
     .checkin-bloque { display: flex; flex-direction: column; gap: 12px; }
     .checkin-label { font-size: 1rem; font-weight: 600; color: #fff; }
@@ -273,7 +275,8 @@
                 <div class="ruleta-label label-7">Doble oportunidad</div>
                 <div class="ruleta-centro">Ruleta MoveSmart</div>
               </div>
-            </div>
+
+              
           </div>
         </div>
 
@@ -386,7 +389,7 @@
             </div>
           </div>
 
-          <input type="hidden" name="cliente" value="Juan Ugalde">
+          <input type="hidden" name="cliente" value="Pamela Cortés">
           <input type="hidden" name="rutina" id="rutinaHidden" value="">
           <input type="hidden" name="semana" id="semanaCalculada">
           <input type="hidden" name="fecha" id="fechaActual">
@@ -571,6 +574,16 @@
       return angulos[premio] ?? 0;
     }
 
+    function animarRuletaHastaPremio(premio) {
+      if (!ruletaBeneficios) return;
+
+      const anguloPremio = obtenerAnguloPremio(premio);
+      const vueltasExtra = 360 * 1;
+
+      currentRotation = currentRotation + vueltasExtra + anguloPremio;
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+    }
+
     function mostrarPremio(premio, urlPremio) {
       premioGanadoBox.textContent = premio || "Premio asignado";
       claimPremioBtn.href = urlPremio || CLAIM_PREMIO_URL || "#";
@@ -605,128 +618,77 @@
       }
     }
 
-  async function girarRuleta() {
-  if (ruletaGirando) return;
+    async function girarRuleta() {
+      if (ruletaGirando) return;
 
-  const cliente = form.cliente.value;
-  ruletaGirando = true;
+      const cliente = form.cliente.value;
+      ruletaGirando = true;
 
-  girarRuletaFullscreenBtn.disabled = true;
-  girarRuletaFullscreenBtn.textContent = "Girando...";
+      girarRuletaFullscreenBtn.disabled = true;
+      girarRuletaFullscreenBtn.textContent = "Girando...";
 
-  ruletaFullscreen.classList.add("hidden");
-  premioFullscreen.classList.add("hidden");
-  mensajeError.classList.add("hidden");
+      ruletaFullscreen.classList.add("hidden");
+      premioFullscreen.classList.add("hidden");
+      mensajeError.classList.add("hidden");
 
-  if (ruletaStage) {
-    ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
-  }
+      if (ruletaStage) {
+        ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
+      }
 
-  // 1) Giro inmediato apenas se aprieta el botón
-  ruletaBeneficios.style.transition = "none";
-  currentRotation = currentRotation % 360;
-  ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+      try {
+        const response = await fetch(
+          `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
+        );
 
-  // Forzar al navegador a aplicar el estado inicial antes de animar
-  void ruletaBeneficios.offsetHeight;
+        const result = await response.json();
 
-  ruletaBeneficios.style.transition = "transform 13s cubic-bezier(0.12, 0.75, 0.15, 1)";
+        if (!result.ok) {
+          mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
+          mensajeError.classList.remove("hidden");
 
-  // Giro visual inmediato mientras el script responde
-  currentRotation = currentRotation + (360 * 6);
-  ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+          ruletaGirando = false;
+          girarRuletaFullscreenBtn.disabled = false;
+          girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
+          return;
+        }
 
-  let premioMostrado = false;
-  let result = null;
+        const anguloPremio = obtenerAnguloPremio(result.premio);
+        const vueltas = 360 * 8;
 
-  const mostrarPremioDespuesDelGiro = () => {
-    if (premioMostrado || !result || !result.ok) return;
-    premioMostrado = true;
+        ruletaBeneficios.style.transition = "none";
+        currentRotation = currentRotation % 360;
+        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+        ruletaBeneficios.offsetHeight;
 
-    setTimeout(() => {
-      mostrarPremio(result.premio, result.url_premio);
+        ruletaBeneficios.style.transition = "transform 13s cubic-bezier(0.12, 0.75, 0.15, 1)";
+        currentRotation = currentRotation + vueltas + anguloPremio;
+        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
-      ruletaGirando = false;
-      girarRuletaFullscreenBtn.disabled = false;
-      girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-    }, 700);
-  };
+        ruletaBeneficios.addEventListener("transitionend", function alTerminarGiro(event) {
+          if (event.propertyName !== "transform") return;
 
-  try {
-    // 2) Mientras ya está girando, pedimos el premio al script
-    const response = await fetch(
-      `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
-    );
+          ruletaBeneficios.removeEventListener("transitionend", alTerminarGiro);
 
-    result = await response.json();
+          setTimeout(() => {
+            mostrarPremio(result.premio, result.url_premio);
 
-    if (!result.ok) {
-      setTimeout(() => {
-        mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
+            ruletaGirando = false;
+            girarRuletaFullscreenBtn.disabled = false;
+            girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
+          }, 800);
+        });
+
+      } catch (error) {
+        console.error("Error al girar ruleta:", error);
+
+        mensajeError.textContent = "Hubo un problema al girar la ruleta.";
         mensajeError.classList.remove("hidden");
 
         ruletaGirando = false;
         girarRuletaFullscreenBtn.disabled = false;
         girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-      }, 800);
-
-      console.error("Resultado ruleta no OK:", result);
-      return;
+      }
     }
-
-    // 3) Ajustamos el destino final hacia el premio mientras sigue girando
-    const anguloPremio = obtenerAnguloPremio(result.premio);
-    currentRotation = currentRotation + (360 * 2) + anguloPremio;
-    ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-
-    // 4) Cuando termine realmente la transición, mostramos el premio
-    ruletaBeneficios.addEventListener("transitionend", function alTerminarGiro(event) {
-      if (event.propertyName !== "transform") return;
-
-      ruletaBeneficios.removeEventListener("transitionend", alTerminarGiro);
-      mostrarPremioDespuesDelGiro();
-    });
-
-    // Seguridad por si transitionend no dispara
-    setTimeout(() => {
-      mostrarPremioDespuesDelGiro();
-    }, 14200);
-
-  } catch (error) {
-    console.error("Error al girar ruleta:", error);
-
-    setTimeout(() => {
-      mensajeError.textContent = "Hubo un problema al girar la ruleta.";
-      mensajeError.classList.remove("hidden");
-
-      ruletaGirando = false;
-      girarRuletaFullscreenBtn.disabled = false;
-      girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-    }, 800);
-  }
-}
-    ruletaBeneficios.addEventListener("transitionend", function alTerminarGiro(event) {
-      if (event.propertyName !== "transform") return;
-
-      ruletaBeneficios.removeEventListener("transitionend", alTerminarGiro);
-      mostrarPremioDespuesDelGiro();
-    });
-
-    setTimeout(() => {
-      mostrarPremioDespuesDelGiro();
-    }, 14200);
-
-  } catch (error) {
-    console.error("Error al girar ruleta:", error);
-
-    mensajeError.textContent = "Hubo un problema al girar la ruleta.";
-    mensajeError.classList.remove("hidden");
-
-    ruletaGirando = false;
-    girarRuletaFullscreenBtn.disabled = false;
-    girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
-  }
-}
 
     dolorRadios.forEach(radio => {
       radio.addEventListener("change", () => {
@@ -835,8 +797,7 @@
           fechaActual.value = nuevaFecha;
           await obtenerSemanaDesdeScript();
 
-          ruletaFullscreen.classList.remove("hidden");
-          consultarEstadoRuleta();
+          await consultarEstadoRuleta();
         } else {
           mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
           mensajeError.classList.remove("hidden");
