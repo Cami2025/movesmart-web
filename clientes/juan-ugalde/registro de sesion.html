@@ -624,8 +624,9 @@
       ruletaGirando = true;
 
       girarRuletaFullscreenBtn.disabled = true;
-      girarRuletaFullscreenBtn.textContent = "Preparando giro...";
+      girarRuletaFullscreenBtn.textContent = "Girando...";
 
+      // La transición visual parte de inmediato al apretar el botón.
       ruletaFullscreen.classList.add("hidden");
       premioFullscreen.classList.add("hidden");
       mensajeError.classList.add("hidden");
@@ -634,9 +635,25 @@
         ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
       }
 
+      // 1) Giro inmediato largo: evita la sensación de pausa mientras Apps Script responde.
+      ruletaBeneficios.style.transition = "none";
+      currentRotation = currentRotation % 360;
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+      ruletaBeneficios.offsetHeight; // fuerza repaint
+
+      // Parte visualmente altiro y sigue girando largo.
+      const vueltasVisuales = 360 * 30;
+      ruletaBeneficios.style.transition = "transform 20s linear";
+      currentRotation = currentRotation + vueltasVisuales;
+      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+
+      // Permite que el navegador pinte el primer movimiento antes del fetch.
+      await new Promise(resolve => requestAnimationFrame(() => {
+        requestAnimationFrame(resolve);
+      }));
+
       try {
-        // 1) Primero pedimos el premio real al Apps Script.
-        // Así la ruleta hace un solo giro continuo hasta el premio correcto.
+        // 2) Mientras ya está girando, pedimos el premio real al Apps Script.
         const response = await fetch(
           `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
         );
@@ -647,25 +664,23 @@
           mensajeError.textContent = result.message || "Aún no puedes girar la ruleta.";
           mensajeError.classList.remove("hidden");
 
+          ruletaBeneficios.style.transition = "transform 0.8s ease-out";
+          currentRotation = currentRotation + 120;
+          ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+
           ruletaGirando = false;
           girarRuletaFullscreenBtn.disabled = false;
           girarRuletaFullscreenBtn.textContent = "🎯 Girar ruleta";
           return;
         }
 
-        // 2) Un solo giro fluido hasta el premio asignado.
+        // 3) Giro final más largo y fluido hasta el premio asignado.
         const anguloPremio = obtenerAnguloPremio(result.premio);
-        const vueltasFinales = 360 * 5;
+        const vueltasFinales = 360 * 8;
+        const baseFinal = Math.ceil(currentRotation / 360) * 360;
 
-        ruletaBeneficios.style.transition = "none";
-        currentRotation = currentRotation % 360;
-        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-        ruletaBeneficios.offsetHeight; // fuerza repaint para que el navegador aplique el reset
-
-        girarRuletaFullscreenBtn.textContent = "Girando...";
-
-        ruletaBeneficios.style.transition = "transform 4s cubic-bezier(0.12, 0.75, 0.15, 1)";
-        currentRotation = currentRotation + vueltasFinales + anguloPremio;
+        ruletaBeneficios.style.transition = "transform 7s cubic-bezier(0.12, 0.75, 0.15, 1)";
+        currentRotation = baseFinal + vueltasFinales + anguloPremio;
         ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
         ruletaBeneficios.addEventListener("transitionend", function alTerminarGiro(event) {
