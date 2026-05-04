@@ -801,6 +801,7 @@
         const result = await response.json();
 
         if (result.ok) {
+          mensajeFinal.textContent = "¡Sesión registrada! Revisando recompensa...";
           mensajeFinal.classList.remove("hidden");
 
           form.reset();
@@ -810,9 +811,12 @@
 
           const nuevaFecha = obtenerFechaChile();
           fechaActual.value = nuevaFecha;
-          await obtenerSemanaDesdeScript();
 
-          await consultarEstadoRuleta();
+          // Abre la ruleta casi inmediatamente después de registrar la sesión.
+          // Importante: con esta versión se abre cada vez que el registro sea exitoso.
+          setTimeout(() => {
+            ruletaFullscreen.classList.remove("hidden");
+          }, 400);
         } else {
           mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
           mensajeError.classList.remove("hidden");
