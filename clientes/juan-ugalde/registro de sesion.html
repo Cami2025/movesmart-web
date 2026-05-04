@@ -624,7 +624,7 @@
       ruletaGirando = true;
 
       girarRuletaFullscreenBtn.disabled = true;
-      girarRuletaFullscreenBtn.textContent = "Girando...";
+      girarRuletaFullscreenBtn.textContent = "Preparando giro...";
 
       ruletaFullscreen.classList.add("hidden");
       premioFullscreen.classList.add("hidden");
@@ -634,26 +634,9 @@
         ruletaStage.scrollIntoView({ behavior: "auto", block: "center" });
       }
 
-      // 1) Giro inmediato visual: parte altiro, sin esperar al Apps Script.
-      const anguloInicialAleatorio = Math.floor(Math.random() * 360);
-      const vueltasIniciales = 360 * 2;
-
-      ruletaBeneficios.style.transition = "none";
-      currentRotation = currentRotation % 360;
-      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-      ruletaBeneficios.offsetHeight; // fuerza repaint para que el navegador aplique el reset
-
-      ruletaBeneficios.style.transition = "transform 1.2s linear";
-      currentRotation = currentRotation + vueltasIniciales + anguloInicialAleatorio;
-      ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
-
-      // Deja que el navegador pinte el giro ANTES de consultar Apps Script
-      await new Promise(resolve => requestAnimationFrame(() => {
-        requestAnimationFrame(resolve);
-      }));
-
       try {
-        // 2) Mientras ya está girando, pedimos el premio real al Apps Script.
+        // 1) Primero pedimos el premio real al Apps Script.
+        // Así la ruleta hace un solo giro continuo hasta el premio correcto.
         const response = await fetch(
           `${RULETA_URL}?action=girarRuleta&cliente=${encodeURIComponent(cliente)}`
         );
@@ -670,13 +653,19 @@
           return;
         }
 
-        // 3) Cuando ya sabemos el premio, ajustamos el destino final para que caiga donde corresponde.
+        // 2) Un solo giro fluido hasta el premio asignado.
         const anguloPremio = obtenerAnguloPremio(result.premio);
-        const vueltasFinales = 360 * 4;
-        const baseFinal = Math.ceil(currentRotation / 360) * 360;
+        const vueltasFinales = 360 * 5;
 
-        ruletaBeneficios.style.transition = "transform 3.2s cubic-bezier(0.12, 0.75, 0.15, 1)";
-        currentRotation = baseFinal + vueltasFinales + anguloPremio;
+        ruletaBeneficios.style.transition = "none";
+        currentRotation = currentRotation % 360;
+        ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
+        ruletaBeneficios.offsetHeight; // fuerza repaint para que el navegador aplique el reset
+
+        girarRuletaFullscreenBtn.textContent = "Girando...";
+
+        ruletaBeneficios.style.transition = "transform 4s cubic-bezier(0.12, 0.75, 0.15, 1)";
+        currentRotation = currentRotation + vueltasFinales + anguloPremio;
         ruletaBeneficios.style.transform = `rotate(${currentRotation}deg)`;
 
         ruletaBeneficios.addEventListener("transitionend", function alTerminarGiro(event) {
