@@ -30,7 +30,7 @@
       color:var(--text);
       background:
         linear-gradient(180deg, rgba(7,9,19,.45), rgba(7,9,19,.86)),
-        url('fondo-preview-rutina.png') center center / cover no-repeat fixed,
+        url('../fondo-preview-rutina.png') center center / cover no-repeat fixed,
         var(--bg);
       overflow-x:hidden;
     }
@@ -110,13 +110,19 @@
     }
 
     .chest-main{
-      width:112px;
-      height:112px;
+      width:132px;
+      height:132px;
       margin:0 auto 6px;
       display:grid;
       place-items:center;
-      font-size:4.6rem;
       filter:drop-shadow(0 0 22px rgba(255,122,0,.45));
+    }
+
+    .chest-main img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
     }
 
     .hero h1{
@@ -168,19 +174,18 @@
     }
 
     .coin{
-      width:210px;
-      height:210px;
-      border-radius:50%;
+      width:230px;
+      height:230px;
       display:grid;
       place-items:center;
-      background:
-        radial-gradient(circle at 30% 25%, #ffe69b, #ffb323 44%, #db7f00 74%, #925200 100%);
-      border:3px solid rgba(255,205,86,.9);
-      box-shadow:0 0 28px rgba(255,139,0,.65), 0 20px 50px rgba(0,0,0,.42);
-      font-size:5rem;
-      font-weight:900;
-      color:#fff;
-      text-shadow:0 6px 12px rgba(0,0,0,.28);
+      filter:drop-shadow(0 0 28px rgba(255,139,0,.65)) drop-shadow(0 20px 32px rgba(0,0,0,.42));
+    }
+
+    .coin img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
     }
 
     .badge{
@@ -331,6 +336,15 @@
       border:1px solid rgba(255,122,0,.28);
       font-size:1.65rem;
       flex:0 0 auto;
+      overflow:hidden;
+    }
+
+    .mini-icon img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+      transform:scale(1.18);
     }
 
     .cycle-cell strong{display:block;margin-bottom:4px}
@@ -480,7 +494,7 @@
       .footer{flex-direction:column;align-items:stretch;text-align:center}
       .points-card{justify-content:center}
       .featured-prize,.next-prize{padding:22px}
-      .coin{width:170px;height:170px;font-size:4rem}
+      .coin{width:180px;height:180px}
       .claim-btn{width:100%;min-width:unset}
     }
   </style>
@@ -488,7 +502,7 @@
 <body>
   <div class="wrap">
     <header class="topbar">
-      <a href="plan-juan-ugalde.html" class="back-btn">← Menú principal</a>
+      <a href="../clientes/juan-ugalde/plan-juan-ugalde.html" class="back-btn">← Menú principal</a>
       <div class="points-card">
         <div class="points-icon">⭐</div>
         <div>
@@ -499,14 +513,14 @@
     </header>
 
     <section class="hero">
-      <div class="chest-main">🏆</div>
+      <div class="chest-main"><img src="imagenes/icono-cofre.png" alt="Cofre MoveSmart"></div>
       <h1>Mi Cofre MoveSmart</h1>
       <p>⭐ Tus premios desbloqueados por constancia ⭐</p>
     </section>
 
     <section class="featured-prize">
       <div class="prize-visual">
-        <div class="coin">%</div>
+        <div class="coin"><img src="imagenes/porcentaje.png" alt="Premio de descuento"></div>
       </div>
 
       <div class="featured-copy">
@@ -542,7 +556,7 @@
 
       <div class="history-row">
         <div class="cycle-cell">
-          <div class="mini-icon">%</div>
+          <div class="mini-icon"><img src="imagenes/porcentaje.png" alt="Descuento"></div>
           <div><strong>Mayo 2026</strong><span>Ciclo completado</span></div>
         </div>
         <strong>15% de descuento<br>en tu renovación</strong>
