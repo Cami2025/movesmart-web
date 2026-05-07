@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Cofre MoveSmart</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    :root{
+      --bg:#070913;
+      --card:rgba(18,18,38,.78);
+      --card-soft:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.12);
+      --text:#fff;
+      --muted:rgba(255,255,255,.76);
+      --blue:#4d6dff;
+      --blue-2:#284bff;
+      --purple:#8b4dff;
+      --orange:#ff7a00;
+      --orange-2:#ff9b2f;
+      --green:#42e88a;
+      --shadow:0 24px 70px rgba(0,0,0,.42);
+      --wrap:min(1120px, calc(100% - 30px));
+    }
+
+    body{
+      min-height:100vh;
+      font-family:'Segoe UI', system-ui, sans-serif;
+      color:var(--text);
+      background:
+        linear-gradient(180deg, rgba(7,9,19,.45), rgba(7,9,19,.86)),
+        url('fondo-preview-rutina.png') center center / cover no-repeat fixed,
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(77,109,255,.18), transparent 24%),
+        radial-gradient(circle at 80% 18%, rgba(255,122,0,.16), transparent 22%),
+        radial-gradient(circle at 50% 40%, rgba(139,77,255,.15), transparent 26%);
+      z-index:0;
+    }
+
+    .wrap{
+      width:var(--wrap);
+      margin:auto;
+      padding:32px 0 54px;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .back-btn,
+    .points-card{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:0 16px 34px rgba(0,0,0,.25);
+    }
+
+    .back-btn{
+      color:#fff;
+      text-decoration:none;
+      padding:13px 20px;
+      border-radius:999px;
+      font-weight:800;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .points-card{
+      padding:14px 18px;
+      border-radius:22px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .points-icon{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:rgba(255,154,47,.14);
+      font-size:1.5rem;
+    }
+
+    .points-card strong{font-size:1.5rem;display:block;line-height:1}
+    .points-card span{color:var(--muted);font-size:.92rem}
+
+    .hero{
+      text-align:center;
+      margin-bottom:34px;
+    }
+
+    .chest-main{
+      width:112px;
+      height:112px;
+      margin:0 auto 6px;
+      display:grid;
+      place-items:center;
+      font-size:4.6rem;
+      filter:drop-shadow(0 0 22px rgba(255,122,0,.45));
+    }
+
+    .hero h1{
+      font-size:clamp(2.4rem, 6vw, 4.3rem);
+      line-height:1;
+      letter-spacing:-.05em;
+      text-shadow:0 10px 30px rgba(0,0,0,.35);
+      margin-bottom:18px;
+    }
+
+    .hero p{
+      color:rgba(255,255,255,.86);
+      font-size:clamp(1rem, 2.4vw, 1.35rem);
+      font-weight:600;
+    }
+
+    .featured-prize{
+      border:1px solid rgba(93,112,255,.75);
+      border-radius:30px;
+      background:
+        linear-gradient(135deg, rgba(33,43,115,.84), rgba(22,15,40,.88)),
+        radial-gradient(circle at 20% 40%, rgba(255,122,0,.18), transparent 28%);
+      box-shadow:0 0 0 1px rgba(118,94,255,.22), var(--shadow);
+      padding:36px;
+      display:grid;
+      grid-template-columns:.9fr 1.25fr .85fr;
+      gap:30px;
+      align-items:center;
+      margin-bottom:34px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .featured-prize::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:radial-gradient(circle at 15% 45%, rgba(255,122,0,.16), transparent 28%);
+      pointer-events:none;
+    }
+
+    .prize-visual,
+    .featured-copy,
+    .prize-meta{position:relative;z-index:1}
+
+    .prize-visual{
+      display:grid;
+      place-items:center;
+    }
+
+    .coin{
+      width:210px;
+      height:210px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at 30% 25%, #ffe69b, #ffb323 44%, #db7f00 74%, #925200 100%);
+      border:3px solid rgba(255,205,86,.9);
+      box-shadow:0 0 28px rgba(255,139,0,.65), 0 20px 50px rgba(0,0,0,.42);
+      font-size:5rem;
+      font-weight:900;
+      color:#fff;
+      text-shadow:0 6px 12px rgba(0,0,0,.28);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:12px;
+      background:linear-gradient(180deg, var(--blue), var(--blue-2));
+      font-size:.9rem;
+      font-weight:900;
+      margin-bottom:16px;
+      box-shadow:0 12px 24px rgba(47,99,255,.28);
+    }
+
+    .featured-copy h2{
+      font-size:clamp(1.7rem, 4vw, 2.45rem);
+      line-height:1.06;
+      margin-bottom:12px;
+    }
+
+    .featured-copy h3{
+      color:var(--orange-2);
+      font-size:clamp(1.35rem, 3vw, 2rem);
+      line-height:1.18;
+      margin-bottom:14px;
+    }
+
+    .featured-copy p{
+      color:var(--muted);
+      font-size:1.05rem;
+      line-height:1.6;
+      margin-bottom:22px;
+    }
+
+    .claim-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-width:280px;
+      padding:17px 24px;
+      border-radius:14px;
+      border:none;
+      background:linear-gradient(180deg, #ff9b2f, #ff6a00);
+      color:#fff;
+      font-weight:900;
+      text-decoration:none;
+      box-shadow:0 14px 34px rgba(255,106,0,.34);
+    }
+
+    .small-note{
+      margin-top:12px;
+      color:rgba(255,255,255,.62);
+      font-size:.9rem;
+    }
+
+    .prize-meta{
+      display:grid;
+      gap:12px;
+    }
+
+    .meta-card{
+      display:grid;
+      grid-template-columns:46px 1fr;
+      gap:12px;
+      align-items:center;
+      padding:15px;
+      border-radius:16px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .meta-icon{
+      width:46px;
+      height:46px;
+      display:grid;
+      place-items:center;
+      border-radius:13px;
+      background:rgba(255,255,255,.07);
+      font-size:1.35rem;
+    }
+
+    .meta-card span{
+      color:var(--muted);
+      display:block;
+      font-size:.88rem;
+      margin-bottom:3px;
+    }
+
+    .meta-card strong{font-size:1rem}
+    .available{color:var(--green)}
+    .coupon{color:#ffd36d}
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:1.7rem;
+      margin:0 0 18px;
+      letter-spacing:-.02em;
+    }
+
+    .history{
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:22px;
+      overflow:hidden;
+      background:rgba(10,12,28,.66);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:var(--shadow);
+      margin-bottom:34px;
+    }
+
+    .history-head,
+    .history-row{
+      display:grid;
+      grid-template-columns:1.15fr 1.55fr 1.15fr 1fr 1fr;
+      gap:16px;
+      align-items:center;
+      padding:18px 26px;
+    }
+
+    .history-head{
+      background:rgba(139,77,255,.18);
+      color:rgba(255,255,255,.74);
+      font-weight:800;
+    }
+
+    .history-row{
+      border-top:1px solid rgba(255,255,255,.08);
+      min-height:104px;
+    }
+
+    .cycle-cell{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .mini-icon{
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(255,122,0,.16);
+      border:1px solid rgba(255,122,0,.28);
+      font-size:1.65rem;
+      flex:0 0 auto;
+    }
+
+    .cycle-cell strong{display:block;margin-bottom:4px}
+    .cycle-cell span{color:var(--muted);font-size:.92rem}
+
+    .date-cell{color:rgba(255,255,255,.86)}
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:9px 14px;
+      border-radius:10px;
+      font-weight:900;
+      background:rgba(66,232,138,.14);
+      color:var(--green);
+      width:max-content;
+    }
+
+    .status.claimed{
+      color:#71f0a8;
+      background:rgba(66,232,138,.13);
+    }
+
+    .row-btn{
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      padding:11px 14px;
+      border-radius:11px;
+      text-decoration:none;
+      color:#fff;
+      font-weight:900;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+    }
+
+    .row-btn.orange{
+      border-color:rgba(255,122,0,.5);
+      background:linear-gradient(180deg, #ff8a1f, #ff5a1f);
+      box-shadow:0 10px 22px rgba(255,90,31,.22);
+    }
+
+    .next-prize{
+      display:grid;
+      grid-template-columns:.8fr 1.1fr .8fr;
+      gap:28px;
+      align-items:center;
+      border:1px solid rgba(139,77,255,.55);
+      border-radius:28px;
+      padding:32px;
+      background:linear-gradient(135deg, rgba(44,23,88,.72), rgba(9,12,29,.78));
+      box-shadow:var(--shadow);
+      margin-bottom:28px;
+    }
+
+    .locked-chest{
+      width:190px;
+      height:190px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:radial-gradient(circle, rgba(139,77,255,.24), rgba(139,77,255,.02) 68%);
+      font-size:5rem;
+      filter:grayscale(.2) drop-shadow(0 0 20px rgba(139,77,255,.35));
+    }
+
+    .next-prize h3{
+      color:#a978ff;
+      font-size:1.45rem;
+      margin-bottom:12px;
+    }
+
+    .next-prize h2{
+      font-size:2rem;
+      line-height:1.15;
+      margin-bottom:12px;
+    }
+
+    .next-prize p{color:var(--muted);line-height:1.7;font-size:1.05rem}
+
+    .lock-box{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .lock-box strong{color:#b58aff;font-size:1.1rem}
+    .progress-label{margin:22px 0 10px;color:rgba(255,255,255,.88);font-weight:800}
+    .progress-bar{
+      height:16px;
+      background:rgba(255,255,255,.12);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .progress-fill{
+      width:30%;
+      height:100%;
+      background:linear-gradient(90deg, var(--purple), #ca7cff);
+      border-radius:999px;
+    }
+
+    .footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      padding:24px 28px;
+      border-radius:22px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--muted);
+    }
+
+    .footer strong{
+      color:#fff;
+      display:block;
+      font-size:1.15rem;
+      margin-bottom:4px;
+    }
+
+    .footer .brand-logo{
+      font-size:2rem;
+      color:#fff;
+      font-weight:900;
+    }
+    .footer .brand-logo span{color:var(--orange)}
+
+    @media (max-width: 940px){
+      .featured-prize,
+      .next-prize{
+        grid-template-columns:1fr;
+      }
+
+      .prize-visual{justify-content:center}
+
+      .history-head{display:none}
+      .history-row{
+        grid-template-columns:1fr;
+        gap:12px;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar,
+      .footer{flex-direction:column;align-items:stretch;text-align:center}
+      .points-card{justify-content:center}
+      .featured-prize,.next-prize{padding:22px}
+      .coin{width:170px;height:170px;font-size:4rem}
+      .claim-btn{width:100%;min-width:unset}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <a href="plan-juan-ugalde.html" class="back-btn">← Menú principal</a>
+      <div class="points-card">
+        <div class="points-icon">⭐</div>
+        <div>
+          <strong>120</strong>
+          <span>MovePuntos</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="chest-main">🏆</div>
+      <h1>Mi Cofre MoveSmart</h1>
+      <p>⭐ Tus premios desbloqueados por constancia ⭐</p>
+    </section>
+
+    <section class="featured-prize">
+      <div class="prize-visual">
+        <div class="coin">%</div>
+      </div>
+
+      <div class="featured-copy">
+        <div class="badge">¡FELICIDADES!</div>
+        <h2>Premio desbloqueado</h2>
+        <h3>15% de descuento en tu próxima renovación</h3>
+        <p>Por completar tu ciclo de mayo 2026</p>
+        <a href="#" class="claim-btn">🎁 RECLAMAR PREMIO</a>
+        <div class="small-note">ⓘ Podrás usar tu premio en el momento que tú decidas.</div>
+      </div>
+
+      <div class="prize-meta">
+        <div class="meta-card">
+          <div class="meta-icon">📅</div>
+          <div><span>Fecha de desbloqueo</span><strong>31 mayo 2026</strong></div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-icon">✅</div>
+          <div><span>Estado</span><strong class="available">Disponible</strong></div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-icon">🎁</div>
+          <div><span>Código / Cupón</span><strong class="coupon">MOVE15MAYO</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <h2 class="section-title">🏆 Mis premios ganados</h2>
+    <section class="history">
+      <div class="history-head">
+        <div>Ciclo</div><div>Premio</div><div>Fecha</div><div>Estado</div><div>Acción</div>
+      </div>
+
+      <div class="history-row">
+        <div class="cycle-cell">
+          <div class="mini-icon">%</div>
+          <div><strong>Mayo 2026</strong><span>Ciclo completado</span></div>
+        </div>
+        <strong>15% de descuento<br>en tu renovación</strong>
+        <div class="date-cell">📅 31 mayo 2026</div>
+        <div><span class="status">Disponible</span></div>
+        <a href="#" class="row-btn orange">Reclamar</a>
+      </div>
+
+      <div class="history-row">
+        <div class="cycle-cell">
+          <div class="mini-icon">🏋️</div>
+          <div><strong>Abril 2026</strong><span>Ciclo completado</span></div>
+        </div>
+        <strong>Rutina bonus<br>personalizada</strong>
+        <div class="date-cell">📅 30 abril 2026</div>
+        <div><span class="status claimed">Reclamado ✓</span></div>
+        <a href="#" class="row-btn">Ver detalle</a>
+      </div>
+
+      <div class="history-row">
+        <div class="cycle-cell">
+          <div class="mini-icon">📘</div>
+          <div><strong>Marzo 2026</strong><span>Ciclo completado</span></div>
+        </div>
+        <strong>Guía de movilidad<br>y recuperación</strong>
+        <div class="date-cell">📅 31 marzo 2026</div>
+        <div><span class="status claimed">Reclamado ✓</span></div>
+        <a href="#" class="row-btn">Ver detalle</a>
+      </div>
+    </section>
+
+    <section class="next-prize">
+      <div class="locked-chest">🔒</div>
+      <div>
+        <h3>Próximo premio</h3>
+        <h2>Premio especial<br>por tu constancia</h2>
+        <p>Completa tu próximo ciclo para abrir un nuevo premio.</p>
+      </div>
+      <div class="lock-box">
+        <strong>🔒 Bloqueado</strong>
+        <p style="margin-top:8px;color:var(--muted);line-height:1.6">Sigue entrenando y mantén tu constancia.</p>
+        <div class="progress-label">Avance del ciclo actual<br><span style="color:#b58aff">30% completado</span></div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <strong>⭐ Tu disciplina te está llevando lejos.</strong>
+        <span style="color:#ffb45c;font-weight:800">¡Sigue así, lo mejor está por venir!</span>
+      </div>
+      <div class="brand-logo">Move<span>Smart</span></div>
+    </footer>
+  </div>
+</body>
+</html>
