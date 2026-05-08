@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -490,6 +492,153 @@
       border-radius:999px;
     }
 
+
+
+    .unlock-container{
+      display:grid;
+      grid-template-columns:220px 1fr 1fr;
+      gap:28px;
+      align-items:center;
+      border:1px solid rgba(255,122,0,.55);
+      border-radius:22px;
+      padding:22px 28px;
+      background:
+        linear-gradient(135deg, rgba(22,14,26,.88), rgba(9,13,30,.86)),
+        radial-gradient(circle at 13% 50%, rgba(255,122,0,.22), transparent 28%);
+      box-shadow:0 18px 48px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.04);
+      margin-bottom:28px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .unlock-container::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 14% 42%, rgba(255,160,28,.18), transparent 25%),
+        linear-gradient(180deg, rgba(255,255,255,.035), transparent 48%);
+    }
+
+    .unlock-visual,
+    .unlock-copy,
+    .unlock-checklist{position:relative;z-index:1}
+
+    .unlock-visual{
+      display:grid;
+      place-items:center;
+    }
+
+    .unlock-visual img{
+      width:178px;
+      height:178px;
+      object-fit:contain;
+      display:block;
+      filter:drop-shadow(0 0 24px rgba(255,145,0,.72)) drop-shadow(0 18px 28px rgba(0,0,0,.42));
+    }
+
+    .unlock-copy h3{
+      color:var(--orange-2);
+      font-size:.95rem;
+      margin-bottom:8px;
+      font-weight:900;
+    }
+
+    .unlock-copy h2{
+      font-size:1.62rem;
+      line-height:1.12;
+      margin-bottom:10px;
+      letter-spacing:-.02em;
+    }
+
+    .unlock-copy p{
+      color:var(--muted);
+      line-height:1.55;
+      font-size:.96rem;
+      max-width:430px;
+    }
+
+    .unlock-progress-text{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      margin-top:16px;
+      font-size:.9rem;
+      font-weight:800;
+    }
+
+    .unlock-progress-text span:last-child{color:var(--orange-2)}
+
+    .unlock-progress-bar{
+      height:12px;
+      margin-top:7px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      overflow:hidden;
+    }
+
+    .unlock-progress-fill{
+      width:30%;
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--orange), var(--orange-2));
+      box-shadow:0 0 18px rgba(255,122,0,.35);
+    }
+
+    .unlock-checklist{
+      border-left:1px solid rgba(255,255,255,.11);
+      padding-left:24px;
+      display:grid;
+      gap:15px;
+    }
+
+    .unlock-item{
+      display:grid;
+      grid-template-columns:28px 1fr;
+      gap:12px;
+      align-items:start;
+    }
+
+    .unlock-item .check,
+    .unlock-item .lock{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:.9rem;
+      margin-top:2px;
+    }
+
+    .unlock-item .check{
+      color:#11131f;
+      background:linear-gradient(180deg, #ffb33a, #ff7a00);
+      box-shadow:0 0 18px rgba(255,122,0,.28);
+    }
+
+    .unlock-item .lock{
+      color:rgba(255,255,255,.52);
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .unlock-item strong{
+      display:block;
+      font-size:.95rem;
+      margin-bottom:3px;
+      color:#fff;
+    }
+
+    .unlock-item span{
+      display:block;
+      color:var(--muted);
+      font-size:.88rem;
+      line-height:1.35;
+    }
+
     .footer{
       display:flex;
       justify-content:space-between;
@@ -518,7 +667,8 @@
 
     @media (max-width: 940px){
       .featured-prize,
-      .next-prize{
+      .next-prize,
+      .unlock-container{
         grid-template-columns:1fr;
       }
 
@@ -533,10 +683,159 @@
 
     @media (max-width: 640px){
       .topbar,
-      .footer{flex-direction:column;align-items:stretch;text-align:center}
+  
+
+    .unlock-container{
+      display:grid;
+      grid-template-columns:220px 1fr 1fr;
+      gap:28px;
+      align-items:center;
+      border:1px solid rgba(255,122,0,.55);
+      border-radius:22px;
+      padding:22px 28px;
+      background:
+        linear-gradient(135deg, rgba(22,14,26,.88), rgba(9,13,30,.86)),
+        radial-gradient(circle at 13% 50%, rgba(255,122,0,.22), transparent 28%);
+      box-shadow:0 18px 48px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.04);
+      margin-bottom:28px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .unlock-container::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 14% 42%, rgba(255,160,28,.18), transparent 25%),
+        linear-gradient(180deg, rgba(255,255,255,.035), transparent 48%);
+    }
+
+    .unlock-visual,
+    .unlock-copy,
+    .unlock-checklist{position:relative;z-index:1}
+
+    .unlock-visual{
+      display:grid;
+      place-items:center;
+    }
+
+    .unlock-visual img{
+      width:178px;
+      height:178px;
+      object-fit:contain;
+      display:block;
+      filter:drop-shadow(0 0 24px rgba(255,145,0,.72)) drop-shadow(0 18px 28px rgba(0,0,0,.42));
+    }
+
+    .unlock-copy h3{
+      color:var(--orange-2);
+      font-size:.95rem;
+      margin-bottom:8px;
+      font-weight:900;
+    }
+
+    .unlock-copy h2{
+      font-size:1.62rem;
+      line-height:1.12;
+      margin-bottom:10px;
+      letter-spacing:-.02em;
+    }
+
+    .unlock-copy p{
+      color:var(--muted);
+      line-height:1.55;
+      font-size:.96rem;
+      max-width:430px;
+    }
+
+    .unlock-progress-text{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      margin-top:16px;
+      font-size:.9rem;
+      font-weight:800;
+    }
+
+    .unlock-progress-text span:last-child{color:var(--orange-2)}
+
+    .unlock-progress-bar{
+      height:12px;
+      margin-top:7px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      overflow:hidden;
+    }
+
+    .unlock-progress-fill{
+      width:30%;
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--orange), var(--orange-2));
+      box-shadow:0 0 18px rgba(255,122,0,.35);
+    }
+
+    .unlock-checklist{
+      border-left:1px solid rgba(255,255,255,.11);
+      padding-left:24px;
+      display:grid;
+      gap:15px;
+    }
+
+    .unlock-item{
+      display:grid;
+      grid-template-columns:28px 1fr;
+      gap:12px;
+      align-items:start;
+    }
+
+    .unlock-item .check,
+    .unlock-item .lock{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:.9rem;
+      margin-top:2px;
+    }
+
+    .unlock-item .check{
+      color:#11131f;
+      background:linear-gradient(180deg, #ffb33a, #ff7a00);
+      box-shadow:0 0 18px rgba(255,122,0,.28);
+    }
+
+    .unlock-item .lock{
+      color:rgba(255,255,255,.52);
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .unlock-item strong{
+      display:block;
+      font-size:.95rem;
+      margin-bottom:3px;
+      color:#fff;
+    }
+
+    .unlock-item span{
+      display:block;
+      color:var(--muted);
+      font-size:.88rem;
+      line-height:1.35;
+    }
+
+    .footer{flex-direction:column;align-items:stretch;text-align:center}
       .points-card{justify-content:center}
-      .featured-prize,.next-prize{padding:22px}
+      .featured-prize,.next-prize,.unlock-container{padding:22px}
       .coin{width:180px;height:180px}
+      .unlock-checklist{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,.11);padding-top:18px}
+      .unlock-visual img{width:150px;height:150px}
       .claim-btn{width:100%;min-width:unset}
     }
   </style>
@@ -630,18 +929,49 @@
       </div>
     </section>
 
-    <section class="next-prize">
-      <div class="locked-chest">🔒</div>
-      <div>
-        <div class="badge">🔒 PRÓXIMO PREMIO</div>
-        <h2>Premio especial<br>por tu constancia</h2>
-        <p>Completa tu próximo ciclo para abrir un nuevo premio.</p>
+    <section class="unlock-container">
+      <div class="unlock-visual">
+        <img src="imagenes/cofre2.png" alt="Cofre bloqueado">
       </div>
-      <div class="lock-box">
-        <strong>🔒 Bloqueado</strong>
-        <p style="margin-top:8px;color:var(--muted);line-height:1.6">Sigue entrenando y mantén tu constancia.</p>
-        <div class="progress-label">Avance del ciclo actual<br><span style="color:#b58aff">30% completado</span></div>
-        <div class="progress-bar"><div class="progress-fill"></div></div>
+
+      <div class="unlock-copy">
+        <h3>Cómo desbloquear tu cofre</h3>
+        <h2>Completa tu ciclo para<br>revelar tu próximo premio 🎁</h2>
+        <p>Sigue entrenando con constancia y cumple tu meta mensual para activar tu premio.</p>
+
+        <div class="unlock-progress-text">
+          <span>Progreso actual</span>
+          <span>30% completado</span>
+        </div>
+        <div class="unlock-progress-bar">
+          <div class="unlock-progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="unlock-checklist">
+        <div class="unlock-item">
+          <div class="check">✓</div>
+          <div>
+            <strong>Completa las sesiones</strong>
+            <span>planificadas de tu ciclo actual.</span>
+          </div>
+        </div>
+
+        <div class="unlock-item">
+          <div class="check">✓</div>
+          <div>
+            <strong>Mantén tu constancia semanal</strong>
+            <span>Sigue tu plan y registra tus entrenamientos.</span>
+          </div>
+        </div>
+
+        <div class="unlock-item">
+          <div class="lock">🔒</div>
+          <div>
+            <strong>Completa el ciclo</strong>
+            <span>Cumple tu meta mensual para revelar tu premio.</span>
+          </div>
+        </div>
       </div>
     </section>
 
