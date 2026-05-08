@@ -20,6 +20,8 @@
       --orange:#ff7a00;
       --orange-2:#ff9b2f;
       --green:#42e88a;
+      --locked:#ff5d73;
+      --violet:#b45cff;
       --shadow:0 24px 70px rgba(0,0,0,.42);
       --wrap:min(1120px, calc(100% - 30px));
     }
@@ -140,12 +142,12 @@
     }
 
     .featured-prize{
-      border:1px solid rgba(93,112,255,.75);
+      border:1px solid rgba(180,92,255,.95);
       border-radius:30px;
       background:
-        linear-gradient(135deg, rgba(33,43,115,.84), rgba(22,15,40,.88)),
-        radial-gradient(circle at 20% 40%, rgba(255,122,0,.18), transparent 28%);
-      box-shadow:0 0 0 1px rgba(118,94,255,.22), var(--shadow);
+        linear-gradient(135deg, rgba(29,12,62,.88), rgba(7,11,29,.92)),
+        radial-gradient(circle at 20% 45%, rgba(180,92,255,.24), transparent 30%);
+      box-shadow:0 0 0 1px rgba(180,92,255,.26), 0 0 34px rgba(180,92,255,.18), var(--shadow);
       padding:36px;
       display:grid;
       grid-template-columns:.9fr 1.25fr .85fr;
@@ -160,7 +162,7 @@
       content:"";
       position:absolute;
       inset:-1px;
-      background:radial-gradient(circle at 15% 45%, rgba(255,122,0,.16), transparent 28%);
+      background:radial-gradient(circle at 15% 45%, rgba(180,92,255,.22), transparent 30%);
       pointer-events:none;
     }
 
@@ -178,7 +180,7 @@
       height:230px;
       display:grid;
       place-items:center;
-      filter:drop-shadow(0 0 28px rgba(255,139,0,.65)) drop-shadow(0 20px 32px rgba(0,0,0,.42));
+      filter:drop-shadow(0 0 28px rgba(180,92,255,.75)) drop-shadow(0 20px 32px rgba(0,0,0,.42));
     }
 
     .coin img{
@@ -194,11 +196,11 @@
       gap:8px;
       padding:10px 14px;
       border-radius:12px;
-      background:linear-gradient(180deg, var(--blue), var(--blue-2));
+      background:linear-gradient(180deg, #5b36d8, #341b92);
       font-size:.9rem;
       font-weight:900;
       margin-bottom:16px;
-      box-shadow:0 12px 24px rgba(47,99,255,.28);
+      box-shadow:0 12px 24px rgba(139,77,255,.28);
     }
 
     .featured-copy h2{
@@ -229,12 +231,13 @@
       min-width:280px;
       padding:17px 24px;
       border-radius:14px;
-      border:none;
-      background:linear-gradient(180deg, #ff9b2f, #ff6a00);
-      color:#fff;
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      color:rgba(255,255,255,.45);
       font-weight:900;
       text-decoration:none;
-      box-shadow:0 14px 34px rgba(255,106,0,.34);
+      pointer-events:none;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
     }
 
     .small-note{
@@ -278,7 +281,8 @@
 
     .meta-card strong{font-size:1rem}
     .available{color:var(--green)}
-    .coupon{color:#ffd36d}
+    .locked-text{color:#b979ff}
+    .coupon{color:#b979ff}
 
     .section-title{
       display:flex;
@@ -359,14 +363,15 @@
       padding:9px 14px;
       border-radius:10px;
       font-weight:900;
-      background:rgba(66,232,138,.14);
-      color:var(--green);
+      background:rgba(255,93,115,.16);
+      color:#ff6f84;
       width:max-content;
     }
 
-    .status.claimed{
-      color:#71f0a8;
-      background:rgba(66,232,138,.13);
+    .status.claimed,
+    .status.locked{
+      color:#ff6f84;
+      background:rgba(255,93,115,.16);
     }
 
     .row-btn{
@@ -386,6 +391,43 @@
       border-color:rgba(255,122,0,.5);
       background:linear-gradient(180deg, #ff8a1f, #ff5a1f);
       box-shadow:0 10px 22px rgba(255,90,31,.22);
+    }
+
+
+    .secret-prize{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      width:100%;
+      max-width:270px;
+      padding:12px;
+      border-radius:12px;
+      border:1px dashed rgba(180,92,255,.78);
+      background:rgba(180,92,255,.08);
+    }
+
+    .secret-mark{
+      width:54px;
+      height:54px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      border:1px solid rgba(180,92,255,.55);
+      background:rgba(180,92,255,.12);
+      color:#d2a8ff;
+      font-size:2rem;
+      font-weight:900;
+    }
+
+    .secret-prize strong{display:block;margin-bottom:4px}
+    .secret-prize small{display:block;color:var(--muted);line-height:1.35}
+
+    .row-btn.disabled{
+      pointer-events:none;
+      color:#fff;
+      border-color:rgba(180,92,255,.62);
+      background:rgba(180,92,255,.08);
     }
 
     .next-prize{
@@ -520,16 +562,16 @@
 
     <section class="featured-prize">
       <div class="prize-visual">
-        <div class="coin"><img src="imagenes/porcentaje.png" alt="Premio de descuento"></div>
+        <div class="coin"><img src="imagenes/bloqueado.png" alt="Premio de descuento"></div>
       </div>
 
       <div class="featured-copy">
-        <div class="badge">¡FELICIDADES!</div>
-        <h2>Premio desbloqueado</h2>
+        <div class="badge">🔒 PREMIO BLOQUEADO</div>
+        <h2>Premio especial<br>por tu constancia</h2>
         <h3>15% de descuento en tu próxima renovación</h3>
         <p>Por completar tu ciclo de mayo 2026</p>
-        <a href="#" class="claim-btn">🎁 RECLAMAR PREMIO</a>
-        <div class="small-note">ⓘ Podrás usar tu premio en el momento que tú decidas.</div>
+        <a href="#" class="claim-btn">🔒 AÚN NO DISPONIBLE</a>
+        <div class="small-note">⚠️ Completa el ciclo para desbloquear este premio.</div>
       </div>
 
       <div class="prize-meta">
@@ -539,11 +581,11 @@
         </div>
         <div class="meta-card">
           <div class="meta-icon">✅</div>
-          <div><span>Estado</span><strong class="available">Disponible</strong></div>
+          <div><span>Estado</span><strong class="locked-text">Bloqueado</strong></div>
         </div>
         <div class="meta-card">
           <div class="meta-icon">🎁</div>
-          <div><span>Código / Cupón</span><strong class="coupon">MOVE15MAYO</strong></div>
+          <div><span>Código / Cupón</span><strong class="coupon">AÚN NO DISPONIBLE</strong></div>
         </div>
       </div>
     </section>
@@ -556,42 +598,42 @@
 
       <div class="history-row">
         <div class="cycle-cell">
-          <div class="mini-icon"><img src="imagenes/porcentaje.png" alt="Descuento"></div>
+          <div class="mini-icon"><img src="imagenes/bloqueado.png" alt="Descuento"></div>
           <div><strong>Mayo 2026</strong><span>Ciclo completado</span></div>
         </div>
-        <strong>15% de descuento<br>en tu renovación</strong>
+        <div class="secret-prize"><div class="secret-mark">?</div><div><strong>Premio secreto</strong><small>Se revelará al desbloquear.</small></div></div>
         <div class="date-cell">📅 31 mayo 2026</div>
-        <div><span class="status">Disponible</span></div>
-        <a href="#" class="row-btn orange">Reclamar</a>
+        <div><span class="status locked">Bloqueado</span></div>
+        <a href="#" class="row-btn disabled">Aún no disponible</a>
       </div>
 
       <div class="history-row">
         <div class="cycle-cell">
-          <div class="mini-icon">🏋️</div>
+          <div class="mini-icon"><img src="imagenes/bloqueado.png" alt="Premio bloqueado"></div>
           <div><strong>Abril 2026</strong><span>Ciclo completado</span></div>
         </div>
-        <strong>Rutina bonus<br>personalizada</strong>
+        <div class="secret-prize"><div class="secret-mark">?</div><div><strong>Premio secreto</strong><small>Se revelará al desbloquear.</small></div></div>
         <div class="date-cell">📅 30 abril 2026</div>
-        <div><span class="status claimed">Reclamado ✓</span></div>
-        <a href="#" class="row-btn">Ver detalle</a>
+        <div><span class="status locked">Bloqueado</span></div>
+        <a href="#" class="row-btn disabled">Aún no disponible</a>
       </div>
 
       <div class="history-row">
         <div class="cycle-cell">
-          <div class="mini-icon">📘</div>
+          <div class="mini-icon"><img src="imagenes/bloqueado.png" alt="Premio bloqueado"></div>
           <div><strong>Marzo 2026</strong><span>Ciclo completado</span></div>
         </div>
-        <strong>Guía de movilidad<br>y recuperación</strong>
+        <div class="secret-prize"><div class="secret-mark">?</div><div><strong>Premio secreto</strong><small>Se revelará al desbloquear.</small></div></div>
         <div class="date-cell">📅 31 marzo 2026</div>
-        <div><span class="status claimed">Reclamado ✓</span></div>
-        <a href="#" class="row-btn">Ver detalle</a>
+        <div><span class="status locked">Bloqueado</span></div>
+        <a href="#" class="row-btn disabled">Aún no disponible</a>
       </div>
     </section>
 
     <section class="next-prize">
       <div class="locked-chest">🔒</div>
       <div>
-        <h3>Próximo premio</h3>
+        <div class="badge">🔒 PRÓXIMO PREMIO</div>
         <h2>Premio especial<br>por tu constancia</h2>
         <p>Completa tu próximo ciclo para abrir un nuevo premio.</p>
       </div>
