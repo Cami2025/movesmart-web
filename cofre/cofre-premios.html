@@ -393,7 +393,6 @@
       box-shadow:0 10px 22px rgba(255,90,31,.22);
     }
 
-
     .secret-prize{
       display:flex;
       align-items:center;
@@ -477,12 +476,14 @@
 
     .lock-box strong{color:#b58aff;font-size:1.1rem}
     .progress-label{margin:22px 0 10px;color:rgba(255,255,255,.88);font-weight:800}
+
     .progress-bar{
       height:16px;
       background:rgba(255,255,255,.12);
       border-radius:999px;
       overflow:hidden;
     }
+
     .progress-fill{
       width:30%;
       height:100%;
@@ -490,8 +491,7 @@
       border-radius:999px;
     }
 
-
-
+    /* ===== Contenedor inferior corregido ===== */
     .unlock-container{
       display:grid;
       grid-template-columns:220px 1fr 1fr;
@@ -521,7 +521,10 @@
 
     .unlock-visual,
     .unlock-copy,
-    .unlock-checklist{position:relative;z-index:1}
+    .unlock-checklist{
+      position:relative;
+      z-index:1;
+    }
 
     .unlock-visual{
       display:grid;
@@ -661,6 +664,7 @@
       color:#fff;
       font-weight:900;
     }
+
     .footer .brand-logo span{color:var(--orange)}
 
     @media (max-width: 940px){
@@ -673,6 +677,7 @@
       .prize-visual{justify-content:center}
 
       .history-head{display:none}
+
       .history-row{
         grid-template-columns:1fr;
         gap:12px;
@@ -681,161 +686,131 @@
 
     @media (max-width: 640px){
       .topbar,
-  
+      .footer{
+        flex-direction:column;
+        align-items:stretch;
+        text-align:center;
+      }
 
-    .unlock-container{
-      display:grid;
-      grid-template-columns:220px 1fr 1fr;
-      gap:28px;
-      align-items:center;
-      border:1px solid rgba(255,122,0,.55);
-      border-radius:22px;
-      padding:22px 28px;
+      .points-card{justify-content:center}
+
+      .featured-prize,
+      .next-prize,
+      .unlock-container{
+        padding:22px;
+      }
+
+      .coin{width:180px;height:180px}
+
+      .unlock-checklist{
+        border-left:none;
+        padding-left:0;
+        border-top:1px solid rgba(255,255,255,.11);
+        padding-top:18px;
+      }
+
+      .unlock-visual img{
+        width:150px;
+        height:150px;
+      }
+
+      .claim-btn{
+        width:100%;
+        min-width:unset;
+      }
+    }
+
+    /* ===== Historial vacío estilo cofre ===== */
+    .empty-history{
+      border:1px solid rgba(180,92,255,.72);
+      border-radius:26px;
+      padding:22px;
       background:
-        linear-gradient(135deg, rgba(22,14,26,.88), rgba(9,13,30,.86)),
-        radial-gradient(circle at 13% 50%, rgba(255,122,0,.22), transparent 28%);
-      box-shadow:0 18px 48px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.04);
-      margin-bottom:28px;
-      position:relative;
+        linear-gradient(135deg, rgba(31,15,67,.74), rgba(8,11,30,.86)),
+        radial-gradient(circle at 18% 8%, rgba(180,92,255,.18), transparent 28%);
+      box-shadow:0 0 0 1px rgba(180,92,255,.12), 0 18px 48px rgba(0,0,0,.36);
       overflow:hidden;
+      margin-bottom:28px;
     }
 
-    .unlock-container::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
+    .history-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:1.55rem;
+      font-weight:900;
+      letter-spacing:-.02em;
+      margin-bottom:20px;
+    }
+
+    .empty-history .history-head{
+      border-radius:16px 16px 0 0;
+      padding:16px 22px;
+      background:linear-gradient(180deg, rgba(72,38,130,.72), rgba(42,22,80,.72));
+      border:1px solid rgba(180,92,255,.20);
+      border-bottom:none;
+      color:rgba(255,255,255,.70);
+    }
+
+    .empty-state{
+      min-height:250px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:42px 24px;
+      border:1px dashed rgba(180,92,255,.70);
+      border-radius:0 0 18px 18px;
       background:
-        radial-gradient(circle at 14% 42%, rgba(255,160,28,.18), transparent 25%),
-        linear-gradient(180deg, rgba(255,255,255,.035), transparent 48%);
+        radial-gradient(circle at 50% 38%, rgba(139,77,255,.18), transparent 25%),
+        linear-gradient(180deg, rgba(4,7,24,.58), rgba(5,7,22,.68));
     }
 
-    .unlock-visual,
-    .unlock-copy,
-    .unlock-checklist{position:relative;z-index:1}
-
-    .unlock-visual{
+    .empty-icon{
+      width:96px;
+      height:96px;
+      border-radius:50%;
       display:grid;
       place-items:center;
+      margin-bottom:22px;
+      font-size:2.8rem;
+      color:#d6b6ff;
+      background:radial-gradient(circle, rgba(180,92,255,.28), rgba(75,38,128,.36));
+      border:1px solid rgba(180,92,255,.46);
+      box-shadow:0 0 24px rgba(180,92,255,.28), inset 0 1px 0 rgba(255,255,255,.12);
     }
 
-    .unlock-visual img{
-      width:178px;
-      height:178px;
-      object-fit:contain;
-      display:block;
-      filter:drop-shadow(0 0 24px rgba(255,145,0,.72)) drop-shadow(0 18px 28px rgba(0,0,0,.42));
-    }
-
-    .unlock-copy h3{
-      color:var(--orange-2);
-      font-size:.95rem;
-      margin-bottom:8px;
-      font-weight:900;
-    }
-
-    .unlock-copy h2{
-      font-size:1.62rem;
-      line-height:1.12;
+    .empty-state h3{
+      font-size:clamp(1.35rem, 3vw, 2rem);
+      line-height:1.15;
       margin-bottom:10px;
       letter-spacing:-.02em;
     }
 
-    .unlock-copy p{
+    .empty-state p{
       color:var(--muted);
-      line-height:1.55;
-      font-size:.96rem;
-      max-width:430px;
+      font-size:1rem;
+      line-height:1.6;
+      max-width:620px;
     }
 
-    .unlock-progress-text{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      margin-top:16px;
-      font-size:.9rem;
-      font-weight:800;
+    @media (max-width: 640px){
+      .empty-history{padding:14px;border-radius:22px}
+      .history-title{font-size:1.2rem;margin-bottom:14px}
+
+      .empty-history .history-head{
+        display:grid;
+        grid-template-columns:repeat(5,1fr);
+        gap:8px;
+        padding:12px 10px;
+        font-size:.72rem;
+      }
+
+      .empty-state{min-height:210px;padding:30px 16px}
+      .empty-icon{width:78px;height:78px;font-size:2.2rem}
     }
 
-    .unlock-progress-text span:last-child{color:var(--orange-2)}
-
-    .unlock-progress-bar{
-      height:12px;
-      margin-top:7px;
-      border-radius:999px;
-      background:rgba(255,255,255,.12);
-      overflow:hidden;
-    }
-
-    .unlock-progress-fill{
-      width:30%;
-      height:100%;
-      border-radius:999px;
-      background:linear-gradient(90deg, var(--orange), var(--orange-2));
-      box-shadow:0 0 18px rgba(255,122,0,.35);
-    }
-
-    .unlock-checklist{
-      border-left:1px solid rgba(255,255,255,.11);
-      padding-left:24px;
-      display:grid;
-      gap:15px;
-    }
-
-    .unlock-item{
-      display:grid;
-      grid-template-columns:28px 1fr;
-      gap:12px;
-      align-items:start;
-    }
-
-    .unlock-item .check,
-    .unlock-item .lock{
-      width:28px;
-      height:28px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      font-weight:900;
-      font-size:.9rem;
-      margin-top:2px;
-    }
-
-    .unlock-item .check{
-      color:#11131f;
-      background:linear-gradient(180deg, #ffb33a, #ff7a00);
-      box-shadow:0 0 18px rgba(255,122,0,.28);
-    }
-
-    .unlock-item .lock{
-      color:rgba(255,255,255,.52);
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.10);
-    }
-
-    .unlock-item strong{
-      display:block;
-      font-size:.95rem;
-      margin-bottom:3px;
-      color:#fff;
-    }
-
-    .unlock-item span{
-      display:block;
-      color:var(--muted);
-      font-size:.88rem;
-      line-height:1.35;
-    }
-
-    .footer{flex-direction:column;align-items:stretch;text-align:center}
-      .points-card{justify-content:center}
-      .featured-prize,.next-prize,.unlock-container{padding:22px}
-      .coin{width:180px;height:180px}
-      .unlock-checklist{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,.11);padding-top:18px}
-      .unlock-visual img{width:150px;height:150px}
-      .claim-btn{width:100%;min-width:unset}
-    }
   </style>
 </head>
 <body>
@@ -845,7 +820,7 @@
       <div class="points-card">
         <div class="points-icon">⭐</div>
         <div>
-          <strong>120</strong>
+          <strong>0</strong>
           <span>MovePuntos</span>
         </div>
       </div>
@@ -881,48 +856,22 @@
         </div>
         <div class="meta-card">
           <div class="meta-icon">🎁</div>
-          <div><span>Código / Cupón</span><strong class="coupon">AÚN NO DISPONIBLE</strong></div>
+          <div><span>premio</span><strong class="coupon">AÚN NO DISPONIBLE</strong></div>
         </div>
       </div>
     </section>
 
-    <h2 class="section-title">🏆 Mis premios ganados</h2>
-    <section class="history">
+    <section class="history empty-history">
+      <div class="history-title">🏆 <span>Mis premios ganados</span></div>
+
       <div class="history-head">
         <div>Ciclo</div><div>Premio</div><div>Fecha</div><div>Estado</div><div>Acción</div>
       </div>
 
-      <div class="history-row">
-        <div class="cycle-cell">
-          <div class="mini-icon"><img src="imagenes/bloqueado.png" alt="Descuento"></div>
-          <div><strong>Mayo 2026</strong><span>Ciclo completado</span></div>
-        </div>
-        <div class="secret-prize"><div class="secret-mark">?</div><div><strong>Premio secreto</strong><small>Se revelará al desbloquear.</small></div></div>
-        <div class="date-cell">📅 31 mayo 2026</div>
-        <div><span class="status locked">Bloqueado</span></div>
-        <a href="#" class="row-btn disabled">Aún no disponible</a>
-      </div>
-
-      <div class="history-row">
-        <div class="cycle-cell">
-          <div class="mini-icon"><img src="imagenes/bloqueado.png" alt="Premio bloqueado"></div>
-          <div><strong>Abril 2026</strong><span>Ciclo completado</span></div>
-        </div>
-        <div class="secret-prize"><div class="secret-mark">?</div><div><strong>Premio secreto</strong><small>Se revelará al desbloquear.</small></div></div>
-        <div class="date-cell">📅 30 abril 2026</div>
-        <div><span class="status locked">Bloqueado</span></div>
-        <a href="#" class="row-btn disabled">Aún no disponible</a>
-      </div>
-
-      <div class="history-row">
-        <div class="cycle-cell">
-          <div class="mini-icon"><img src="imagenes/bloqueado.png" alt="Premio bloqueado"></div>
-          <div><strong>Marzo 2026</strong><span>Ciclo completado</span></div>
-        </div>
-        <div class="secret-prize"><div class="secret-mark">?</div><div><strong>Premio secreto</strong><small>Se revelará al desbloquear.</small></div></div>
-        <div class="date-cell">📅 31 marzo 2026</div>
-        <div><span class="status locked">Bloqueado</span></div>
-        <a href="#" class="row-btn disabled">Aún no disponible</a>
+      <div class="empty-state">
+        <div class="empty-icon">🔒</div>
+        <h3>Aún no tienes premios desbloqueados</h3>
+        <p>Completa tu ciclo actual para que tu primer premio aparezca aquí.</p>
       </div>
     </section>
 
@@ -936,15 +885,10 @@
         <h2>Completa tu ciclo para<br>revelar tu próximo premio 🎁</h2>
         <p>Sigue entrenando con constancia y cumple tu meta mensual para activar tu premio.</p>
 
-        <div class="unlock-progress-text">
-          <span>Progreso actual</span>
-          <span>30% completado</span>
-        </div>
         <div class="unlock-progress-bar">
           <div class="unlock-progress-fill"></div>
         </div>
       </div>
-
       <div class="unlock-checklist">
         <div class="unlock-item">
           <div class="check">✓</div>
