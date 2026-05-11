@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cofre de Premios Exclusivo | MoveSmart</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+    :root{
+      --bg:#08111d;
+      --bg2:#0f1d31;
+      --card:rgba(255,255,255,.08);
+      --card-soft:rgba(255,255,255,.05);
+      --border:rgba(255,255,255,.12);
+      --text:#fff;
+      --muted:rgba(255,255,255,.78);
+      --accent:#ff5a1f;
+      --accent2:#ff7a47;
+      --blue:#2f63ff;
+      --gold:#f6b73c;
+      --green:#42e88a;
+      --radius:26px;
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+      --wrap:min(1120px, calc(100% - 32px));
+    }
+
+    body{
+      min-height:100vh;
+      color:white;
+      background:
+        linear-gradient(180deg, rgba(5,8,18,.58), rgba(5,8,18,.82)),
+        url('fondo-preview-rutina.png') center center / cover no-repeat fixed;
+      position:relative;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(47,99,255,.18), transparent 28%),
+        radial-gradient(circle at 82% 20%, rgba(255,90,31,.22), transparent 24%),
+        radial-gradient(circle at 76% 72%, rgba(246,183,60,.14), transparent 22%);
+      z-index:0;
+    }
+
+    nav{
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter:blur(12px);
+      background:rgba(6,12,22,.42);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .nav-wrap{
+      width:var(--wrap);
+      margin:0 auto;
+      padding:18px 0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand{
+      font-size:1.35rem;
+      font-weight:800;
+      letter-spacing:.3px;
+    }
+
+    .brand span{color:var(--accent)}
+
+    .nav-links{display:flex;gap:12px;flex-wrap:wrap}
+
+    .nav-links a{
+      text-decoration:none;
+      color:var(--text);
+      opacity:.9;
+      padding:10px 14px;
+      border-radius:14px;
+      transition:.25s ease;
+      font-size:.95rem;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    .nav-links a:hover{background:rgba(255,255,255,.10);opacity:1}
+
+    main{
+      width:var(--wrap);
+      margin:0 auto;
+      padding:44px 0 34px;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:26px;
+      align-items:stretch;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+    }
+
+    .panel{
+      padding:34px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height:500px;
+    }
+
+    .pill{
+      display:inline-flex;
+      width:max-content;
+      padding:8px 14px;
+      border-radius:999px;
+      margin-bottom:18px;
+      background:rgba(246,183,60,.13);
+      color:#ffe7b2;
+      border:1px solid rgba(246,183,60,.28);
+      font-size:.88rem;
+      font-weight:700;
+    }
+
+    h1{
+      font-size:clamp(2rem, 5vw, 3.4rem);
+      line-height:1.05;
+      margin-bottom:14px;
+      letter-spacing:-.04em;
+    }
+
+    .accent{color:var(--accent)}
+    .gold{color:var(--gold)}
+
+    .lead{
+      color:var(--muted);
+      font-size:1rem;
+      line-height:1.7;
+      max-width:590px;
+      margin-bottom:24px;
+    }
+
+    .list{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:8px;
+    }
+
+    .mini{
+      background:var(--card-soft);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .mini h3{font-size:1rem;margin-bottom:8px}
+
+    .mini p{
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.55;
+    }
+
+    .exclusive{
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height:500px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .exclusive::after{
+      content:"";
+      position:absolute;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      right:-70px;
+      top:-70px;
+      background:rgba(246,183,60,.12);
+      filter:blur(2px);
+    }
+
+    .chest{
+      width:92px;
+      height:92px;
+      border-radius:26px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(255,90,31,.20), rgba(246,183,60,.22));
+      border:1px solid rgba(255,255,255,.14);
+      margin-bottom:22px;
+      font-size:2.4rem;
+      box-shadow:0 18px 35px rgba(0,0,0,.22);
+      position:relative;
+      z-index:1;
+    }
+
+    .exclusive h2{
+      font-size:2rem;
+      line-height:1.15;
+      margin-bottom:12px;
+      position:relative;
+      z-index:1;
+    }
+
+    .exclusive p{
+      color:var(--muted);
+      line-height:1.7;
+      margin-bottom:22px;
+      font-size:.98rem;
+      position:relative;
+      z-index:1;
+    }
+
+    .notice{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:18px;
+      padding:16px;
+      margin-bottom:14px;
+      position:relative;
+      z-index:1;
+    }
+
+    .notice strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:.97rem;
+    }
+
+    .notice span{
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.55;
+    }
+
+    .progress-box{
+      margin-top:20px;
+      padding:20px;
+      border-radius:22px;
+      background:linear-gradient(135deg, rgba(47,99,255,.16), rgba(255,90,31,.12));
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .progress-title{
+      font-weight:800;
+      margin-bottom:14px;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .step{
+      min-height:76px;
+      border-radius:18px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.09);
+      text-align:center;
+      color:rgba(255,255,255,.82);
+      font-size:.86rem;
+    }
+
+    .step.locked{
+      background:rgba(255,90,31,.12);
+      border-color:rgba(255,90,31,.22);
+    }
+
+    .step strong{font-size:1.15rem;color:white}
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:13px 18px;
+      border-radius:16px;
+      text-decoration:none;
+      font-weight:800;
+      transition:.25s ease;
+    }
+
+    .btn-primary{background:var(--accent);color:white}
+    .btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+
+    .btn-secondary{
+      background:rgba(255,255,255,.08);
+      color:white;
+      border:1px solid rgba(255,255,255,.1);
+    }
+
+    .btn-secondary:hover{background:rgba(255,255,255,.12)}
+
+    .foot{
+      width:var(--wrap);
+      margin:0 auto;
+      padding:0 0 30px;
+      color:rgba(255,255,255,.62);
+      text-align:center;
+      font-size:.9rem;
+      position:relative;
+      z-index:1;
+    }
+
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
+      .list{grid-template-columns:1fr}
+      .nav-wrap{flex-direction:column;align-items:flex-start}
+      .steps{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (max-width: 540px){
+      main{padding-top:28px}
+      .panel,.exclusive{padding:24px;min-height:auto}
+      .steps{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-wrap">
+      <div class="brand">Move<span>Smart</span></div>
+      <div class="nav-links">
+        <a href="plan-julisa-sanhueza.html">Mi Plan</a>
+        <a href="rutina-a-julisa-sanhueza.html">Rutina A</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="card panel">
+        <span class="pill">MoveSmart · Cofre de premios</span>
+        <h1>Contenido <span class="accent">exclusivo</span> para quienes sostienen el hábito</h1>
+        <p class="lead">
+          Esta sección forma parte del sistema de recompensas MoveSmart. El cofre no se desbloquea por hacerlo perfecto, sino por mantener constancia, registrar tus sesiones y avanzar semana a semana.
+        </p>
+
+        <div class="list">
+          <div class="mini">
+            <h3>🎁 Premios por constancia</h3>
+            <p>El cofre reúne beneficios, sorpresas o recompensas asociadas al cumplimiento del programa.</p>
+          </div>
+          <div class="mini">
+            <h3>🔐 Acceso bloqueado</h3>
+            <p>No todo el contenido aparece desde el inicio. Algunas recompensas se activan cuando completas tu proceso.</p>
+          </div>
+          <div class="mini">
+            <h3>✅ Hábito primero</h3>
+            <p>La idea es reforzar la adherencia: entrenar, registrar y volver a intentarlo aunque la semana no sea perfecta.</p>
+          </div>
+          <div class="mini">
+            <h3>✨ Experiencia MoveSmart</h3>
+            <p>Tu plan no es solo una rutina: también tiene seguimiento, motivación y pequeñas metas desbloqueables.</p>
+          </div>
+        </div>
+
+        <div class="progress-box">
+          <div class="progress-title">Camino para desbloquear el cofre</div>
+          <div class="steps">
+            <div class="step"><strong>1</strong>Semana 1</div>
+            <div class="step"><strong>2</strong>Semana 2</div>
+            <div class="step"><strong>3</strong>Semana 3</div>
+            <div class="step locked"><strong>🔒</strong>Cofre</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card exclusive">
+        <div class="chest">🎁</div>
+        <h2>Cofre de premios bloqueado</h2>
+        <p>
+          Este contenido todavía no está disponible. Para abrirlo, debes completar las condiciones de tu programa MoveSmart y mantener activo tu seguimiento.
+        </p>
+
+        <div class="notice">
+          <strong>¿Qué puede incluir este cofre?</strong>
+          <span>Descuentos, premios simbólicos, beneficios de continuidad, mensajes de reconocimiento o recompensas especiales por adherencia.</span>
+        </div>
+
+        <div class="notice">
+          <strong>¿Cómo se desbloquea?</strong>
+          <span>Registrando tus sesiones y completando las semanas definidas en tu plan. Cuando cumplas el objetivo, el cofre se activa.</span>
+        </div>
+
+        <div class="notice">
+          <strong>¿Ya cumpliste tu hábito?</strong>
+          <span>Escríbeme para revisar tu seguimiento y activar tu premio MoveSmart.</span>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="https://wa.me/569999340284" target="_blank" rel="noopener noreferrer">
+            Solicitar desbloqueo por WhatsApp
+          </a>
+          <a class="btn btn-secondary" href="javascript:history.back()">
+            ← Volver
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="foot">
+    Camila Alvarez Cortés · MoveSmart · Sistema de premios por adherencia
+  </div>
+</body>
+</html>
