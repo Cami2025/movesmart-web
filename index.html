@@ -494,20 +494,76 @@
 
     @media (max-width: 640px){
       :root{--container:min(100% - 28px, 100%)}
+
       .site-bg{
         background-position:88% 8%;
         background-size:auto 100%;
         filter:saturate(1.08) brightness(1.08);
       }
-      .nav{align-items:flex-start;padding:12px 0 14px}
-      .nav-links{gap:14px 18px;font-weight:700}
-      .nav-actions{gap:10px;justify-content:flex-start;}
-      .top-socials{gap:8px;}
-      .top-social{width:38px;height:38px;border-radius:12px;}
-      .top-social svg{width:17px;height:17px;}
 
-      .btn.small{padding:0 18px}
-      .topbar{background:rgba(10,8,14,.34)}
+      .topbar{
+        background:rgba(10,8,14,.42);
+      }
+
+      .nav{
+        min-height:auto;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:16px;
+        padding:18px 0 20px;
+      }
+
+      .nav-links{
+        width:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        gap:14px 20px;
+        font-weight:700;
+        font-size:1rem;
+      }
+
+      .nav-links a.active::after{
+        bottom:-7px;
+      }
+
+      .nav-actions{
+        width:100%;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:14px;
+      }
+
+      .top-socials{
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:12px;
+      }
+
+      .top-social{
+        width:54px;
+        height:54px;
+        border-radius:18px;
+      }
+
+      .top-social svg{
+        width:22px;
+        height:22px;
+      }
+
+      .btn.small{
+        width:180px;
+        min-height:58px;
+        padding:0 18px;
+        margin:0 auto;
+      }
+
       .hero{min-height:360px}
       .brand{font-size:3.15rem}
       .hero-title{font-size:2.35rem}
