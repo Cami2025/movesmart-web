@@ -8,11 +8,17 @@
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
       --bg:#07070c;
+      --panel:#11111b;
+      --panel2:#171421;
       --text:#f6f1ee;
       --muted:rgba(246,241,238,.74);
+      --soft:rgba(255,255,255,.06);
       --border:rgba(255,255,255,.11);
       --accent:#ff5a1f;
       --accent2:#ff8a3d;
+      --green:#38d37b;
+      --blue:#2f63ff;
+      --purple:#9a4dff;
       --max:1120px;
       --shadow:0 28px 80px rgba(0,0,0,.46);
     }
@@ -43,21 +49,8 @@
 
     .brand{font-size:1.35rem;font-weight:900;letter-spacing:-.04em}
     .brand span{color:var(--accent)}
-
-    .nav{
-      display:flex;
-      gap:14px;
-      color:var(--muted);
-      font-weight:700;
-      font-size:.95rem;
-    }
-
-    .nav a{
-      padding:10px 14px;
-      border-radius:999px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.07);
-    }
+    .nav{display:flex;gap:14px;color:var(--muted);font-weight:700;font-size:.95rem}
+    .nav a{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
 
     .hero{
       display:grid;
@@ -69,6 +62,8 @@
 
     .kicker{
       display:inline-flex;
+      align-items:center;
+      gap:10px;
       padding:9px 14px;
       border-radius:999px;
       background:rgba(255,90,31,.12);
@@ -85,7 +80,6 @@
       letter-spacing:-.075em;
       margin-bottom:22px;
     }
-
     h1 span{color:var(--accent)}
 
     .lead{
@@ -96,7 +90,6 @@
     }
 
     .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-
     .btn{
       display:inline-flex;
       align-items:center;
@@ -107,38 +100,31 @@
       border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.07);
     }
+    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 18px 38px rgba(255,90,31,.22)}
 
-    .btn.primary{
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      box-shadow:0 18px 38px rgba(255,90,31,.22);
-    }
-
-    .visual,
-    .mini-visual{
-      width:100%;
-      height:420px;
-      border-radius:28px;
+    .visual{
+      min-height:520px;
+      border-radius:34px;
+      border:1px solid var(--border);
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.18), rgba(0,0,0,.62)),
+        radial-gradient(circle at 68% 42%, rgba(255,90,31,.28), transparent 26%),
+        linear-gradient(135deg,#1b1722,#07070c);
+      position:relative;
       overflow:hidden;
-      background:#111;
-      border:1px solid rgba(255,255,255,.10);
       box-shadow:var(--shadow);
-      display:block;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
     }
 
-    .visual img,
-    .mini-visual img{
+    .visual img{
       width:100%;
       height:100%;
-      object-fit:cover;
-      object-position:center;
+      object-fit:contain;
       border-radius:28px;
       display:block;
-    }
-
-    .mini-visual{
-      margin:30px 0;
-      border:1px solid rgba(0,0,0,.08);
-      box-shadow:none;
     }
 
     .article-layout{
@@ -156,15 +142,8 @@
       padding:clamp(24px,4vw,54px);
       box-shadow:var(--shadow);
     }
-
-    .article p{
-      font-size:1.08rem;
-      margin:0 0 20px;
-      color:#3b3742;
-    }
-
+    .article p{font-size:1.08rem;margin:0 0 20px;color:#3b3742}
     .article strong{color:#17131d}
-
     .article h2{
       font-size:clamp(2rem,4vw,3.2rem);
       line-height:1.05;
@@ -172,13 +151,7 @@
       margin:44px 0 18px;
       color:#17131d;
     }
-
-    .article h3{
-      font-size:1.45rem;
-      margin:30px 0 12px;
-      color:#17131d;
-      letter-spacing:-.03em;
-    }
+    .article h3{font-size:1.45rem;margin:30px 0 12px;color:#17131d;letter-spacing:-.03em}
 
     .quote{
       margin:32px 0;
@@ -192,6 +165,41 @@
       color:#17131d;
     }
 
+    .mini-visual{
+      margin:30px 0;
+      border-radius:28px;
+      min-height:310px;
+      overflow:hidden;
+      background:#05050a;
+      border:1px solid rgba(0,0,0,.08);
+      position:relative;
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .mini-visual img{
+      width:100%;
+      height:auto;
+      max-height:none;
+      object-fit:contain;
+      display:block;
+      border-radius:28px;
+    }
+
+    .mini-visual.energy{
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.10), rgba(0,0,0,.72)),
+        radial-gradient(circle at 22% 35%, rgba(255,255,255,.08), transparent 18%),
+        linear-gradient(135deg,#1c1715,#09090f);
+    }
+    .mini-visual.system{
+      background:
+        radial-gradient(circle at 72% 35%, rgba(255,90,31,.22), transparent 24%),
+        linear-gradient(135deg,#10101a,#06070b);
+    }
+
     .compare{
       margin:32px 0;
       display:grid;
@@ -200,28 +208,11 @@
       border-radius:26px;
       overflow:hidden;
     }
-
-    .compare > div{
-      padding:24px;
-      background:#faf7f5;
-    }
-
-    .compare > div:first-child{
-      border-right:1px solid #ddd5d8;
-      background:#f0eceb;
-    }
-
+    .compare > div{padding:24px;background:#faf7f5}
+    .compare > div:first-child{border-right:1px solid #ddd5d8;background:#f0eceb}
     .compare h3{margin-top:0!important}
-
-    .check,.cross{
-      display:flex;
-      gap:12px;
-      margin:14px 0;
-      color:#3b3742;
-    }
-
-    .cross b{color:#c83725}
-    .check b{color:#169b52}
+    .check,.cross{display:flex;gap:12px;margin:14px 0;color:#3b3742}
+    .cross b{color:#c83725}.check b{color:#169b52}
 
     .evidence{
       border-radius:26px;
@@ -230,16 +221,8 @@
       color:white;
       margin:34px 0;
     }
-
-    .evidence h3{
-      color:white;
-      margin-top:0;
-    }
-
-    .evidence p{
-      color:rgba(255,255,255,.78);
-      margin-bottom:0;
-    }
+    .evidence h3{color:white;margin-top:0}
+    .evidence p{color:rgba(255,255,255,.78);margin-bottom:0}
 
     .final-cta{
       margin-top:42px;
@@ -252,25 +235,13 @@
       gap:20px;
       align-items:center;
     }
-
-    .final-cta h2{
-      color:white;
-      margin:0 0 10px;
-      font-size:2.2rem;
-    }
-
-    .final-cta p{
-      color:rgba(255,255,255,.74);
-      margin:0;
-    }
+    .final-cta h2{color:white;margin:0 0 10px;font-size:2.2rem}
+    .final-cta p{color:rgba(255,255,255,.74);margin:0}
 
     .sidebar{
-      position:sticky;
-      top:22px;
-      display:grid;
-      gap:18px;
+      position:sticky;top:22px;
+      display:grid;gap:18px;
     }
-
     .side-card{
       border-radius:26px;
       border:1px solid var(--border);
@@ -279,93 +250,31 @@
       padding:22px;
       box-shadow:0 18px 50px rgba(0,0,0,.22);
     }
+    .side-card h3{font-size:1.1rem;margin-bottom:14px}
+    .side-card ul{padding-left:18px;color:var(--muted);display:grid;gap:10px;font-size:.95rem}
+    .side-card .small{color:var(--muted);font-size:.95rem}
 
-    .side-card h3{
-      font-size:1.1rem;
-      margin-bottom:14px;
-    }
-
-    .side-card ul{
-      padding-left:18px;
-      color:var(--muted);
-      display:grid;
-      gap:10px;
-      font-size:.95rem;
-    }
-
-    .side-card .small{
-      color:var(--muted);
-      font-size:.95rem;
-    }
-
-    .footer{
-      padding:40px 0 60px;
-      color:var(--muted);
-      text-align:center;
-    }
+    .footer{padding:40px 0 60px;color:var(--muted);text-align:center}
 
     @media(max-width:980px){
-      .hero,
-      .article-layout{
-        grid-template-columns:1fr;
-      }
-
-      .sidebar{
-        position:static;
-        grid-template-columns:1fr 1fr;
-      }
+      .hero,.article-layout{grid-template-columns:1fr}
+      .visual{min-height:460px}
+      .sidebar{position:static;grid-template-columns:1fr 1fr}
     }
-
     @media(max-width:720px){
-      .topbar{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-
-      .nav{
-        width:100%;
-        overflow:auto;
-      }
-
-      .hero{
-        padding-top:18px;
-      }
-
-      .visual,
-      .mini-visual{
-        height:240px;
-        border-radius:22px;
-      }
-
-      .visual img,
-      .mini-visual img{
-        border-radius:22px;
-      }
-
-      .article{
-        border-radius:26px;
-      }
-
-      .compare{
-        grid-template-columns:1fr;
-      }
-
-      .compare>div:first-child{
-        border-right:none;
-        border-bottom:1px solid #ddd5d8;
-      }
-
-      .final-cta{
-        grid-template-columns:1fr;
-      }
-
-      .sidebar{
-        grid-template-columns:1fr;
-      }
+      .topbar{flex-direction:column;align-items:flex-start}
+      .nav{width:100%;overflow:auto}
+      .hero{padding-top:18px}
+      .visual{min-height:360px;padding:14px}
+      .visual img{border-radius:22px}
+      .article{border-radius:26px}
+      .compare{grid-template-columns:1fr}
+      .compare>div:first-child{border-right:none;border-bottom:1px solid #ddd5d8}
+      .final-cta{grid-template-columns:1fr}
+      .sidebar{grid-template-columns:1fr}
     }
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <header class="topbar">
@@ -381,9 +290,7 @@
       <div>
         <div class="kicker">BLOG MOVESMART · ADHERENCIA</div>
         <h1>Un PDF no sabe <span>cómo llegas</span> del trabajo</h1>
-        <p class="lead">
-          Una rutina puede verse perfecta en papel, pero fallar en la vida real si no considera energía, dolor, estrés, sueño y disponibilidad.
-        </p>
+        <p class="lead">Una rutina puede verse perfecta en papel, pero fallar en la vida real si no considera energía, dolor, estrés, sueño y disponibilidad.</p>
         <div class="cta-row">
           <a class="btn primary" href="#articulo">Leer artículo ↘</a>
           <a class="btn" href="#resumen">Ver ideas clave</a>
@@ -391,7 +298,7 @@
       </div>
 
       <div class="visual" aria-label="Imagen editorial: el plan no cambia, tu realidad sí">
-        <img src="../imagenes/pdf-plan-no-cambia.png" alt="El plan no cambia, tu realidad sí" loading="lazy">
+        <img src="imagenes/pdf-plan-no-cambia.png" alt="El plan no cambia, tu realidad sí" loading="lazy">
       </div>
     </section>
 
@@ -409,7 +316,7 @@
         <p>Cuando el plan no considera eso, aparece una sensación muy común: “fallé”. Pero muchas veces no fallaste tú. Falló la estructura.</p>
 
         <div class="mini-visual energy">
-          <img src="../imagenes/energia-baja-app.png" alt="Llegas con poca energía" loading="lazy">
+          <img src="imagenes/energia-baja-app.png" alt="Llegas con poca energía" loading="lazy">
         </div>
 
         <h2>El entrenamiento no ocurre en el papel</h2>
@@ -425,7 +332,6 @@
             <div class="cross"><b>✕</b><span>Depende demasiado de motivación.</span></div>
             <div class="cross"><b>✕</b><span>No evoluciona con tus sensaciones.</span></div>
           </div>
-
           <div>
             <h3>Sistema adaptable</h3>
             <div class="check"><b>✓</b><span>Considera energía, dolor y disponibilidad.</span></div>
@@ -446,7 +352,7 @@
         </div>
 
         <div class="mini-visual system">
-          <img src="../imagenes/movesmart-se-adapta.png" alt="MoveSmart se adapta" loading="lazy">
+          <img src="imagenes/movesmart-se-adapta.png" alt="MoveSmart se adapta" loading="lazy">
         </div>
 
         <h2>Entonces, ¿qué debería hacer un buen plan?</h2>
