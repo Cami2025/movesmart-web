@@ -3,492 +3,680 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Un PDF no sabe cómo llegas del trabajo | MoveSmart</title>
+  <title>Artículos | MoveSmart</title>
+  <meta name="description" content="Artículos MoveSmart sobre entrenamiento inteligente, adherencia, rehabilitación y hábitos sostenibles." />
+
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
+
     :root{
-      --bg:#07070c;
-      --text:#f6f1ee;
-      --muted:rgba(246,241,238,.74);
-      --border:rgba(255,255,255,.11);
+      --bg:#08060d;
+      --text:#f8f4fb;
+      --muted:rgba(248,244,251,.72);
       --accent:#ff5a1f;
-      --accent2:#ff8a3d;
-      --max:1120px;
-      --shadow:0 28px 80px rgba(0,0,0,.46);
+      --accent2:#ff8b4f;
+      --line:rgba(255,255,255,.12);
+      --glass:rgba(255,255,255,.065);
+      --glass2:rgba(255,255,255,.035);
+      --shadow:0 28px 70px rgba(0,0,0,.38);
+      --wrap:min(1140px,calc(100% - 34px));
     }
 
     body{
-      font-family:Inter, "Segoe UI", system-ui, sans-serif;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
       color:var(--text);
-      background:
-        linear-gradient(180deg, rgba(8,10,18,.76), rgba(8,10,18,.90)),
-        radial-gradient(circle at 10% 0%, rgba(255,90,31,.24), transparent 28%),
-        radial-gradient(circle at 90% 10%, rgba(47,99,255,.18), transparent 26%),
-        url('fondo-preview-rutina.png') center center / cover no-repeat fixed,
-        #07070c;
       min-height:100vh;
-      line-height:1.65;
+      overflow-x:hidden;
+      background:
+        linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
+        url('fondo-preview-rutina.png') center center / cover no-repeat;
+      background-attachment:fixed;
     }
 
-    a{color:inherit;text-decoration:none}
-    .wrap{width:min(var(--max),calc(100% - 32px));margin:auto}
-
-    .topbar{
-      padding:24px 0;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:18px;
+    .site-glow{
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(73,58,146,.18), transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(243,107,42,.20), transparent 20%),
+        linear-gradient(90deg, rgba(6,8,18,.18) 0%, rgba(6,8,18,.04) 38%, rgba(6,8,18,.10) 100%);
+      z-index:0;
+      pointer-events:none;
     }
 
-    .brand{font-size:1.35rem;font-weight:900;letter-spacing:-.04em}
-    .brand span{color:var(--accent)}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .wrap{
+      width:var(--wrap);
+      margin:auto;
+      position:relative;
+      z-index:1;
+    }
+
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      background:rgba(8,6,13,.72);
+      border-bottom:1px solid var(--line);
+    }
 
     .nav{
+      min-height:76px;
       display:flex;
-      gap:14px;
-      color:var(--muted);
-      font-weight:700;
-      font-size:.95rem;
-    }
-
-    .nav a{
-      padding:10px 14px;
-      border-radius:999px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.07);
-    }
-
-    .hero{
-      display:grid;
-      grid-template-columns:1.02fr .98fr;
-      gap:34px;
       align-items:center;
-      padding:44px 0 36px;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:0;
+      font-weight:900;
+      font-size:2rem;
+      letter-spacing:-.06em;
+      line-height:1;
+    }
+
+    .brand span{
+      color:var(--accent);
+    }
+
+    .menu{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      color:var(--muted);
+      font-size:.96rem;
+      font-weight:700;
+    }
+
+    .menu a.active,
+    .menu a:hover{
+      color:#fff;
+    }
+
+    .search-pill{
+      border:1px solid var(--line);
+      padding:10px 16px;
+      border-radius:999px;
+      color:#fff;
+      background:rgba(255,255,255,.06);
+      font-weight:800;
+    }
+
+    .page-title{
+      padding:54px 0 30px;
+      text-align:center;
     }
 
     .kicker{
       display:inline-flex;
       padding:9px 14px;
-      border-radius:999px;
+      border:1px solid rgba(255,90,31,.26);
       background:rgba(255,90,31,.12);
-      border:1px solid rgba(255,90,31,.25);
-      color:#ffd6c8;
-      font-weight:800;
-      font-size:.9rem;
+      color:#ffd7ca;
+      border-radius:999px;
+      font-size:.88rem;
+      font-weight:900;
+      margin-bottom:16px;
+    }
+
+    .page-title h1{
+      font-size:clamp(2.5rem,7vw,5.6rem);
+      line-height:.9;
+      letter-spacing:-.07em;
       margin-bottom:18px;
     }
 
-    h1{
-      font-size:clamp(3rem,7vw,6.5rem);
-      line-height:.92;
-      letter-spacing:-.075em;
-      margin-bottom:22px;
-    }
-
-    h1 span{color:var(--accent)}
-
-    .lead{
-      font-size:clamp(1.08rem,2vw,1.28rem);
-      color:var(--muted);
+    .page-title p{
       max-width:680px;
-      margin-bottom:24px;
+      margin:auto;
+      color:var(--muted);
+      line-height:1.75;
+      font-size:1.05rem;
     }
 
-    .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:15px 22px;
-      border-radius:18px;
-      font-weight:900;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.07);
-    }
-
-    .btn.primary{
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      box-shadow:0 18px 38px rgba(255,90,31,.22);
-    }
-
-    .visual,
-    .mini-visual{
-      width:100%;
-      height:420px;
+    .featured{
+      background:rgba(255,255,255,.96);
+      color:#15131a;
       border-radius:28px;
-      overflow:hidden;
-      background:#111;
-      border:1px solid rgba(255,255,255,.10);
+      padding:14px;
       box-shadow:var(--shadow);
-      display:block;
-    }
-
-    .visual img,
-    .mini-visual img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      border-radius:28px;
-      display:block;
-    }
-
-    .mini-visual{
-      margin:30px 0;
-      border:1px solid rgba(0,0,0,.08);
-      box-shadow:none;
-    }
-
-    .article-layout{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 300px;
-      gap:36px;
-      align-items:start;
-      margin:46px 0 70px;
-    }
-
-    .article{
-      background:rgba(255,255,255,.935);
-      color:#17131d;
-      border-radius:34px;
-      padding:clamp(24px,4vw,54px);
-      box-shadow:var(--shadow);
-    }
-
-    .article p{
-      font-size:1.08rem;
-      margin:0 0 20px;
-      color:#3b3742;
-    }
-
-    .article strong{color:#17131d}
-
-    .article h2{
-      font-size:clamp(2rem,4vw,3.2rem);
-      line-height:1.05;
-      letter-spacing:-.06em;
-      margin:44px 0 18px;
-      color:#17131d;
-    }
-
-    .article h3{
-      font-size:1.45rem;
-      margin:30px 0 12px;
-      color:#17131d;
-      letter-spacing:-.03em;
-    }
-
-    .quote{
-      margin:32px 0;
-      padding:28px;
-      border-left:6px solid var(--accent);
-      background:#f1edf0;
-      border-radius:0 22px 22px 0;
-      font-size:1.22rem;
-      font-weight:800;
-      line-height:1.45;
-      color:#17131d;
-    }
-
-    .compare{
-      margin:32px 0;
       display:grid;
       grid-template-columns:1fr 1fr;
-      border:1px solid #ddd5d8;
-      border-radius:26px;
-      overflow:hidden;
-    }
-
-    .compare > div{
-      padding:24px;
-      background:#faf7f5;
-    }
-
-    .compare > div:first-child{
-      border-right:1px solid #ddd5d8;
-      background:#f0eceb;
-    }
-
-    .compare h3{margin-top:0!important}
-
-    .check,.cross{
-      display:flex;
-      gap:12px;
-      margin:14px 0;
-      color:#3b3742;
-    }
-
-    .cross b{color:#c83725}
-    .check b{color:#169b52}
-
-    .evidence{
-      border-radius:26px;
-      padding:26px;
-      background:#17131d;
-      color:white;
-      margin:34px 0;
-    }
-
-    .evidence h3{
-      color:white;
-      margin-top:0;
-    }
-
-    .evidence p{
-      color:rgba(255,255,255,.78);
-      margin-bottom:0;
-    }
-
-    .final-cta{
-      margin-top:42px;
-      border-radius:30px;
-      background:linear-gradient(135deg,#16121e,#30150d);
-      color:white;
-      padding:34px;
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:20px;
-      align-items:center;
-    }
-
-    .final-cta h2{
-      color:white;
-      margin:0 0 10px;
-      font-size:2.2rem;
-    }
-
-    .final-cta p{
-      color:rgba(255,255,255,.74);
-      margin:0;
-    }
-
-    .sidebar{
-      position:sticky;
-      top:22px;
-      display:grid;
       gap:18px;
+      min-height:330px;
+      margin-bottom:34px;
     }
 
-    .side-card{
-      border-radius:26px;
-      border:1px solid var(--border);
-      background:rgba(255,255,255,.06);
-      backdrop-filter:blur(12px);
-      padding:22px;
-      box-shadow:0 18px 50px rgba(0,0,0,.22);
+    .featured-media{
+      display:block;
+      overflow:hidden;
+      border-radius:18px;
+      background:#111;
     }
 
-    .side-card h3{
-      font-size:1.1rem;
+    .featured-media img{
+      width:100%;
+      height:100%;
+      min-height:300px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .featured-content{
+      padding:24px 24px 20px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .date{
+      font-size:.82rem;
+      color:rgba(21,19,26,.62);
+      font-weight:800;
+      margin-bottom:12px;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
+    .featured h2{
+      font-size:clamp(1.7rem,3.5vw,2.75rem);
+      line-height:1.08;
+      letter-spacing:-.045em;
       margin-bottom:14px;
     }
 
-    .side-card ul{
-      padding-left:18px;
-      color:var(--muted);
-      display:grid;
+    .featured p{
+      font-size:1.03rem;
+      line-height:1.65;
+      color:#3f3948;
+      margin-bottom:20px;
+    }
+
+    .read-more{
+      align-self:flex-start;
+      display:inline-flex;
       gap:10px;
-      font-size:.95rem;
+      align-items:center;
+      color:#c6422b;
+      font-weight:900;
+      font-size:1.05rem;
     }
 
-    .side-card .small{
+    .arrow{
+      font-size:1.4rem;
+      line-height:1;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      margin:22px 0 18px;
+    }
+
+    .section-head h3{
+      font-size:clamp(1.4rem,3vw,2.05rem);
+      letter-spacing:-.04em;
+    }
+
+    .section-head p{
       color:var(--muted);
-      font-size:.95rem;
+      max-width:540px;
+      line-height:1.6;
     }
 
-    .footer{
-      padding:40px 0 60px;
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+    }
+
+    .article-card{
+      background:linear-gradient(180deg,var(--glass),var(--glass2));
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:24px;
+      padding:18px;
+      box-shadow:0 18px 45px rgba(0,0,0,.22);
+      min-height:100%;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      overflow:hidden;
+      transition:.22s ease;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    .article-card:hover{
+      transform:translateY(-4px);
+      background:linear-gradient(180deg,rgba(255,255,255,.105),rgba(255,255,255,.055));
+      border-color:rgba(255,255,255,.20);
+    }
+
+    .thumb{
+      height:174px;
+      border-radius:14px;
+      overflow:hidden;
+      background:rgba(8,6,13,.62);
+      border:1px solid rgba(255,255,255,.10);
+      margin-bottom:14px;
+    }
+
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:.25s ease;
+    }
+
+    .article-card:hover .thumb img{
+      transform:scale(1.035);
+    }
+
+    .article-card .date{
+      color:rgba(255,255,255,.58);
+    }
+
+    .article-card h4{
+      font-size:1.22rem;
+      line-height:1.25;
+      letter-spacing:-.03em;
+      margin-bottom:10px;
+      color:#fff;
+    }
+
+    .excerpt{
+      color:rgba(255,255,255,.76);
+      line-height:1.55;
+      font-size:.96rem;
+      margin-bottom:18px;
+      display:-webkit-box;
+      -webkit-line-clamp:3;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+
+    .article-card .read-more{
+      margin-top:auto;
+      font-size:1rem;
+      color:#ff9b72;
+    }
+
+    .soon-badge{
+      position:absolute;
+      top:28px;
+      right:28px;
+      z-index:2;
+      background:rgba(255,90,31,.88);
+      color:#fff;
+      padding:8px 11px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:900;
+      box-shadow:0 12px 25px rgba(255,90,31,.26);
+      border:1px solid rgba(255,255,255,.18);
+    }
+
+    .soon .read-more{
+      color:rgba(255,255,255,.58);
+      pointer-events:none;
+    }
+
+    .pagination{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin:30px 0 44px;
+    }
+
+    .pagination a,
+    .pagination span{
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:rgba(255,255,255,.07);
+      border:1px solid var(--line);
+      color:#fff;
+      font-weight:900;
+    }
+
+    .pagination .current{
+      background:var(--accent);
+      border-color:var(--accent);
+    }
+
+    .newsletter{
+      margin-bottom:52px;
+      border-radius:28px;
+      background:linear-gradient(135deg,rgba(255,90,31,.16),rgba(255,255,255,.07));
+      border:1px solid var(--line);
+      padding:26px;
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:18px;
+      align-items:center;
+    }
+
+    .newsletter .badge{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:1.3rem;
+    }
+
+    .newsletter h3{
+      font-size:1.35rem;
+      margin-bottom:6px;
+    }
+
+    .newsletter p{
       color:var(--muted);
-      text-align:center;
+      line-height:1.6;
     }
 
-    @media(max-width:980px){
-      .hero,
-      .article-layout{
+    .form{
+      display:flex;
+      gap:10px;
+      margin-top:16px;
+      max-width:520px;
+    }
+
+    .form input{
+      flex:1;
+      border:none;
+      border-radius:14px;
+      padding:14px 16px;
+      background:rgba(255,255,255,.92);
+      font-size:1rem;
+    }
+
+    .form button{
+      border:none;
+      border-radius:14px;
+      padding:14px 18px;
+      background:var(--accent);
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    footer{
+      border-top:1px solid var(--line);
+      padding:26px 0;
+      color:var(--muted);
+      font-size:.92rem;
+    }
+
+    .footer-row{
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    @media(max-width:900px){
+      .menu{
+        display:none;
+      }
+
+      .featured{
         grid-template-columns:1fr;
       }
 
-      .sidebar{
-        position:static;
+      .featured-media img{
+        height:280px;
+      }
+
+      .grid{
         grid-template-columns:1fr 1fr;
+      }
+
+      .section-head{
+        display:block;
+      }
+
+      .section-head p{
+        margin-top:8px;
+      }
+
+      .newsletter{
+        grid-template-columns:1fr;
       }
     }
 
-    @media(max-width:720px){
-      .topbar{
-        flex-direction:column;
+    @media(max-width:640px){
+      .nav{
+        height:auto;
+        padding:16px 0;
         align-items:flex-start;
       }
 
-      .nav{
-        width:100%;
-        overflow:auto;
+      .search-pill{
+        display:none;
       }
 
-      .hero{
-        padding-top:18px;
+      .page-title{
+        text-align:left;
+        padding:36px 0 22px;
       }
 
-      .visual,
-      .mini-visual{
-        height:240px;
+      .featured{
         border-radius:22px;
       }
 
-      .visual img,
-      .mini-visual img{
-        border-radius:22px;
+      .featured-content{
+        padding:14px 8px 8px;
       }
 
-      .article{
-        border-radius:26px;
-      }
-
-      .compare{
+      .grid{
         grid-template-columns:1fr;
       }
 
-      .compare>div:first-child{
-        border-right:none;
-        border-bottom:1px solid #ddd5d8;
+      .form{
+        flex-direction:column;
       }
 
-      .final-cta{
-        grid-template-columns:1fr;
+      .thumb{
+        height:155px;
       }
 
-      .sidebar{
-        grid-template-columns:1fr;
+      .brand{
+        font-size:1.75rem;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <header class="topbar">
-      <a class="brand" href="articulos-movesmart-imagenes-github.html">Move<span>Smart</span></a>
-      <nav class="nav">
-        <a href="articulos-movesmart-imagenes-github.html">Artículos</a>
-        <a href="index.html">Inicio</a>
-        <a href="#evaluacion">Evaluación gratuita</a>
+  <div class="site-glow"></div>
+
+  <header class="site-header">
+    <div class="wrap nav">
+
+      <!-- LOGO NUEVO -->
+      <a href="index.html" class="brand" aria-label="Inicio MoveSmart">
+        Move<span>Smart</span>
+      </a>
+
+      <nav class="menu" aria-label="Navegación principal">
+        <a class="active" href="articulos-movesmart.html">Artículos</a>
+        <a href="acceso-clientes.html">Clientes</a>
+        <a href="blog-movesmart-informativo-editorial-titulo-ajustado.html">Blog</a>
+        <a href="#">Evaluación</a>
       </nav>
-    </header>
 
-    <section class="hero">
-      <div>
-        <div class="kicker">BLOG MOVESMART · ADHERENCIA</div>
-        <h1>Un PDF no sabe <span>cómo llegas</span> del trabajo</h1>
-        <p class="lead">
-          Una rutina puede verse perfecta en papel, pero fallar en la vida real si no considera energía, dolor, estrés, sueño y disponibilidad.
-        </p>
-        <div class="cta-row">
-          <a class="btn primary" href="#articulo">Leer artículo ↘</a>
-          <a class="btn" href="#resumen">Ver ideas clave</a>
-        </div>
-      </div>
+      <a class="search-pill" href="#">Buscar</a>
+    </div>
+  </header>
 
-      <div class="visual" aria-label="Imagen editorial: el plan no cambia, tu realidad sí">
-        <img src="../imagenes/pdf-plan-no-cambia.png" alt="El plan no cambia, tu realidad sí" loading="lazy">
-      </div>
+  <main>
+    <section class="page-title wrap">
+      <span class="kicker">Blog educativo MoveSmart</span>
+      <h1>ARTÍCULOS</h1>
+      <p>
+        Ideas breves y aplicables sobre entrenamiento inteligente,
+        adherencia, rehabilitación y rutinas que se adaptan a la vida real.
+      </p>
     </section>
 
-    <main class="article-layout" id="articulo">
-      <article class="article">
-        <p><strong>¿Sabías que muchas personas no abandonan porque no tengan disciplina?</strong> Muchas veces abandonan porque el plan que recibieron no conversa con su vida real.</p>
+    <section class="wrap">
+      <article class="featured">
+        <a class="featured-media" href="articulo_principal/un_pdf_no_sabe.html">
+          <img src="imagenes/pdf-no-sabe.png" alt="El PDF sigue igual" />
+        </a>
 
-        <p>Un PDF puede decirte qué ejercicio hacer, cuántas series completar y cuántas repeticiones ejecutar. Pero no sabe si dormiste mal, si llegaste con dolor, si tuviste un día pesado o si hoy simplemente tienes menos energía.</p>
+        <div class="featured-content">
+          <div class="date">Artículo principal · MoveSmart</div>
 
-        <div class="quote">No siempre necesitas más motivación. A veces necesitas un plan que sepa ajustarse.</div>
+          <h2>Un PDF no sabe cómo llegas del trabajo</h2>
 
-        <h2>El problema de una rutina fija</h2>
-        <p>Una rutina estática puede funcionar en condiciones ideales. El problema es que la mayoría de las personas no vive en condiciones ideales: trabaja, se cansa, duerme distinto cada noche, tiene estrés, molestias, horarios cambiantes y días con poca energía.</p>
+          <p>
+            Una rutina puede verse correcta en papel,
+            pero fallar en la vida real si no considera cansancio,
+            dolor, sueño, estrés o energía disponible.
+            Entrenar con inteligencia no es hacer más:
+            es ajustar mejor.
+          </p>
 
-        <p>Cuando el plan no considera eso, aparece una sensación muy común: “fallé”. Pero muchas veces no fallaste tú. Falló la estructura.</p>
-
-        <div class="mini-visual energy">
-          <img src="../imagenes/energia-baja-app.png" alt="Llegas con poca energía" loading="lazy">
+          <a class="read-more" href="articulo_principal/un_pdf_no_sabe.html">
+            Leer más <span class="arrow">↗</span>
+          </a>
         </div>
-
-        <h2>El entrenamiento no ocurre en el papel</h2>
-        <p>En el papel todo parece ordenado: día de pierna, día de tren superior, cardio, descanso. Pero el cuerpo no funciona como una planilla rígida. Responde al sueño, al estrés, a la carga laboral y a la recuperación.</p>
-
-        <p>Por eso, un sistema inteligente no solo pregunta “qué toca hoy”, también pregunta “cómo llegas hoy”. Esa diferencia cambia completamente la adherencia.</p>
-
-        <section class="compare">
-          <div>
-            <h3>PDF fijo</h3>
-            <div class="cross"><b>✕</b><span>Te dice qué hacer, aunque estés agotada/o.</span></div>
-            <div class="cross"><b>✕</b><span>No ajusta volumen ni intensidad.</span></div>
-            <div class="cross"><b>✕</b><span>Depende demasiado de motivación.</span></div>
-            <div class="cross"><b>✕</b><span>No evoluciona con tus sensaciones.</span></div>
-          </div>
-
-          <div>
-            <h3>Sistema adaptable</h3>
-            <div class="check"><b>✓</b><span>Considera energía, dolor y disponibilidad.</span></div>
-            <div class="check"><b>✓</b><span>Ajusta volumen, intensidad o ejercicio.</span></div>
-            <div class="check"><b>✓</b><span>Construye continuidad real.</span></div>
-            <div class="check"><b>✓</b><span>Evoluciona contigo semana a semana.</span></div>
-          </div>
-        </section>
-
-        <h2>La adherencia es parte del resultado</h2>
-        <p>Cuando hablamos de progreso, solemos pensar en ejercicios, cargas o calorías. Pero hay una variable que sostiene todo lo demás: la adherencia.</p>
-
-        <p>Un plan muy perfecto, pero imposible de sostener, termina siendo menos útil que un plan más simple, flexible y realista. La clave no es entrenar perfecto todos los días. La clave es seguir avanzando incluso cuando el día no fue perfecto.</p>
-
-        <div class="evidence">
-          <h3>Idea clave</h3>
-          <p>Un programa efectivo no solo debe estar bien diseñado desde lo técnico. También debe ser suficientemente flexible para que la persona pueda cumplirlo en su contexto real.</p>
-        </div>
-
-        <div class="mini-visual system">
-          <img src="../imagenes/movesmart-se-adapta.png" alt="MoveSmart se adapta" loading="lazy">
-        </div>
-
-        <h2>Entonces, ¿qué debería hacer un buen plan?</h2>
-        <p>Un buen plan debería tener estructura, pero también margen de ajuste. Debería progresar, pero sin ignorar señales de fatiga. Debería desafiarte, pero no castigarte por tener un día difícil.</p>
-
-        <p>Adaptar no significa hacer menos por flojera. Adaptar significa tomar una mejor decisión para sostener el proceso.</p>
-
-        <div class="quote">No necesitas un plan perfecto. Necesitas un plan que puedas sostener.</div>
-
-        <section class="final-cta" id="evaluacion">
-          <div>
-            <h2>Entrena con inteligencia.</h2>
-            <p>Solicita una evaluación gratuita y construyamos un plan que se adapte a tu realidad.</p>
-          </div>
-          <a class="btn primary" href="#">Solicitar evaluación</a>
-        </section>
       </article>
+    </section>
 
-      <aside class="sidebar" id="resumen">
-        <section class="side-card">
-          <h3>Ideas clave</h3>
-          <ul>
-            <li>Un PDF puede estar bien hecho, pero seguir siendo rígido.</li>
-            <li>La energía del día cambia tu capacidad de entrenar.</li>
-            <li>La adherencia mejora cuando el plan se adapta al contexto.</li>
-            <li>Adaptar no es fallar: es sostener el proceso.</li>
-          </ul>
-        </section>
+    <section class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Próximos artículos</span>
+          <h3>En desarrollo</h3>
+        </div>
 
-        <section class="side-card">
-          <h3>Para quién es este artículo</h3>
-          <p class="small">Para personas que han abandonado rutinas antes y creen que el problema siempre fue falta de disciplina.</p>
-        </section>
+        <p>
+          Estos contenedores quedan preparados para futuros artículos.
+          Cuando tengas el contenido listo, solo cambiamos el estado
+          de “Próximamente” a “Leer más”.
+        </p>
+      </div>
 
-        <section class="side-card">
-          <h3>MoveSmart</h3>
-          <p class="small">Entrenamiento personalizado, flexible, progresivo y sostenible.</p>
-        </section>
-      </aside>
-    </main>
+      <div class="grid">
 
-    <footer class="footer">MoveSmart · Entrena inteligente. Avanza siempre.</footer>
-  </div>
+        <article class="article-card soon">
+          <span class="soon-badge">Próximamente</span>
+
+          <div class="thumb">
+            <img src="imagenes/dolor-no-es-parar.png" alt="Dolor no siempre significa parar" />
+          </div>
+
+          <div class="date">En desarrollo</div>
+
+          <h4>Dolor no siempre significa parar</h4>
+
+          <p class="excerpt">
+            Aprender a diferenciar molestia, fatiga y dolor permite adaptar mejor el entrenamiento sin abandonar el proceso.
+          </p>
+
+          <a class="read-more" href="#">
+            Próximamente <span class="arrow">↗</span>
+          </a>
+        </article>
+
+        <article class="article-card soon">
+          <span class="soon-badge">Próximamente</span>
+
+          <div class="thumb">
+            <img src="imagenes/adherencia.png" alt="Adherencia al entrenamiento" />
+          </div>
+
+          <div class="date">En desarrollo</div>
+
+          <h4>Por qué abandonar no siempre es falta de disciplina</h4>
+
+          <p class="excerpt">
+            Muchas veces el problema no es la motivación,
+            sino un plan demasiado rígido para la realidad diaria de la persona.
+          </p>
+
+          <a class="read-more" href="#">
+            Próximamente <span class="arrow">↗</span>
+          </a>
+        </article>
+
+        <article class="article-card soon">
+          <span class="soon-badge">Próximamente</span>
+
+          <div class="thumb">
+            <img src="imagenes/entrenar-cansancio.png" alt="Entrenar después del trabajo con cansancio" />
+          </div>
+
+          <div class="date">En desarrollo</div>
+
+          <h4>Entrenar después del trabajo: cómo adaptar sin perder progreso</h4>
+
+          <p class="excerpt">
+            Reducir volumen, ajustar intensidad o cambiar un ejercicio puede ser la diferencia entre sostener el hábito o abandonarlo.
+          </p>
+
+          <a class="read-more" href="#">
+            Próximamente <span class="arrow">↗</span>
+          </a>
+        </article>
+
+      </div>
+
+      <nav class="pagination" aria-label="Paginación">
+        <span class="current">1</span>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <span>…</span>
+      </nav>
+    </section>
+
+    <section class="wrap newsletter">
+      <div class="badge">M</div>
+
+      <div>
+        <h3>
+          Recibe ideas MoveSmart para entrenar con más continuidad.
+        </h3>
+
+        <p>
+          Material educativo sobre dolor, adherencia, fuerza,
+          rehabilitación y sistemas de entrenamiento
+          que se adaptan a tu realidad.
+        </p>
+
+        <form class="form">
+          <input type="email" placeholder="Tu correo" />
+          <button type="button">Suscribirme</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <p>© 2026 MoveSmart</p>
+      <p>Entrenamiento personalizado · Rehabilitación · Adherencia</p>
+    </div>
+  </footer>
 </body>
 </html>
