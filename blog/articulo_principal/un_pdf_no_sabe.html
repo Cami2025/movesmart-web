@@ -168,7 +168,6 @@
     .mini-visual{
       margin:30px 0;
       border-radius:28px;
-      min-height:310px;
       overflow:hidden;
       background:#05050a;
       border:1px solid rgba(0,0,0,.08);
@@ -177,23 +176,29 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      padding:0;
     }
 
     .mini-visual img{
       width:100%;
       height:auto;
-      max-height:none;
       object-fit:contain;
       display:block;
       border-radius:28px;
     }
 
     .mini-visual.energy{
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.10), rgba(0,0,0,.72)),
-        radial-gradient(circle at 22% 35%, rgba(255,255,255,.08), transparent 18%),
-        linear-gradient(135deg,#1c1715,#09090f);
+      min-height:0;
+      height:auto;
+      background:#05050a;
     }
+
+    .mini-visual.energy img{
+      width:100%;
+      height:auto;
+      object-fit:contain;
+    }
+
     .mini-visual.system{
       background:
         radial-gradient(circle at 72% 35%, rgba(255,90,31,.22), transparent 24%),
