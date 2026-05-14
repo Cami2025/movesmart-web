@@ -380,11 +380,13 @@
 
     .pagination a,
     .pagination span{
-      width:38px;
+      width:auto;
+      min-width:110px;
       height:38px;
+      padding:0 18px;
       display:grid;
       place-items:center;
-      border-radius:12px;
+      border-radius:999px;
       background:rgba(255,255,255,.07);
       border:1px solid var(--line);
       color:#fff;
@@ -463,23 +465,10 @@
     }
 
     @media(max-width:1000px){
-      .nav{
-        gap:12px;
-      }
-
-      .menu{
-        gap:14px;
-        font-size:.85rem;
-      }
-
-      .top-social{
-        width:34px;
-        height:34px;
-      }
-
-      .search-pill{
-        padding:9px 13px;
-      }
+      .nav{gap:12px}
+      .menu{gap:14px;font-size:.85rem}
+      .top-social{width:34px;height:34px}
+      .search-pill{padding:9px 13px}
     }
 
     @media(max-width:900px){
@@ -489,18 +478,9 @@
         padding:14px 0;
       }
 
-      .brand{
-        font-size:1.25rem;
-      }
-
-      .menu{
-        flex-shrink:0;
-      }
-
-      .nav-actions{
-        flex-shrink:0;
-      }
-
+      .brand{font-size:1.25rem}
+      .menu{flex-shrink:0}
+      .nav-actions{flex-shrink:0}
       .featured{grid-template-columns:1fr}
       .featured-media img{height:280px}
       .grid{grid-template-columns:1fr 1fr}
@@ -515,28 +495,21 @@
         padding:10px 0;
       }
 
-      .brand{
-        font-size:1.05rem;
-      }
-
+      .brand{font-size:1.05rem}
       .menu{
         gap:10px;
         font-size:.72rem;
         font-weight:800;
       }
 
-      .menu a{
-        padding-bottom:5px;
-      }
+      .menu a{padding-bottom:5px}
 
       .menu a.active::after{
         bottom:-6px;
         height:2px;
       }
 
-      .top-socials{
-        gap:4px;
-      }
+      .top-socials{gap:4px}
 
       .top-social{
         width:25px;
@@ -549,34 +522,24 @@
         height:13px;
       }
 
-      .search-pill{
-        display:none;
-      }
+      .search-pill{display:none}
 
       .page-title{
         text-align:left;
         padding:36px 0 22px;
       }
 
-      .featured{
-        border-radius:22px;
-      }
+      .featured{border-radius:22px}
 
       .featured-content{
         padding:14px 8px 8px;
       }
 
-      .grid{
-        grid-template-columns:1fr;
-      }
+      .grid{grid-template-columns:1fr}
 
-      .form{
-        flex-direction:column;
-      }
+      .form{flex-direction:column}
 
-      .thumb{
-        height:155px;
-      }
+      .thumb{height:155px}
     }
   </style>
 </head>
@@ -589,17 +552,17 @@
       <a href="../index.html" class="brand" aria-label="Inicio MoveSmart">Move<span>Smart</span></a>
 
       <nav class="menu" aria-label="Navegación principal">
-        <a class="active" href="index.html">Inicio</a>
-        <a href="#articulos-en-desarrollo">Artículos</a>
-        <a href="acceso-clientes.html">Clientes</a>
-        <a href="blog-movesmart-informativo-editorial-titulo-ajustado.html">Blog</a>
-        <a href="#">Evaluación</a>
+        <a href="../index.html">Inicio</a>
+        <a class="active" href="#articulos-en-desarrollo">Artículos</a>
+        <a href="../acceso-clientes.html">Clientes</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../evaluacion-gratuita-movesmart.html">Evaluación</a>
       </nav>
 
       <div class="nav-actions">
         <div class="top-socials" aria-label="Redes sociales MoveSmart">
           <a class="top-social instagram" href="#" aria-label="Instagram">
-            <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4zm4.2 3.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 7.2m0 2A2.8 2.8 0 1 0 14.8 12 2.8 2.8 0 0 0 12 9.2M17.2 6.7a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4zm4.2 3.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 7.2m0 2A2.8 2.8 0 1 0 14.8 12 2.8 2.8 0 0 0 12 9.2M17.2 6.7a1.1 1.1 0 1 1-1.1 1.1 1.1 0 0 1 1.1-1.1"/></svg>
           </a>
 
           <a class="top-social twitter" href="#" aria-label="Twitter">
@@ -662,7 +625,7 @@
           <div class="date">En desarrollo</div>
           <h4>Cuando tienes poco tiempo, entrenar distinto sigue siendo entrenar</h4>
           <p class="excerpt">No siempre necesitas una hora libre para avanzar. Aprender a adaptar el entrenamiento a tu energía, tiempo y realidad diaria permite mantener la constancia sin sentir que “fallaste” por no hacer la rutina perfecta.</p>
-          <a class="read-more" href="../desarrollo/material_en_desarrollo.html">Próximamente <span class="arrow">↗</span></a>
+          <a class="read-more" href="#">Próximamente <span class="arrow">↗</span></a>
         </article>
 
         <article class="article-card soon">
@@ -689,10 +652,7 @@
       </div>
 
       <nav class="pagination" aria-label="Paginación">
-        <span class="current">1</span>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <span>…</span>
+        <a class="current" href="#articulos-en-desarrollo">Siguiente</a>
       </nav>
     </section>
 
