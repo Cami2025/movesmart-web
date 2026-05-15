@@ -206,7 +206,7 @@
 
     .hero{
       position:relative;
-      min-height:700px;
+      min-height:560px; /* reducido para acercar "Cómo Funciona" */
       display:flex;
       align-items:flex-start;
     }
@@ -223,7 +223,7 @@
     .hero-content{
       position:relative;
       padding-top:84px;
-      padding-bottom:150px;
+      padding-bottom:80px; /* antes 150px: reduce el espacio bajo el botón */
       max-width:670px;
     }
 
@@ -257,7 +257,12 @@
 
     .section{
       position:relative;
-      padding:44px 0 10px;
+      padding:28px 0 10px; /* antes 44px */
+    }
+
+    #como-funciona.section{
+      margin-top:-35px; /* sube toda la sección Cómo Funciona */
+      padding-top:16px;
     }
 
     .section-title{
@@ -466,7 +471,7 @@
     @media (max-width: 1080px){
       .cards{grid-template-columns:repeat(2, minmax(0, 1fr))}
       .phone{right:28px;width:min(320px, 38vw)}
-      .hero{min-height:660px}
+      .hero{min-height:540px}
     }
 
     @media (max-width: 820px){
@@ -491,9 +496,9 @@
           radial-gradient(circle at 84% 16%, rgba(243,107,42,.08), transparent 18%),
           radial-gradient(circle at 54% 40%, rgba(255,255,255,.025), transparent 18%);
       }
-      .hero{min-height:520px}
-      .hero-content{padding-top:42px;padding-bottom:22px}
-      #como-funciona.section{padding-top:22px}
+      .hero{min-height:500px}
+      .hero-content{padding-top:42px;padding-bottom:12px}
+      #como-funciona.section{margin-top:-30px;padding-top:0}
       .hero::before{
         background:linear-gradient(180deg, rgba(8,7,12,.50) 0%, rgba(9,7,12,.36) 28%, rgba(10,8,14,.18) 60%, rgba(10,8,14,.08) 100%);
       }
@@ -533,13 +538,13 @@
       .nav-links{gap:14px 18px;font-weight:700}
       .btn.small{padding:0 18px}
       .topbar{background:rgba(10,8,14,.34)}
-      .hero{min-height:360px}
+      .hero{min-height:340px}
       .brand{font-size:3.15rem}
       .hero-title{font-size:2.35rem}
       .hero-content{padding-top:32px;padding-bottom:14px}
       .hero-subtitle{font-size:1.04rem;max-width:420px;margin-bottom:24px}
       .section{padding:22px 0 10px}
-      #como-funciona.section{padding-top:14px}
+      #como-funciona.section{margin-top:-25px;padding-top:0}
       .section-title{margin-bottom:8px}
       .section-subtitle{margin:0 auto 22px;font-size:.92rem;line-height:1.45}
       .cards{grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px}
@@ -696,12 +701,17 @@
       .mobile-blog-link::after{display:none !important;}
 
       .hero{
-        min-height:720px;
+        min-height:560px; /* antes 720px: reduce el espacio grande */
       }
 
       .hero-content{
-        padding-top:58px;
-        padding-bottom:70px;
+        padding-top:48px;
+        padding-bottom:20px; /* antes 70px */
+      }
+
+      #como-funciona.section{
+        margin-top:-45px; /* sube Cómo Funciona */
+        padding-top:0;
       }
     }
 
@@ -714,7 +724,7 @@
       .top-social svg{width:13px;height:13px;}
       .nav-actions > .btn.small{min-height:30px;padding:0 10px;font-size:.65rem;border-radius:10px;}
       .nav-links{font-size:.74rem;column-gap:24px;}
-      .hero-content{padding-top:50px;}
+      .hero-content{padding-top:44px;}
     }
 
     @media (max-width: 350px){
