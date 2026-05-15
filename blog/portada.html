@@ -724,7 +724,7 @@
   const newsletterEmail = document.getElementById("newsletterEmail");
   const newsletterMensaje = document.getElementById("newsletterMensaje");
 
-  newsletterForm.addEventListener("submit", async function(e) {
+  newsletterForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
     const email = newsletterEmail.value.trim();
@@ -734,24 +734,16 @@
       return;
     }
 
-    newsletterMensaje.textContent = "Guardando tu correo...";
+    newsletterMensaje.textContent = "¡Listo! Ya estás suscrita a MoveSmart.";
+    newsletterForm.reset();
 
-    const url = "https://script.google.com/macros/s/AKfycby5yxE-1FxWmFIZyD_CJw2Ou9-balJIn-n25TJ_BbVhLTGLECFzOQoxdvelRDtmdI1Qpw/exec?email=" 
+    const url = "https://script.google.com/macros/s/AKfycby5yxE-1FxWmFIZyD_CJw2Ou9-balJIn-n25TJ_BbVhLTGLECFzOQoxdvelRDtmdI1Qpw/exec?email="
       + encodeURIComponent(email);
 
-    try {
-      await fetch(url, {
-        method: "GET",
-        mode: "no-cors"
-      });
-
-      newsletterMensaje.textContent = "¡Listo! Ya estás suscrita a MoveSmart.";
-      newsletterForm.reset();
-
-    } catch (error) {
-      newsletterMensaje.textContent = "Hubo un problema. Inténtalo nuevamente.";
-    }
+    fetch(url, {
+      method: "GET",
+      mode: "no-cors",
+      keepalive: true
+    });
   });
 </script>
-</body>
-</html>
