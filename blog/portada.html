@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Artículos | MoveSmart</title>
 
+  <!-- Optimización de carga: precarga los recursos visuales principales -->
+  <link rel="preload" as="image" href="fondo-preview-rutina.png">
+  <link rel="preload" as="image" href="imagenes/pdf-no-sabe.png">
+  <link rel="preconnect" href="https://script.google.com">
+
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -31,6 +36,7 @@
         linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
         url('fondo-preview-rutina.png') center center / cover no-repeat;
       background-attachment:fixed;
+      will-change:auto;
     }
 
     .site-glow{
@@ -51,8 +57,8 @@
       position:sticky;
       top:0;
       z-index:20;
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
       background:rgba(8,6,13,.72);
       border-bottom:1px solid var(--line);
     }
@@ -281,6 +287,8 @@
     }
 
     .article-card{
+      content-visibility:auto;
+      contain-intrinsic-size:360px;
       background:linear-gradient(180deg,var(--glass),var(--glass2));
       color:var(--text);
       border:1px solid rgba(255,255,255,.13);
@@ -293,8 +301,8 @@
       position:relative;
       overflow:hidden;
       transition:.22s ease;
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
     }
 
     .article-card:hover{
@@ -399,6 +407,8 @@
     }
 
     .newsletter{
+      content-visibility:auto;
+      contain-intrinsic-size:260px;
       margin-bottom:52px;
       border-radius:28px;
       background:linear-gradient(135deg,rgba(255,90,31,.16),rgba(255,255,255,.07));
@@ -503,6 +513,11 @@
     }
 
     @media(max-width:640px){
+      body{
+        background-attachment:scroll;
+        background-position:center top;
+      }
+
       .nav{
         min-height:auto;
         gap:10px;
@@ -633,7 +648,7 @@
     <section class="wrap">
       <article class="featured">
         <a class="featured-media" href="articulo_principal/un_pdf_no_sabe.html">
-          <img src="imagenes/pdf-no-sabe.png" alt="El PDF sigue igual" />
+          <img src="imagenes/pdf-no-sabe.png" alt="El PDF sigue igual" fetchpriority="high" decoding="async" />
         </a>
 
         <div class="featured-content">
@@ -660,7 +675,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="imagenes/poco_tiempo_para_entrenar.png" alt="Poco tiempo para entrenar" />
+            <img src="imagenes/poco_tiempo_para_entrenar.png" alt="Poco tiempo para entrenar" loading="lazy" decoding="async" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Cuando tienes poco tiempo, entrenar distinto sigue siendo entrenar</h4>
@@ -671,7 +686,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="imagenes/dolor_no_significa parar.png" alt="Dolor y entreno" />
+            <img src="imagenes/dolor_no_significa parar.png" alt="Dolor y entreno" loading="lazy" decoding="async" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dolor no siempre significa parar</h4>
@@ -682,7 +697,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="imagenes/dormir_y_grasa.png" alt="Dormir poco y acumulación de grasa" />
+            <img src="imagenes/dormir_y_grasa.png" alt="Dormir poco y acumulación de grasa" loading="lazy" decoding="async" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dormir poco también entrena tu cuerpo… para acumular grasa</h4>
@@ -740,10 +755,18 @@
     const url = "https://script.google.com/macros/s/AKfycby5yxE-1FxWmFIZyD_CJw2Ou9-balJIn-n25TJ_BbVhLTGLECFzOQoxdvelRDtmdI1Qpw/exec?email="
       + encodeURIComponent(email);
 
-    fetch(url, {
-      method: "GET",
-      mode: "no-cors",
-      keepalive: true
-    });
+    const enviarASheets = () => {
+      fetch(url, {
+        method: "GET",
+        mode: "no-cors",
+        keepalive: true
+      }).catch(() => {});
+    };
+
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(enviarASheets);
+    } else {
+      setTimeout(enviarASheets, 250);
+    }
   });
 </script>
