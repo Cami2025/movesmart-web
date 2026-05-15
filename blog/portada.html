@@ -4,11 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Artículos | MoveSmart</title>
-
-  <!-- Optimización de carga: precarga los recursos visuales principales -->
-  <link rel="preload" as="image" href="fondo-preview-rutina.png">
-  <link rel="preload" as="image" href="imagenes/pdf-no-sabe.png">
-  <link rel="preconnect" href="https://script.google.com">
+  <!-- Optimización 4G: carga antes lo visible y retrasa lo demás -->
+  <link rel="preload" as="image" href="imagenes/pdf-no-sabe.png" fetchpriority="high">
+  <link rel="preload" as="image" href="fondo-preview-rutina.png" media="(min-width: 641px)">
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -35,8 +33,7 @@
       background:
         linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
         url('fondo-preview-rutina.png') center center / cover no-repeat;
-      background-attachment:fixed;
-      will-change:auto;
+      background-attachment:scroll;
     }
 
     .site-glow{
@@ -287,8 +284,6 @@
     }
 
     .article-card{
-      content-visibility:auto;
-      contain-intrinsic-size:360px;
       background:linear-gradient(180deg,var(--glass),var(--glass2));
       color:var(--text);
       border:1px solid rgba(255,255,255,.13);
@@ -301,8 +296,8 @@
       position:relative;
       overflow:hidden;
       transition:.22s ease;
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
     }
 
     .article-card:hover{
@@ -407,8 +402,6 @@
     }
 
     .newsletter{
-      content-visibility:auto;
-      contain-intrinsic-size:260px;
       margin-bottom:52px;
       border-radius:28px;
       background:linear-gradient(135deg,rgba(255,90,31,.16),rgba(255,255,255,.07));
@@ -513,11 +506,6 @@
     }
 
     @media(max-width:640px){
-      body{
-        background-attachment:scroll;
-        background-position:center top;
-      }
-
       .nav{
         min-height:auto;
         gap:10px;
@@ -596,6 +584,55 @@
 
       .thumb{height:155px}
     }
+
+
+    /* Optimización de carga: el navegador no pinta secciones hasta que se acercan */
+    .article-card, .newsletter, footer{
+      content-visibility:auto;
+      contain-intrinsic-size:260px;
+    }
+
+    /* Versión 4G/celular: mantiene estética, pero baja efectos pesados */
+    @media(max-width:640px){
+      body{
+        background:
+          radial-gradient(circle at 78% 12%, rgba(255,90,31,.18), transparent 26%),
+          radial-gradient(circle at 12% 18%, rgba(73,58,146,.16), transparent 28%),
+          linear-gradient(180deg,#08060d 0%,#0b0711 55%,#08060d 100%);
+        background-attachment:scroll;
+      }
+
+      .site-glow{display:none;}
+
+      .site-header,
+      .article-card{
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+      }
+
+      .featured{
+        box-shadow:0 14px 34px rgba(0,0,0,.28);
+      }
+
+      .article-card{
+        box-shadow:0 12px 28px rgba(0,0,0,.20);
+      }
+
+      .featured-media img{
+        min-height:220px;
+        height:220px;
+      }
+
+      .thumb{height:138px;}
+
+      .article-card:hover,
+      .article-card:hover .thumb img,
+      .top-social:hover,
+      .form button:hover{
+        transform:none;
+      }
+    }
+
   </style>
 </head>
 
@@ -648,7 +685,7 @@
     <section class="wrap">
       <article class="featured">
         <a class="featured-media" href="articulo_principal/un_pdf_no_sabe.html">
-          <img src="imagenes/pdf-no-sabe.png" alt="El PDF sigue igual" fetchpriority="high" decoding="async" />
+          <img src="imagenes/pdf-no-sabe.png" alt="El PDF sigue igual" fetchpriority="high" decoding="async" width="680" height="420" />
         </a>
 
         <div class="featured-content">
@@ -675,7 +712,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="imagenes/poco_tiempo_para_entrenar.png" alt="Poco tiempo para entrenar" loading="lazy" decoding="async" />
+            <img src="imagenes/poco_tiempo_para_entrenar.png" alt="Poco tiempo para entrenar" loading="lazy" decoding="async" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Cuando tienes poco tiempo, entrenar distinto sigue siendo entrenar</h4>
@@ -686,7 +723,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="imagenes/dolor_no_significa parar.png" alt="Dolor y entreno" loading="lazy" decoding="async" />
+            <img src="imagenes/dolor_no_significa parar.png" alt="Dolor y entreno" loading="lazy" decoding="async" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dolor no siempre significa parar</h4>
@@ -697,7 +734,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="imagenes/dormir_y_grasa.png" alt="Dormir poco y acumulación de grasa" loading="lazy" decoding="async" />
+            <img src="imagenes/dormir_y_grasa.png" alt="Dormir poco y acumulación de grasa" loading="lazy" decoding="async" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dormir poco también entrena tu cuerpo… para acumular grasa</h4>
@@ -755,18 +792,18 @@
     const url = "https://script.google.com/macros/s/AKfycby5yxE-1FxWmFIZyD_CJw2Ou9-balJIn-n25TJ_BbVhLTGLECFzOQoxdvelRDtmdI1Qpw/exec?email="
       + encodeURIComponent(email);
 
-    const enviarASheets = () => {
+    const enviarCorreo = () => {
       fetch(url, {
         method: "GET",
         mode: "no-cors",
         keepalive: true
-      }).catch(() => {});
+      });
     };
 
     if ("requestIdleCallback" in window) {
-      requestIdleCallback(enviarASheets);
+      requestIdleCallback(enviarCorreo);
     } else {
-      setTimeout(enviarASheets, 250);
+      setTimeout(enviarCorreo, 400);
     }
   });
 </script>
