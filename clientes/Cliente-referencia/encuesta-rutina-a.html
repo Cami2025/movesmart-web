@@ -1182,6 +1182,8 @@
   
 
   <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwou3Nad70dFsp5ugw6Bx6y7_bpoZT5-g_GGiJ3kOEBz4m5Xj6-m00GelBOSmJqTUJYmA/exec";
+
     const respuestas = { tiempo:null, energia:null, motivacion:null };
     const progressFill = document.getElementById('progressFill');
     const progressText = document.getElementById('progressText');
@@ -1209,6 +1211,24 @@
       return 'Completa';
     }
 
+    function guardarRespuestaEnSheets(estructura, modo){
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({
+          cliente: "Juan Ugalde",
+          rutina: "Rutina A",
+          tiempo: respuestas.tiempo,
+          energia: respuestas.energia,
+          motivacion: respuestas.motivacion,
+          estructura: estructura,
+          modo: modo
+        })
+      }).catch(function(error){
+        console.log("No se pudo guardar en Sheets:", error);
+      });
+    }
+
     document.querySelectorAll('.choice').forEach(btn => {
       btn.addEventListener('click', () => {
         const question = btn.closest('.question').dataset.question;
@@ -1234,6 +1254,9 @@
 
       const estructura = nombreEstructura();
       const modo = modoSegunEnergia();
+
+      guardarRespuestaEnSheets(estructura, modo);
+
       const modoTexto = {
         Recovery: 'Hoy prioriza control, técnica y menor esfuerzo. Puedes descansar más y reducir una serie si aparece molestia.',
         Normal: 'Sigue la rutina tal como está planificada hoy. Mantén control y buena técnica.',
