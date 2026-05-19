@@ -817,6 +817,39 @@
       .finish-session-btn{width:100%;min-width:unset}
     }
 
+
+
+    /* Corrección: la rutina completa no debe heredar el hero oscuro de la encuesta */
+    .routine-container .hero{
+      min-height:auto;
+      display:block;
+      border-radius:30px;
+      padding:26px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      margin:22px 0;
+      overflow:visible;
+    }
+
+    .routine-container .hero::before{
+      display:none;
+    }
+
+    .routine-container .hero h1,
+    .routine-container .hero .subtitle,
+    .routine-container .hero .eyebrow,
+    .routine-container .hero .quick-stats{
+      position:relative;
+      z-index:2;
+    }
+
+    .routine-container .hero .quick-stats{
+      margin-bottom:0;
+    }
+
   </style>
 </head>
 <body>
