@@ -3,477 +3,875 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acceso Clientes | MoveSmart</title>
+  <title>MoveSmart | Recuperación Inteligente</title>
+  <meta name="description" content="Obtén tu plan personalizado desde el primer día con MoveSmart." />
   <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:'Segoe UI',sans-serif;
-    }
-
     :root{
-      --bg:#0d0b16;
-      --card:rgba(255,255,255,.08);
-      --card-soft:rgba(255,255,255,.06);
-      --border:rgba(255,255,255,.12);
-      --text:#fff;
-      --muted:rgba(255,255,255,.82);
-      --accent:#ff7a3d;
-      --accent-2:#ff5a1f;
-      --ok:#8ef0a5;
-      --error:#ff9a9a;
-      --shadow:0 10px 24px rgba(0,0,0,.18);
-      --radius:26px;
-      --wrap:min(1180px, calc(100% - 32px));
+      --bg:#0c0812;
+      --card:rgba(24,16,32,.56);
+      --card-border:rgba(255,255,255,.08);
+      --text:#f3edf7;
+      --muted:#cbc0d3;
+      --accent:#f36b2a;
+      --accent-2:#ff8b4f;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+      --radius:22px;
+      --container:min(1200px, calc(100% - 48px));
     }
 
-    
-    img{
-      max-width:100%;
-      height:auto;
-      display:block;
-    }
-
-    *{
-      -webkit-tap-highlight-color:transparent;
-    }
-
-
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
-      min-height:100vh;
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color:var(--text);
       background:
-        linear-gradient(180deg, rgba(8,10,18,.45), rgba(8,10,18,.72)),
-        url('fondo-acceso-clientes.webp') center center / cover no-repeat,
-        var(--bg);
-      display:flex;
-      justify-content:center;
+        radial-gradient(circle at top, rgba(128,70,86,.14), transparent 34%),
+        linear-gradient(180deg, #0b0710 0%, #0d0812 55%, #09070f 100%);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+
+   .site-bg{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(8,7,13,.18) 0%, rgba(10,8,15,.26) 42%, rgba(8,7,13,.38) 100%),
+    radial-gradient(circle at 72% 18%, rgba(255,140,84,.10), transparent 18%),
+    url("imagenes/fondo-index-realista.webp") center top / cover no-repeat;
+  z-index:-2;
+  transform:scale(1);
+  /* filter eliminado para mejorar velocidad */
+}
+
+    .site-glow{
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(66, 39, 105, 0.32), transparent 32%),
+        radial-gradient(circle at 82% 14%, rgba(243,107,42,.18), transparent 24%),
+        radial-gradient(circle at 52% 44%, rgba(255,255,255,.05), transparent 22%);
+      z-index:-1;
+      pointer-events:none;
+    }
+
+    .container{width:var(--container);margin:0 auto}
+
+
+    .top-brand{
+      display:inline-flex;
       align-items:center;
-      padding:28px 0;
+      flex:0 0 auto;
+      font-size:1.55rem;
+      font-weight:900;
+      letter-spacing:-.05em;
+      color:#fff;
+      white-space:nowrap;
+      text-shadow:0 2px 16px rgba(0,0,0,.28);
     }
 
-    .page{
-      width:var(--wrap);
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:28px;
-      align-items:stretch;
-    }
-
-    .panel,
-    .login-card{
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.05));
-      border:1px solid var(--border);
-      border-radius:32px;
-      /* blur eliminado para mejorar rendimiento */
-      box-shadow:var(--shadow);
-    }
-
-    .panel{
-      padding:30px 34px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .login-card{
-      padding:30px 34px;
-    }
+    .top-brand span{color:var(--accent)}
 
     .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      /* backdrop-filter eliminado para mejorar velocidad */
+      background:rgba(10,8,14,.44);
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+
+    .nav{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      margin-bottom:16px;
+      min-height:78px;
+      gap:20px;
+      flex-wrap:nowrap;
+      overflow:hidden;
     }
 
-    .back-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      text-decoration:none;
-      color:#fff;
-      padding:12px 18px;
-      border-radius:16px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.1);
-      font-weight:700;
-    }
-
-    .brand{
-      font-size:1.1rem;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-
-    .brand span{
-      color:var(--accent);
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 14px;
-      border-radius:999px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);
-      color:var(--muted);
-      font-size:.95rem;
-      margin:8px 0 18px;
-    }
-
-    h1{
-      font-size:clamp(2rem, 5vw, 4.2rem);
-      line-height:.98;
-      margin-bottom:18px;
-      max-width:700px;
-    }
-
-    h1 .accent{
-      color:var(--accent);
-    }
-
-    .lead{
-      color:var(--muted);
-      max-width:660px;
-      line-height:1.65;
-      font-size:1.1rem;
-      margin-bottom:24px;
-    }
-
-    .features{
-      display:grid;
-      gap:16px;
-      margin-top:18px;
-    }
-
-    .feature{
+    .nav-links{
       display:flex;
-      gap:16px;
-      padding:18px;
-      border-radius:22px;
-      background:var(--card-soft);
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .icon{
-      width:46px;
-      height:46px;
-      border-radius:14px;
-      display:grid;
-      place-items:center;
-      background:rgba(255,122,61,.14);
-      border:1px solid rgba(255,122,61,.28);
-      flex:0 0 auto;
-      font-size:1.1rem;
-    }
-
-    .feature h3{
-      font-size:1.1rem;
-      margin-bottom:4px;
-    }
-
-    .feature p{
-      color:var(--muted);
-      line-height:1.55;
-    }
-
-    .login-card h2{
-      font-size:2rem;
-      margin-bottom:10px;
-    }
-
-    .login-card .sub{
-      color:var(--muted);
-      line-height:1.6;
-      margin-bottom:24px;
-    }
-
-    .form-group{
-      margin-bottom:18px;
-    }
-
-    label{
-      display:block;
-      margin-bottom:10px;
-      font-weight:700;
-      font-size:1.05rem;
-    }
-
-    input{
-      width:100%;
-      padding:18px 20px;
-      border-radius:20px;
-      border:1.5px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.88);
-      color:#151515;
-      font-size:1.06rem;
-      outline:none;
-      transition:border-color .18s ease;
-    }
-
-    input:focus{
-      border-color:rgba(255,122,61,.8);
-      box-shadow:0 0 0 4px rgba(255,122,61,.15);
-    }
-
-    button{
-      width:100%;
-      border:none;
-      padding:18px 20px;
-      border-radius:20px;
-      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      align-items:center;
+      gap:24px;
+      flex-wrap:nowrap;
+      font-size:1rem;
       color:#fff;
-      font-size:1.15rem;
-      font-weight:900;
-      cursor:pointer;
-      box-shadow:0 10px 30px rgba(255,90,31,.25);
-      transition:transform .15s ease, filter .15s ease;
+      font-weight:700;
+      white-space:nowrap;
+      min-width:0;
     }
 
-    button:hover{
-      transform:translateY(-1px);
+    .nav-links a{
+      position:relative;
+      opacity:1;
+      color:#fff;
+      text-shadow:0 1px 12px rgba(0,0,0,.18);
+    }
+
+    .nav-links a.active,
+    .nav-links a:hover{color:#fff}
+
+    .nav-links a.active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-12px;
+      height:3px;
+      border-radius:999px;
+      background:var(--accent);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:54px;
+      padding:0 28px;
+      border-radius:14px;
+      background:linear-gradient(180deg, var(--accent-2), var(--accent));
+      color:#fff;
+      font-weight:700;
+      letter-spacing:.01em;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 10px 26px rgba(243,107,42,.22);
+      transition:transform .22s ease, box-shadow .22s ease, filter .22s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 16px 34px rgba(243,107,42,.28);
       filter:brightness(1.03);
     }
 
-    .message{
-      margin-top:14px;
-      font-weight:700;
-      min-height:24px;
+
+    .mobile-blog-link{display:none;}
+    .btn.small{
+      min-height:50px;
+      padding:0 24px;
+      border-radius:12px;
+      font-size:1rem;
     }
 
-    .message.ok{
-      color:var(--ok);
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex:0 0 auto;
+      white-space:nowrap;
     }
 
-    .message.error{
-      color:var(--error);
+    .top-socials{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
     }
 
-    .hint{
-      margin-top:22px;
-      padding:18px;
-      border-radius:20px;
+    .top-social{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.08);
+      display:grid;
+      place-items:center;
+      color:#fff;
+      transition:transform .22s ease, background .22s ease, box-shadow .22s ease;
+      /* backdrop-filter eliminado para mejorar velocidad */
+      -webkit-/* backdrop-filter eliminado para mejorar velocidad */
     }
 
-    .hint strong{
-      display:block;
-      margin-bottom:8px;
+    .top-social:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.10);
+      box-shadow:0 12px 26px rgba(0,0,0,.24);
     }
 
-    .hint p{
+    .top-social svg{
+      width:19px;
+      height:19px;
+      fill:currentColor;
+    }
+
+    .top-social.instagram{color:#ff5a8a;}
+    .top-social.twitter{color:#4da3ff;}
+    .top-social.linkedin{color:#58a6ff;}
+    .top-social.spotify{color:#1ed760;}
+
+    .hero{
+      position:relative;
+      min-height:500px; /* equilibrado: baja un poco Cómo Funciona */
+      display:flex;
+      align-items:flex-start;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg, rgba(9,7,12,.74) 0%, rgba(10,8,14,.42) 34%, rgba(10,8,14,.12) 65%, rgba(10,8,14,.02) 100%);
+      pointer-events:none;
+    }
+
+    .hero-content{
+      position:relative;
+      padding-top:84px;
+      padding-bottom:10px; /* espacio equilibrado bajo el botón */
+      max-width:670px;
+    }
+
+    .brand{
+      margin:0 0 14px;
+      font-size:clamp(3rem, 6vw, 5rem);
+      line-height:.95;
+      letter-spacing:-.04em;
+      font-weight:800;
+    }
+
+    .brand span{color:var(--accent)}
+
+    .hero-title{
+      margin:0 0 20px;
+      font-size:clamp(2rem, 4vw, 3.5rem);
+      line-height:1.06;
+      letter-spacing:-.03em;
+      font-weight:700;
+    }
+
+    .hero-title .accent{color:var(--accent)}
+
+    .hero-subtitle{
+      margin:0 0 36px;
+      max-width:680px;
+      font-size:clamp(1.1rem, 1.7vw, 1.6rem);
+      line-height:1.5;
+      color:#eee2f6;
+    }
+
+    .section{
+      position:relative;
+      padding:22px 0 10px; /* espacio equilibrado */
+    }
+
+    #como-funciona.section{
+      margin-top:-65px; /* baja un poco la sección Cómo Funciona */
+      padding-top:0;
+    }
+
+    .section-title{
+      margin:0 0 10px;
+      text-align:center;
+      font-size:clamp(2rem, 3vw, 3rem);
+      letter-spacing:-.03em;
+    }
+
+    .section-subtitle{
+      margin:0 auto 30px;
+      text-align:center;
+      max-width:720px;
+      color:var(--muted);
+      font-size:1.12rem;
+      line-height:1.7;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0, 1fr));
+      gap:18px;
+      margin-top:16px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+      border:1px solid var(--card-border);
+      border-radius:20px;
+      padding:24px 22px 22px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(8px);
+      min-height:220px;
+    }
+
+    .step{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:1.2rem;
+      color:#e8dde8;
+      margin-bottom:18px;
+    }
+
+    .step-number{
+      font-size:2rem;
+      font-weight:800;
+      line-height:1;
+      color:#efe5f2;
+    }
+
+    .step-icon{
+      width:28px;
+      height:28px;
+      opacity:.88;
+      color:#bfb1cc;
+    }
+
+    .card h3{
+      margin:0 0 12px;
+      font-size:1.85rem;
+      line-height:1.08;
+      letter-spacing:-.03em;
+    }
+
+    .card p{
+      margin:0;
       color:var(--muted);
       line-height:1.6;
+      font-size:1rem;
     }
 
-    @media (max-width: 980px){
-      .page{
-        grid-template-columns:1fr;
-      }
+    .plan-wrap{
+      position:relative;
+      margin-top:18px;
+      padding:24px 0 0;
+    }
 
-      .panel,
-      .login-card{
-        padding:24px;
-      }
+    .plan-panel{
+      position:relative;
+      overflow:hidden;
+      border-radius:28px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025)),
+        radial-gradient(circle at 78% 70%, rgba(243,107,42,.08), transparent 18%),
+        radial-gradient(circle at 18% 24%, rgba(109,83,150,.10), transparent 24%);
+      min-height:420px;
+      box-shadow:0 25px 60px rgba(0,0,0,.35);
+      /* backdrop-filter eliminado para mejorar velocidad */
+    }
 
-      h1{
-        max-width:unset;
+    .plan-copy{
+      position:relative;
+      z-index:2;
+      width:min(560px, calc(100% - 40px));
+      padding:56px 34px 84px;
+    }
+
+    .plan-copy h2{
+      margin:0 0 12px;
+      font-size:clamp(2rem, 3.3vw, 3rem);
+      letter-spacing:-.03em;
+    }
+
+    .plan-copy p{
+      margin:0 0 26px;
+      color:var(--muted);
+      font-size:1.12rem;
+      line-height:1.7;
+    }
+
+    .phone{
+      position:absolute;
+      right:40px;
+      bottom:-18px;
+      width:min(330px, 31vw);
+      z-index:3;
+      filter:drop-shadow(0 26px 34px rgba(0,0,0,.42));
+      transform:rotate(-14deg);
+      transform-origin:center center;
+      user-select:none;
+      pointer-events:none;
+    }
+
+    .questions{
+      padding:86px 0 74px;
+      text-align:center;
+    }
+
+    .questions h2{
+      margin:0 0 14px;
+      font-size:clamp(2.1rem, 3.2vw, 3.1rem);
+      letter-spacing:-.03em;
+    }
+
+    .questions p{
+      margin:0 0 28px;
+      color:var(--muted);
+      font-size:1.1rem;
+    }
+
+    footer{
+      padding:0 0 34px;
+    }
+
+    .footer-inner{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:24px;
+      padding-top:10px;
+    }
+
+    .footer-name{
+      font-size:1.1rem;
+      line-height:1.4;
+      color:#f3edf6;
+    }
+
+    .footer-name strong{
+      display:block;
+      font-size:1.9rem;
+      letter-spacing:-.03em;
+      margin-bottom:4px;
+    }
+
+    .footer-side{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      color:#d2c7db;
+    }
+
+    .socials{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .social{
+      width:40px;
+      height:40px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      display:grid;
+      place-items:center;
+      color:#f0e7f4;
+    }
+
+    .social svg{
+      width:18px;
+      height:18px;
+      fill:currentColor;
+    }
+
+    .legal{
+      font-size:.96rem;
+      color:#c2b6cb;
+      white-space:nowrap;
+    }
+
+    @media (max-width: 1080px){
+      .cards{grid-template-columns:repeat(2, minmax(0, 1fr))}
+      .phone{right:28px;width:min(320px, 38vw)}
+      .hero{min-height:440px}
+    }
+
+    @media (max-width: 820px){
+      .nav{min-height:66px;gap:10px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+      .nav::-webkit-scrollbar{display:none}
+      .top-brand{font-size:1.18rem;letter-spacing:-.055em;}
+      .nav-links{gap:12px;font-size:.78rem;font-weight:800;flex:0 0 auto;}
+      .nav-links a.active::after{bottom:-8px;height:3px;}
+      .nav-actions{gap:8px;}
+      .top-socials{gap:6px;}
+      .top-social{width:34px;height:34px;border-radius:11px;}
+      .top-social svg{width:16px;height:16px;}
+      .btn.small{min-height:36px;padding:0 13px;border-radius:11px;font-size:.8rem;}
+      .site-bg{
+        background-position:84% 8%;
+        background-size:auto 100%;
+        /* filter eliminado para mejorar velocidad */
       }
+      .site-glow{
+        background:
+          radial-gradient(circle at 18% 14%, rgba(66,39,105,.18), transparent 28%),
+          radial-gradient(circle at 84% 16%, rgba(243,107,42,.08), transparent 18%),
+          radial-gradient(circle at 54% 40%, rgba(255,255,255,.025), transparent 18%);
+      }
+      .hero{min-height:420px}
+      .hero-content{padding-top:42px;padding-bottom:12px}
+      #como-funciona.section{margin-top:-60px;padding-top:0}
+      .hero::before{
+        background:linear-gradient(180deg, rgba(8,7,12,.50) 0%, rgba(9,7,12,.36) 28%, rgba(10,8,14,.18) 60%, rgba(10,8,14,.08) 100%);
+      }
+      .plan-panel{
+        min-height:650px;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025)),
+          radial-gradient(circle at 78% 72%, rgba(243,107,42,.10), transparent 20%),
+          radial-gradient(circle at 18% 26%, rgba(109,83,150,.12), transparent 26%);
+        /* backdrop-filter eliminado para mejorar velocidad */
+      }
+      .plan-copy{
+        width:100%;
+        max-width:100%;
+        padding:40px 24px 280px;
+      }
+      .phone{
+        left:50%;
+        right:auto;
+        bottom:18px;
+        width:min(250px, 50vw);
+        transform:translateX(-50%) rotate(-12deg);
+      }
+      .questions{padding-top:70px}
+      .footer-inner{align-items:flex-start;flex-direction:column}
+      .footer-side{justify-content:flex-start}
     }
 
     @media (max-width: 640px){
-      body{
-        padding:16px 0;
+      :root{--container:min(100% - 28px, 100%)}
+      .site-bg{
+        background-position:88% 8%;
+        background-size:auto 100%;
+        /* filter eliminado para mejorar velocidad */
       }
-
-      .page{
-        width:min(100% - 20px, 1180px);
-        gap:18px;
-      }
+      .nav{align-items:flex-start;padding:12px 0 14px}
+      .nav-links{gap:14px 18px;font-weight:700}
+      .btn.small{padding:0 18px}
+      .topbar{background:rgba(10,8,14,.34)}
+      .hero{min-height:300px}
+      .brand{font-size:3.15rem}
+      .hero-title{font-size:2.35rem}
+      .hero-content{padding-top:32px;padding-bottom:14px}
+      .hero-subtitle{font-size:1.04rem;max-width:420px;margin-bottom:24px}
+      .section{padding:22px 0 10px}
+      #como-funciona.section{margin-top:-42px;padding-top:0}
+      .section-title{margin-bottom:8px}
+      .section-subtitle{margin:0 auto 22px;font-size:.92rem;line-height:1.45}
+      .cards{grid-template-columns:repeat(2, minmax(0, 1fr));gap:12px}
+      .card{min-height:188px;padding:18px 16px}
+      .step{gap:8px;margin-bottom:14px}
+      .step-number{font-size:1.55rem}
+      .step-icon{width:22px;height:22px}
+      .card h3{font-size:1.18rem;line-height:1.12}
+      .card p{font-size:.9rem;line-height:1.45}
+      .plan-wrap{margin-top:12px;padding-top:14px}
+      .plan-panel{min-height:640px}
+      .questions h2{font-size:2rem}
+      .footer-name strong{font-size:1.55rem}
+      .legal{white-space:normal}
+    }
+  
+ /* Header móvil final: MoveSmart un poco más a la derecha, redes y Blog ajustados */
+    @media (max-width: 760px){
+      :root{--container:100%}
 
       .topbar{
-        margin-bottom:8px;
+        position:sticky;
+        top:0;
+        background:rgba(8,6,13,.78);
+        /* backdrop-filter eliminado para mejorar velocidad */
+        /* -webkit-backdrop-filter eliminado para mejorar velocidad */
+        border-bottom:1px solid rgba(255,255,255,.10);
       }
 
-      .back-btn{
-        padding:10px 14px;
-        border-radius:14px;
+      .container{
+        width:100%;
+        max-width:100%;
+        padding-left:34px;
+        padding-right:34px;
       }
 
-      .login-card h2{
-        font-size:1.7rem;
+      .nav{
+        min-height:auto;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:space-between;
+        align-items:center;
+        column-gap:8px;
+        row-gap:10px;
+        padding:14px 0 12px;
+        overflow:hidden;
       }
 
-      input,
-      button{
-        border-radius:16px;
-        padding:16px 18px;
+      /* Fila 1: logo + redes + Blog, con margen lateral */
+      .top-brand{
+        order:1;
+        width:auto;
+        display:inline-flex;
+        font-size:1.16rem;
+        line-height:1;
+        letter-spacing:-.045em;
+        margin:0 0 0 18px;
+        flex:0 0 auto;
       }
 
-      .panel,
-      .login-card{
-        border-radius:24px;
+      .nav-actions{
+        order:1;
+        width:auto;
+        margin-left:auto;
+        margin-right:18px;
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+        gap:6px;
+        flex:0 0 auto;
+        transform:translateX(-14px);
       }
+
+      .top-socials{
+        width:auto;
+        display:flex;
+        justify-content:flex-end;
+        align-items:center;
+        gap:7px;
+        flex:0 0 auto;
+      }
+
+      .top-social{
+        width:auto;
+        height:auto;
+        border:none;
+        background:transparent;
+        border-radius:0;
+        box-shadow:none;
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+        padding:0;
+        flex:0 0 auto;
+      }
+
+      .top-social:hover{
+        transform:translateY(-1px);
+        background:transparent;
+        box-shadow:none;
+      }
+
+      .top-social svg{
+        width:14px;
+        height:14px;
+      }
+
+      .nav-actions > .btn.small{
+        display:inline-flex;
+        min-height:31px;
+        padding:0 11px;
+        border-radius:11px;
+        font-size:.68rem;
+        font-weight:850;
+        flex:0 0 auto;
+      }
+
+      /* Fila 2: menú centrado y más junto */
+      .nav-links{
+        order:2;
+        width:100%;
+        display:grid;
+        grid-template-columns:auto auto auto;
+        align-items:center;
+        justify-content:center;
+        column-gap:30px;
+        row-gap:0;
+        font-size:.76rem;
+        line-height:1;
+        font-weight:850;
+        color:#fff;
+        white-space:nowrap;
+        overflow:visible;
+      }
+
+      .nav-links a{
+        position:relative;
+        padding-bottom:12px;
+        text-align:center;
+      }
+
+      .nav-links a.active::after{
+        left:50%;
+        right:auto;
+        width:46px;
+        transform:translateX(-50%);
+        bottom:0;
+        height:3px;
+      }
+
+      .mobile-blog-link{
+        display:none !important;
+      }
+
+      .mobile-blog-link::after{display:none !important;}
+
+      .hero{
+        min-height:500px; /* baja un poco Cómo Funciona */
+      }
+
+      .hero-content{
+        padding-top:48px;
+        padding-bottom:10px; /* espacio equilibrado bajo el botón */
+      }
+
+      #como-funciona.section{
+        margin-top:-65px; /* baja un poco Cómo Funciona */
+        padding-top:0;
+      }
+     }
+
+    @media (max-width: 390px){
+      .container{padding-left:30px;padding-right:30px;}
+      .top-brand{font-size:1.08rem;margin-left:14px;}
+      .nav{padding:13px 0 11px;row-gap:9px;}
+      .nav-actions{gap:5px;margin-right:14px;transform:translateX(-12px);} 
+      .top-socials{gap:6px;}
+      .top-social svg{width:13px;height:13px;}
+      .nav-actions > .btn.small{min-height:30px;padding:0 10px;font-size:.65rem;border-radius:10px;}
+      .nav-links{font-size:.74rem;column-gap:24px;}
+      .hero-content{padding-top:40px;}
     }
+
+    @media (max-width: 350px){
+      .container{padding-left:24px;padding-right:24px;}
+      .top-brand{font-size:1rem;margin-left:10px;}
+      .top-socials{gap:5px;}
+      .top-social svg{width:12px;height:12px;}
+      .nav-actions > .btn.small{padding:0 8px;font-size:.62rem;}
+      .nav-links{font-size:.69rem;column-gap:18px;}
+    }
+
+
+    @media (min-width: 761px) and (max-width: 1100px){
+      .top-brand{font-size:1.2rem;}
+      .nav{gap:12px;}
+      .nav-links{gap:14px;font-size:.9rem;}
+      .nav-actions{gap:9px;}
+      .top-social{width:36px;height:36px;border-radius:12px;}
+      .top-social svg{width:17px;height:17px;}
+      .btn.small{min-height:42px;padding:0 18px;}
+    }
+
   </style>
 </head>
 <body>
-  <div class="page">
-    <section class="panel">
-      <div class="topbar">
-        <a href="index.html" class="back-btn">← Volver</a>
-        <div class="brand">Move<span>Smart</span></div>
+  <div class="site-bg"></div>
+  <div class="site-glow"></div>
+
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#inicio" class="top-brand" aria-label="Inicio MoveSmart">Move<span>Smart</span></a>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#inicio" class="active">Inicio</a>
+        <a href="#como-funciona">Cómo Funciona</a>
+        <a href="#mi-plan">Acceso Clientes</a>
+        <a href="blog/portada.html" class="mobile-blog-link">Blog</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="top-socials" aria-label="Redes sociales MoveSmart">
+          <a class="top-social instagram" href="https://www.instagram.com/movesmart.plan/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4zm4.2 3.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 7.2m0 2A2.8 2.8 0 1 0 14.8 12 2.8 2.8 0 0 0 12 9.2M17.2 6.7a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1"/></svg>
+          </a>
+          <a class="top-social twitter" href="https://x.com/movesmartchile" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 5.8c-.7.3-1.5.5-2.4.6.9-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.7 1A4.2 4.2 0 0 0 11.5 9c0 .3 0 .6.1.9A12 12 0 0 1 3 5.5a4.2 4.2 0 0 0 1.3 5.6c-.7 0-1.3-.2-1.9-.5v.1a4.2 4.2 0 0 0 3.4 4.1c-.4.1-.8.2-1.2.2-.3 0-.6 0-.8-.1a4.2 4.2 0 0 0 3.9 2.9A8.5 8.5 0 0 1 2 19.5 12 12 0 0 0 8.5 21c7.8 0 12.1-6.5 12.1-12.1v-.6c.8-.6 1.5-1.4 2.1-2.2z"/></svg>
+          </a>
+          <a class="top-social linkedin" href="https://www.linkedin.com/in/movesmart-chile-b4b03b40a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5M3 10h4v11H3zm6 0h3.8v1.5h.1c.5-.9 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6V21h-4v-4.8c0-1.2 0-2.7-1.7-2.7s-1.9 1.3-1.9 2.6V21H9z"/></svg>
+          </a>
+          <a class="top-social spotify" href="https://open.spotify.com/user/31lcttv3ugvu6s5ifvcj5tf5syre" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m4.6 14.5c-.2.3-.6.4-.9.2-2.5-1.5-5.6-1.8-9.3-1-.4.1-.7-.1-.8-.5s.1-.7.5-.8c4-.9 7.5-.5 10.3 1.1.3.2.4.6.2 1m1.2-2.7c-.2.4-.7.5-1.1.3-2.8-1.7-7.1-2.2-10.4-1.2-.4.1-.9-.1-1-.5-.1-.4.1-.9.5-1 3.8-1.1 8.6-.6 11.8 1.4.4.2.5.7.2 1m.1-2.8c-3.4-2-9-2.2-12.2-1.2-.5.2-1-.1-1.2-.6-.2-.5.1-1 .6-1.2 3.7-1.1 9.8-.9 13.8 1.5.4.3.6.9.3 1.3-.3.4-.9.5-1.3.2"/></svg>
+          </a>
+        </div>
+        <a href="blog/portada.html" class="btn small">Blog</a>
       </div>
+    </div>
+  </header>
 
-      <div class="eyebrow">🔐 Acceso personalizado por cliente</div>
-      <h1>Tu espacio de <span class="accent">entrenamiento</span> en un lugar más simple</h1>
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-content">
+        <h1 class="brand">Move<span>Smart</span></h1>
+        <h2 class="hero-title">Una Forma <span class="accent">Inteligente</span> de Recuperar</h2>
+        <p class="hero-subtitle">Obtén tu plan personalizado desde el primer día</p>
+        <a href="evaluacion-gratuita-movesmart.html" class="btn">Evaluación Gratuita</a>
+      </div>
+    </section>
 
-      <p class="lead">
-        En vez de enviar PDFs largos, aquí cada persona entra con su nombre y clave para ver su plan,
-        sus rutinas y su seguimiento en una interfaz más clara y amigable.
-      </p>
+    <section class="section" id="como-funciona">
+      <div class="container">
+        <h2 class="section-title">Cómo Funciona</h2>
+        <p class="section-subtitle">Así es como podemos ayudarte en tu <strong>rehabilitación</strong>:</p>
 
-      <div class="features">
-        <div class="feature">
-          <div class="icon">👤</div>
-          <div>
-            <h3>Plan por persona</h3>
-            <p>Cada cliente entra a su programa con contenido personalizado.</p>
-          </div>
-        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="step">
+              <div class="step-number">1.</div>
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M7 3h10a2 2 0 0 1 2 2v15.5a.5.5 0 0 1-.8.4L16 19H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 2v12h9.7l.3.2V5zm2 3h6v1.8H9zm0 3.5h6v1.8H9z"/>
+              </svg>
+            </div>
+            <h3>Evaluación Inicial</h3>
+            <p>Análisis de tu lesión y estado físico actual</p>
+          </article>
 
-        <div class="feature">
-          <div class="icon">📋</div>
-          <div>
-            <h3>Rutinas más ordenadas</h3>
-            <p>Las secciones del programa quedan visibles sin depender de un PDF complicado.</p>
-          </div>
-        </div>
+          <article class="card">
+            <div class="step">
+              <div class="step-number">2.</div>
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M3 8.5A2.5 2.5 0 0 1 5.5 6H8v2H5.5a.5.5 0 0 0 0 1H8v2H5.5A2.5 2.5 0 0 1 3 8.5m13 1.5V8h5v2zm-8 4h8v2H8zm10 0h3v2h-3zM10 4h4v2h-4zm0 14h4v2h-4z"/>
+              </svg>
+            </div>
+            <h3>Ejercicios Terapéuticos</h3>
+            <p>Rutinas personalizadas para fortalecer y recuperar movilidad</p>
+          </article>
 
-        <div class="feature">
-          <div class="icon">✨</div>
-          <div>
-            <h3>Mismo estilo MoveSmart</h3>
-            <p>Todo mantiene la misma línea visual de tu página principal para que se vea profesional.</p>
-          </div>
+          <article class="card">
+            <div class="step">
+              <div class="step-number">3.</div>
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M5 19V9h3v10zm5 0V5h3v14zm5 0v-7h3v7z"/>
+              </svg>
+            </div>
+            <h3>Seguimiento del Progreso</h3>
+            <p>Reporta cómo te sientes y ve mejorando semana a semana</p>
+          </article>
+
+          <article class="card">
+            <div class="step">
+              <div class="step-number">4.</div>
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="m5 16 4-4 3 3 6-7 1.5 1.3L12 18l-3-3-2.6 2.6zM5 5h2v12h12v2H5z"/>
+              </svg>
+            </div>
+            <h3>Ajustes y Recuperación</h3>
+            <p>Modificamos el plan según avances y evolución</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="login-card">
-      <div class="brand" style="font-size:1.8rem;margin-bottom:10px">Move<span>Smart</span></div>
-      <h2>Ingresar a mi plan</h2>
-      <p class="sub">Escribe tu nombre y tu clave para abrir tu rutina personalizada.</p>
-
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="clientName">Nombre del cliente</label>
-          <input id="clientName" type="text" placeholder="Ej: Juan Ugalde" autocomplete="name" />
+    <section class="plan-wrap" id="mi-plan">
+      <div class="container">
+        <div class="plan-panel">
+          <div class="plan-copy">
+            <h2>Acceso a tu Plan</h2>
+            <p>Ingresa a tu espacio privado y revisa tus rutinas, indicaciones y seguimiento de MoveSmart.</p>
+            <a href="acceso-clientes.html" class="btn">Ingresar a tu Plan</a>
+          </div>
+          <img class="phone" src="imagenes/telefono-movesmart.webp" alt="Vista previa MoveSmart" loading="lazy" decoding="async">
         </div>
-
-        <div class="form-group">
-          <label for="clientPassword">Clave</label>
-          <input id="clientPassword" type="password" placeholder="Ingresa tu clave" autocomplete="current-password" />
-        </div>
-
-        <button type="submit">Entrar a mi plan</button>
-        <p id="message" class="message"></p>
-      </form>
-
-      <div class="hint">
-        <strong>Importante</strong>
-        <p>
-          Los nombres pueden escribirse con o sin mayúsculas y con o sin tilde.
-          El sistema los normaliza automáticamente.
-        </p>
       </div>
     </section>
-  </div>
 
-  <script>
-    const clients = {
-      "pamela cortes": {
-        password: "pamela123",
-        file: "clientes/pamela-cortes/plan-pamela-cortes.html",
-        displayName: "Pamela Cortés"
-      },
-      "juan ugalde": {
-        password: "juan123",
-        file: "clientes/juan-ugalde/plan-juan-ugalde.html",
-        displayName: "Juan Ugalde"
-      },
-      "nicole butto": {
-        password: "nicole123",
-        file: "clientes/nicole-butto/plan-nicole-butto.html",
-        displayName: "Nicole Butto"
-      },
-      "alejandra rivera": {
-        password: "alejandra123",
-        file: "clientes/alejandra-rivera/plan-alejandra-rivera.html",
-        displayName: "Alejandra Rivera"
-      },
-      "carmen briceno": {
-        password: "carmen000",
-        file: "clientes/carmen-briceno/plan-carmen-briceno.html",
-        displayName: "Carmen Briceño"
-      },
-      "mercedes pardo": {
-        password: "mercedes123",
-        file: "clientes/mercedes-pardo/plan-mercedes-pardo.html",
-        displayName: "Mercedes Pardo"
-      },
-      "julisa sanhueza": {
-        password: "julisa123",
-        file: "clientes/julisa-sanhueza/plan-julisa-sanhueza.html",
-        displayName: "Julisa Sanhueza"
-         },
-       "cliente referencia": {
-        password: "cliente123",
-        file: "clientes/Cliente-referencia/plan-cliente-referencia.html",
-        displayName: "cliente-referencia"
-         },
-        };
+    <section class="questions" id="contacto">
+      <div class="container">
+        <h2>¿Tienes Preguntas?</h2>
+        <p>Estoy aquí para ayudarte.</p>
+<a href="https://wa.me/56999340284" class="btn" target="_blank" rel="noopener noreferrer">Contáctame</a>      </div>
+    </section>
+  </main>
+
+  <footer id="planes">
+    <div class="container footer-inner">
+      <div class="footer-name">
+        <strong>Camila Alvarez Cortés</strong>
+        Terapeuta en Actividad Física y Salud
+      </div>
+
     
- function normalizeText(value) {
-      return value
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
-    }
-
-    const form = document.getElementById("loginForm");
-    const message = document.getElementById("message");
-
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const rawName = document.getElementById("clientName").value;
-      const password = document.getElementById("clientPassword").value.trim();
-      const name = normalizeText(rawName);
-      const client = clients[name];
-
-      if (!rawName.trim() || !password) {
-        message.textContent = "Completa tu nombre y tu clave.";
-        message.className = "message error";
-        return;
-      }
-
-      if (!client || client.password !== password) {
-        message.textContent = "Nombre o clave incorrectos.";
-        message.className = "message error";
-        return;
-      }
-
-      message.textContent = `Acceso correcto. Abriendo el plan de ${client.displayName}...`;
-      message.className = "message ok";
-
-      window.location.href = client.file;
-    });
-  </script>
-</body>
-</html>
