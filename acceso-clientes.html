@@ -32,8 +32,8 @@
       min-height:100vh;
       color:var(--text);
       background:
-        linear-gradient(180deg, rgba(8,10,18,.45), rgba(8,10,18,.72)),
-        url('imagenes/fondo-acceso-clientes.webp') center center / cover no-repeat,
+        linear-gradient(180deg, rgba(8,10,18,.22), rgba(8,10,18,.42)),
+        url('fondo-acceso-clientes.webp') center center / cover no-repeat,
         var(--bg);
       display:flex;
       justify-content:center;
@@ -45,27 +45,30 @@
       width:var(--wrap);
       display:grid;
       grid-template-columns:1.05fr .95fr;
-      gap:28px;
+      gap:44px;
       align-items:stretch;
     }
 
-    .panel,
     .login-card{
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.05));
-      border:1px solid var(--border);
-      border-radius:32px;
-      backdrop-filter:blur(10px);
-      box-shadow:var(--shadow);
+      background:transparent;
+      border:none;
+      border-radius:0;
+      backdrop-filter:none;
+      box-shadow:none;
     }
 
     .panel{
-      padding:30px 34px;
+      padding:10px 4px;
       position:relative;
-      overflow:hidden;
+      overflow:visible;
+      background:transparent;
+      border:none;
+      box-shadow:none;
+      backdrop-filter:none;
     }
 
     .login-card{
-      padding:30px 34px;
+      padding:10px 4px;
     }
 
     .topbar{
@@ -141,8 +144,9 @@
       gap:16px;
       padding:18px;
       border-radius:22px;
-      background:var(--card-soft);
-      border:1px solid rgba(255,255,255,.08);
+      background:rgba(13,11,22,.42);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter:blur(4px);
     }
 
     .icon{
@@ -262,9 +266,12 @@
         grid-template-columns:1fr;
       }
 
-      .panel,
+      .panel{
+        padding:8px 4px;
+      }
+
       .login-card{
-        padding:24px;
+        padding:8px 4px;
       }
 
       h1{
@@ -301,9 +308,8 @@
         padding:16px 18px;
       }
 
-      .panel,
       .login-card{
-        border-radius:24px;
+        border-radius:0;
       }
     }
   </style>
@@ -390,7 +396,7 @@
       },
       "juan ugalde": {
         password: "juan123",
-        file: "/movesmart-web/clientes/juan-ugalde/plan-juan-ugalde.html",
+        file: "clientes/juan-ugalde/plan-juan-ugalde.html",
         displayName: "Juan Ugalde"
       },
       "nicole butto": {
@@ -404,7 +410,7 @@
         displayName: "Alejandra Rivera"
       },
       "carmen briceno": {
-        password: "carmen123",
+        password: "carmen000",
         file: "clientes/carmen-briceno/plan-carmen-briceno.html",
         displayName: "Carmen Briceño"
       },
@@ -412,10 +418,15 @@
         password: "mercedes123",
         file: "clientes/mercedes-pardo/plan-mercedes-pardo.html",
         displayName: "Mercedes Pardo"
-      }
-    };
-
-    function normalizeText(value) {
+      },
+      "julisa sanhueza": {
+        password: "julisa123",
+        file: "clientes/julisa-sanhueza/plan-julisa-sanhueza.html",
+        displayName: "Julisa Sanhueza"
+         },
+        };
+    
+ function normalizeText(value) {
       return value
         .toLowerCase()
         .normalize("NFD")
