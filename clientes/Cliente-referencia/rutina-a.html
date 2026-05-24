@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,7 +18,7 @@
       --accent-2:#ff8a3d;
       --blue:#2f63ff;
       --green:#35d062;
-      --shadow:0 22px 60px rgba(0,0,0,.42);
+      --shadow:0 14px 34px rgba(0,0,0,.32);
       --wrap:min(1120px, calc(100% - 32px));
     }
 
@@ -97,8 +98,6 @@
       padding:12px 18px;
       border-radius:16px;
       font-weight:800;
-      backdrop-filter:blur(10px);
-      -webkit-backdrop-filter:blur(10px);
     }
 
     .hero{
@@ -171,8 +170,8 @@
       border-radius:32px;
       padding:28px;
       box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
     }
 
     .survey-head{
@@ -375,8 +374,6 @@
       border:1px solid rgba(255,255,255,.10);
       border-radius:20px;
       padding:16px;
-      backdrop-filter:blur(10px);
-      -webkit-backdrop-filter:blur(10px);
     }
 
     .stat small{
@@ -427,8 +424,6 @@
       background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
       border:1px solid rgba(255,255,255,.13);
       box-shadow:var(--shadow);
-      backdrop-filter:blur(16px);
-      -webkit-backdrop-filter:blur(16px);
       text-align:center;
       animation:fadeUp .35s ease both;
     }
@@ -509,7 +504,7 @@
     body{
       background:
         linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
-        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat fixed;
+        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
     }
 
     .routine-container{
@@ -527,8 +522,6 @@
       background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
       border:1px solid rgba(255,255,255,.12);
       box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
     }
 
     .routine-intro .eyebrow{
@@ -562,8 +555,6 @@
       border-radius:30px;
       overflow:hidden;
       box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
     }
 
     .section-head{
@@ -713,8 +704,6 @@
       justify-content:center;
       padding:20px;
       z-index:9999;
-      backdrop-filter:blur(8px);
-      -webkit-backdrop-filter:blur(8px);
     }
 
     .video-modal.active{ display:flex; }
@@ -783,8 +772,6 @@
       border:1px solid rgba(255,255,255,.10);
       border-radius:20px;
       padding:16px;
-      backdrop-filter:blur(10px);
-      -webkit-backdrop-filter:blur(10px);
     }
 
     .stat small{
@@ -846,8 +833,6 @@
       background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
       border:1px solid rgba(255,255,255,.12);
       box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
       margin:22px 0;
       overflow:visible;
     }
@@ -938,6 +923,29 @@
       .finish-session-btn{
         width:100% !important;
         min-width:unset !important;
+      }
+    }
+
+    /* Optimización rendimiento móvil */
+    @media (max-width:640px){
+      body::before{
+        position:absolute;
+      }
+
+      .choice:hover,
+      .exercise-card:hover{
+        transform:none;
+      }
+
+      .smart-orb{
+        animation:none;
+      }
+
+      .survey-card,
+      .routine-intro,
+      .section,
+      .exercise-card{
+        box-shadow:0 10px 24px rgba(0,0,0,.25);
       }
     }
 
@@ -1393,17 +1401,17 @@
       surveyCard.classList.add('is-processing');
       smartLoadingTitle.textContent = 'Analizando cómo llegas hoy...';
       smartLoadingText.textContent = 'MoveSmart está revisando tu tiempo, energía y motivación.';
-      smartLoading.scrollIntoView({ behavior:'smooth', block:'center' });
+      smartLoading.scrollIntoView({ behavior:'auto', block:'center' });
 
       setTimeout(() => {
         smartLoadingTitle.textContent = 'Adaptando tu Rutina A...';
         smartLoadingText.textContent = `Preparando versión ${estructura} con modo ${modo}.`;
-      }, 750);
+      }, 180);
 
       setTimeout(() => {
         smartLoadingTitle.textContent = '✨ Rutina lista';
         smartLoadingText.textContent = 'Tu sesión personalizada ya está preparada.';
-      }, 1450);
+      }, 380);
 
       setTimeout(() => {
         smartLoading.classList.remove('active');
@@ -1418,8 +1426,8 @@
         const idRutina = respuestas.tiempo === 'express' ? 'rutina-express' : respuestas.tiempo === 'base' ? 'rutina-base' : 'rutina-completa';
         const routineContainer = document.getElementById(idRutina);
         routineContainer.classList.add('active');
-        routineContainer.scrollIntoView({ behavior:'smooth', block:'start' });
-      }, 2200);
+        routineContainer.scrollIntoView({ behavior:'auto', block:'start' });
+      }, 650);
     });
 
     function toEmbedUrl(url) {
