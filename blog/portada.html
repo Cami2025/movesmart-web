@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,9 +9,10 @@
   <title>Artículos | MoveSmart</title>
   <!-- Optimización 4G:
        1) Solo se precarga la imagen principal visible.
-       2) El fondo mobile usa una versión liviana: fondo-index-mobile.webp.
+       2) El fondo se mantiene visible en computador y celular usando fondo-index-realista.webp.
        3) Las miniaturas cargan después con lazy + prioridad baja. -->
   <link rel="preload" as="image" href="../imagenes/pdf-no-sabe.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="../imagenes/fondo-index-realista.webp" fetchpriority="high">
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -611,12 +614,12 @@
       contain-intrinsic-size:760px;
     }
 
-    /* Versión 4G/celular: mantiene estética, pero baja efectos pesados */
+    /* Versión celular rápida: usa el mismo fondo visible y reduce efectos pesados */
     @media(max-width:640px){
       body{
         background:
-          linear-gradient(180deg, rgba(8,10,18,.46), rgba(8,10,18,.70)),
-          url('../imagenes/fondo-index-mobile.webp') center top / cover no-repeat;
+          linear-gradient(180deg, rgba(8,10,18,.22), rgba(8,10,18,.44)),
+          url('../imagenes/fondo-index-realista.webp') center top / cover no-repeat;
         background-attachment:scroll;
       }
 
@@ -628,11 +631,16 @@
         -webkit-backdrop-filter:none;
       }
 
+      .site-header{
+        background:rgba(8,6,13,.62);
+      }
+
       .featured{
         box-shadow:0 14px 34px rgba(0,0,0,.28);
       }
 
       .article-card{
+        background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.04));
         box-shadow:0 12px 28px rgba(0,0,0,.20);
       }
 
