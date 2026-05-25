@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +7,7 @@
   <title>Artículos | MoveSmart</title>
   <!-- Optimización 4G: carga antes lo visible y retrasa lo demás -->
   <link rel="preload" as="image" href="imagenes/pdf-no-sabe.png" fetchpriority="high">
-  <link rel="preload" as="image" href="fondo-preview-rutina.png" media="(min-width: 641px)">
+  <link rel="preload" as="image" href="../imagenes/fondo-index-realista.webp" media="(min-width: 641px)">
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -32,7 +33,7 @@
       overflow-x:hidden;
       background:
         linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
-        url('../imagenes/fondo-index-realista.web') center center / cover no-repeat;
+        url('../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
       background-attachment:scroll;
     }
 
@@ -596,9 +597,8 @@
     @media(max-width:640px){
       body{
         background:
-          radial-gradient(circle at 78% 12%, rgba(255,90,31,.18), transparent 26%),
-          radial-gradient(circle at 12% 18%, rgba(73,58,146,.16), transparent 28%),
-          linear-gradient(180deg,#08060d 0%,#0b0711 55%,#08060d 100%);
+          linear-gradient(180deg, rgba(8,10,18,.46), rgba(8,10,18,.70)),
+          url('../imagenes/fondo-index-realista.webp') center top / cover no-repeat;
         background-attachment:scroll;
       }
 
