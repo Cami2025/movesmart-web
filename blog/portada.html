@@ -6,10 +6,10 @@
   <title>Artículos | MoveSmart</title>
   <!-- Optimización 4G:
        1) Solo se precarga la imagen principal visible.
-       2) El fondo se mantiene visible en computador y celular usando fondo-index-realista.webp.
+       2) El fondo se mantiene visible en computador y celular usando fondo-preview-rutina.webp.
        3) Las miniaturas cargan después con lazy + prioridad baja. -->
   <link rel="preload" as="image" href="../imagenes/pdf-no-sabe.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="../imagenes/-index-realista.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="../imagenes/fondo-preview-rutina.webp" fetchpriority="high">
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -616,7 +616,7 @@
       body{
         background:
           linear-gradient(180deg, rgba(8,10,18,.22), rgba(8,10,18,.44)),
-          url('../imagenes/fondo-index-realista.webp') center top / cover no-repeat;
+          url('../imagenes/fondo-preview-rutina.webp') center top / cover no-repeat;
         background-attachment:scroll;
       }
 
