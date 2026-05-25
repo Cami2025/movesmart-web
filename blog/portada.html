@@ -1,16 +1,28 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Artículos | MoveSmart</title>
-  <!-- Optimización 4G: carga antes lo visible y retrasa lo demás -->
+  <!-- Optimización 4G:
+       1) Solo se precarga la imagen principal visible.
+       2) El fondo mobile usa una versión liviana: fondo-index-mobile.webp.
+       3) Las miniaturas cargan después con lazy + prioridad baja. -->
   <link rel="preload" as="image" href="../imagenes/pdf-no-sabe.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="../imagenes/fondo-index-realista.webp" media="(min-width: 641px)">
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      *{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+      }
+    }
 
     :root{
       --bg:#08060d;
@@ -216,6 +228,7 @@
       min-height:300px;
       object-fit:cover;
       display:block;
+      aspect-ratio:680/420;
     }
 
     .featured-content{
@@ -320,6 +333,7 @@
       height:100%;
       object-fit:cover;
       display:block;
+      aspect-ratio:420/260;
       transition:.25s ease;
     }
 
@@ -592,12 +606,17 @@
       contain-intrinsic-size:260px;
     }
 
+    #articulos-en-desarrollo{
+      content-visibility:auto;
+      contain-intrinsic-size:760px;
+    }
+
     /* Versión 4G/celular: mantiene estética, pero baja efectos pesados */
     @media(max-width:640px){
       body{
         background:
           linear-gradient(180deg, rgba(8,10,18,.46), rgba(8,10,18,.70)),
-          url('../imagenes/fondo-index-realista.webp') center top / cover no-repeat;
+          url('../imagenes/fondo-index-mobile.webp') center top / cover no-repeat;
         background-attachment:scroll;
       }
 
@@ -622,7 +641,7 @@
         height:220px;
       }
 
-      .thumb{height:138px;}
+      .thumb{height:120px;}
 
       .article-card:hover,
       .article-card:hover .thumb img,
@@ -684,7 +703,7 @@
     <section class="wrap">
       <article class="featured">
         <a class="featured-media" href="articulo_principal/un_pdf_no_sabe.html">
-          <img src="../imagenes/pdf-no-sabe.webp" alt="El PDF sigue igual" fetchpriority="high" decoding="async" width="680" height="420" />
+          <img src="../imagenes/pdf-no-sabe.webp" alt="El PDF sigue igual" loading="eager" fetchpriority="high" decoding="async" width="680" height="420" />
         </a>
 
         <div class="featured-content">
@@ -711,7 +730,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="../imagenes/poco_tiempo_para_entrenar.webp" alt="Poco tiempo para entrenar" loading="lazy" decoding="async" width="420" height="260" />
+            <img src="../imagenes/poco_tiempo_para_entrenar.webp" alt="Poco tiempo para entrenar" loading="lazy" decoding="async" fetchpriority="low" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Cuando tienes poco tiempo, entrenar distinto sigue siendo entrenar</h4>
@@ -722,7 +741,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="../imagenes/dolor_no_significa parar.webp" alt="Dolor y entreno" loading="lazy" decoding="async" width="420" height="260" />
+            <img src="../imagenes/dolor_no_significa parar.webp" alt="Dolor y entreno" loading="lazy" decoding="async" fetchpriority="low" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dolor no siempre significa parar</h4>
@@ -733,7 +752,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="../imagenes/dormir_y_grasa.webp" alt="Dormir poco y acumulación de grasa" loading="lazy" decoding="async" width="420" height="260" />
+            <img src="../imagenes/dormir_y_grasa.webp" alt="Dormir poco y acumulación de grasa" loading="lazy" decoding="async" fetchpriority="low" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dormir poco también entrena tu cuerpo… para acumular grasa</h4>
