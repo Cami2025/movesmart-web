@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plan Juan Ugalde | MoveSmart</title>
+  <title>Plan Cliente Juan Ugalde | MoveSmart</title>
   <meta name="description" content="Plan personalizado de entrenamiento MoveSmart para Juan Ugalde." />
   <style>
     :root{
@@ -20,7 +21,7 @@
       --yellow:#d69a2d;
       --container:min(1180px, calc(100% - 36px));
       --radius:26px;
-      --shadow:0 22px 55px rgba(0,0,0,.34);
+      --shadow:0 14px 34px rgba(0,0,0,.28);
     }
 
     *{box-sizing:border-box}
@@ -32,8 +33,7 @@
       background:
         linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
         url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
-      background-attachment:fixed;
-      overflow-x:hidden;
+            overflow-x:hidden;
     }
 
     .site-glow{
@@ -96,7 +96,6 @@
         radial-gradient(circle at 18% 24%, rgba(109,83,150,.12), transparent 24%);
       border:1px solid var(--border);
       box-shadow:var(--shadow);
-      backdrop-filter: blur(10px);
     }
 
     .hero-copy{position:relative;z-index:2}
@@ -151,12 +150,14 @@
       overflow:hidden;
       position:relative;
       background:
+        radial-gradient(circle at 50% 22%, rgba(243,107,42,.16), transparent 28%),
         linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)),
         rgba(12, 10, 18, 0.78);
       display:flex;
-      align-items:flex-end;
-      text-align:left;
-      padding:18px;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:20px;
     }
 
     .routine-box::before{
@@ -169,10 +170,46 @@
     .routine-box > div{
       position:relative;
       z-index:1;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
     }
 
-    .routine-box strong{display:block;font-size:1.15rem;margin-bottom:6px}
-    .routine-box span{color:#f0e8f5;line-height:1.55;font-size:.95rem}
+    .routine-icon{
+      width:min(210px, 72%);
+      height:auto;
+      object-fit:contain;
+      display:block;
+      margin:0 auto 18px;
+    }
+
+    .routine-box strong{
+      display:block;
+      font-size:1.15rem;
+      margin-bottom:8px;
+      text-align:center;
+    }
+
+    .routine-box span{
+      display:block;
+      color:#f0e8f5;
+      line-height:1.55;
+      font-size:.95rem;
+      text-align:center;
+      max-width:24ch;
+      margin:0 auto;
+    }
+
+    .routine-line{
+      width:56px;
+      height:4px;
+      border-radius:999px;
+      margin:16px auto 0;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      box-shadow:0 0 14px rgba(243,107,42,.55);
+    }
 
     .stats{
       display:grid;
@@ -187,7 +224,6 @@
       background:rgba(24,16,32,.58);
       border:1px solid var(--border);
       box-shadow:var(--shadow);
-      backdrop-filter: blur(10px);
     }
 
     .stat{
@@ -296,7 +332,6 @@
       left:50%;
       transform:translateX(-50%);
       opacity:.48;
-      filter:blur(3px);
       pointer-events:none;
     }
 
@@ -320,7 +355,6 @@
       border-radius:0;
       background:transparent;
       box-shadow:none;
-      filter:drop-shadow(0 18px 26px rgba(0,0,0,.45));
     }
 
     .reward-icon-img{
@@ -332,7 +366,6 @@
       border-radius:0;
       background:transparent;
       box-shadow:none;
-      filter:drop-shadow(0 18px 26px rgba(0,0,0,.45));
     }
 
     .card-preview p{
@@ -392,7 +425,6 @@
       z-index:0;
       color:#b9b8ff;
       font-size:1.55rem;
-      filter:drop-shadow(0 0 10px rgba(139,132,255,.65));
       opacity:.9;
     }
 
@@ -440,6 +472,7 @@
       .wrap{padding:18px 0 34px}
       .topbar{flex-direction:column;align-items:flex-start}
       .hero,.panel{padding:18px}
+      .routine-icon{width:min(190px, 78%)}
       .info-grid{grid-template-columns:1fr}
     }
   </style>
@@ -457,15 +490,17 @@
     <section class="hero">
       <div class="hero-copy">
         <div class="eyebrow">✨ Rutina de entrenamiento personalizada</div>
-        <h2>Programa MoveSmart – Juan Ugalde</h2>
+        <h2>Programa MoveSmart – Cliente Referencia</h2>
         <p>Este espacio reúne tu planificación de entrenamiento, tus rutinas y tu seguimiento en una sola interfaz. La idea es que tengas algo más claro, visual y simple que un PDF largo.</p>
       </div>
 
       <div class="routine-visual">
         <div class="routine-box">
           <div>
-            <strong>Rutina MoveSmart</strong>
-            <span>Vista previa con fondo personalizado para que se vea más visual, moderna y coherente con tu estilo.</span>
+            <img src="../../imagenes/montana.webp" class="routine-icon" alt="Icono MoveSmart" decoding="async">
+            <strong>No es solo una rutina</strong>
+            <span>Es un plan personalizado que se adapta a tu vida real: tiempo, energía, progreso y adherencia.</span>
+            <i class="routine-line" aria-hidden="true"></i>
           </div>
         </div>
       </div>
@@ -488,19 +523,19 @@
     </section>
 
     <section class="cards">
-      <a href="rutina-a-juan-ugalde.html" class="big-card green">
+      <a href="rutina-a.html" class="big-card green">
         <div class="head">Ver Rutina A ▶</div>
         <div class="card-preview">
-          <img src="icono-rutina-a.png" class="preview-icon-img" alt="Icono Rutina A">
+          <img src="../../imagenes/icono-rutina-a.webp" class="preview-icon-img" alt="Icono Rutina A" loading="lazy" decoding="async">
           <p>Bloque principal de fuerza base, técnica y control del movimiento.</p>
         </div>
         <div class="foot">Fuerza Base ▶</div>
       </a>
 
-      <a href="rutina-b-juan-ugalde.html" class="big-card yellow">
+      <a href="rutina-b.html" class="big-card yellow">
         <div class="head">Ver Rutina B ▶</div>
         <div class="card-preview">
-          <img src="icono-rutina-b.png" class="preview-icon-img" alt="Icono Rutina B">
+          <img src="../../imagenes/icono-rutina-b.webp" class="preview-icon-img" alt="Icono Rutina B" loading="lazy" decoding="async">
           <p>Trabajo complementario con movilidad, estabilidad y acondicionamiento.</p>
         </div>
         <div class="foot">Fuerza + Cardio ▶</div>
@@ -512,7 +547,7 @@
           <span class="sparkle one">✦</span>
           <span class="sparkle two">✦</span>
           <div class="reward-box">
-            <img src="icono-cofre.png" class="reward-icon-img" alt="Cofre de premios">
+            <img src="../../imagenes/icono-cofre.webp" class="reward-icon-img" alt="Cofre de premios" loading="lazy" decoding="async">
             <strong>Premios ganados</strong>
             <p>Completa el mes para desbloquear y guardar tu premio aquí.</p>
           </div>
