@@ -84,19 +84,13 @@ font-weight:800;
 backdrop-filter:blur(10px);
 -webkit-backdrop-filter:blur(10px);
 }
-.hero{
-min-height:360px;
-border-radius:34px;
-overflow:hidden;
-position:relative;
-display:grid;
-grid-template-columns:1.05fr .95fr;
-align-items:stretch;
-border:1px solid rgba(255,255,255,.10);
-box-shadow:var(--shadow);
-background:url('imagenes/contendor.webp') center right / cover no-repeat;
-margin-bottom:24px;
-}
+.hero-image{
+      position:absolute;
+      inset:0;
+      background:url('../../../imagenes/contendor.webp') center right / cover no-repeat;
+      z-index:0;
+      transform:scale(1.01);
+    }
 .hero::before{
 content:"";
 position:absolute;
