@@ -1,5 +1,7 @@
 
 
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -85,6 +87,13 @@
     }
 
     .brand span{color:var(--accent)}
+
+    .brand-logo{
+      height:46px;
+      width:auto;
+      display:block;
+      object-fit:contain;
+    }
 
     .menu{
       display:flex;
@@ -653,6 +662,15 @@
       }
     }
 
+
+    @media(max-width:900px){
+      .brand-logo{height:38px}
+    }
+
+    @media(max-width:640px){
+      .brand-logo{height:34px}
+    }
+
   </style>
 </head>
 
@@ -661,7 +679,9 @@
 
   <header class="site-header">
     <div class="wrap nav">
-      <a href="../index.html" class="brand" aria-label="Inicio MoveSmart">Move<span>Smart</span></a>
+      <a href="../index.html" class="brand" aria-label="Inicio MoveSmart">
+        <img src="../imagenes/logo.webp" alt="MoveSmart" class="brand-logo" loading="eager" decoding="async">
+      </a>
 
       <nav class="menu" aria-label="Navegación principal">
         <a href="../index.html">Inicio</a>
