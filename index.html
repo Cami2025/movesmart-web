@@ -1128,6 +1128,115 @@
       }
     }
 
+  
+
+    /* Ajuste nuevo: logo del hero arriba a la izquierda y eslogan como protagonista */
+    .hero-content{
+      text-align:left !important;
+      align-items:flex-start !important;
+      margin-inline:auto !important;
+    }
+
+    .hero-main-logo{
+      margin-left:0 !important;
+      margin-right:0 !important;
+      align-self:flex-start !important;
+    }
+
+    .hero-title,
+    .hero-subtitle{
+      text-align:left !important;
+      margin-left:0 !important;
+      margin-right:0 !important;
+    }
+
+    .hero .btn{
+      align-self:flex-start !important;
+    }
+
+    @media (max-width: 760px){
+      .hero{
+        min-height:760px !important;
+      }
+
+      .hero-content{
+        padding-top:54px !important;
+        padding-bottom:42px !important;
+        max-width:100% !important;
+      }
+
+      .hero-main-logo{
+        width:min(220px, 50vw) !important;
+        margin:0 0 44px 0 !important;
+        filter:drop-shadow(0 16px 30px rgba(0,0,0,.42)) !important;
+      }
+
+      .hero-title{
+        max-width:650px !important;
+        margin:0 0 24px 0 !important;
+        font-size:clamp(2.85rem, 8.6vw, 4.35rem) !important;
+        line-height:1.12 !important;
+        letter-spacing:-.052em !important;
+        font-weight:900 !important;
+      }
+
+      .hero-subtitle{
+        max-width:560px !important;
+        margin:0 0 30px 0 !important;
+        font-size:clamp(1.28rem, 4vw, 1.8rem) !important;
+        line-height:1.38 !important;
+      }
+
+      .hero .btn{
+        min-height:74px !important;
+        padding:0 46px !important;
+        border-radius:20px !important;
+        font-size:1.35rem !important;
+        font-weight:900 !important;
+      }
+
+      #como-funciona.section{
+        margin-top:0 !important;
+        padding-top:54px !important;
+      }
+    }
+
+    @media (max-width: 430px){
+      .hero{
+        min-height:735px !important;
+      }
+
+      .hero-content{
+        padding-top:46px !important;
+        padding-bottom:36px !important;
+      }
+
+      .hero-main-logo{
+        width:min(190px, 48vw) !important;
+        margin-bottom:42px !important;
+      }
+
+      .hero-title{
+        max-width:350px !important;
+        font-size:2.55rem !important;
+        line-height:1.1 !important;
+        margin-bottom:20px !important;
+      }
+
+      .hero-subtitle{
+        max-width:320px !important;
+        font-size:1.22rem !important;
+        margin-bottom:26px !important;
+      }
+
+      .hero .btn{
+        min-height:68px !important;
+        padding:0 36px !important;
+        border-radius:18px !important;
+        font-size:1.22rem !important;
+      }
+    }
+
   </style>
 </head>
 <body>
