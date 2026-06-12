@@ -796,89 +796,31 @@
     }
 
 
-    /* Ajuste móvil: menos separación y hero más arriba */
+    /* Ajustes finales móvil: logo central más compacto, CTA más conectado y más aire antes de Cómo Funciona */
     @media (max-width: 760px){
-      .container{
-        padding-left:26px;
-        padding-right:26px;
-      }
-
-      .nav{
-        padding:8px 0 8px;
-        row-gap:4px;
-      }
-
-      .top-brand{
-        margin-left:0;
-      }
-
-      .nav-actions{
-        margin-right:0;
-        transform:none;
-      }
-
-      .top-brand-logo{
-        height:46px;
-      }
-
-      .nav-links{
-        column-gap:22px;
-        font-size:.72rem;
-      }
-
-      .nav-links a{
-        padding-bottom:8px;
-      }
-
-      .hero{
-        min-height:auto;
-      }
-
-      .hero-content{
-        padding-top:0;
-        padding-bottom:42px;
-      }
-
       .hero-main-logo{
-        width:min(330px, 82vw);
-        margin:-42px auto -92px;
-      }
-
-      .hero-title{
-        margin:0 0 14px;
-        font-size:clamp(2.55rem, 9.6vw, 4rem);
-        line-height:1.04;
+        width:min(220px, 55vw);
+        margin:0 auto 16px;
       }
 
       .hero-subtitle{
-        margin-bottom:20px;
-        font-size:1.02rem;
-        line-height:1.45;
+        margin-bottom:18px;
       }
 
       #como-funciona.section{
-        margin-top:-18px;
+        margin-top:10px;
+        padding-top:30px;
       }
     }
 
     @media (max-width: 390px){
-      .container{
-        padding-left:24px;
-        padding-right:24px;
-      }
-
-      .top-brand-logo{
-        height:44px;
-      }
-
-      .nav-links{
-        column-gap:18px;
-        font-size:.69rem;
-      }
-
       .hero-main-logo{
-        width:min(315px, 84vw);
-        margin:-38px auto -88px;
+        width:min(205px, 54vw);
+        margin-bottom:14px;
+      }
+
+      .hero-subtitle{
+        margin-bottom:16px;
       }
     }
 
