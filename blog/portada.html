@@ -2,6 +2,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -607,16 +609,6 @@
 
 
     /* Optimización de carga: el navegador no pinta secciones hasta que se acercan */
-    .article-card, .newsletter, footer{
-      content-visibility:auto;
-      contain-intrinsic-size:260px;
-    }
-
-    #articulos-en-desarrollo{
-      content-visibility:auto;
-      contain-intrinsic-size:760px;
-    }
-
     /* Versión celular rápida: usa el mismo fondo visible y reduce efectos pesados */
     @media(max-width:640px){
       body{
@@ -1038,7 +1030,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="../imagenes/poco_tiempo_para_entrenar.webp" alt="Poco tiempo para entrenar" loading="lazy" decoding="async" fetchpriority="low" width="420" height="260" />
+            <img src="../imagenes/poco_tiempo_para_entrenar.webp" alt="Poco tiempo para entrenar" loading="eager" decoding="async" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Cuando tienes poco tiempo, entrenar distinto sigue siendo entrenar</h4>
@@ -1049,7 +1041,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="../imagenes/dolor_no_significa parar.webp" alt="Dolor y entreno" loading="lazy" decoding="async" fetchpriority="low" width="420" height="260" />
+            <img src="../imagenes/dolor_no_significa parar.webp" alt="Dolor y entreno" loading="eager" decoding="async" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dolor no siempre significa parar</h4>
@@ -1060,7 +1052,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="../imagenes/dormir_y_grasa.webp" alt="Dormir poco y acumulación de grasa" loading="lazy" decoding="async" fetchpriority="low" width="420" height="260" />
+            <img src="../imagenes/dormir_y_grasa.webp" alt="Dormir poco y acumulación de grasa" loading="eager" decoding="async" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dormir poco también entrena tu cuerpo… para acumular grasa</h4>
