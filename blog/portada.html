@@ -4,6 +4,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -951,7 +953,21 @@
       .nav-links{font-size:.69rem;column-gap:18px}
     }
 
-  </style>
+  
+.archive-box{
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:24px;
+  overflow:hidden;
+  margin-bottom:48px;
+}
+.archive-item{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.10);transition:.2s ease;}
+.archive-item:last-child{border-bottom:none;}
+.archive-item:hover{background:rgba(255,255,255,.05);}
+.archive-item span:first-child{font-weight:700;}
+@media(max-width:640px){.archive-item{padding:16px;font-size:.95rem;}}
+
+</style>
 </head>
 
 <body>
@@ -1022,7 +1038,7 @@
       <div class="section-head">
         <div>
           <span class="kicker">Próximos artículos</span>
-          <h3>En desarrollo</h3>
+          <h3>Próximamente</h3>
         </div>
       </div>
 
@@ -1066,7 +1082,24 @@
       </nav>
     </section>
 
+    
+    <section class="wrap" id="archivo-articulos">
+      <div class="section-head">
+        <div>
+          <span class="kicker">Biblioteca MoveSmart</span>
+          <h3>Archivo de artículos</h3>
+        </div>
+      </div>
+      <div class="archive-box">
+        <a class="archive-item" href="articulo_principal/un_pdf_no_sabe.html">
+          <span>📄 Un PDF no sabe cómo llegas del trabajo</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </section>
+
     <section class="wrap newsletter">
+
       <div class="badge">M</div>
       <div>
         <h3>Recibe ideas MoveSmart para entrenar con más continuidad.</h3>
