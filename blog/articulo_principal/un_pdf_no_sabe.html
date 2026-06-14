@@ -34,31 +34,6 @@
     a{color:inherit;text-decoration:none}
     .wrap{width:min(var(--max),calc(100% - 32px));margin:auto}
 
-    .topbar{
-      padding:24px 0;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:18px;
-    }
-
-    .brand{font-size:1.35rem;font-weight:900;letter-spacing:-.04em}
-    .brand span{color:var(--accent)}
-
-    .nav{
-      display:flex;
-      gap:14px;
-      color:var(--muted);
-      font-weight:700;
-      font-size:.95rem;
-    }
-
-    .nav a{
-      padding:10px 14px;
-      border-radius:999px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.07);
-    }
 
     .hero{
       display:grid;
@@ -374,19 +349,333 @@
         grid-template-columns:1fr;
       }
     }
+
+    /* Header igual al segundo HTML */
+    .container{
+      width:min(1200px, calc(100% - 48px));
+      margin:0 auto;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      background:rgba(10,8,14,.44);
+      border-bottom:1px solid rgba(255,255,255,.05);
+      padding:0;
+    }
+
+    .topbar .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      min-height:78px;
+      gap:20px;
+      flex-wrap:nowrap;
+      overflow:hidden;
+    }
+
+    .top-brand{
+      display:inline-flex;
+      align-items:center;
+      flex:0 0 auto;
+      color:#fff;
+      white-space:nowrap;
+      text-shadow:0 2px 16px rgba(0,0,0,.28);
+    }
+
+    .top-brand-logo{
+      height:70px;
+      width:auto;
+      display:block;
+      object-fit:contain;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:24px;
+      flex-wrap:nowrap;
+      font-size:1rem;
+      color:#fff;
+      font-weight:700;
+      white-space:nowrap;
+      min-width:0;
+    }
+
+    .nav-links a{
+      position:relative;
+      opacity:1;
+      color:#fff;
+      text-shadow:0 1px 12px rgba(0,0,0,.18);
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex:0 0 auto;
+      white-space:nowrap;
+      width:auto;
+      justify-content:flex-end;
+    }
+
+    .top-socials{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
+      width:auto;
+      margin-top:0;
+    }
+
+    .top-social{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      display:grid;
+      place-items:center;
+      color:#fff;
+      transition:transform .22s ease, background .22s ease, box-shadow .22s ease;
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+    }
+
+    .top-social:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.10);
+      box-shadow:0 12px 26px rgba(0,0,0,.24);
+    }
+
+    .top-social svg{
+      width:19px;
+      height:19px;
+      fill:currentColor;
+    }
+
+    .top-social.instagram{color:#ff5a8a}
+    .top-social.twitter{color:#4da3ff}
+    .top-social.linkedin{color:#58a6ff}
+    .top-social.spotify{color:#1ed760}
+
+    .header-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:50px;
+      padding:0 24px;
+      border-radius:12px;
+      font-size:1rem;
+      background:linear-gradient(180deg,var(--accent2),var(--accent));
+      color:#fff;
+      font-weight:700;
+      letter-spacing:.01em;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 10px 26px rgba(243,107,42,.22);
+      transition:.22s ease;
+    }
+
+    .header-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 16px 34px rgba(243,107,42,.28);
+      filter:brightness(1.03);
+    }
+
+    @media (max-width:1100px){
+      .top-brand-logo{height:60px}
+      .topbar .nav{gap:12px}
+      .nav-links{gap:14px;font-size:.9rem}
+      .nav-actions{gap:9px}
+      .top-social{width:36px;height:36px;border-radius:12px}
+      .top-social svg{width:17px;height:17px}
+      .header-btn{min-height:42px;padding:0 18px}
+    }
+
+    @media (max-width:760px){
+      .container{
+        width:100%;
+        max-width:100%;
+        padding-left:34px;
+        padding-right:34px;
+      }
+
+      .topbar{
+        background:rgba(8,6,13,.78);
+        backdrop-filter:blur(14px);
+        -webkit-backdrop-filter:blur(14px);
+        border-bottom:1px solid rgba(255,255,255,.10);
+      }
+
+      .topbar .nav{
+        min-height:auto;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:space-between;
+        align-items:center;
+        column-gap:8px;
+        row-gap:10px;
+        padding:14px 0 12px;
+        overflow:hidden;
+      }
+
+      .top-brand{
+        order:1;
+        width:auto;
+        margin:0 0 0 18px;
+        flex:0 0 auto;
+      }
+
+      .top-brand-logo{height:42px}
+
+      .nav-actions{
+        order:1;
+        width:auto;
+        margin-left:auto;
+        margin-right:18px;
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+        gap:6px;
+        flex:0 0 auto;
+        transform:translateX(-14px);
+      }
+
+      .top-socials{
+        width:auto;
+        display:flex;
+        justify-content:flex-end;
+        align-items:center;
+        gap:7px;
+        flex:0 0 auto;
+      }
+
+      .top-social{
+        width:auto;
+        height:auto;
+        border:none;
+        background:transparent;
+        border-radius:0;
+        box-shadow:none;
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+        padding:0;
+        flex:0 0 auto;
+      }
+
+      .top-social:hover{
+        transform:translateY(-1px);
+        background:transparent;
+        box-shadow:none;
+      }
+
+      .top-social svg{
+        width:14px;
+        height:14px;
+      }
+
+      .header-btn{
+        display:inline-flex;
+        min-height:31px;
+        padding:0 11px;
+        border-radius:11px;
+        font-size:.68rem;
+        font-weight:850;
+        flex:0 0 auto;
+      }
+
+      .nav-links{
+        order:2;
+        width:100%;
+        display:grid;
+        grid-template-columns:auto auto auto;
+        align-items:center;
+        justify-content:center;
+        column-gap:30px;
+        row-gap:0;
+        font-size:.76rem;
+        line-height:1;
+        font-weight:850;
+        color:#fff;
+        white-space:nowrap;
+        overflow:visible;
+      }
+
+      .nav-links a{
+        position:relative;
+        padding-bottom:12px;
+        text-align:center;
+      }
+    }
+
+    @media (max-width:390px){
+      .container{padding-left:30px;padding-right:30px}
+      .top-brand{margin-left:14px}
+      .top-brand-logo{height:38px}
+      .topbar .nav{padding:13px 0 11px;row-gap:9px}
+      .nav-actions{gap:5px;margin-right:14px;transform:translateX(-12px)}
+      .top-socials{gap:6px}
+      .top-social svg{width:13px;height:13px}
+      .header-btn{min-height:30px;padding:0 10px;font-size:.65rem;border-radius:10px}
+      .nav-links{font-size:.74rem;column-gap:24px}
+    }
+
+    @media (max-width:350px){
+      .container{padding-left:24px;padding-right:24px}
+      .top-brand{margin-left:10px}
+      .top-brand-logo{height:35px}
+      .top-socials{gap:5px}
+      .top-social svg{width:12px;height:12px}
+      .header-btn{padding:0 8px;font-size:.62rem}
+      .nav-links{font-size:.69rem;column-gap:18px}
+    }
+
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <header class="topbar">
-      <a class="brand" href="articulos-movesmart-imagenes-github.html">Move<span>Smart</span></a>
-      <nav class="nav">
-        <a href="articulos-movesmart-imagenes-github.html">Artículos</a>
-        <a href="index.html">Inicio</a>
-        <a href="#evaluacion">Evaluación gratuita</a>
+  <header class="topbar">
+    <div class="container nav">
+      <a href="/movesmart-web/index.html#inicio" class="top-brand" aria-label="Inicio MoveSmart">
+        <img src="/movesmart-web/imagenes/logo.webp" alt="MoveSmart" class="top-brand-logo" loading="eager" decoding="async">
+      </a>
+
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="/movesmart-web/index.html#inicio">Inicio</a>
+        <a href="/movesmart-web/index.html#como-funciona">Cómo Funciona</a>
+        <a href="/movesmart-web/acceso-clientes.html">Acceso Clientes</a>
       </nav>
-    </header>
+
+      <div class="nav-actions">
+        <div class="top-socials" aria-label="Redes sociales MoveSmart">
+          <a class="top-social instagram" href="https://www.instagram.com/movesmart.plan/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4zm4.2 3.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 7.2m0 2A2.8 2.8 0 1 0 14.8 12 2.8 2.8 0 0 0 12 9.2M17.2 6.7a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1"/></svg>
+          </a>
+
+          <a class="top-social twitter" href="https://x.com/movesmartchile" target="_blank" rel="noopener noreferrer" aria-label="X">
+            <svg viewBox="0 0 24 24"><path d="M22 5.8c-.7.3-1.5.5-2.4.6.9-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.7 1A4.2 4.2 0 0 0 11.5 9c0 .3 0 .6.1.9A12 12 0 0 1 3 5.5a4.2 4.2 0 0 0 1.3 5.6c-.7 0-1.3-.2-1.9-.5v.1a4.2 4.2 0 0 0 3.4 4.1c-.4.1-.8.2-1.2.2-.3 0-.6 0-.8-.1a4.2 4.2 0 0 0 3.9 2.9A8.5 8.5 0 0 1 2 19.5 12 12 0 0 0 8.5 21c7.8 0 12.1-6.5 12.1-12.1v-.6c.8-.6 1.5-1.4 2.1-2.2z"/></svg>
+          </a>
+
+          <a class="top-social linkedin" href="https://www.linkedin.com/in/movesmart-chile-b4b03b40a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5M3 10h4v11H3zm6 0h3.8v1.5h.1c.5-.9 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6V21h-4v-4.8c0-1.2 0-2.7-1.7-2.7s-1.9 1.3-1.9 2.6V21H9z"/></svg>
+          </a>
+
+          <a class="top-social spotify" href="https://open.spotify.com/user/31lcttv3ugvu6s5ifvcj5tf5syre" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m4.6 14.5c-.2.3-.6.4-.9.2-2.5-1.5-5.6-1.8-9.3-1-.4.1-.7-.1-.8-.5s.1-.7.5-.8c4-.9 7.5-.5 10.3 1.1.3.2.4.6.2 1m1.2-2.7c-.2.4-.7.5-1.1.3-2.8-1.7-7.1-2.2-10.4-1.2-.4.1-.9-.1-1-.5-.1-.4.1-.9.5-1 3.8-1.1 8.6-.6 11.8 1.4.4.2.5.7.2 1m.1-2.8c-3.4-2-9-2.2-12.2-1.2-.5.2-1-.1-1.2-.6-.2-.5.1-1 .6-1.2 3.7-1.1 9.8-.9 13.8 1.5.4.3.6.9.3 1.3-.3.4-.9.5-1.3.2"/></svg>
+          </a>
+        </div>
+
+        <a href="/movesmart-web/blog/portada.html" class="header-btn">Blog</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
 
     <section class="hero">
       <div>
