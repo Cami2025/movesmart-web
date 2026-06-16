@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cómo usar este programa | MoveSmart</title>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+
+    :root{
+      --bg:#050915;
+      --text:#fff;
+      --muted:rgba(255,255,255,.74);
+      --soft:rgba(255,255,255,.05);
+      --card:rgba(8,14,28,.82);
+      --border:rgba(126,163,255,.22);
+      --orange:#ff6a21;
+      --blue:#2d72ff;
+      --green:#19c878;
+      --radius:26px;
+      --shadow:0 24px 70px rgba(0,0,0,.42);
+      --container:min(1180px,calc(100% - 34px));
+    }
+
+    body{
+      min-height:100vh;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 82% 8%,rgba(255,106,33,.20),transparent 30%),
+        radial-gradient(circle at 18% 22%,rgba(45,114,255,.16),transparent 36%),
+        linear-gradient(180deg,rgba(5,9,21,.86),rgba(5,9,21,.96)),
+        url('fondo-preview-rutina.png') center/cover fixed no-repeat;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(0,0,0,.35),transparent 45%,rgba(0,0,0,.35));
+      z-index:-1;
+    }
+
+    .wrap{width:var(--container);margin:auto;padding:24px 0 38px}
+
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .badge{
+      width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+      background:linear-gradient(135deg,#ff8a28,#ff3d55);font-size:1.5rem;font-weight:900;
+      box-shadow:0 12px 30px rgba(255,91,31,.25)
+    }
+    .brand h1{font-size:1.55rem;line-height:1;font-weight:900;letter-spacing:-.04em}
+    .brand h1 span{color:var(--orange)}
+    .brand p{font-size:.92rem;color:var(--muted);margin-top:6px}
+
+    .back{
+      color:#fff;text-decoration:none;font-weight:800;
+      padding:13px 22px;border-radius:18px;
+      border:1px solid var(--border);background:rgba(255,255,255,.045);
+      transition:.2s ease;
+    }
+    .back:hover{transform:translateY(-2px);background:rgba(255,255,255,.09)}
+
+    .hero{
+      position:relative;overflow:hidden;border-radius:var(--radius);padding:34px 38px;margin-bottom:16px;
+      border:1px solid var(--border);box-shadow:var(--shadow);
+      background:linear-gradient(135deg,rgba(9,17,34,.94),rgba(9,14,28,.82));
+      min-height:220px;display:flex;align-items:center;
+    }
+    .hero-content{max-width:560px;position:relative;z-index:2}
+    .pill{
+      display:inline-flex;align-items:center;gap:9px;margin-bottom:20px;
+      padding:10px 16px;border-radius:999px;font-size:.85rem;font-weight:900;text-transform:uppercase;
+      background:linear-gradient(135deg,rgba(61,75,218,.75),rgba(39,55,131,.75));
+      border:1px solid rgba(255,255,255,.08)
+    }
+    .hero h2{font-size:clamp(2.15rem,4vw,3.15rem);line-height:1.02;letter-spacing:-.06em;margin-bottom:18px}
+    .hero h2 span{color:var(--orange)}
+    .hero p{color:rgba(255,255,255,.82);font-size:1.03rem;line-height:1.75}
+
+    .hero-visual{position:absolute;right:28px;top:24px;bottom:24px;width:46%;opacity:.95}
+    .orbit{position:absolute;inset:0;display:grid;place-items:center}
+    .circle{
+      position:absolute;width:235px;height:235px;border-radius:50%;
+      border:1px solid rgba(45,114,255,.35);
+      box-shadow:inset 0 0 35px rgba(45,114,255,.18),0 0 55px rgba(45,114,255,.14)
+    }
+    .circle::before{content:"";position:absolute;inset:14px;border-radius:50%;border:4px solid transparent;border-top-color:#13a7ff;border-right-color:#ff6a21;filter:drop-shadow(0 0 10px #188cff)}
+    .dumbbell{font-size:4rem;color:#8ed4ff;text-shadow:0 0 24px rgba(45,164,255,.65);z-index:2}
+    .mini-card{position:absolute;border:1px solid rgba(255,255,255,.12);background:rgba(8,14,28,.65);backdrop-filter:blur(10px);border-radius:24px;display:grid;place-items:center;color:#ff6a21;box-shadow:var(--shadow)}
+    .chart{left:6%;top:30%;width:150px;height:92px;font-size:2.3rem;color:#ff6a21}
+    .calendar{right:4%;top:15%;width:92px;height:92px;font-size:2.1rem;color:#ff7a3d}
+    .check{right:11%;bottom:12%;width:92px;height:92px;font-size:3rem;color:#2d72ff;border-radius:50%}
+
+    .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+    .panel{
+      border:1px solid var(--border);border-radius:var(--radius);padding:22px;background:var(--card);
+      box-shadow:var(--shadow);backdrop-filter:blur(10px)
+    }
+    .panel-title{display:flex;align-items:center;gap:14px;font-size:1.35rem;font-weight:900;margin-bottom:18px;letter-spacing:-.03em}
+    .title-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#246dff,#173ec2)}
+    .orange-icon{background:linear-gradient(135deg,#ff8a28,#ff4c1f)}
+
+    .timeline{position:relative;display:grid;gap:10px;padding-left:48px}
+    .timeline::before{content:"";position:absolute;left:19px;top:12px;bottom:12px;border-left:1px dashed rgba(45,114,255,.45)}
+    .step,.tip{
+      display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:center;
+      padding:16px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025));
+      border:1px solid rgba(255,255,255,.08)
+    }
+    .num{position:absolute;left:0;width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#2d72ff,#1d4ee8);display:grid;place-items:center;font-weight:900}
+    .step{position:relative}
+    .iconbox{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;border:1px solid rgba(45,114,255,.35);font-size:1.7rem;background:rgba(7,13,28,.65)}
+    .tip .iconbox{border-color:rgba(255,106,33,.35);color:var(--orange)}
+    h3{font-size:1.05rem;margin-bottom:6px;letter-spacing:-.02em}
+    .step p,.tip p{color:var(--muted);font-size:.96rem;line-height:1.55}
+    strong,.blue{color:#4d8cff;font-weight:900}
+
+    .tips{display:grid;gap:10px}.tip{grid-template-columns:66px 1fr;padding:18px}
+
+    .remember{
+      margin-top:16px;border:1px solid var(--border);border-radius:22px;overflow:hidden;
+      display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 26px;
+      background:linear-gradient(135deg,rgba(8,18,36,.92),rgba(7,12,24,.86));box-shadow:var(--shadow)
+    }
+    .remember-left{display:flex;align-items:center;gap:18px}.shield{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:2rem;color:var(--green);background:rgba(25,200,120,.08);border:1px solid rgba(25,200,120,.22)}
+    .remember h3{font-size:1.05rem}.remember p{color:var(--muted);margin-top:5px}.remember .weight{font-size:2rem;color:var(--green)}
+
+    @media(max-width:900px){
+      .topbar{align-items:flex-start;flex-direction:column}.back{width:100%;text-align:center}
+      .hero{padding:28px 22px;min-height:auto}.hero-visual{display:none}.grid{grid-template-columns:1fr}.timeline{padding-left:44px}.step,.tip{grid-template-columns:58px 1fr}.remember{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="badge">M</div>
+        <div>
+          <h1>Move<span>Smart</span></h1>
+          <p>Juan Ugalde · Programa personalizado</p>
+        </div>
+      </div>
+      <a class="back" href="plan-juan-ugalde.html">← Volver al plan</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="pill">📘 Guía general del programa</div>
+        <h2>¿Cómo <span>usar</span> este programa?</h2>
+        <p>Este plan está diseñado para que puedas avanzar de forma progresiva, segura y sostenible. La idea no es hacerlo perfecto, sino mantener constancia, cuidar la técnica y adaptar la carga según cómo se sienta tu cuerpo.</p>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit">
+          <div class="circle"></div>
+          <div class="dumbbell">🏋️</div>
+        </div>
+        <div class="mini-card chart">📈</div>
+        <div class="mini-card calendar">🗓️</div>
+        <div class="mini-card check">✓</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-title"><span class="title-icon">↯</span>Pasos para usarlo bien</div>
+        <div class="timeline">
+          <div class="step"><div class="num">1</div><div class="iconbox">🗓️</div><div><h3>Sigue la estructura por semanas</h3><p>El mes se organiza en 2 semanas de trabajo que se van alternando: <span class="blue">Semana 1 → Semana 2 → Semana 1 → Semana 2.</span></p></div></div>
+          <div class="step"><div class="num">2</div><div class="iconbox">🎯</div><div><h3>Prioriza continuidad antes que intensidad</h3><p>Lo más importante es cumplir con las sesiones de manera consistente. No necesitas entrenar al máximo para progresar.</p></div></div>
+          <div class="step"><div class="num">3</div><div class="iconbox">⚡</div><div><h3>Mantén sesiones cortas y sostenibles</h3><p>Busca que cada sesión se sienta realizable. Es mejor terminar con energía que sobrecargarte y perder adherencia.</p></div></div>
+          <div class="step"><div class="num">4</div><div class="iconbox">📈</div><div><h3>No llegues al fallo</h3><p>La meta es trabajar con buena técnica y dejar siempre un pequeño margen. Si terminas demasiado cansado, ajusta la siguiente sesión.</p></div></div>
+          <div class="step"><div class="num">5</div><div class="iconbox">📋</div><div><h3>Registra tus sensaciones</h3><p>Usa la sección de seguimiento para anotar energía, molestias, progreso y cualquier ajuste que necesites hacer.</p></div></div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-title"><span class="title-icon orange-icon">★</span>Puntos clave</div>
+        <div class="tips">
+          <div class="tip"><div class="iconbox">📊</div><div><h3>Escala RPE</h3><p>RPE significa percepción del esfuerzo. Usa una escala del 1 al 10, donde 1 es muy suave y 10 es tu máximo esfuerzo.</p></div></div>
+          <div class="tip"><div class="iconbox">💓</div><div><h3>Si terminas muy cansado</h3><p>Baja 1 serie en la próxima sesión o reduce un poco la intensidad. El objetivo es sostener el plan, no agotarte.</p></div></div>
+          <div class="tip"><div class="iconbox">🎯</div><div><h3>Enfoque del mes</h3><p>Recuperar base física general, mejorar adherencia y volver a entrenar con una estructura clara y segura.</p></div></div>
+          <div class="tip"><div class="iconbox">📝</div><div><h3>Seguimiento</h3><p>Registrar tus datos te ayudará a ver avances, detectar fatiga y ajustar mejor el programa.</p></div></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="remember">
+      <div class="remember-left">
+        <div class="shield">✓</div>
+        <div><h3>Recuerda: constancia + técnica + descanso = progreso real.</h3><p>Confía en el proceso y dale tiempo a tu cuerpo para adaptarse.</p></div>
+      </div>
+      <div class="weight">🏋️</div>
+    </section>
+  </main>
+</body>
+</html>
