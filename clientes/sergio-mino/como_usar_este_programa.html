@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -78,19 +79,24 @@
     .hero h2 span{color:var(--orange)}
     .hero p{color:rgba(255,255,255,.82);font-size:1.03rem;line-height:1.75}
 
-    .hero-visual{position:absolute;right:28px;top:24px;bottom:24px;width:46%;opacity:.95}
-    .orbit{position:absolute;inset:0;display:grid;place-items:center}
-    .circle{
-      position:absolute;width:235px;height:235px;border-radius:50%;
-      border:1px solid rgba(45,114,255,.35);
-      box-shadow:inset 0 0 35px rgba(45,114,255,.18),0 0 55px rgba(45,114,255,.14)
+    .hero-visual{
+      position:absolute;
+      right:20px;
+      top:50%;
+      transform:translateY(-50%);
+      width:48%;
+      max-width:560px;
+      z-index:1;
+      pointer-events:none;
     }
-    .circle::before{content:"";position:absolute;inset:14px;border-radius:50%;border:4px solid transparent;border-top-color:#13a7ff;border-right-color:#ff6a21;filter:drop-shadow(0 0 10px #188cff)}
-    .dumbbell{font-size:4rem;color:#8ed4ff;text-shadow:0 0 24px rgba(45,164,255,.65);z-index:2}
-    .mini-card{position:absolute;border:1px solid rgba(255,255,255,.12);background:rgba(8,14,28,.65);backdrop-filter:blur(10px);border-radius:24px;display:grid;place-items:center;color:#ff6a21;box-shadow:var(--shadow)}
-    .chart{left:6%;top:30%;width:150px;height:92px;font-size:2.3rem;color:#ff6a21}
-    .calendar{right:4%;top:15%;width:92px;height:92px;font-size:2.1rem;color:#ff7a3d}
-    .check{right:11%;bottom:12%;width:92px;height:92px;font-size:3rem;color:#2d72ff;border-radius:50%}
+
+    .hero-visual img{
+      width:100%;
+      height:auto;
+      display:block;
+      object-fit:contain;
+      filter:drop-shadow(0 0 28px rgba(45,114,255,.28));
+    }
 
     .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
     .panel{
@@ -153,13 +159,7 @@
       </div>
 
       <div class="hero-visual" aria-hidden="true">
-        <div class="orbit">
-          <div class="circle"></div>
-          <div class="dumbbell">🏋️</div>
-        </div>
-        <div class="mini-card chart">📈</div>
-        <div class="mini-card calendar">🗓️</div>
-        <div class="mini-card check">✓</div>
+        <img src="como.webp" alt="">
       </div>
     </section>
 
