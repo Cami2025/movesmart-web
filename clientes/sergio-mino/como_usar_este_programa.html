@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,17 +11,17 @@
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
 
     :root{
-      --bg:#050915;
-      --text:#fff;
-      --muted:rgba(255,255,255,.74);
+      --bg:#0c0812;
+      --text:#f3edf7;
+      --muted:#cbc0d3;
       --soft:rgba(255,255,255,.05);
-      --card:rgba(8,14,28,.82);
-      --border:rgba(126,163,255,.22);
+      --card:rgba(255,255,255,.08);
+      --border:rgba(255,255,255,.12);
       --orange:#ff6a21;
       --blue:#2d72ff;
       --green:#19c878;
       --radius:26px;
-      --shadow:0 24px 70px rgba(0,0,0,.42);
+      --shadow:0 14px 34px rgba(0,0,0,.28);
       --container:min(1180px,calc(100% - 34px));
     }
 
@@ -27,16 +29,20 @@
       min-height:100vh;
       color:var(--text);
       background:
-        radial-gradient(circle at 82% 8%,rgba(255,106,33,.20),transparent 30%),
-        radial-gradient(circle at 18% 22%,rgba(45,114,255,.16),transparent 36%),
-        linear-gradient(180deg,rgba(5,9,21,.86),rgba(5,9,21,.96)),
-        url('../../imagenes/fondo-index-realista.webp') center/cover fixed no-repeat;
+        linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
+        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
+      overflow-x:hidden;
     }
 
     body::before{
       content:"";
-      position:fixed;inset:0;pointer-events:none;
-      background:linear-gradient(90deg,rgba(0,0,0,.35),transparent 45%,rgba(0,0,0,.35));
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(73,58,146,.18), transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(243,107,42,.20), transparent 20%),
+        linear-gradient(90deg, rgba(6,8,18,.18) 0%, rgba(6,8,18,.04) 38%, rgba(6,8,18,.10) 100%);
       z-index:-1;
     }
 
@@ -56,7 +62,7 @@
     .back{
       color:#fff;text-decoration:none;font-weight:800;
       padding:13px 22px;border-radius:18px;
-      border:1px solid var(--border);background:rgba(255,255,255,.045);
+      border:1px solid var(--border);background:rgba(255,255,255,.06);
       transition:.2s ease;
     }
     .back:hover{transform:translateY(-2px);background:rgba(255,255,255,.09)}
@@ -64,15 +70,18 @@
     .hero{
       position:relative;overflow:hidden;border-radius:var(--radius);padding:34px 38px;margin-bottom:16px;
       border:1px solid var(--border);box-shadow:var(--shadow);
-      background:linear-gradient(135deg,rgba(9,17,34,.94),rgba(9,14,28,.82));
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035)),
+        radial-gradient(circle at 78% 70%, rgba(243,107,42,.10), transparent 18%),
+        radial-gradient(circle at 18% 24%, rgba(109,83,150,.12), transparent 24%);
       min-height:220px;display:flex;align-items:center;
     }
     .hero-content{max-width:560px;position:relative;z-index:2}
     .pill{
       display:inline-flex;align-items:center;gap:9px;margin-bottom:20px;
       padding:10px 16px;border-radius:999px;font-size:.85rem;font-weight:900;text-transform:uppercase;
-      background:linear-gradient(135deg,rgba(61,75,218,.75),rgba(39,55,131,.75));
-      border:1px solid rgba(255,255,255,.08)
+      background:rgba(255,255,255,.07);
+      border:1px solid var(--border)
     }
     .hero h2{font-size:clamp(2.15rem,4vw,3.15rem);line-height:1.02;letter-spacing:-.06em;margin-bottom:18px}
     .hero h2 span{color:var(--orange)}
@@ -100,7 +109,7 @@
     .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
     .panel{
       border:1px solid var(--border);border-radius:var(--radius);padding:22px;background:var(--card);
-      box-shadow:var(--shadow);backdrop-filter:blur(10px)
+      box-shadow:var(--shadow);
     }
     .panel-title{display:flex;align-items:center;gap:14px;font-size:1.35rem;font-weight:900;margin-bottom:18px;letter-spacing:-.03em}
     .title-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#246dff,#173ec2)}
@@ -110,12 +119,12 @@
     .timeline::before{content:"";position:absolute;left:19px;top:12px;bottom:12px;border-left:1px dashed rgba(45,114,255,.45)}
     .step,.tip{
       display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:center;
-      padding:16px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025));
+      padding:16px;border-radius:18px;background:rgba(255,255,255,.05);
       border:1px solid rgba(255,255,255,.08)
     }
     .num{position:absolute;left:0;width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,#2d72ff,#1d4ee8);display:grid;place-items:center;font-weight:900}
     .step{position:relative}
-    .iconbox{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;border:1px solid rgba(45,114,255,.35);font-size:1.7rem;background:rgba(7,13,28,.65)}
+    .iconbox{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;border:1px solid rgba(45,114,255,.35);font-size:1.7rem;background:rgba(255,255,255,.05)}
     .tip .iconbox{border-color:rgba(255,106,33,.35);color:var(--orange)}
     h3{font-size:1.05rem;margin-bottom:6px;letter-spacing:-.02em}
     .step p,.tip p{color:var(--muted);font-size:.96rem;line-height:1.55}
@@ -126,7 +135,7 @@
     .remember{
       margin-top:16px;border:1px solid var(--border);border-radius:22px;overflow:hidden;
       display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 26px;
-      background:linear-gradient(135deg,rgba(8,18,36,.92),rgba(7,12,24,.86));box-shadow:var(--shadow)
+      background:var(--card);box-shadow:var(--shadow)
     }
     .remember-left{display:flex;align-items:center;gap:18px}.shield{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:2rem;color:var(--green);background:rgba(25,200,120,.08);border:1px solid rgba(25,200,120,.22)}
     .remember h3{font-size:1.05rem}.remember p{color:var(--muted);margin-top:5px}.remember .weight{font-size:2rem;color:var(--green)}
