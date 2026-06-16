@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -132,8 +133,85 @@
     .remember h3{font-size:1.05rem}.remember p{color:var(--muted);margin-top:5px}.remember .weight{font-size:2rem;color:var(--green)}
 
     @media(max-width:900px){
-      .topbar{align-items:flex-start;flex-direction:column}.back{width:100%;text-align:center}
-      .hero{padding:28px 22px;min-height:auto}.hero-visual{display:none}.grid{grid-template-columns:1fr}.timeline{padding-left:44px}.step,.tip{grid-template-columns:58px 1fr}.remember{align-items:flex-start;flex-direction:column}
+      .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .back{
+        width:100%;
+        text-align:center;
+      }
+
+      .hero{
+        padding:28px 22px 24px;
+        min-height:auto;
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .hero-content{
+        max-width:100%;
+      }
+
+      .hero-visual{
+        position:relative;
+        right:auto;
+        top:auto;
+        transform:none;
+        width:100%;
+        max-width:360px;
+        margin:24px auto 0;
+        display:block;
+        opacity:1;
+      }
+
+      .hero-visual img{
+        width:100%;
+        height:auto;
+        display:block;
+        object-fit:contain;
+      }
+
+      .grid{
+        grid-template-columns:1fr;
+      }
+
+      .timeline{
+        padding-left:0;
+      }
+
+      .timeline::before{
+        display:none;
+      }
+
+      .step,
+      .tip{
+        grid-template-columns:1fr;
+        gap:12px;
+      }
+
+      .step{
+        padding:18px;
+      }
+
+      .num{
+        position:static;
+        width:38px;
+        height:38px;
+        margin-bottom:2px;
+      }
+
+      .iconbox{
+        width:54px;
+        height:54px;
+      }
+
+      .remember{
+        align-items:flex-start;
+        flex-direction:column;
+      }
     }
   </style>
 </head>
@@ -158,7 +236,7 @@
       </div>
 
       <div class="hero-visual" aria-hidden="true">
-        <img src="../../imagenes/encabezado.webp" alt="">
+        <img src="como.webp" alt="">
       </div>
     </section>
 
