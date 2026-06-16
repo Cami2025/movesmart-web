@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -30,58 +31,109 @@
         radial-gradient(circle at top right, rgba(47,99,255,.18), transparent 32%),
         radial-gradient(circle at bottom left, rgba(255,90,31,.16), transparent 28%),
         linear-gradient(180deg, rgba(8,17,29,.86), rgba(9,18,31,.94)),
-        url('../imagenes/fondo-preview-rutina.webp') center center / cover no-repeat fixed,
+        url('imagenes/fondo-preview-rutina.webp') center center / cover no-repeat fixed,
         var(--bg);
       background-attachment:fixed;
     }
 
-    nav{
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+
+    .topbar{
       position:sticky;
       top:0;
-      z-index:10;
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      background:rgba(6,12,22,.36);
-      border-bottom:1px solid rgba(255,255,255,.06);
+      z-index:50;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      background:rgba(10,8,14,.44);
+      border-bottom:1px solid rgba(255,255,255,.05);
     }
 
-    .nav-wrap{
+    .nav{
       width:var(--wrap);
       margin:0 auto;
-      padding:18px 0;
       display:flex;
+      align-items:center;
       justify-content:space-between;
+      min-height:78px;
+      gap:20px;
+      flex-wrap:nowrap;
+      overflow:hidden;
+    }
+
+    .top-brand{
+      font-size:0;
+      line-height:0;
+      letter-spacing:0;
+      text-shadow:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:flex-start;
+      flex:0 0 auto;
+      width:auto;
+      min-width:max-content;
+    }
+
+    .top-logo{
+      display:block;
+      height:68px;
+      width:auto;
+      max-width:none;
+      object-fit:contain;
+      filter:drop-shadow(0 12px 22px rgba(0,0,0,.42));
+    }
+
+    .nav-actions{
+      display:flex;
       align-items:center;
       gap:14px;
+      flex:0 0 auto;
+      white-space:nowrap;
     }
 
-    .brand{
-      font-size:1.35rem;
-      font-weight:800;
-      letter-spacing:.3px;
-    }
-
-    .brand span{color:var(--accent)}
-
-    .nav-links{
+    .top-socials{
       display:flex;
-      gap:12px;
-      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
     }
 
-    .nav-links a{
-      text-decoration:none;
-      color:var(--text);
-      opacity:.9;
-      padding:10px 14px;
+    .top-social{
+      width:42px;
+      height:42px;
       border-radius:14px;
-      transition:.25s ease;
-      font-size:.95rem;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      display:grid;
+      place-items:center;
+      color:#fff;
+      transition:transform .22s ease, background .22s ease, box-shadow .22s ease;
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
     }
 
-    .nav-links a:hover{
-      background:rgba(255,255,255,.08);
-      opacity:1;
+    .top-social:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.10);
+      box-shadow:0 12px 26px rgba(0,0,0,.24);
+    }
+
+    .top-social svg{
+      width:19px;
+      height:19px;
+      fill:currentColor;
+    }
+
+    .top-social.instagram{color:#ff5a8a;}
+    .top-social.twitter{color:#4da3ff;}
+    .top-social.linkedin{color:#58a6ff;}
+    .top-social.spotify{color:#1ed760;}
+
+    .btn.small{
+      min-height:50px;
+      padding:0 24px;
+      border-radius:12px;
+      font-size:1rem;
     }
 
     main{
@@ -277,28 +329,118 @@
       .list{
         grid-template-columns:1fr;
       }
-      .nav-wrap{
-        flex-direction:column;
-        align-items:flex-start;
-      }
       .panel,
       .exclusive{
         min-height:auto;
         padding:26px;
       }
     }
+
+
+    @media (max-width: 760px){
+      .topbar{
+        background:rgba(8,6,13,.78);
+        backdrop-filter:blur(14px);
+        -webkit-backdrop-filter:blur(14px);
+        border-bottom:1px solid rgba(255,255,255,.10);
+      }
+
+      .nav{
+        width:100%;
+        max-width:100%;
+        min-height:auto;
+        padding:14px 34px 12px;
+        column-gap:8px;
+        row-gap:10px;
+      }
+
+      .top-logo{height:46px;}
+
+      .nav-actions{
+        margin-left:auto;
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+        gap:6px;
+      }
+
+      .top-socials{gap:7px;}
+
+      .top-social{
+        width:auto;
+        height:auto;
+        border:none;
+        background:transparent;
+        border-radius:0;
+        box-shadow:none;
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+        padding:0;
+      }
+
+      .top-social:hover{
+        transform:translateY(-1px);
+        background:transparent;
+        box-shadow:none;
+      }
+
+      .top-social svg{
+        width:14px;
+        height:14px;
+      }
+
+      .nav-actions > .btn.small{
+        min-height:31px;
+        padding:0 11px;
+        border-radius:11px;
+        font-size:.68rem;
+        font-weight:850;
+      }
+    }
+
+    @media (max-width: 390px){
+      .nav{padding-left:30px;padding-right:30px;}
+      .top-logo{height:42px;}
+      .top-social svg{width:13px;height:13px;}
+      .nav-actions > .btn.small{min-height:30px;padding:0 10px;font-size:.65rem;border-radius:10px;}
+    }
+
+    @media (max-width: 350px){
+      .nav{padding-left:24px;padding-right:24px;}
+      .top-logo{height:38px;}
+      .top-socials{gap:5px;}
+      .top-social svg{width:12px;height:12px;}
+      .nav-actions > .btn.small{padding:0 8px;font-size:.62rem;}
+    }
+
   </style>
 </head>
 <body>
-  <nav>
-    <div class="nav-wrap">
-      <div class="brand">Move<span>Smart</span></div>
-      <div class="nav-links">
-        <a href="plan-carmen-briceno.html">Mi Plan</a>
-        <a href="rutina-a-carmen-briceno.html">Rutina A</a>
+  <header class="topbar">
+    <div class="nav">
+      <a href="index.html" class="top-brand" aria-label="Inicio MoveSmart">
+        <img class="top-logo" src="imagenes/logo.webp" alt="MoveSmart">
+      </a>
+
+      <div class="nav-actions">
+        <div class="top-socials" aria-label="Redes sociales MoveSmart">
+          <a class="top-social instagram" href="https://www.instagram.com/movesmart.plan/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4zm4.2 3.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 7.2m0 2A2.8 2.8 0 1 0 14.8 12 2.8 2.8 0 0 0 12 9.2M17.2 6.7a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1"/></svg>
+          </a>
+          <a class="top-social twitter" href="https://x.com/movesmartchile" target="_blank" rel="noopener noreferrer" aria-label="X">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 5.8c-.7.3-1.5.5-2.4.6.9-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.7 1A4.2 4.2 0 0 0 11.5 9c0 .3 0 .6.1.9A12 12 0 0 1 3 5.5a4.2 4.2 0 0 0 1.3 5.6c-.7 0-1.3-.2-1.9-.5v.1a4.2 4.2 0 0 0 3.4 4.1c-.4.1-.8.2-1.2.2-.3 0-.6 0-.8-.1a4.2 4.2 0 0 0 3.9 2.9A8.5 8.5 0 0 1 2 19.5 12 12 0 0 0 8.5 21c7.8 0 12.1-6.5 12.1-12.1v-.6c.8-.6 1.5-1.4 2.1-2.2z"/></svg>
+          </a>
+          <a class="top-social linkedin" href="https://www.linkedin.com/in/movesmart-chile-b4b03b40a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5M3 10h4v11H3zm6 0h3.8v1.5h.1c.5-.9 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6V21h-4v-4.8c0-1.2 0-2.7-1.7-2.7s-1.9 1.3-1.9 2.6V21H9z"/></svg>
+          </a>
+          <a class="top-social spotify" href="https://open.spotify.com/user/31lcttv3ugvu6s5ifvcj5tf5syre" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m4.6 14.5c-.2.3-.6.4-.9.2-2.5-1.5-5.6-1.8-9.3-1-.4.1-.7-.1-.8-.5s.1-.7.5-.8c4-.9 7.5-.5 10.3 1.1.3.2.4.6.2 1m1.2-2.7c-.2.4-.7.5-1.1.3-2.8-1.7-7.1-2.2-10.4-1.2-.4.1-.9-.1-1-.5-.1-.4.1-.9.5-1 3.8-1.1 8.6-.6 11.8 1.4.4.2.5.7.2 1m.1-2.8c-3.4-2-9-2.2-12.2-1.2-.5.2-1-.1-1.2-.6-.2-.5.1-1 .6-1.2 3.7-1.1 9.8-.9 13.8 1.5.4.3.6.9.3 1.3-.3.4-.9.5-1.3.2"/></svg>
+          </a>
+        </div>
+        <a href="blog/portada.html" class="btn btn-primary small">Blog</a>
       </div>
     </div>
-  </nav>
+  </header>
 
   <main>
     <section class="hero">
