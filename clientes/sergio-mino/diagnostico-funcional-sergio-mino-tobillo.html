@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,6 +20,8 @@
       --text:#ffffff;
       --muted:rgba(255,255,255,.78);
       --border:rgba(255,255,255,.12);
+      --card:rgba(255,255,255,.08);
+      --soft:rgba(255,255,255,.05);
       --accent:#ff5a1f;
       --blue:#4f8cff;
       --green:#65d978;
@@ -36,10 +35,8 @@
       min-height:100vh;
       color:var(--text);
       background:
-        linear-gradient(180deg, rgba(5,9,20,.78), rgba(5,9,20,.96)),
-        radial-gradient(circle at 75% 18%, rgba(47,99,255,.18), transparent 28%),
-        radial-gradient(circle at 18% 62%, rgba(255,90,31,.13), transparent 30%),
-        linear-gradient(135deg, var(--bg), var(--bg2));
+        linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
+        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
       overflow-x:hidden;
     }
 
@@ -49,10 +46,10 @@
       inset:0;
       pointer-events:none;
       background:
-        linear-gradient(90deg, rgba(5,9,20,.96) 0%, rgba(5,9,20,.74) 44%, rgba(5,9,20,.34) 100%),
-        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
-      opacity:.72;
-      z-index:-2;
+        radial-gradient(circle at 16% 18%, rgba(73,58,146,.18), transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(243,107,42,.20), transparent 20%),
+        linear-gradient(90deg, rgba(6,8,18,.18) 0%, rgba(6,8,18,.04) 38%, rgba(6,8,18,.10) 100%);
+      z-index:-1;
     }
 
     body::after{
@@ -73,7 +70,7 @@
       position:sticky;
       top:0;
       z-index:50;
-      background:rgba(10,8,14,.44);
+      background:rgba(10,8,14,.40);
       border-bottom:1px solid rgba(255,255,255,.05);
       backdrop-filter:blur(10px);
       -webkit-backdrop-filter:blur(10px);
@@ -204,10 +201,13 @@
       padding:24px;
       border:1px solid rgba(255,255,255,.10);
       border-radius:28px;
-      background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035)),
+        radial-gradient(circle at 78% 70%, rgba(243,107,42,.10), transparent 18%),
+        radial-gradient(circle at 18% 24%, rgba(109,83,150,.12), transparent 24%);
       box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
       overflow:hidden;
     }
 
@@ -300,9 +300,9 @@
       padding:24px;
       border-radius:20px;
       border:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.045));
-      backdrop-filter:blur(16px);
-      -webkit-backdrop-filter:blur(16px);
+      background:var(--card);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
       box-shadow:var(--shadow);
       margin-bottom:20px;
     }
@@ -392,12 +392,12 @@
 
     .info-card{
       border:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      background:var(--card);
       border-radius:20px;
       padding:24px;
       box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
     }
 
     .info-head{
@@ -471,10 +471,10 @@
       padding:22px 24px;
       border-radius:20px;
       border:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      background:var(--card);
       box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
     }
 
     .trophy{
@@ -556,8 +556,9 @@
 
       body::before{
         background:
-          linear-gradient(180deg, rgba(5,9,20,.92), rgba(5,9,20,.98)),
-          url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
+          radial-gradient(circle at 16% 18%, rgba(73,58,146,.18), transparent 30%),
+          radial-gradient(circle at 82% 18%, rgba(243,107,42,.20), transparent 20%),
+          linear-gradient(90deg, rgba(6,8,18,.18) 0%, rgba(6,8,18,.04) 38%, rgba(6,8,18,.10) 100%);
       }
 
       .case-card{
