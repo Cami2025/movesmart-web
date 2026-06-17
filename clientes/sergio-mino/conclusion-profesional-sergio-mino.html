@@ -1,9 +1,9 @@
 
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- saved from url=(0101)https://cami2025.github.io/movesmart-web/clientes/sergio-mino/conclusion-profesional-sergio-mino.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conclusión Profesional | Sergio Miño · MoveSmart</title>
 
   <style>
@@ -115,9 +115,38 @@
     }
 
     .hero{
+      position:relative;
       border-radius:30px;
-      padding:28px;
+      padding:34px 38px;
       margin-bottom:22px;
+      min-height:250px;
+      display:flex;
+      align-items:center;
+    }
+
+    .hero-content{
+      max-width:600px;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-visual{
+      position:absolute;
+      right:18px;
+      top:50%;
+      transform:translateY(-50%);
+      width:46%;
+      max-width:520px;
+      z-index:1;
+      pointer-events:none;
+    }
+
+    .hero-visual img{
+      width:100%;
+      height:auto;
+      display:block;
+      object-fit:contain;
+      filter:drop-shadow(0 0 28px rgba(243,107,42,.24));
     }
 
     .hero .eyebrow{
@@ -258,6 +287,37 @@
         text-align:center;
       }
 
+      .hero{
+        padding:28px 22px 24px;
+        min-height:auto;
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .hero-content{
+        max-width:100%;
+      }
+
+      .hero-visual{
+        position:relative;
+        right:auto;
+        top:auto;
+        transform:none;
+        width:100%;
+        max-width:360px;
+        margin:24px auto 0;
+        display:block;
+        opacity:1;
+      }
+
+      .hero-visual img{
+        width:100%;
+        height:auto;
+        display:block;
+        object-fit:contain;
+      }
+
       .main-grid{
         grid-template-columns:1fr;
       }
@@ -281,18 +341,24 @@
         </div>
       </div>
 
-      <a href="plan-sergio-mino.html" class="back-btn">← Volver al plan</a>
+      <a href="https://cami2025.github.io/movesmart-web/clientes/sergio-mino/plan-sergio-mino.html" class="back-btn">← Volver al plan</a>
     </div>
 
     <section class="hero">
-      <div class="eyebrow">📋 Cierre y enfoque general del plan</div>
-      <h2>Conclusión <span>Profesional</span></h2>
-      <p>
-        Este programa fue ajustado para entregar una estructura de entrenamiento clara,
-        progresiva y sostenible, priorizando el retorno seguro a la actividad física,
-        la recuperación del tobillo y la construcción de una base física que permita
-        volver gradualmente al trail running y OCR.
-      </p>
+      <div class="hero-content">
+        <div class="eyebrow">📋 Cierre y enfoque general del plan</div>
+        <h2>Conclusión <span>Profesional</span></h2>
+        <p>
+          Este programa fue ajustado para entregar una estructura de entrenamiento clara,
+          progresiva y sostenible, priorizando el retorno seguro a la actividad física,
+          la recuperación del tobillo y la construcción de una base física que permita
+          volver gradualmente al trail running y OCR.
+        </p>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <img src="conclusion.webp" alt="">
+      </div>
     </section>
 
     <section class="main-grid">
@@ -375,5 +441,6 @@
 
   </div>
 
-</body>
-</html>
+
+
+</body></html>
