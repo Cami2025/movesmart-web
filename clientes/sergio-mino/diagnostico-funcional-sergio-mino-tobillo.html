@@ -1,0 +1,704 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Diagnóstico Funcional | Sergio Miño · MoveSmart</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Segoe UI', sans-serif;
+    }
+
+    :root{
+      --bg:#050914;
+      --bg2:#0b1426;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.78);
+      --border:rgba(255,255,255,.12);
+      --accent:#ff5a1f;
+      --blue:#4f8cff;
+      --green:#65d978;
+      --shadow:0 22px 55px rgba(0,0,0,.42);
+      --container:min(1120px, calc(100% - 32px));
+    }
+
+    html{scroll-behavior:smooth;}
+
+    body{
+      min-height:100vh;
+      color:var(--text);
+      background:
+        linear-gradient(180deg, rgba(5,9,20,.78), rgba(5,9,20,.96)),
+        radial-gradient(circle at 75% 18%, rgba(47,99,255,.18), transparent 28%),
+        radial-gradient(circle at 18% 62%, rgba(255,90,31,.13), transparent 30%),
+        linear-gradient(135deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(90deg, rgba(5,9,20,.96) 0%, rgba(5,9,20,.74) 44%, rgba(5,9,20,.34) 100%),
+        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
+      opacity:.72;
+      z-index:-2;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 70% 36%, rgba(255,90,31,.18), transparent 13%),
+        radial-gradient(circle at 18% 12%, rgba(255,255,255,.05), transparent 18%);
+      z-index:-1;
+    }
+
+    .wrap{
+      width:var(--container);
+      margin:auto;
+      padding:30px 0 48px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      padding-bottom:24px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      margin-bottom:58px;
+    }
+
+    .logo h1{
+      font-size:clamp(2rem, 5vw, 3.35rem);
+      font-weight:900;
+      letter-spacing:-.06em;
+      font-style:italic;
+      line-height:1;
+    }
+
+    .logo span{color:var(--accent);}
+
+    .logo p{
+      margin-top:7px;
+      color:rgba(255,255,255,.72);
+      font-size:.88rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      color:white;
+      padding:14px 22px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      transition:.2s ease;
+      font-weight:650;
+    }
+
+    .back-btn:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.10);
+    }
+
+    .hero{
+      position:relative;
+      display:grid;
+      grid-template-columns:minmax(0, 1fr) minmax(320px, .9fr);
+      gap:30px;
+      align-items:center;
+      max-width:100%;
+      margin-bottom:46px;
+      padding:30px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:30px;
+      background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      overflow:hidden;
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:620px;
+    }
+
+    .hero-ankle{
+      position:relative;
+      z-index:1;
+      min-height:430px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-ankle::before{
+      content:"";
+      position:absolute;
+      width:330px;
+      height:330px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,90,31,.22), transparent 62%);
+      filter:blur(4px);
+    }
+
+    .hero-ankle img{
+      position:relative;
+      z-index:2;
+      width:min(100%, 470px);
+      max-height:460px;
+      object-fit:contain;
+      filter:drop-shadow(0 26px 45px rgba(0,0,0,.46));
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:11px 18px;
+      border-radius:999px;
+      border:1px solid rgba(255,90,31,.55);
+      background:rgba(255,90,31,.08);
+      color:#fff;
+      font-size:.92rem;
+      font-weight:800;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      margin-bottom:24px;
+    }
+
+    .dot{
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      border:3px solid var(--accent);
+      box-shadow:0 0 0 6px rgba(255,90,31,.12);
+    }
+
+    .hero h2{
+      font-size:clamp(3.1rem, 8vw, 5.8rem);
+      line-height:.94;
+      letter-spacing:-.07em;
+      margin-bottom:22px;
+      text-wrap:balance;
+    }
+
+    .client-name{
+      color:var(--accent);
+      font-size:clamp(1.65rem, 4vw, 2.35rem);
+      font-weight:900;
+      margin-bottom:22px;
+      letter-spacing:-.03em;
+    }
+
+    .hero p{
+      color:rgba(255,255,255,.88);
+      line-height:1.75;
+      font-size:1.08rem;
+      max-width:560px;
+    }
+
+    .case-card{
+      display:grid;
+      grid-template-columns:1fr 1.18fr 1fr;
+      gap:26px;
+      align-items:center;
+      padding:28px;
+      border-radius:24px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.045));
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+    }
+
+    .ankle-icon{
+      width:150px;
+      height:150px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      border:2px solid rgba(255,255,255,.13);
+      background:rgba(255,255,255,.04);
+      margin:auto;
+    }
+
+    .ankle-icon svg{
+      width:82px;
+      height:82px;
+      stroke:var(--accent);
+      fill:none;
+      stroke-width:2.4;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .case-text h3{
+      color:var(--accent);
+      font-size:1.25rem;
+      margin-bottom:14px;
+      position:relative;
+      display:inline-block;
+    }
+
+    .case-text h3::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-6px;
+      width:58px;
+      height:2px;
+      border-radius:999px;
+      background:var(--accent);
+    }
+
+    .case-text p{
+      color:rgba(255,255,255,.86);
+      line-height:1.75;
+    }
+
+    .case-data{
+      border-left:1px solid rgba(255,255,255,.14);
+      padding-left:26px;
+      display:grid;
+      gap:18px;
+    }
+
+    .data-item{
+      display:grid;
+      grid-template-columns:34px 1fr;
+      gap:13px;
+      align-items:start;
+    }
+
+    .data-icon{
+      color:var(--accent);
+      font-size:1.4rem;
+    }
+
+    .data-item small{
+      display:block;
+      color:rgba(255,255,255,.62);
+      font-size:.9rem;
+      margin-bottom:4px;
+    }
+
+    .data-item strong{
+      font-size:1rem;
+      font-weight:700;
+      color:#fff;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:18px;
+      margin-top:20px;
+    }
+
+    .info-card{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      border-radius:22px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+    }
+
+    .info-head{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      margin-bottom:22px;
+    }
+
+    .info-icon{
+      width:58px;
+      height:58px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-size:1.7rem;
+      font-weight:900;
+    }
+
+    .blue .info-icon{
+      background:rgba(79,140,255,.15);
+      color:var(--blue);
+    }
+
+    .green .info-icon{
+      background:rgba(101,217,120,.14);
+      color:var(--green);
+    }
+
+    .blue h3{color:var(--blue);}
+    .green h3{color:var(--green);}
+
+    .info-card h3{
+      font-size:1.35rem;
+    }
+
+    .check-list{
+      list-style:none;
+      display:grid;
+      gap:14px;
+    }
+
+    .check-list li{
+      display:grid;
+      grid-template-columns:24px 1fr;
+      gap:12px;
+      color:rgba(255,255,255,.88);
+      line-height:1.65;
+    }
+
+    .check{
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-size:.75rem;
+      margin-top:3px;
+      border:1px solid currentColor;
+    }
+
+    .blue .check{color:var(--blue);}
+    .green .check{color:var(--green);}
+
+    .goal-card{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:92px 1fr;
+      gap:22px;
+      align-items:center;
+      padding:24px 28px;
+      border-radius:22px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+    }
+
+    .trophy{
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(255,90,31,.13);
+      border:1px solid rgba(255,90,31,.28);
+      color:var(--accent);
+      font-size:2rem;
+    }
+
+    .goal-card h3{
+      color:var(--accent);
+      font-size:1.35rem;
+      margin-bottom:8px;
+    }
+
+    .goal-card p{
+      color:rgba(255,255,255,.86);
+      line-height:1.7;
+    }
+
+    .cta-wrap{
+      max-width:880px;
+      margin:26px auto 0;
+      text-align:center;
+    }
+
+    .cta{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:22px;
+      width:100%;
+      min-height:88px;
+      border-radius:16px;
+      text-decoration:none;
+      color:white;
+      background:linear-gradient(135deg, #ff3d00, var(--accent), #ff741f);
+      box-shadow:0 18px 38px rgba(255,90,31,.26);
+      font-size:clamp(1.55rem, 4vw, 2.15rem);
+      font-weight:900;
+      transition:.2s ease;
+    }
+
+    .cta:hover{
+      transform:translateY(-3px);
+      box-shadow:0 22px 48px rgba(255,90,31,.34);
+    }
+
+    .cta span:first-child{
+      font-size:2.3rem;
+      line-height:1;
+    }
+
+    .secure-note{
+      margin-top:18px;
+      color:rgba(255,255,255,.62);
+      font-size:.95rem;
+    }
+
+    @media (max-width: 920px){
+      .hero{
+        grid-template-columns:1fr;
+        padding:24px;
+      }
+
+      .hero-ankle{
+        min-height:260px;
+        margin-top:-10px;
+      }
+
+      .hero-ankle img{
+        max-height:300px;
+      }
+
+      body::before{
+        background:
+          linear-gradient(180deg, rgba(5,9,20,.92), rgba(5,9,20,.98)),
+          url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
+      }
+
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        margin-bottom:38px;
+      }
+
+      .back-btn{
+        width:100%;
+      }
+
+      .case-card{
+        grid-template-columns:1fr;
+        text-align:left;
+      }
+
+      .case-data{
+        border-left:0;
+        border-top:1px solid rgba(255,255,255,.14);
+        padding-left:0;
+        padding-top:24px;
+      }
+
+      .info-grid{
+        grid-template-columns:1fr;
+      }
+
+      .goal-card{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 560px){
+      .wrap{
+        width:min(100% - 24px, 1120px);
+        padding-top:22px;
+      }
+
+      .hero{
+        margin-bottom:32px;
+      }
+
+      .hero h2{
+        font-size:3rem;
+      }
+
+      .hero-ankle{
+        min-height:220px;
+      }
+
+      .hero-ankle img{
+        max-height:260px;
+      }
+
+      .case-card,
+      .info-card,
+      .goal-card{
+        padding:22px;
+      }
+
+      .ankle-icon{
+        width:122px;
+        height:122px;
+      }
+
+      .cta{
+        min-height:76px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+
+    <header class="topbar">
+      <div class="logo">
+        <h1>Move<span>Smart</span></h1>
+        <p>Entrenamiento inteligente</p>
+      </div>
+
+      <a href="index.html" class="back-btn">← Volver al inicio</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">
+          <span class="dot"></span>
+          Diagnóstico funcional
+        </div>
+
+        <h2>Diagnóstico funcional</h2>
+        <div class="client-name">Sergio Miño</div>
+
+        <p>
+          Este diagnóstico nos permite entender tu punto actual y definir el enfoque del programa
+          para que vuelvas a entrenar y competir de forma segura, progresiva y sostenible.
+        </p>
+      </div>
+
+      <div class="hero-ankle" aria-hidden="true">
+        <img src="../../imagenes/tobillo.webp" alt="">
+      </div>
+    </section>
+
+    <section class="case-card">
+      <div class="ankle-icon" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <path d="M46 10v34c0 8-4 14-9 19l-7 7c-6 6-3 16 6 16h30c10 0 16-6 16-13 0-7-6-11-14-11H54" />
+          <path d="M31 86h48" />
+          <path d="M42 10h15" />
+          <path d="M51 23h13" />
+          <path d="M50 36h11" />
+        </svg>
+      </div>
+
+      <div class="case-text">
+        <h3>Resumen del caso</h3>
+        <p>
+          Sergio es corredor de trail y competidor de OCR. Presenta una molestia en el tobillo
+          de aproximadamente 3,5 meses de evolución. Actualmente busca volver a entrenar y competir
+          con confianza, reduciendo el riesgo de recaída.
+        </p>
+      </div>
+
+      <div class="case-data">
+        <div class="data-item">
+          <div class="data-icon">📅</div>
+          <div>
+            <small>Tiempo desde la lesión</small>
+            <strong>≈ 3,5 meses</strong>
+          </div>
+        </div>
+
+        <div class="data-item">
+          <div class="data-icon">🏃</div>
+          <div>
+            <small>Deporte</small>
+            <strong>Trail Running / OCR</strong>
+          </div>
+        </div>
+
+        <div class="data-item">
+          <div class="data-icon">◎</div>
+          <div>
+            <small>Objetivo</small>
+            <strong>Volver a correr y competir</strong>
+          </div>
+        </div>
+
+        <div class="data-item">
+          <div class="data-icon">📈</div>
+          <div>
+            <small>Enfoque principal</small>
+            <strong>Recuperación + Progresión + Rendimiento</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-grid">
+      <article class="info-card blue">
+        <div class="info-head">
+          <div class="info-icon">👁</div>
+          <h3>Lo que observamos</h3>
+        </div>
+
+        <ul class="check-list">
+          <li><span class="check">✓</span><span>Molestia persistente en el tobillo que limita la carga, la carrera y el entrenamiento específico.</span></li>
+          <li><span class="check">✓</span><span>Posible disminución de la tolerancia a la carga, estabilidad y control del apoyo.</span></li>
+          <li><span class="check">✓</span><span>Necesidad de recuperar movilidad, fuerza y confianza en diferentes superficies.</span></li>
+          <li><span class="check">✓</span><span>Riesgo de recaída si se vuelve a la intensidad sin una progresión adecuada.</span></li>
+        </ul>
+      </article>
+
+      <article class="info-card green">
+        <div class="info-head">
+          <div class="info-icon">🎯</div>
+          <h3>Qué vamos a trabajar</h3>
+        </div>
+
+        <ul class="check-list">
+          <li><span class="check">✓</span><span>Movilidad y control del tobillo.</span></li>
+          <li><span class="check">✓</span><span>Fuerza y estabilidad para el apoyo unipodal.</span></li>
+          <li><span class="check">✓</span><span>Tolerancia a la carga y a los impactos.</span></li>
+          <li><span class="check">✓</span><span>Progresión hacia carrera en terreno plano, luego pendientes y terreno irregular.</span></li>
+          <li><span class="check">✓</span><span>Preparación específica para trail y OCR.</span></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="goal-card">
+      <div class="trophy">🏆</div>
+      <div>
+        <h3>Nuestro objetivo</h3>
+        <p>
+          Guiarte en un retorno progresivo, seguro y sostenible, para que recuperes tu nivel,
+          disfrutes el proceso y vuelvas a competir con mayor confianza.
+        </p>
+      </div>
+    </section>
+
+    <div class="cta-wrap">
+      <a href="plan-sergio-mino.html" class="cta">
+        <span>→</span>
+        <span>Ver mi programa</span>
+      </a>
+
+      <div class="secure-note">
+        🔒 Programa 100% personalizado para tu proceso de recuperación y rendimiento.
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>
