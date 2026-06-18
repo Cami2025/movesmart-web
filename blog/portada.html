@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +8,7 @@
   <title>Artículos | MoveSmart</title>
   <!-- Versión optimizada: solo se precarga la imagen principal visible. -->
   <link rel="preload" as="image" href="../imagenes/pdf-no-sabe.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="../imagenes/logo.webp" fetchpriority="high">
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -959,6 +962,27 @@
 .archive-item span:first-child{font-weight:700;}
 @media(max-width:640px){.archive-item{padding:16px;font-size:.95rem;}}
 
+
+/* Extra velocidad sin cambiar diseño:
+   las secciones fuera de pantalla se pintan cuando se acercan */
+@supports (content-visibility:auto){
+  #articulos-en-desarrollo,
+  #archivo-articulos,
+  .newsletter,
+  footer{
+    content-visibility:auto;
+    contain-intrinsic-size:1px 520px;
+  }
+}
+
+/* Reduce trabajo de render en tarjetas sin cambiar apariencia */
+.article-card,
+.featured,
+.newsletter,
+.archive-box{
+  contain:layout paint style;
+}
+
 </style>
 </head>
 
@@ -968,7 +992,7 @@
   <header class="topbar">
     <div class="container nav">
       <a href="../index.html#inicio" class="top-brand" aria-label="Inicio MoveSmart">
-        <img src="../imagenes/logo.webp" alt="MoveSmart" class="top-brand-logo" loading="eager" decoding="async">
+        <img src="../imagenes/logo.webp" alt="MoveSmart" class="top-brand-logo" loading="eager" fetchpriority="high" decoding="async">
       </a>
 
       <nav class="nav-links" aria-label="Navegación principal">
@@ -1038,7 +1062,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="../imagenes/poco_tiempo_para_entrenar.webp" alt="Poco tiempo para entrenar" loading="eager" decoding="async" width="420" height="260" />
+            <img src="../imagenes/poco_tiempo_para_entrenar.webp" alt="Poco tiempo para entrenar" loading="lazy" fetchpriority="low" decoding="async" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Cuando tienes poco tiempo, entrenar distinto sigue siendo entrenar</h4>
@@ -1049,7 +1073,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="../imagenes/dolor_no_significa parar.webp" alt="Dolor y entreno" loading="eager" decoding="async" width="420" height="260" />
+            <img src="../imagenes/dolor_no_significa parar.webp" alt="Dolor y entreno" loading="lazy" fetchpriority="low" decoding="async" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dolor no siempre significa parar</h4>
@@ -1060,7 +1084,7 @@
         <article class="article-card soon">
           <span class="soon-badge">Próximamente</span>
           <div class="thumb">
-            <img src="../imagenes/dormir_y_grasa.webp" alt="Dormir poco y acumulación de grasa" loading="eager" decoding="async" width="420" height="260" />
+            <img src="../imagenes/dormir_y_grasa.webp" alt="Dormir poco y acumulación de grasa" loading="lazy" fetchpriority="low" decoding="async" width="420" height="260" />
           </div>
           <div class="date">En desarrollo</div>
           <h4>Dormir poco también entrena tu cuerpo… para acumular grasa</h4>
@@ -1082,6 +1106,7 @@
           <span>↗</span>
         </a>
       </div>
+    </section>
     </section>
 
     <section class="wrap newsletter">
