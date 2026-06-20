@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Diagnóstico Funcional | Camila Valenzuela · MoveSmart</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Segoe UI', sans-serif;
+    }
+
+    :root{
+      --bg:#050914;
+      --bg2:#0b1426;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.78);
+      --border:rgba(255,255,255,.12);
+      --card:rgba(255,255,255,.08);
+      --soft:rgba(255,255,255,.05);
+      --accent:#ff5a1f;
+      --blue:#4f8cff;
+      --green:#65d978;
+      --shadow:0 14px 34px rgba(0,0,0,.30);
+      --container:min(1120px, calc(100% - 32px));
+    }
+
+    html{scroll-behavior:smooth;}
+
+    body{
+      min-height:100vh;
+      color:var(--text);
+      background:
+        linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
+        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(73,58,146,.18), transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(243,107,42,.20), transparent 20%),
+        linear-gradient(90deg, rgba(6,8,18,.18) 0%, rgba(6,8,18,.04) 38%, rgba(6,8,18,.10) 100%);
+      z-index:-1;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 70% 36%, rgba(255,90,31,.18), transparent 13%),
+        radial-gradient(circle at 18% 12%, rgba(255,255,255,.05), transparent 18%);
+      z-index:-1;
+    }
+
+    a{color:inherit;text-decoration:none;}
+    img{display:block;max-width:100%;}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(10,8,14,.40);
+      border-bottom:1px solid rgba(255,255,255,.05);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    .nav{
+      width:var(--container);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      min-height:78px;
+      gap:20px;
+      flex-wrap:nowrap;
+      overflow:hidden;
+    }
+
+    .top-brand{
+      font-size:0;
+      line-height:0;
+      letter-spacing:0;
+      text-shadow:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:flex-start;
+      flex:0 0 auto;
+      width:auto;
+      min-width:max-content;
+    }
+
+    .top-logo{
+      display:block;
+      height:68px;
+      width:auto;
+      max-width:none;
+      object-fit:contain;
+      filter:drop-shadow(0 12px 22px rgba(0,0,0,.42));
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex:0 0 auto;
+      white-space:nowrap;
+    }
+
+    .top-socials{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
+    }
+
+    .top-social{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      display:grid;
+      place-items:center;
+      color:#fff;
+      transition:transform .22s ease, background .22s ease, box-shadow .22s ease;
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+    }
+
+    .top-social:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.10);
+      box-shadow:0 12px 26px rgba(0,0,0,.24);
+    }
+
+    .top-social svg{
+      width:19px;
+      height:19px;
+      fill:currentColor;
+    }
+
+    .top-social.instagram{color:#ff5a8a;}
+    .top-social.twitter{color:#4da3ff;}
+    .top-social.linkedin{color:#58a6ff;}
+    .top-social.spotify{color:#1ed760;}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:13px 18px;
+      border-radius:16px;
+      font-weight:700;
+      transition:.25s ease;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:white;
+    }
+
+    .btn-primary:hover{
+      background:#ff8b4f;
+      transform:translateY(-1px);
+    }
+
+    .btn.small{
+      min-height:50px;
+      padding:0 24px;
+      border-radius:12px;
+      font-size:1rem;
+    }
+
+    .wrap{
+      width:var(--container);
+      margin:auto;
+      padding:34px 0 44px;
+    }
+
+    .hero{
+      position:relative;
+      display:grid;
+      grid-template-columns:minmax(0, 1fr) minmax(320px, .9fr);
+      gap:14px;
+      align-items:center;
+      max-width:100%;
+      margin-bottom:26px;
+      padding:24px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035)),
+        radial-gradient(circle at 78% 70%, rgba(243,107,42,.10), transparent 18%),
+        radial-gradient(circle at 18% 24%, rgba(109,83,150,.12), transparent 24%);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      overflow:hidden;
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:620px;
+    }
+
+    .hero-ankle{
+      position:relative;
+      z-index:1;
+      min-height:240px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .hero-ankle::before{
+      content:"";
+      position:absolute;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,90,31,.22), transparent 62%);
+      filter:blur(4px);
+    }
+
+    .hero-ankle img{
+      position:relative;
+      z-index:2;
+      width:min(100%, 360px);
+      max-height:360px;
+      object-fit:contain;
+      filter:drop-shadow(0 26px 45px rgba(0,0,0,.46));
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,90,31,.55);
+      background:rgba(255,90,31,.08);
+      color:#fff;
+      font-size:.82rem;
+      font-weight:800;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      margin-bottom:16px;
+    }
+
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      border:2px solid var(--accent);
+      box-shadow:0 0 0 5px rgba(255,90,31,.12);
+    }
+
+    .hero h2{
+      font-size:clamp(2rem, 4vw, 3.4rem);
+      line-height:1.02;
+      letter-spacing:-.04em;
+      margin-bottom:12px;
+      text-wrap:balance;
+    }
+
+    .client-name{
+      color:var(--accent);
+      font-size:clamp(1.25rem, 3vw, 1.65rem);
+      font-weight:900;
+      margin-bottom:12px;
+      letter-spacing:-.03em;
+    }
+
+    .hero p{
+      color:rgba(255,255,255,.88);
+      line-height:1.70;
+      font-size:1.02rem;
+      max-width:560px;
+    }
+
+    .case-card{
+      display:grid;
+      grid-template-columns:1fr 1.18fr 1fr;
+      gap:20px;
+      align-items:center;
+      padding:24px;
+      border-radius:20px;
+      border:1px solid var(--border);
+      background:var(--card);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);
+      margin-bottom:20px;
+    }
+
+    .ankle-icon{
+      width:118px;
+      height:118px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      border:2px solid rgba(255,255,255,.13);
+      background:rgba(255,255,255,.04);
+      margin:auto;
+    }
+
+    .ankle-icon img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:50%;
+      display:block;
+      filter:drop-shadow(0 14px 24px rgba(0,0,0,.34));
+    }
+
+    .case-text h3{
+      color:var(--accent);
+      font-size:1.15rem;
+      margin-bottom:14px;
+      position:relative;
+      display:inline-block;
+    }
+
+    .case-text h3::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-6px;
+      width:48px;
+      height:2px;
+      border-radius:999px;
+      background:var(--accent);
+    }
+
+    .case-text p{
+      color:rgba(255,255,255,.86);
+      line-height:1.70;
+    }
+
+    .case-data{
+      border-left:1px solid rgba(255,255,255,.14);
+      padding-left:22px;
+      display:grid;
+      gap:12px;
+    }
+
+    .data-item{
+      display:grid;
+      grid-template-columns:30px 1fr;
+      gap:13px;
+      align-items:start;
+    }
+
+    .data-icon{
+      color:var(--accent);
+      font-size:1.2rem;
+    }
+
+    .data-item small{
+      display:block;
+      color:rgba(255,255,255,.62);
+      font-size:.82rem;
+      margin-bottom:4px;
+    }
+
+    .data-item strong{
+      font-size:.96rem;
+      font-weight:700;
+      color:#fff;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+      margin-top:20px;
+    }
+
+    .info-card{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:20px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    .info-head{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .info-icon{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      font-size:1.22rem;
+      font-weight:900;
+    }
+
+    .blue .info-icon{
+      background:rgba(79,140,255,.15);
+      color:var(--blue);
+    }
+
+    .green .info-icon{
+      background:rgba(101,217,120,.14);
+      color:var(--green);
+    }
+
+    .blue h3{color:var(--blue);}
+    .green h3{color:var(--green);}
+
+    .info-card h3{
+      font-size:1.22rem;
+    }
+
+    .check-list{
+      list-style:none;
+      display:grid;
+      gap:12px;
+    }
+
+    .check-list li{
+      display:grid;
+      grid-template-columns:22px 1fr;
+      gap:12px;
+      color:rgba(255,255,255,.88);
+      line-height:1.65;
+    }
+
+    .check{
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-size:.68rem;
+      margin-top:3px;
+      border:1px solid currentColor;
+    }
+
+    .blue .check{color:var(--blue);}
+    .green .check{color:var(--green);}
+
+    .goal-card{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:78px 1fr;
+      gap:14px;
+      align-items:center;
+      padding:22px 24px;
+      border-radius:20px;
+      border:1px solid var(--border);
+      background:var(--card);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+
+    .trophy{
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(255,90,31,.13);
+      border:1px solid rgba(255,90,31,.28);
+      color:var(--accent);
+      font-size:1.6rem;
+    }
+
+    .goal-card h3{
+      color:var(--accent);
+      font-size:1.22rem;
+      margin-bottom:8px;
+    }
+
+    .goal-card p{
+      color:rgba(255,255,255,.86);
+      line-height:1.7;
+    }
+
+    .cta-wrap{
+      max-width:720px;
+      margin:22px auto 0;
+      text-align:center;
+    }
+
+    .cta{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:14px;
+      width:100%;
+      min-height:62px;
+      border-radius:14px;
+      text-decoration:none;
+      color:white;
+      background:linear-gradient(135deg, #ff3d00, var(--accent), #ff741f);
+      box-shadow:0 12px 28px rgba(255,90,31,.24);
+      font-size:clamp(1.05rem, 3vw, 1.35rem);
+      font-weight:900;
+      transition:.2s ease;
+    }
+
+    .cta:hover{
+      transform:translateY(-3px);
+      box-shadow:0 22px 48px rgba(255,90,31,.34);
+    }
+
+    .cta span:first-child{
+      font-size:1.45rem;
+      line-height:1;
+    }
+
+    .secure-note{
+      margin-top:18px;
+      color:rgba(255,255,255,.62);
+      font-size:.85rem;
+    }
+
+    @media (max-width: 920px){
+      .hero{
+        grid-template-columns:1fr;
+        padding:24px;
+      }
+
+      .hero-ankle{
+        min-height:240px;
+        margin-top:-10px;
+      }
+
+      .hero-ankle img{
+        max-height:280px;
+      }
+
+      body::before{
+        background:
+          radial-gradient(circle at 16% 18%, rgba(73,58,146,.18), transparent 30%),
+          radial-gradient(circle at 82% 18%, rgba(243,107,42,.20), transparent 20%),
+          linear-gradient(90deg, rgba(6,8,18,.18) 0%, rgba(6,8,18,.04) 38%, rgba(6,8,18,.10) 100%);
+      }
+
+      .case-card{
+        grid-template-columns:1fr;
+        text-align:left;
+      }
+
+      .case-data{
+        border-left:0;
+        border-top:1px solid rgba(255,255,255,.14);
+        padding-left:0;
+        padding-top:24px;
+      }
+
+      .info-grid{
+        grid-template-columns:1fr;
+      }
+
+      .goal-card{
+        grid-template-columns:1fr;
+      }
+    }
+
+
+    @media (max-width: 760px){
+      .topbar{
+        background:rgba(8,6,13,.78);
+        backdrop-filter:blur(14px);
+        -webkit-backdrop-filter:blur(14px);
+        border-bottom:1px solid rgba(255,255,255,.10);
+      }
+
+      .nav{
+        width:100%;
+        max-width:100%;
+        min-height:auto;
+        padding:14px 34px 12px;
+        column-gap:8px;
+        row-gap:10px;
+      }
+
+      .top-logo{height:46px;}
+
+      .nav-actions{
+        margin-left:auto;
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+        gap:6px;
+      }
+
+      .top-socials{gap:7px;}
+
+      .top-social{
+        width:auto;
+        height:auto;
+        border:none;
+        background:transparent;
+        border-radius:0;
+        box-shadow:none;
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+        padding:0;
+      }
+
+      .top-social:hover{
+        transform:translateY(-1px);
+        background:transparent;
+        box-shadow:none;
+      }
+
+      .top-social svg{
+        width:14px;
+        height:14px;
+      }
+
+      .nav-actions > .btn.small{
+        min-height:31px;
+        padding:0 11px;
+        border-radius:11px;
+        font-size:.68rem;
+        font-weight:850;
+      }
+    }
+
+    @media (max-width: 390px){
+      .nav{padding-left:30px;padding-right:30px;}
+      .top-logo{height:42px;}
+      .top-social svg{width:13px;height:13px;}
+      .nav-actions > .btn.small{min-height:30px;padding:0 10px;font-size:.65rem;border-radius:10px;}
+    }
+
+    @media (max-width: 350px){
+      .nav{padding-left:24px;padding-right:24px;}
+      .top-logo{height:38px;}
+      .top-socials{gap:5px;}
+      .top-social svg{width:12px;height:12px;}
+      .nav-actions > .btn.small{padding:0 8px;font-size:.62rem;}
+    }
+
+    @media (max-width: 560px){
+      .wrap{
+        width:min(100% - 24px, 1120px);
+        padding-top:22px;
+      }
+
+      .hero{
+        margin-bottom:32px;
+      }
+
+      .hero h2{
+        font-size:2.25rem;
+      }
+
+      .hero-ankle{
+        min-height:200px;
+      }
+
+      .hero-ankle img{
+        max-height:230px;
+      }
+
+      .case-card,
+      .info-card,
+      .goal-card{
+        padding:18px;
+      }
+
+      .ankle-icon{
+        width:104px;
+        height:104px;
+      }
+
+      .cta{
+        min-height:58px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="nav">
+      <a href="../../contenido_exclusivo/index.html" class="top-brand" aria-label="Inicio MoveSmart">
+        <img class="top-logo" src="../../imagenes/logo.webp" alt="MoveSmart">
+      </a>
+
+      <div class="nav-actions">
+        <div class="top-socials" aria-label="Redes sociales MoveSmart">
+          <a class="top-social instagram" href="https://www.instagram.com/movesmart.plan/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4zm4.2 3.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 7.2m0 2A2.8 2.8 0 1 0 14.8 12 2.8 2.8 0 0 0 12 9.2M17.2 6.7a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1"></path></svg>
+          </a>
+          <a class="top-social twitter" href="https://x.com/movesmartchile" target="_blank" rel="noopener noreferrer" aria-label="X">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 5.8c-.7.3-1.5.5-2.4.6.9-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.7 1A4.2 4.2 0 0 0 11.5 9c0 .3 0 .6.1.9A12 12 0 0 1 3 5.5a4.2 4.2 0 0 0 1.3 5.6c-.7 0-1.3-.2-1.9-.5v.1a4.2 4.2 0 0 0 3.4 4.1c-.4.1-.8.2-1.2.2-.3 0-.6 0-.8-.1a4.2 4.2 0 0 0 3.9 2.9A8.5 8.5 0 0 1 2 19.5 12 12 0 0 0 8.5 21c7.8 0 12.1-6.5 12.1-12.1v-.6c.8-.6 1.5-1.4 2.1-2.2z"></path></svg>
+          </a>
+          <a class="top-social linkedin" href="https://www.linkedin.com/in/movesmart-chile-b4b03b40a" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5M3 10h4v11H3zm6 0h3.8v1.5h.1c.5-.9 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6V21h-4v-4.8c0-1.2 0-2.7-1.7-2.7s-1.9 1.3-1.9 2.6V21H9z"></path></svg>
+          </a>
+          <a class="top-social spotify" href="https://open.spotify.com/user/31lcttv3ugvu6s5ifvcj5tf5syre" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m4.6 14.5c-.2.3-.6.4-.9.2-2.5-1.5-5.6-1.8-9.3-1-.4.1-.7-.1-.8-.5s.1-.7.5-.8c4-.9 7.5-.5 10.3 1.1.3.2.4.6.2 1m1.2-2.7c-.2.4-.7.5-1.1.3-2.8-1.7-7.1-2.2-10.4-1.2-.4.1-.9-.1-1-.5-.1-.4.1-.9.5-1 3.8-1.1 8.6-.6 11.8 1.4.4.2.5.7.2 1m.1-2.8c-3.4-2-9-2.2-12.2-1.2-.5.2-1-.1-1.2-.6-.2-.5.1-1 .6-1.2 3.7-1.1 9.8-.9 13.8 1.5.4.3.6.9.3 1.3-.3.4-.9.5-1.3.2"></path></svg>
+          </a>
+        </div>
+        <a href="https://cami2025.github.io/movesmart-web/blog/portada.html" class="btn btn-primary small">Blog</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">
+          <span class="dot"></span>
+          Diagnóstico funcional
+        </div>
+
+        <h2>Diagnóstico funcional</h2>
+        <div class="client-name">Camila Valenzuela</div>
+
+        <p>
+          Este diagnóstico nos permite entender tu punto actual y definir el enfoque del programa
+          para que vuelvas a entrenar y competir de forma segura, progresiva y sostenible.
+        </p>
+      </div>
+
+      <div class="hero-ankle" aria-hidden="true">
+        <img src="../../imagenes/tobillo.webp" alt="">
+      </div>
+    </section>
+
+    <section class="case-card">
+      <div class="ankle-icon" aria-hidden="true">
+        <img src="../../imagenes/tobillo1.webp" alt="">
+      </div>
+
+      <div class="case-text">
+        <h3>Resumen del caso</h3>
+        <p>
+          Camila busca tonificar y recomponer corporalmente luego de dos embarazos. Refiere sensación de pérdida de músculo, necesidad de recuperar fuerza y una molestia ocasional en la espalda baja. Actualmente quiere entrenar en casa, sin correr ni saltar, con sesiones realistas de 30 a 45 minutos.
+        </p>
+      </div>
+
+      <div class="case-data">
+        <div class="data-item">
+          <div class="data-icon">📅</div>
+          <div>
+            <small>Tiempo sin entrenamiento regular</small>
+            <strong>≈ 1 año sin entrenar</strong>
+          </div>
+        </div>
+
+        <div class="data-item">
+          <div class="data-icon">🏃</div>
+          <div>
+            <small>Modalidad</small>
+            <strong>Fuerza en casa</strong>
+          </div>
+        </div>
+
+        <div class="data-item">
+          <div class="data-icon">◎</div>
+          <div>
+            <small>Objetivo</small>
+            <strong>Tonificar y recuperar fuerza</strong>
+          </div>
+        </div>
+
+        <div class="data-item">
+          <div class="data-icon">📈</div>
+          <div>
+            <small>Enfoque principal</small>
+            <strong>Fuerza + Core + Adherencia</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-grid">
+      <article class="info-card blue">
+        <div class="info-head">
+          <div class="info-icon">👁</div>
+          <h3>Lo que observamos</h3>
+        </div>
+
+        <ul class="check-list">
+          <li><span class="check">✓</span><span>Molestia ocasional de espalda baja que requiere buena técnica, control de carga y fortalecimiento progresivo.</span></li>
+          <li><span class="check">✓</span><span>Posible disminución de la tolerancia a la carga, estabilidad y control del apoyo.</span></li>
+          <li><span class="check">✓</span><span>Necesidad de recuperar movilidad, fuerza y confianza en diferentes superficies.</span></li>
+          <li><span class="check">✓</span><span>Riesgo de recaída si se vuelve a la intensidad sin una progresión adecuada.</span></li>
+        </ul>
+      </article>
+
+      <article class="info-card green">
+        <div class="info-head">
+          <div class="info-icon">🎯</div>
+          <h3>Qué vamos a trabajar</h3>
+        </div>
+
+        <ul class="check-list">
+          <li><span class="check">✓</span><span>Estabilidad de core, glúteos y control lumbopélvico.</span></li>
+          <li><span class="check">✓</span><span>Fuerza y estabilidad para el apoyo unipodal.</span></li>
+          <li><span class="check">✓</span><span>Tolerancia a la carga y a los impactos.</span></li>
+          <li><span class="check">✓</span><span>Progresión hacia carrera en terreno plano, luego pendientes y terreno irregular.</span></li>
+          <li><span class="check">✓</span><span>Entrenamiento de fuerza en casa, bajo impacto y compatible con su rutina familiar.</span></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="goal-card">
+      <div class="trophy">🏆</div>
+      <div>
+        <h3>Nuestro objetivo</h3>
+        <p>
+          Guiarte en un retorno progresivo, seguro y sostenible, para que recuperes tu nivel,
+          disfrutes el proceso y vuelvas a competir con mayor confianza.
+        </p>
+      </div>
+    </section>
+
+    <div class="cta-wrap">
+      <a href="plan-camila-valenzuela.html" class="cta">
+        <span>→</span>
+        <span>Ver mi programa</span>
+      </a>
+
+      <div class="secure-note">
+        🔒 Programa 100% personalizado para tu proceso de recuperación y rendimiento.
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>
