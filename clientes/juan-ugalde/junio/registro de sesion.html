@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -765,11 +766,14 @@
 
         const response = await fetch(SCRIPT_URL, {
           method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          mode: "no-cors",
           body: JSON.stringify(payload)
         });
 
-        const result = await response.json();
+        // Con mode: "no-cors" Google Apps Script guarda la fila,
+        // pero el navegador no permite leer la respuesta.
+        // Por eso asumimos éxito si no hubo error de red.
+        const result = { ok: true };
 
         if (result.ok) {
           mensajeFinal.classList.remove("hidden");
