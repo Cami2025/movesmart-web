@@ -832,36 +832,28 @@
 
         submitBtn.textContent = "Guardando registro...";
 
-        const response = await fetch(SCRIPT_URL, {
+        await fetch(SCRIPT_URL, {
           method: "POST",
+          mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload)
         });
 
-        const result = await response.json();
+        mensajeFinal.textContent = "¡Sesión registrada! Revisa tu hoja de respuestas.";
+        mensajeFinal.classList.remove("hidden");
 
-        if (result.ok) {
-          mensajeFinal.textContent = "¡Sesión registrada! Revisando recompensa...";
-          mensajeFinal.classList.remove("hidden");
+        form.reset();
+        esfuerzoValor.textContent = "5";
+        zonaBlock.classList.add("hidden");
+        resetFotoUI();
 
-          form.reset();
-          esfuerzoValor.textContent = "5";
-          zonaBlock.classList.add("hidden");
-          resetFotoUI();
+        const nuevaFecha = obtenerFechaChile();
+        fechaActual.value = nuevaFecha;
 
-          const nuevaFecha = obtenerFechaChile();
-          fechaActual.value = nuevaFecha;
-
-          // Abre la ruleta casi inmediatamente después de registrar la sesión.
-          // Importante: con esta versión se abre cada vez que el registro sea exitoso.
-          setTimeout(() => {
-            ruletaFullscreen.classList.remove("hidden");
-          }, 400);
-        } else {
-          mensajeError.textContent = result.message || "Hubo un problema al enviar tu seguimiento.";
-          mensajeError.classList.remove("hidden");
-          console.error("Resultado respuestas no OK:", result);
-        }
+        // Abre la ruleta casi inmediatamente después de registrar la sesión.
+        setTimeout(() => {
+          ruletaFullscreen.classList.remove("hidden");
+        }, 400);
       } catch (error) {
         mensajeError.textContent = "No se pudo enviar el formulario. Revisa la implementación del Apps Script.";
         mensajeError.classList.remove("hidden");
