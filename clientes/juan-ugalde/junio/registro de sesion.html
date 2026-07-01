@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -403,9 +405,9 @@
 
           <button type="submit" class="checkin-boton" id="submitBtn">✅ Registrar mi sesión</button>
 
-          <p id="mensajeCarga" class="checkin-carga hidden">Enviando, espera un momento...</p>
-          <p id="mensajeFinal" class="checkin-exito hidden">¡Gracias! Tu seguimiento fue enviado correctamente.</p>
-          <p id="mensajeError" class="checkin-error hidden">Hubo un problema al enviar tu seguimiento.</p>
+          <p id="mensajeCarga" class="checkin-carga hidden">Guardando tu sesión...</p>
+          <p id="mensajeFinal" class="checkin-exito hidden">✨ Sesión registrada con éxito. ¡Buen trabajo!</p>
+          <p id="mensajeError" class="checkin-error hidden">No se pudo guardar tu sesión. Inténtalo nuevamente.</p>
         </form>
       </div>
     </div>
@@ -564,7 +566,7 @@
       mensajeCarga.classList.remove("hidden");
 
       submitBtn.disabled = true;
-      submitBtn.textContent = "Guardando registro...";
+      submitBtn.textContent = "Guardando tu sesión...";
 
       try {
         fechaActual.value = obtenerFechaChile();
@@ -597,7 +599,7 @@
           fotoNombre: fotoNombreArchivo
         };
 
-        submitBtn.textContent = "Enviando al Sheet...";
+        submitBtn.textContent = "Enviando tu registro...";
 
         await fetch(SCRIPT_URL, {
           method: "POST",
@@ -605,7 +607,7 @@
           body: JSON.stringify(payload)
         });
 
-        mensajeFinal.textContent = "Registro enviado al Sheet.";
+        mensajeFinal.textContent = "✨ Sesión registrada con éxito. ¡Buen trabajo!";
         mensajeFinal.classList.remove("hidden");
 
         form.reset();
@@ -616,7 +618,7 @@
         rutinaHidden.value = rutinaParam;
 
       } catch (error) {
-        mensajeError.textContent = "No se pudo enviar al Sheet.";
+        mensajeError.textContent = "No se pudo guardar tu sesión. Inténtalo nuevamente.";
         mensajeError.classList.remove("hidden");
         console.error(error);
       } finally {
