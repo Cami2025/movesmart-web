@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -272,6 +274,54 @@
       .pill{flex:1 1 130px}
       .finish-session-btn{width:100%;min-width:unset}
     }
+  
+    .smart-loading{
+      display:none;
+      margin-top:22px;
+      padding:28px;
+      border-radius:30px;
+      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.13);
+      box-shadow:var(--shadow);
+      text-align:center;
+      animation:fadeUp .35s ease both;
+    }
+
+    .smart-loading.active{display:block}
+
+    .smart-orb{
+      width:68px;
+      height:68px;
+      border-radius:50%;
+      margin:0 auto 16px;
+      background:
+        radial-gradient(circle at 30% 30%, #fff, transparent 24%),
+        linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow:0 0 34px rgba(255,90,31,.45);
+      animation:pulseOrb 1.15s ease-in-out infinite;
+    }
+
+    .smart-loading h3{
+      font-size:1.35rem;
+      margin-bottom:8px;
+    }
+
+    .smart-loading p{
+      color:rgba(255,255,255,.76);
+      line-height:1.6;
+    }
+
+    .survey-card.is-processing{
+      opacity:.75;
+      pointer-events:none;
+      transition:.25s ease;
+    }
+
+    @keyframes pulseOrb{
+      0%,100%{transform:scale(.92);opacity:.72}
+      50%{transform:scale(1.06);opacity:1}
+    }
+
   </style>
 </head>
 
@@ -410,6 +460,13 @@
       <p class="microcopy">Hoy buscamos sumar una repetición útil, no ganar por intensidad.</p>
 
       <div class="result-card" id="resultCard"></div>
+
+      <div class="smart-loading" id="smartLoading" aria-live="polite">
+        <div class="smart-orb"></div>
+        <h3 id="smartLoadingTitle">Analizando cómo llegas hoy...</h3>
+        <p id="smartLoadingText">MoveSmart está ajustando tu rutina según tu tiempo, energía y dolor de rodilla.</p>
+      </div>
+
 
       <!-- RUTINA EXPRESS -->
       <div class="routine-container" id="rutina-express">
@@ -706,76 +763,160 @@
   </div>
 
   <script>
-    const answers = {};
-    const totalQuestions = 3;
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzw1N8iVnpObbNNP78nEQ05krw6GQqYX95_NiMaKqMkS4ctR3QQa_f8t8WN1rQOgxmBng/exec";
+    const CLIENTE = "Fabian Laferte";
+
+    const respuestas = { tiempo:null, energia:null, dolor:null };
 
     const progressFill = document.getElementById("progressFill");
     const progressText = document.getElementById("progressText");
     const resultCard = document.getElementById("resultCard");
+    const surveyCard = document.querySelector(".survey-card");
+    const smartLoading = document.getElementById("smartLoading");
+    const smartLoadingTitle = document.getElementById("smartLoadingTitle");
+    const smartLoadingText = document.getElementById("smartLoadingText");
     const createRoutine = document.getElementById("createRoutine");
 
     function updateProgress(){
-      const answered = Object.keys(answers).length;
-      const percent = (answered / totalQuestions) * 100;
-      progressFill.style.width = percent + "%";
-      progressText.textContent = `Pregunta ${answered} de ${totalQuestions}`;
+      const answered = Object.values(respuestas).filter(Boolean).length;
+      progressFill.style.width = `${(answered / 3) * 100}%`;
+      progressText.textContent = `Pregunta ${answered} de 3`;
+    }
+
+    function nombreEstructura(){
+      if(respuestas.tiempo === "express") return "Express";
+      if(respuestas.tiempo === "base") return "Base";
+      return "Completa";
+    }
+
+    function modoSegunRespuesta(){
+      if(respuestas.dolor === "alto" || respuestas.energia === "baja") return "Recovery";
+      if(respuestas.dolor === "leve" && respuestas.energia === "alta") return "Plus";
+      return "Normal";
+    }
+
+    function guardarRespuestaEnSheets(estructura, modo){
+      const payload = {
+        cliente: CLIENTE,
+        rutina: "Rutina B",
+        tiempo: respuestas.tiempo,
+        energia: respuestas.energia,
+        dolor: respuestas.dolor,
+        estructura: estructura,
+        modo: modo
+      };
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        keepalive: true,
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(payload)
+      }).catch(function(error){
+        console.log("No se pudo guardar en Sheets:", error);
+
+        try{
+          const blob = new Blob([JSON.stringify(payload)], {type:"text/plain;charset=utf-8"});
+          navigator.sendBeacon(SCRIPT_URL, blob);
+        }catch(e){
+          console.log("Tampoco se pudo usar sendBeacon:", e);
+        }
+      });
     }
 
     document.querySelectorAll(".choice").forEach(button => {
       button.addEventListener("click", () => {
         const question = button.closest(".question").dataset.question;
-        answers[question] = button.dataset.value;
+        respuestas[question] = button.dataset.value;
 
         button.closest(".choices").querySelectorAll(".choice").forEach(btn => {
           btn.classList.remove("selected");
         });
 
         button.classList.add("selected");
+        resultCard.classList.remove("active");
+        document.querySelectorAll(".routine-container").forEach(routine => {
+          routine.classList.remove("active");
+        });
         updateProgress();
       });
     });
 
-    function hideRoutines(){
-      document.querySelectorAll(".routine-container").forEach(routine => {
-        routine.classList.remove("active");
-      });
+    function elegirRutinaId(){
+      const tiempo = respuestas.tiempo;
+      const energia = respuestas.energia;
+      const dolor = respuestas.dolor;
+
+      if(dolor === "alto") return "rutina-express";
+      if(tiempo === "express" || energia === "baja") return "rutina-express";
+      if(tiempo === "completa" && energia === "alta" && dolor === "leve") return "rutina-completa";
+      return "rutina-base";
     }
 
-    function chooseRoutine(){
-      const tiempo = answers.tiempo;
-      const energia = answers.energia;
-      const dolor = answers.dolor;
+    function crearRutina(){
+      const faltan = Object.entries(respuestas).filter(([,v]) => !v).map(([k]) => k);
 
-      if(!tiempo || !energia || !dolor){
+      if(faltan.length){
+        resultCard.innerHTML = "<strong>Falta completar la encuesta.</strong><br>Responde tiempo, energía y dolor de rodilla para crear la rutina de hoy.";
+        resultCard.style.background = "rgba(255,90,31,.12)";
+        resultCard.style.borderColor = "rgba(255,90,31,.28)";
+        resultCard.style.color = "#ffe0d4";
         resultCard.classList.add("active");
-        resultCard.innerHTML = "<strong>Falta completar la encuesta.</strong><br>Responde las 3 preguntas para crear la rutina de hoy.";
         return;
       }
 
-      hideRoutines();
+      const estructura = nombreEstructura();
+      const modo = modoSegunRespuesta();
+      const routineId = elegirRutinaId();
 
-      let routineId = "rutina-base";
-      let message = "Hoy corresponde la versión base: control, cadera y estabilidad sin sobrecargar.";
+      guardarRespuestaEnSheets(estructura, modo);
 
-      if(dolor === "alto"){
-        routineId = "rutina-express";
-        message = "Hoy conviene la versión express: menos volumen y más control.";
-      } else if(tiempo === "express" || energia === "baja"){
-        routineId = "rutina-express";
-        message = "Hoy haremos una versión corta para mantener continuidad.";
-      } else if(tiempo === "completa" && energia === "alta" && dolor === "leve"){
-        routineId = "rutina-completa";
-        message = "Hoy puedes realizar la versión completa, manteniendo siempre la regla del dolor.";
-      }
+      const modoTexto = {
+        Recovery: "Hoy conviene bajar el volumen, usar menos rango y priorizar control. La idea es sumar sin irritar la rodilla.",
+        Normal: "Hoy puedes seguir la rutina planificada, manteniendo técnica, pausas y control.",
+        Plus: "Hoy tienes buena disponibilidad. Si la rodilla responde bien, puedes hacer la versión completa o agregar una serie controlada."
+      };
 
-      resultCard.classList.add("active");
-      resultCard.innerHTML = `<strong>Rutina creada.</strong><br>${message}`;
+      resultCard.classList.remove("active");
+      document.querySelectorAll(".routine-container").forEach(routine => {
+        routine.classList.remove("active");
+      });
 
-      document.getElementById(routineId).classList.add("active");
-      document.getElementById(routineId).scrollIntoView({behavior:"smooth", block:"start"});
+      smartLoading.classList.add("active");
+      surveyCard.classList.add("is-processing");
+      smartLoadingTitle.textContent = "Analizando cómo llegas hoy...";
+      smartLoadingText.textContent = "MoveSmart está revisando tu tiempo, energía y dolor de rodilla.";
+      smartLoading.scrollIntoView({ behavior:"auto", block:"center" });
+
+      setTimeout(() => {
+        smartLoadingTitle.textContent = "Adaptando tu Rutina B...";
+        smartLoadingText.textContent = `Preparando versión ${estructura} con modo ${modo}.`;
+      }, 180);
+
+      setTimeout(() => {
+        smartLoadingTitle.textContent = "✨ Rutina lista";
+        smartLoadingText.textContent = "Tu sesión personalizada ya está preparada.";
+      }, 380);
+
+      setTimeout(() => {
+        smartLoading.classList.remove("active");
+        surveyCard.classList.remove("is-processing");
+
+        resultCard.style.background = "rgba(29,191,115,.12)";
+        resultCard.style.borderColor = "rgba(29,191,115,.28)";
+        resultCard.style.color = "#ddffea";
+        resultCard.innerHTML = `<strong>✨ Recomendación MoveSmart:</strong><br>Rutina B ${estructura} · Modo ${modo}<br><span style="color:rgba(255,255,255,.76)">${modoTexto[modo]}</span>`;
+        resultCard.classList.add("active");
+
+        const routineContainer = document.getElementById(routineId);
+        routineContainer.classList.add("active");
+        routineContainer.scrollIntoView({ behavior:"auto", block:"start" });
+      }, 650);
     }
 
-    createRoutine.addEventListener("click", chooseRoutine);
+    createRoutine.addEventListener("click", crearRutina);
     updateProgress();
   </script>
 </body>
