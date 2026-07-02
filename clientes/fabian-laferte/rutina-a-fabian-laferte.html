@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rutina A MoveSmart | Fabián Laferte</title>
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    :root{
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.78);
+      --soft:rgba(255,255,255,.06);
+      --soft-2:rgba(255,255,255,.09);
+      --border:rgba(255,255,255,.13);
+      --accent:#ff5a1f;
+      --accent-2:#ff8a3d;
+      --blue:#2f63ff;
+      --green:#35d062;
+      --yellow:#ffd166;
+      --red:#ff5b5b;
+      --shadow:0 14px 34px rgba(0,0,0,.32);
+      --wrap:min(1120px, calc(100% - 32px));
+    }
+
+    body{
+      min-height:100vh;
+      font-family:'Segoe UI',system-ui,sans-serif;
+      color:var(--text);
+      background:
+        linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
+        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(47,99,255,.16), transparent 28%),
+        radial-gradient(circle at 88% 20%, rgba(255,90,31,.18), transparent 26%),
+        linear-gradient(90deg, rgba(4,6,14,.20), transparent 45%, rgba(255,90,31,.06)),
+        radial-gradient(circle at 50% 110%, rgba(255,255,255,.05), transparent 36%);
+      z-index:0;
+    }
+
+    .wrap{
+      width:var(--wrap);
+      margin:auto;
+      padding:30px 0 50px;
+      position:relative;
+      z-index:1;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:24px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-badge{
+      width:46px;
+      height:46px;
+      border-radius:15px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      font-weight:900;
+      box-shadow:0 16px 34px rgba(255,90,31,.22);
+    }
+
+    .brand-text h1{
+      font-size:1.28rem;
+      line-height:1.05;
+      font-weight:900;
+      letter-spacing:-.02em;
+    }
+
+    .brand-text p{
+      color:var(--muted);
+      font-size:.92rem;
+      margin-top:4px;
+    }
+
+    .back-btn{
+      text-decoration:none;
+      color:#fff;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.13);
+      padding:12px 18px;
+      border-radius:16px;
+      font-weight:800;
+    }
+
+    .hero{
+      min-height:360px;
+      border-radius:34px;
+      overflow:hidden;
+      position:relative;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      align-items:stretch;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      background:#090d18;
+      margin-bottom:24px;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg, rgba(5,7,15,.96) 0%, rgba(5,7,15,.82) 42%, rgba(5,7,15,.34) 70%, rgba(5,7,15,.16) 100%),
+        linear-gradient(180deg, rgba(5,7,15,.12), rgba(5,7,15,.56));
+      z-index:1;
+      pointer-events:none;
+    }
+
+    .hero-copy{
+      position:relative;
+      z-index:2;
+      padding:42px 42px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .hello{
+      color:var(--accent-2);
+      font-weight:900;
+      font-size:1.1rem;
+      margin-bottom:14px;
+    }
+
+    .hero h2{
+      font-size:clamp(2rem, 4vw, 3.6rem);
+      line-height:1.04;
+      letter-spacing:-.04em;
+      max-width:720px;
+      margin-bottom:16px;
+    }
+
+    .hero p{
+      color:rgba(255,255,255,.82);
+      font-size:1.05rem;
+      line-height:1.7;
+      max-width:600px;
+    }
+
+    .hero-image{
+      position:absolute;
+      inset:0;
+      background:url('../../imagenes/contendor.webp') center right / cover no-repeat;
+      z-index:0;
+      transform:scale(1.01);
+    }
+
+    .survey-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:32px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+    }
+
+    .survey-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      margin-bottom:24px;
+    }
+
+    .survey-title{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .survey-icon{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      background:rgba(255,90,31,.14);
+      border:1px solid rgba(255,90,31,.24);
+      display:grid;
+      place-items:center;
+      font-size:1.35rem;
+    }
+
+    .survey-title h3{
+      font-size:1.55rem;
+      margin-bottom:4px;
+    }
+
+    .survey-title p{
+      color:var(--muted);
+    }
+
+    .progress-wrap{
+      display:grid;
+      grid-template-columns:1fr auto;
+      align-items:center;
+      gap:22px;
+      margin:8px 0 22px;
+    }
+
+    .progress-bar{
+      height:7px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      overflow:hidden;
+    }
+
+    .progress-fill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition:.25s ease;
+    }
+
+    .progress-text{
+      color:rgba(255,255,255,.72);
+      font-size:.98rem;
+      white-space:nowrap;
+    }
+
+    .question{
+      padding:26px 0;
+      border-top:1px solid rgba(255,255,255,.09);
+    }
+
+    .question:first-of-type{border-top:none}
+
+    .q-title{
+      display:flex;
+      align-items:flex-start;
+      gap:16px;
+      margin-bottom:18px;
+    }
+
+    .q-icon{
+      width:54px;
+      height:54px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(255,90,31,.11);
+      border:1px solid rgba(255,90,31,.24);
+      color:var(--accent-2);
+      font-size:1.45rem;
+      flex:0 0 auto;
+    }
+
+    .q-title h4{
+      color:var(--accent-2);
+      font-size:1.24rem;
+      margin-bottom:6px;
+    }
+
+    .q-title p{
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .choices{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:18px;
+    }
+
+    .choice{
+      min-height:132px;
+      padding:20px 16px;
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.12);
+      color:#fff;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-align:center;
+      font-family:inherit;
+      transition:.18s ease;
+    }
+
+    .choice:hover{
+      transform:translateY(-2px);
+      border-color:rgba(255,90,31,.45);
+    }
+
+    .choice.selected{
+      background:linear-gradient(180deg, rgba(255,90,31,.24), rgba(255,90,31,.10));
+      border-color:var(--accent);
+      box-shadow:0 0 0 1px rgba(255,90,31,.44), 0 16px 28px rgba(255,90,31,.10);
+    }
+
+    .choice .emoji{
+      font-size:1.7rem;
+      line-height:1;
+    }
+
+    .choice strong{
+      font-size:1.22rem;
+      display:block;
+    }
+
+    .choice span{
+      color:rgba(255,255,255,.74);
+      font-size:.94rem;
+    }
+
+    .submit-btn{
+      margin-top:16px;
+      width:100%;
+      border:none;
+      border-radius:18px;
+      padding:19px 24px;
+      background:linear-gradient(180deg, #ff7a1f, #ff4f13);
+      color:#fff;
+      font-weight:900;
+      font-size:1.18rem;
+      cursor:pointer;
+      box-shadow:0 16px 34px rgba(255,90,31,.25);
+      font-family:inherit;
+    }
+
+    .microcopy{
+      color:rgba(255,255,255,.68);
+      text-align:center;
+      margin-top:16px;
+      font-size:.95rem;
+    }
+
+    .result-card{
+      display:none;
+      margin-top:18px;
+      padding:18px;
+      border-radius:22px;
+      background:rgba(29,191,115,.12);
+      border:1px solid rgba(29,191,115,.28);
+      color:#ddffea;
+      line-height:1.65;
+    }
+
+    .result-card.active{display:block}
+
+    .routine-container{
+      display:none;
+      margin-top:24px;
+      animation:fadeUp .35s ease both;
+    }
+
+    .routine-container.active{display:block}
+
+    .routine-intro{
+      margin:22px 0;
+      padding:26px;
+      border-radius:30px;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+    }
+
+    .routine-version-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:12px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,90,31,.15);
+      color:#ffd6c8;
+      border:1px solid rgba(255,90,31,.25);
+      font-size:.9rem;
+      font-weight:800;
+    }
+
+    .routine-intro h2{
+      font-size:clamp(1.7rem,3vw,2.6rem);
+      line-height:1.05;
+      margin-bottom:10px;
+      letter-spacing:-.03em;
+    }
+
+    .routine-intro p{
+      color:var(--muted);
+      line-height:1.7;
+      max-width:820px;
+    }
+
+    .quick-stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin:22px 0 28px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:20px;
+      padding:16px;
+    }
+
+    .stat small{
+      display:block;
+      color:rgba(255,255,255,.72);
+      margin-bottom:6px;
+    }
+
+    .stat strong{
+      font-size:1rem;
+      line-height:1.4;
+    }
+
+    .section{
+      margin-top:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:30px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .section-head{
+      background:linear-gradient(135deg, rgba(47,99,255,.34), rgba(255,90,31,.18));
+      padding:20px 24px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+
+    .section-head h2{
+      font-size:1.45rem;
+      margin-bottom:5px;
+    }
+
+    .section-head p{
+      color:rgba(255,255,255,.78);
+      line-height:1.55;
+    }
+
+    .section-body{
+      padding:20px;
+      display:grid;
+      gap:16px;
+    }
+
+    .exercise-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:24px;
+      padding:20px;
+      display:grid;
+      grid-template-columns:1.3fr .9fr;
+      gap:20px;
+      align-items:center;
+      transition:.18s ease;
+    }
+
+    .exercise-card:hover{
+      transform:translateY(-2px);
+      border-color:rgba(255,90,31,.38);
+    }
+
+    .exercise-name{
+      font-size:1.18rem;
+      font-weight:900;
+      margin-bottom:8px;
+      color:#fff;
+    }
+
+    .exercise-desc{
+      color:rgba(255,255,255,.76);
+      line-height:1.65;
+      font-size:.97rem;
+    }
+
+    .exercise-meta{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+
+    .pill{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      padding:11px 12px;
+      font-size:.95rem;
+      color:#fff;
+    }
+
+    .pill span{
+      display:block;
+      color:rgba(255,255,255,.62);
+      font-size:.82rem;
+      margin-bottom:4px;
+    }
+
+    .simple-card,
+    .note,
+    .finish-session-text,
+    .upsell-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.035));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      padding:18px;
+      line-height:1.7;
+      color:rgba(255,255,255,.84);
+    }
+
+    .note{
+      margin-top:22px;
+      background:rgba(29,191,115,.12);
+      border-color:rgba(29,191,115,.28);
+      color:#ddffea;
+    }
+
+    .pain-note{
+      background:rgba(255,209,102,.10);
+      border-color:rgba(255,209,102,.30);
+      color:#fff1c6;
+    }
+
+    .upsell-card{
+      margin-top:22px;
+      background:rgba(255,90,31,.12);
+      border-color:rgba(255,90,31,.28);
+      color:#ffe0d4;
+    }
+
+    .finish-session-wrap{
+      margin-top:22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+    }
+
+    .finish-session-text{
+      width:100%;
+      text-align:center;
+    }
+
+    .finish-session-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      text-decoration:none;
+      background:linear-gradient(180deg,#ff8a1f,#ff5a1f);
+      color:#fff;
+      font-weight:900;
+      font-size:1.05rem;
+      padding:18px 28px;
+      border-radius:20px;
+      box-shadow:0 14px 30px rgba(255,90,31,.28);
+      border:none;
+      min-width:320px;
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(14px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;min-height:360px}
+      .hero-copy{padding:34px 26px}
+      .choices{grid-template-columns:1fr}
+      .survey-head,.progress-wrap{grid-template-columns:1fr;align-items:start}
+      .progress-text{white-space:normal}
+      .exercise-card{grid-template-columns:1fr}
+      .exercise-meta{grid-template-columns:repeat(2,1fr)}
+      .quick-stats{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (max-width:640px){
+      .choice:hover,.exercise-card:hover{transform:none}
+      .quick-stats{grid-template-columns:1fr !important;gap:12px !important}
+      .exercise-meta{display:flex !important;flex-wrap:wrap !important;gap:8px !important}
+      .pill{flex:1 1 130px !important}
+      .finish-session-btn{width:100% !important;min-width:unset !important}
+      .topbar{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-badge">M</div>
+        <div class="brand-text">
+          <h1>MoveSmart</h1>
+          <p>Fabián Laferte · Rutina A personalizada</p>
+        </div>
+      </div>
+      <a href="plan-fabian-laferte.html" class="back-btn">← Volver</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-image" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <div class="hello">¡Hola Fabián!</div>
+        <h2>Tu Rutina A MoveSmart para recuperar fuerza, control y confianza en tu rodilla derecha.</h2>
+        <p>
+          Esta rutina está pensada para comenzar de forma progresiva, sin forzar la flexión de rodilla.
+          El objetivo es mejorar fuerza de cuádriceps, cadera y estabilidad para que subir y bajar sea cada vez más cómodo.
+        </p>
+      </div>
+    </section>
+
+    <main class="survey-card">
+      <div class="survey-head">
+        <div class="survey-title">
+          <div class="survey-icon">✨</div>
+          <div>
+            <h3>Encuesta MoveSmart</h3>
+            <p>Toma 30 segundos. Tu rutina se adapta a cómo llegas hoy.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText">Pregunta 0 de 3</div>
+      </div>
+
+      <section class="question" data-question="tiempo">
+        <div class="q-title">
+          <div class="q-icon">⏱️</div>
+          <div>
+            <h4>1. ¿Cuánto tiempo tienes hoy?</h4>
+            <p>Sé realista. Lo importante es cumplir, aunque sea una versión corta.</p>
+          </div>
+        </div>
+
+        <div class="choices">
+          <button class="choice" type="button" data-value="express">
+            <span class="emoji">⏱️</span>
+            <strong>10 – 20 min</strong>
+            <span>Poco tiempo</span>
+          </button>
+
+          <button class="choice" type="button" data-value="base">
+            <span class="emoji">🕒</span>
+            <strong>20 – 30 min</strong>
+            <span>Tiempo ideal</span>
+          </button>
+
+          <button class="choice" type="button" data-value="completa">
+            <span class="emoji">🕘</span>
+            <strong>30 – 40 min</strong>
+            <span>Más tiempo</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="question" data-question="energia">
+        <div class="q-title">
+          <div class="q-icon">⚡</div>
+          <div>
+            <h4>2. ¿Cómo está tu energía hoy?</h4>
+            <p>Piensa en cómo se siente tu cuerpo físicamente.</p>
+          </div>
+        </div>
+
+        <div class="choices">
+          <button class="choice" type="button" data-value="baja">
+            <span class="emoji">🪫</span>
+            <strong>Baja</strong>
+            <span>Me cuesta empezar</span>
+          </button>
+
+          <button class="choice" type="button" data-value="media">
+            <span class="emoji">⚡</span>
+            <strong>Media</strong>
+            <span>Me siento normal</span>
+          </button>
+
+          <button class="choice" type="button" data-value="alta">
+            <span class="emoji">🔋</span>
+            <strong>Alta</strong>
+            <span>Me siento disponible</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="question" data-question="dolor">
+        <div class="q-title">
+          <div class="q-icon">🦵</div>
+          <div>
+            <h4>3. ¿Cómo está tu rodilla derecha hoy?</h4>
+            <p>Usa esta referencia: leve 0–3/10, moderado 4–5/10, alto 6/10 o más.</p>
+          </div>
+        </div>
+
+        <div class="choices">
+          <button class="choice" type="button" data-value="leve">
+            <span class="emoji">🟢</span>
+            <strong>Leve</strong>
+            <span>0–3/10</span>
+          </button>
+
+          <button class="choice" type="button" data-value="moderado">
+            <span class="emoji">🟡</span>
+            <strong>Moderado</strong>
+            <span>4–5/10</span>
+          </button>
+
+          <button class="choice" type="button" data-value="alto">
+            <span class="emoji">🔴</span>
+            <strong>Alto</strong>
+            <span>6/10 o más</span>
+          </button>
+        </div>
+      </section>
+
+      <button class="submit-btn" type="button" id="createRoutine">Crear mi rutina personalizada →</button>
+      <p class="microcopy">La meta no es hacerlo perfecto. La meta es hacerlo posible.</p>
+
+      <div class="result-card" id="resultCard"></div>
+
+      <!-- RUTINA EXPRESS -->
+      <div class="routine-container" id="rutina-express">
+        <div class="routine-intro">
+          <div class="routine-version-label">⚡ Rutina A Express · 10–20 min</div>
+          <h2>Rutina A · Activación y control de rodilla</h2>
+          <p>Versión corta para mantener continuidad. Ideal para días de poca energía, poco tiempo o rodilla más sensible.</p>
+
+          <div class="quick-stats">
+            <div class="stat"><small>Duración</small><strong>10–20 min</strong></div>
+            <div class="stat"><small>Intensidad</small><strong>RPE 2–4</strong></div>
+            <div class="stat"><small>Material</small><strong>Silla, pared y peso corporal</strong></div>
+            <div class="stat"><small>Objetivo</small><strong>Activar sin irritar</strong></div>
+          </div>
+        </div>
+
+        <div class="note pain-note">
+          <strong>Semáforo MoveSmart:</strong> 🟢 0–3/10 continúa · 🟡 4–5/10 reduce rango o series · 🔴 6/10 o más detén ese ejercicio y usa una versión más suave.
+        </div>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Entrada en calor</h2>
+            <p>Preparar la rodilla sin impacto.</p>
+          </div>
+
+          <div class="section-body">
+            <div class="simple-card">
+              <strong>Caminata suave en casa o marcha en el lugar</strong><br>
+              3 minutos, ritmo cómodo.
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Bloque principal</h2>
+            <p>Control, activación y tolerancia inicial a la flexión.</p>
+          </div>
+
+          <div class="section-body">
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Extensión de rodilla sentado</div>
+                <p class="exercise-desc">Sentado en una silla, estira la rodilla derecha de forma controlada y vuelve lento. No bloquees fuerte.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>2</div>
+                <div class="pill"><span>Reps</span>10 por lado</div>
+                <div class="pill"><span>Descanso</span>30 seg</div>
+                <div class="pill"><span>Carga</span>Peso corporal</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Sentadilla parcial a silla</div>
+                <p class="exercise-desc">Baja solo hasta donde la rodilla se mantenga cómoda. Usa una silla alta si es necesario.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>2</div>
+                <div class="pill"><span>Reps</span>6–8</div>
+                <div class="pill"><span>Descanso</span>45 seg</div>
+                <div class="pill"><span>RPE</span>3–4</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Puente de glúteos</div>
+                <p class="exercise-desc">Eleva la cadera, aprieta glúteos 2 segundos y baja lento. Mantén rodillas alineadas.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>2</div>
+                <div class="pill"><span>Reps</span>10</div>
+                <div class="pill"><span>Descanso</span>40 seg</div>
+                <div class="pill"><span>Objetivo</span>Cadera</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="finish-session-wrap">
+          <p class="finish-session-text">Cuando termines esta sesión, presiona el botón para registrar cómo te fue.</p>
+          <a href="registro de sesion.html?rutina=Rutina%20A%20Express&sesion_objetivo=Rodilla%20control%20inicial" class="finish-session-btn">✅ Finalicé mi sesión</a>
+        </div>
+      </div>
+
+      <!-- RUTINA BASE -->
+      <div class="routine-container" id="rutina-base">
+        <div class="routine-intro">
+          <div class="routine-version-label">🕒 Rutina A Base · 20–30 min</div>
+          <h2>Rutina A · Fuerza base de rodilla y cadera</h2>
+          <p>Versión ideal para Fabián. Trabaja cuádriceps, glúteos y control de flexión sin exigir profundidad excesiva.</p>
+
+          <div class="quick-stats">
+            <div class="stat"><small>Duración</small><strong>20–30 min</strong></div>
+            <div class="stat"><small>Intensidad</small><strong>RPE 3–5</strong></div>
+            <div class="stat"><small>Material</small><strong>Silla, pared, banda opcional</strong></div>
+            <div class="stat"><small>Objetivo</small><strong>Fuerza y control</strong></div>
+          </div>
+        </div>
+
+        <div class="note pain-note">
+          <strong>Regla clave:</strong> si la molestia sube sobre 4–5/10, reduce rango. No necesitas bajar profundo para que el ejercicio sirva.
+        </div>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Calentamiento</h2>
+            <p>Preparar rodilla, cadera y tobillo antes del bloque principal.</p>
+          </div>
+
+          <div class="section-body">
+            <div class="simple-card">
+              <strong>Marcha en el lugar + movilidad suave</strong><br>
+              5 minutos. Incluye 10 círculos de tobillo por lado y 10 flexiones suaves de rodilla.
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Bloque principal</h2>
+            <p>Trabajo progresivo, sin buscar dolor alto ni fatiga máxima.</p>
+          </div>
+
+          <div class="section-body">
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Sentadilla parcial a silla</div>
+                <p class="exercise-desc">Baja hacia la silla con control. Mantén la rodilla alineada con el segundo dedo del pie.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>3</div>
+                <div class="pill"><span>Reps</span>8</div>
+                <div class="pill"><span>Descanso</span>60 seg</div>
+                <div class="pill"><span>RPE</span>4–5</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Isométrico de pared parcial</div>
+                <p class="exercise-desc">Apoya la espalda en la pared y baja solo un poco. Mantén la posición sin dolor alto.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>3</div>
+                <div class="pill"><span>Tiempo</span>20–30 seg</div>
+                <div class="pill"><span>Descanso</span>45 seg</div>
+                <div class="pill"><span>Rango</span>Parcial</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Puente de glúteos con pausa</div>
+                <p class="exercise-desc">Sube, mantén 2 segundos y baja lento. Busca sentir glúteos, no la zona lumbar.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>3</div>
+                <div class="pill"><span>Reps</span>10–12</div>
+                <div class="pill"><span>Descanso</span>45 seg</div>
+                <div class="pill"><span>RPE</span>4</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Abducción de cadera de lado</div>
+                <p class="exercise-desc">Acostado de lado, eleva la pierna superior sin girar la pelvis. Control lento.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>2–3</div>
+                <div class="pill"><span>Reps</span>10 por lado</div>
+                <div class="pill"><span>Descanso</span>30–40 seg</div>
+                <div class="pill"><span>Objetivo</span>Glúteo medio</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Elevación de talones</div>
+                <p class="exercise-desc">De pie, sube y baja lento. Puedes apoyarte en una pared o silla.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>2</div>
+                <div class="pill"><span>Reps</span>12</div>
+                <div class="pill"><span>Descanso</span>30 seg</div>
+                <div class="pill"><span>Objetivo</span>Pantorrilla</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="finish-session-wrap">
+          <p class="finish-session-text">Cuando termines esta sesión, registra dolor, esfuerzo y cómo quedó la rodilla.</p>
+          <a href="registro de sesion.html?rutina=Rutina%20A%20Base&sesion_objetivo=Fuerza%20rodilla%20y%20cadera" class="finish-session-btn">✅ Finalicé mi sesión</a>
+        </div>
+      </div>
+
+      <!-- RUTINA COMPLETA -->
+      <div class="routine-container" id="rutina-completa">
+        <div class="routine-intro">
+          <div class="routine-version-label">🕘 Rutina A Completa · 30–40 min</div>
+          <h2>Rutina A · Fuerza, control y progresión funcional</h2>
+          <p>Versión para días de buena energía y baja molestia. Integra más volumen, control unilateral y tolerancia a subir/bajar.</p>
+
+          <div class="quick-stats">
+            <div class="stat"><small>Duración</small><strong>30–40 min</strong></div>
+            <div class="stat"><small>Intensidad</small><strong>RPE 4–6</strong></div>
+            <div class="stat"><small>Material</small><strong>Silla, escalón bajo, banda opcional</strong></div>
+            <div class="stat"><small>Objetivo</small><strong>Progresión funcional</strong></div>
+          </div>
+        </div>
+
+        <div class="note pain-note">
+          <strong>Condición para hacer esta versión:</strong> rodilla en zona verde o amarilla baja. Si aparece dolor alto, vuelve a Rutina Base.
+        </div>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Calentamiento</h2>
+            <p>Activación general y preparación de rodilla.</p>
+          </div>
+
+          <div class="section-body">
+            <div class="simple-card">
+              <strong>Marcha activa + movilidad</strong><br>
+              6 minutos. Incluye movilidad de tobillo, flexiones suaves de rodilla y 10 sentadillas muy parciales.
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>Bloque principal</h2>
+            <p>Más volumen, manteniendo control y buen rango.</p>
+          </div>
+
+          <div class="section-body">
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Sentadilla parcial controlada</div>
+                <p class="exercise-desc">Baja hasta el rango tolerable. Mantén tronco estable y rodillas alineadas.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>3</div>
+                <div class="pill"><span>Reps</span>10</div>
+                <div class="pill"><span>Descanso</span>60 seg</div>
+                <div class="pill"><span>RPE</span>5</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Step up bajo</div>
+                <p class="exercise-desc">Sube a un escalón bajo con control. Si duele, baja la altura o cambia por sentadilla a silla.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>2–3</div>
+                <div class="pill"><span>Reps</span>6 por lado</div>
+                <div class="pill"><span>Descanso</span>60 seg</div>
+                <div class="pill"><span>Rango</span>Bajo</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Isométrico de pared</div>
+                <p class="exercise-desc">Mantén una flexión parcial, respirando tranquilo. No busques profundidad máxima.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>3</div>
+                <div class="pill"><span>Tiempo</span>30 seg</div>
+                <div class="pill"><span>Descanso</span>45 seg</div>
+                <div class="pill"><span>RPE</span>5</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Puente unilateral asistido</div>
+                <p class="exercise-desc">Apoya ambos pies, pero carga un poco más en una pierna. Mantén pelvis estable.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>2</div>
+                <div class="pill"><span>Reps</span>8 por lado</div>
+                <div class="pill"><span>Descanso</span>45 seg</div>
+                <div class="pill"><span>Objetivo</span>Glúteo</div>
+              </div>
+            </article>
+
+            <article class="exercise-card">
+              <div>
+                <div class="exercise-name">Caminata lateral sin o con banda</div>
+                <p class="exercise-desc">Pasos cortos, pelvis estable y rodillas alineadas. Usa banda solo si se siente controlado.</p>
+              </div>
+              <div class="exercise-meta">
+                <div class="pill"><span>Series</span>2</div>
+                <div class="pill"><span>Reps</span>8 pasos por lado</div>
+                <div class="pill"><span>Descanso</span>40 seg</div>
+                <div class="pill"><span>RPE</span>4–5</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="finish-session-wrap">
+          <p class="finish-session-text">Finaliza registrando cómo respondió la rodilla al trabajo de fuerza.</p>
+          <a href="registro de sesion.html?rutina=Rutina%20A%20Completa&sesion_objetivo=Progresion%20funcional%20rodilla" class="finish-session-btn">✅ Finalicé mi sesión</a>
+        </div>
+      </div>
+
+      <div class="upsell-card">
+        <strong>Nota MoveSmart:</strong> esta Rutina A está diseñada para iniciar el proceso. La progresión real depende de cómo responda la rodilla durante la sesión y al día siguiente.
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const answers = {};
+    const totalQuestions = 3;
+
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
+    const resultCard = document.getElementById("resultCard");
+    const createRoutine = document.getElementById("createRoutine");
+
+    function updateProgress(){
+      const answered = Object.keys(answers).length;
+      const percent = (answered / totalQuestions) * 100;
+      progressFill.style.width = percent + "%";
+      progressText.textContent = `Pregunta ${answered} de ${totalQuestions}`;
+    }
+
+    document.querySelectorAll(".choice").forEach(button => {
+      button.addEventListener("click", () => {
+        const question = button.closest(".question").dataset.question;
+        answers[question] = button.dataset.value;
+
+        button.closest(".choices").querySelectorAll(".choice").forEach(btn => {
+          btn.classList.remove("selected");
+        });
+
+        button.classList.add("selected");
+        updateProgress();
+      });
+    });
+
+    function hideRoutines(){
+      document.querySelectorAll(".routine-container").forEach(routine => {
+        routine.classList.remove("active");
+      });
+    }
+
+    function chooseRoutine(){
+      const tiempo = answers.tiempo;
+      const energia = answers.energia;
+      const dolor = answers.dolor;
+
+      if(!tiempo || !energia || !dolor){
+        resultCard.classList.add("active");
+        resultCard.innerHTML = "<strong>Falta completar la encuesta.</strong><br>Responde las 3 preguntas para crear la rutina de hoy.";
+        return;
+      }
+
+      hideRoutines();
+
+      let routineId = "rutina-base";
+      let message = "Hoy corresponde una versión base: suficiente para avanzar sin sobrecargar.";
+
+      if(dolor === "alto"){
+        routineId = "rutina-express";
+        message = "Hoy conviene elegir la versión express: menos rango, menos volumen y más control.";
+      } else if(tiempo === "express" || energia === "baja"){
+        routineId = "rutina-express";
+        message = "Hoy haremos una versión corta para mantener continuidad sin depender de motivación perfecta.";
+      } else if(tiempo === "completa" && energia === "alta" && dolor === "leve"){
+        routineId = "rutina-completa";
+        message = "Hoy puedes realizar la versión completa, manteniendo siempre la regla del dolor.";
+      }
+
+      resultCard.classList.add("active");
+      resultCard.innerHTML = `<strong>Rutina creada.</strong><br>${message}`;
+
+      document.getElementById(routineId).classList.add("active");
+      document.getElementById(routineId).scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    createRoutine.addEventListener("click", chooseRoutine);
+    updateProgress();
+  </script>
+</body>
+</html>
