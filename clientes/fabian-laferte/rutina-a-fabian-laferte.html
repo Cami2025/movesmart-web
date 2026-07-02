@@ -1059,78 +1059,115 @@
     </main>
   </div>
 
-  <script>
-    const answers = {};
-    const totalQuestions = 3;
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzw1N8iVnpObbNNP78nEQ05krw6GQqYX95_NiMaKqMkS4ctR3QQa_f8t8WN1rQOgxmBng/exec";
 
-    const progressFill = document.getElementById("progressFill");
-    const progressText = document.getElementById("progressText");
-    const resultCard = document.getElementById("resultCard");
-    const createRoutine = document.getElementById("createRoutine");
+  const CLIENTE = "Fabian Laferte";
+  const answers = {};
+  const totalQuestions = 3;
 
-    function updateProgress(){
-      const answered = Object.keys(answers).length;
-      const percent = (answered / totalQuestions) * 100;
-      progressFill.style.width = percent + "%";
-      progressText.textContent = `Pregunta ${answered} de ${totalQuestions}`;
-    }
+  const progressFill = document.getElementById("progressFill");
+  const progressText = document.getElementById("progressText");
+  const resultCard = document.getElementById("resultCard");
+  const createRoutine = document.getElementById("createRoutine");
 
-    document.querySelectorAll(".choice").forEach(button => {
-      button.addEventListener("click", () => {
-        const question = button.closest(".question").dataset.question;
-        answers[question] = button.dataset.value;
+  function updateProgress(){
+    const answered = Object.keys(answers).length;
+    progressFill.style.width = ((answered / totalQuestions) * 100) + "%";
+    progressText.textContent = `Pregunta ${answered} de ${totalQuestions}`;
+  }
 
-        button.closest(".choices").querySelectorAll(".choice").forEach(btn => {
-          btn.classList.remove("selected");
-        });
-
-        button.classList.add("selected");
-        updateProgress();
-      });
+  function hideRoutines(){
+    document.querySelectorAll(".routine-container").forEach(routine => {
+      routine.classList.remove("active");
     });
+  }
 
-    function hideRoutines(){
-      document.querySelectorAll(".routine-container").forEach(routine => {
-        routine.classList.remove("active");
+  function nombreEstructura(){
+    if(answers.tiempo === "express") return "Express";
+    if(answers.tiempo === "base") return "Base";
+    return "Completa";
+  }
+
+  function modoSegunDolor(){
+    if(answers.dolor === "alto") return "Recovery";
+    if(answers.energia === "alta" && answers.dolor === "leve") return "Plus";
+    return "Normal";
+  }
+
+  function guardarRespuestaEnSheets(estructura, modo){
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({
+        cliente: CLIENTE,
+        rutina: "Rutina A",
+        tiempo: answers.tiempo,
+        energia: answers.energia,
+        motivacion: answers.dolor,
+        estructura: estructura,
+        modo: modo
+      })
+    }).catch(error => {
+      console.log("No se pudo guardar en Sheets:", error);
+    });
+  }
+
+  document.querySelectorAll(".choice").forEach(button => {
+    button.addEventListener("click", () => {
+      const question = button.closest(".question").dataset.question;
+      answers[question] = button.dataset.value;
+
+      button.closest(".choices").querySelectorAll(".choice").forEach(btn => {
+        btn.classList.remove("selected");
       });
-    }
 
-    function chooseRoutine(){
-      const tiempo = answers.tiempo;
-      const energia = answers.energia;
-      const dolor = answers.dolor;
+      button.classList.add("selected");
+      updateProgress();
+    });
+  });
 
-      if(!tiempo || !energia || !dolor){
-        resultCard.classList.add("active");
-        resultCard.innerHTML = "<strong>Falta completar la encuesta.</strong><br>Responde las 3 preguntas para crear la rutina de hoy.";
-        return;
-      }
+  function chooseRoutine(){
+    const tiempo = answers.tiempo;
+    const energia = answers.energia;
+    const dolor = answers.dolor;
 
-      hideRoutines();
-
-      let routineId = "rutina-base";
-      let message = "Hoy corresponde una versión base: suficiente para avanzar sin sobrecargar.";
-
-      if(dolor === "alto"){
-        routineId = "rutina-express";
-        message = "Hoy conviene elegir la versión express: menos rango, menos volumen y más control.";
-      } else if(tiempo === "express" || energia === "baja"){
-        routineId = "rutina-express";
-        message = "Hoy haremos una versión corta para mantener continuidad sin depender de motivación perfecta.";
-      } else if(tiempo === "completa" && energia === "alta" && dolor === "leve"){
-        routineId = "rutina-completa";
-        message = "Hoy puedes realizar la versión completa, manteniendo siempre la regla del dolor.";
-      }
-
+    if(!tiempo || !energia || !dolor){
       resultCard.classList.add("active");
-      resultCard.innerHTML = `<strong>Rutina creada.</strong><br>${message}`;
-
-      document.getElementById(routineId).classList.add("active");
-      document.getElementById(routineId).scrollIntoView({behavior:"smooth", block:"start"});
+      resultCard.innerHTML = "<strong>Falta completar la encuesta.</strong><br>Responde las 3 preguntas para crear la rutina de hoy.";
+      return;
     }
 
-    createRoutine.addEventListener("click", chooseRoutine);
-    updateProgress();
-  </script>
+    hideRoutines();
+
+    let routineId = "rutina-base";
+    let message = "Hoy corresponde una versión base: suficiente para avanzar sin sobrecargar.";
+
+    if(dolor === "alto"){
+      routineId = "rutina-express";
+      message = "Hoy conviene elegir la versión express: menos rango, menos volumen y más control.";
+    } else if(tiempo === "express" || energia === "baja"){
+      routineId = "rutina-express";
+      message = "Hoy haremos una versión corta para mantener continuidad.";
+    } else if(tiempo === "completa" && energia === "alta" && dolor === "leve"){
+      routineId = "rutina-completa";
+      message = "Hoy puedes realizar la versión completa, manteniendo siempre la regla del dolor.";
+    }
+
+    const estructura = nombreEstructura();
+    const modo = modoSegunDolor();
+
+    guardarRespuestaEnSheets(estructura, modo);
+
+    resultCard.classList.add("active");
+    resultCard.innerHTML = `<strong>Rutina creada.</strong><br>${message}`;
+
+    document.getElementById(routineId).classList.add("active");
+    document.getElementById(routineId).scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  createRoutine.addEventListener("click", chooseRoutine);
+  updateProgress();
+</script>
 </body>
 </html>
