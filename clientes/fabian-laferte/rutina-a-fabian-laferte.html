@@ -577,6 +577,54 @@
       min-width:320px;
     }
 
+
+    .smart-loading{
+      display:none;
+      margin-top:22px;
+      padding:28px;
+      border-radius:30px;
+      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.13);
+      box-shadow:var(--shadow);
+      text-align:center;
+      animation:fadeUp .35s ease both;
+    }
+
+    .smart-loading.active{display:block}
+
+    .smart-orb{
+      width:68px;
+      height:68px;
+      border-radius:50%;
+      margin:0 auto 16px;
+      background:
+        radial-gradient(circle at 30% 30%, #fff, transparent 24%),
+        linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow:0 0 34px rgba(255,90,31,.45);
+      animation:pulseOrb 1.15s ease-in-out infinite;
+    }
+
+    .smart-loading h3{
+      font-size:1.35rem;
+      margin-bottom:8px;
+    }
+
+    .smart-loading p{
+      color:rgba(255,255,255,.76);
+      line-height:1.6;
+    }
+
+    .survey-card.is-processing{
+      opacity:.75;
+      pointer-events:none;
+      transition:.25s ease;
+    }
+
+    @keyframes pulseOrb{
+      0%,100%{transform:scale(.92);opacity:.72}
+      50%{transform:scale(1.06);opacity:1}
+    }
+
     @keyframes fadeUp{
       from{opacity:0;transform:translateY(14px)}
       to{opacity:1;transform:translateY(0)}
@@ -739,6 +787,13 @@
       <p class="microcopy">La meta no es hacerlo perfecto. La meta es hacerlo posible.</p>
 
       <div class="result-card" id="resultCard"></div>
+
+      <div class="smart-loading" id="smartLoading" aria-live="polite">
+        <div class="smart-orb"></div>
+        <h3 id="smartLoadingTitle">Analizando cómo llegas hoy...</h3>
+        <p id="smartLoadingText">MoveSmart está ajustando tu rutina según tu tiempo, energía y dolor.</p>
+      </div>
+
 
       <!-- RUTINA EXPRESS -->
       <div class="routine-container" id="rutina-express">
@@ -1070,6 +1125,10 @@
   const progressText = document.getElementById("progressText");
   const resultCard = document.getElementById("resultCard");
   const createRoutine = document.getElementById("createRoutine");
+  const surveyCard = document.querySelector(".survey-card");
+  const smartLoading = document.getElementById("smartLoading");
+  const smartLoadingTitle = document.getElementById("smartLoadingTitle");
+  const smartLoadingText = document.getElementById("smartLoadingText");
 
   function updateProgress(){
     const answered = Object.keys(answers).length;
@@ -1159,11 +1218,39 @@
 
     guardarRespuestaEnSheets(estructura, modo);
 
-    resultCard.classList.add("active");
-    resultCard.innerHTML = `<strong>Rutina creada.</strong><br>${message}`;
+    const modoTexto = {
+      Recovery: "Hoy prioriza control, técnica y menor esfuerzo. Puedes descansar más y reducir una serie si aparece molestia.",
+      Normal: "Sigue la rutina tal como está planificada hoy. Mantén control y buena técnica.",
+      Plus: "Hoy tienes buena energía. Si la rodilla responde bien, puedes agregar una serie extra o disminuir ligeramente los descansos."
+    };
 
-    document.getElementById(routineId).classList.add("active");
-    document.getElementById(routineId).scrollIntoView({behavior:"smooth", block:"start"});
+    resultCard.classList.remove("active");
+    smartLoading.classList.add("active");
+    surveyCard.classList.add("is-processing");
+    smartLoadingTitle.textContent = "Analizando cómo llegas hoy...";
+    smartLoadingText.textContent = "MoveSmart está revisando tu tiempo, energía y dolor.";
+    smartLoading.scrollIntoView({ behavior:"smooth", block:"center" });
+
+    setTimeout(() => {
+      smartLoadingTitle.textContent = "Adaptando tu Rutina A...";
+      smartLoadingText.textContent = `Preparando versión ${estructura} con modo ${modo}.`;
+    }, 500);
+
+    setTimeout(() => {
+      smartLoadingTitle.textContent = "✨ Rutina lista";
+      smartLoadingText.textContent = "Tu sesión personalizada ya está preparada.";
+    }, 950);
+
+    setTimeout(() => {
+      smartLoading.classList.remove("active");
+      surveyCard.classList.remove("is-processing");
+
+      resultCard.classList.add("active");
+      resultCard.innerHTML = `<strong>Rutina creada.</strong><br>${message}<br><br><strong>Modo ${modo}:</strong> ${modoTexto[modo]}`;
+
+      document.getElementById(routineId).classList.add("active");
+      document.getElementById(routineId).scrollIntoView({behavior:"smooth", block:"start"});
+    }, 1350);
   }
 
   createRoutine.addEventListener("click", chooseRoutine);
