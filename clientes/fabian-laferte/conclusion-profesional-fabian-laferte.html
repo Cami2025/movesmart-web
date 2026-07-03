@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,7 +35,7 @@
       color:var(--text);
       background:
         linear-gradient(180deg, rgba(7,9,18,.72), rgba(7,9,18,.88)),
-        url('fondo-preview-rutina.png') center center / cover no-repeat fixed;
+        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat fixed;
       overflow-x:hidden;
     }
 
@@ -263,10 +265,6 @@
     }
 
     .note-panel{
-      display:grid;
-      grid-template-columns:260px 1fr;
-      align-items:center;
-      gap:24px;
       background:linear-gradient(180deg, rgba(14,18,34,.90), rgba(10,13,26,.90));
       border:1px solid var(--border);
       border-radius:28px;
@@ -280,13 +278,16 @@
       gap:16px;
       color:#4f9cff;
       font-weight:900;
-      font-size:1.18rem;
+      font-size:1.22rem;
       line-height:1.35;
+      margin-bottom:20px;
+      padding-bottom:18px;
+      border-bottom:1px solid rgba(255,255,255,.12);
     }
 
     .note-icon{
-      width:56px;
-      height:56px;
+      width:54px;
+      height:54px;
       border-radius:50%;
       display:grid;
       place-items:center;
@@ -296,30 +297,29 @@
       flex:0 0 auto;
     }
 
-    .note-body{
-      border-left:1px solid rgba(255,255,255,.12);
-      padding-left:28px;
-    }
-
     .note-body ul{
       list-style:none;
       display:grid;
-      gap:10px;
+      gap:12px;
       color:rgba(255,255,255,.88);
-      line-height:1.55;
+      line-height:1.65;
+      font-size:1rem;
+      width:100%;
     }
 
     .note-body li{
-      display:grid;
-      grid-template-columns:28px 1fr;
-      align-items:start;
-      gap:10px;
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      word-break:normal;
+      overflow-wrap:break-word;
     }
 
     .note-body li::before{
       content:"✓";
       width:24px;
       height:24px;
+      min-width:24px;
       border-radius:50%;
       display:grid;
       place-items:center;
@@ -327,6 +327,12 @@
       color:#58a0ff;
       font-weight:900;
       font-size:.86rem;
+      margin-top:2px;
+      flex:0 0 24px;
+    }
+
+    .note-body li strong{
+      display:inline;
     }
 
     .footer-note{
@@ -359,16 +365,6 @@
         grid-template-columns:1fr;
       }
 
-      .note-panel{
-        grid-template-columns:1fr;
-      }
-
-      .note-body{
-        border-left:none;
-        padding-left:0;
-        border-top:1px solid rgba(255,255,255,.12);
-        padding-top:20px;
-      }
     }
 
     @media (max-width:560px){
@@ -469,7 +465,7 @@
     <section class="note-panel">
       <div class="note-title">
         <div class="note-icon">i</div>
-        <div>Indicaciones<br>prácticas</div>
+        <div>Indicaciones prácticas</div>
       </div>
 
       <div class="note-body">
