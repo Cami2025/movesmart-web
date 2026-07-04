@@ -70,7 +70,7 @@
       letter-spacing:-.04em;
     }
 
-    .brand span{color:var(--accent)}
+    .brand span{ color:var(--accent); }
 
     .hero{
       position:relative;
@@ -224,10 +224,10 @@
       line-height:1.72;
     }
 
-    .orange .rule-icon{background:rgba(255,90,31,.18);color:#ffd4c8}
-    .blue .rule-icon{background:rgba(47,99,255,.18);color:#dbe5ff}
-    .green .rule-icon{background:rgba(29,191,115,.18);color:#d9ffea}
-    .red .rule-icon{background:rgba(255,107,107,.18);color:#ffdede}
+    .orange .rule-icon{ background:rgba(255,90,31,.18); color:#ffd4c8; }
+    .blue .rule-icon{ background:rgba(47,99,255,.18); color:#dbe5ff; }
+    .green .rule-icon{ background:rgba(29,191,115,.18); color:#d9ffea; }
+    .red .rule-icon{ background:rgba(255,107,107,.18); color:#ffdede; }
 
     .action-box{
       margin-top:22px;
@@ -299,18 +299,55 @@
       font-size:.95rem;
     }
 
-    @media(max-width:920px){
-      .score-card,.rules,.steps{grid-template-columns:1fr}
-      .hero{min-height:auto;flex-direction:column;align-items:flex-start;padding:28px 22px 24px}
-      .hero-content{max-width:100%}
-      .hero-visual{position:relative;right:auto;top:auto;transform:none;width:100%;max-width:380px;margin:24px auto 0}
+    @media (max-width: 920px){
+      .score-card,
+      .rules,
+      .steps{
+        grid-template-columns:1fr;
+      }
+
+      .hero{
+        min-height:auto;
+        flex-direction:column;
+        align-items:flex-start;
+        padding:28px 22px 24px;
+      }
+
+      .hero-content{
+        max-width:100%;
+      }
+
+      .hero-visual{
+        position:relative;
+        right:auto;
+        top:auto;
+        transform:none;
+        width:100%;
+        max-width:380px;
+        margin:24px auto 0;
+      }
     }
 
-    @media(max-width:680px){
-      .topbar,.footer{flex-direction:column;align-items:flex-start}
-      .hero{padding:24px 20px}
-      .panel,.rule-card,.action-box{padding:18px}
-      .scale{grid-template-columns:repeat(6,1fr)}
+    @media (max-width: 680px){
+      .topbar,
+      .footer{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .hero{
+        padding:24px 20px;
+      }
+
+      .panel,
+      .rule-card,
+      .action-box{
+        padding:18px;
+      }
+
+      .scale{
+        grid-template-columns:repeat(6,1fr);
+      }
     }
   </style>
 </head>
@@ -324,108 +361,108 @@
     <section class="hero">
       <div class="hero-content">
         <div class="eyebrow">⚠️ Guía simple de seguridad</div>
-        <h1>Regla del Dolor</h1>
-        <p>
-          Esta guía resume cómo Fabián debe interpretar el dolor durante el programa. El objetivo es recuperar fuerza,
-          mejorar el control de la rodilla derecha y aumentar la tolerancia a la flexión sin provocar irritación excesiva.
-        </p>
+      <h1>Regla del Dolor</h1>
+      <p>
+        Esta guía resume la regla del dolor del plan de Fabián. La idea principal es volver a moverse de forma progresiva, cuidando la respuesta de la rodilla derecha y evitando que la molestia limite la continuidad del programa.
+      </p>
 
-        <div class="score-card">
-          <div class="panel">
-            <h2>Escala de dolor</h2>
-            <p>
-              Usa una escala de 0 a 10 para observar cómo se siente la rodilla derecha durante y después de la sesión.
-              Si el dolor pasa de <strong>3/10</strong> o cambia la forma de moverte, ajusta el ejercicio antes de continuar.
-            </p>
-            <div class="scale">
-              <div>0</div><div>1</div><div>2</div><div class="highlight-3">3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <h2>Objetivo de esta regla</h2>
-            <p>
-              Entrenar de forma segura, mantener continuidad y recuperar confianza para flexionar la rodilla,
-              subir y bajar escaleras, caminar y retomar actividad física progresivamente.
-            </p>
+      <div class="score-card">
+        <div class="panel">
+          <h2>Escala de dolor</h2>
+          <p>
+            Usa una escala de 0 a 10 para observar cómo se siente la rodilla derecha durante la sesión. Si el dolor aparece por sobre <strong>3/10</strong>, el plan indica ajustar el ejercicio antes de continuar.
+          </p>
+          <div class="scale">
+            <div>0</div>
+            <div>1</div>
+            <div>2</div>
+            <div class="highlight-3">3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
           </div>
         </div>
+
+        <div class="panel">
+          <h2>Objetivo de esta regla</h2>
+          <p>
+            Entrenar de manera segura, mantener continuidad y recuperar confianza en el movimiento. No se trata de “aguantar”, sino de adaptar la carga para seguir avanzando sin empeorar la respuesta de la rodilla.
+          </p>
+        </div>
+      </div>
       </div>
 
       <div class="hero-visual" aria-hidden="true">
-        <img src="../../imagenes/logo.webp" alt="">
+        <img src="../../imagenes/escala_dolor.webp" alt="">
       </div>
     </section>
 
     <section class="rules">
-      <article class="rule-card green">
-        <div class="rule-icon">0-3</div>
-        <h3>Dolor permitido</h3>
-        <p>
-          Si la molestia se mantiene entre 0 y 3/10, es tolerable. Puedes continuar siempre que el movimiento sea controlado,
-          no aumente durante la sesión y no te deje peor al día siguiente.
-        </p>
-      </article>
-
       <article class="rule-card orange">
-        <div class="rule-icon">4-5</div>
-        <h3>Zona de ajuste</h3>
+        <div class="rule-icon">1</div>
+        <h3>Si el dolor sube sobre 3/10</h3>
         <p>
-          Si aparece dolor entre 4 y 5/10, baja la dificultad: reduce rango de flexión, repeticiones, velocidad o tiempo bajo tensión.
-          El objetivo no es aguantar, sino encontrar una versión que la rodilla tolere mejor.
+          Reduce el rango de movimiento, baja la carga, disminuye repeticiones o evita flexionar tanto la rodilla durante ese ejercicio.
         </p>
       </article>
 
       <article class="rule-card red">
-        <div class="rule-icon">6+</div>
-        <h3>Detener o cambiar</h3>
+        <div class="rule-icon">2</div>
+        <h3>Evita señales de alerta</h3>
         <p>
-          Si el dolor llega a 6/10 o más, detén ese ejercicio. Cambia por una versión más suave, vuelve a movilidad simple
-          o termina la sesión si la rodilla queda sensible.
+          Evita movimientos que generen dolor punzante, sensación de inestabilidad, cojera, inflamación evidente o una molestia que vaya aumentando durante la sesión.
         </p>
       </article>
 
       <article class="rule-card blue">
-        <div class="rule-icon">24h</div>
-        <h3>Revisa el día siguiente</h3>
+        <div class="rule-icon">3</div>
+        <h3>Adapta, no abandones</h3>
         <p>
-          La rodilla no debería amanecer claramente más dolorosa, rígida o limitada. Si ocurre, la siguiente sesión debe ser más corta,
-          con menos rango y menor intensidad.
+          La prioridad es mantener el hábito de entrenamiento sin agravar la rodilla. Si un ejercicio molesta, cambia a una variante más simple, reduce volumen o usa una versión con menor flexión.
+        </p>
+      </article>
+
+      <article class="rule-card green">
+        <div class="rule-icon">4</div>
+        <h3>Aplica la regla de 24 horas</h3>
+        <p>
+          Si al día siguiente la rodilla está igual o mejor, la carga fue adecuada. Si el dolor aumenta o dura más de 24 horas, la próxima sesión debe ser más suave.
         </p>
       </article>
     </section>
 
     <section class="action-box">
-      <h2>¿Qué hacer si aparece dolor?</h2>
+      <h2>Qué hacer si aparece molestia durante la rutina</h2>
       <div class="steps">
         <div class="step">
           <div class="num">1</div>
-          <strong>Reduce el rango</strong>
-          <p>Haz menos flexión de rodilla. Por ejemplo, sentadilla más parcial o escalón más bajo.</p>
+          <strong>Detente un momento</strong>
+          <p>Observa la intensidad del dolor en la rodilla derecha usando la escala del 0 al 10 antes de seguir.</p>
         </div>
-
         <div class="step">
           <div class="num">2</div>
-          <strong>Baja el volumen</strong>
-          <p>Disminuye repeticiones, series o tiempo. Una sesión corta bien tolerada vale más que forzar.</p>
+          <strong>Ajusta el ejercicio</strong>
+          <p>Reduce rango, velocidad, carga, repeticiones o tiempo bajo tensión para que el movimiento sea tolerable.</p>
         </div>
-
         <div class="step">
           <div class="num">3</div>
-          <strong>Elige la versión simple</strong>
-          <p>Prioriza control, comodidad y continuidad. La progresión se construye desde lo que puedes repetir.</p>
+          <strong>Evita empeorar síntomas</strong>
+          <p>Si hay dolor punzante, inestabilidad, cojera o aumento claro de la molestia, cambia ese ejercicio por una variante más suave o sáltalo ese día.</p>
         </div>
       </div>
 
       <div class="note">
-        <strong>Importante:</strong> una molestia leve y controlada puede ser parte del proceso, pero el dolor fuerte,
-        progresivo o que cambia tu forma de moverte no debe ignorarse.
+        <strong>Recuerda:</strong> el objetivo inicial no es exigir la rodilla al máximo, sino recuperar tolerancia, fuerza y confianza para flexionar, subir y bajar de forma progresiva.
       </div>
     </section>
 
     <div class="footer">
-      <span>Fabián Laferte · Programa personalizado</span>
-      <span>MoveSmart · Entrena con propósito</span>
+      <div>Camila Alvarez Cortés · Terapeuta en Actividad Física y Salud</div>
+      <div>MoveSmart</div>
     </div>
   </div>
 </body>
