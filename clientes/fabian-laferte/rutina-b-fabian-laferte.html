@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -866,6 +868,7 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzw1N8iVnpObbNNP78nEQ05krw6GQqYX95_NiMaKqMkS4ctR3QQa_f8t8WN1rQOgxmBng/exec";
     const CLIENTE = "Fabian Laferte";
+    const PREGUNTA_PERSONALIZADA = "Rodilla derecha";
 
     const respuestas = { tiempo:null, energia:null, dolor:null };
 
@@ -902,7 +905,8 @@
         rutina: "Rutina B",
         tiempo: respuestas.tiempo,
         energia: respuestas.energia,
-        dolor: respuestas.dolor,
+        preguntaPersonalizada: PREGUNTA_PERSONALIZADA,
+        respuestaPersonalizada: respuestas.dolor,
         estructura: estructura,
         modo: modo
       };
