@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -969,7 +970,7 @@
         <div class="hello">¡Hola Fabian!</div>
         <h2>Para crear tu rutina ideal necesitamos conocer cómo llegas hoy.</h2>
         <p>
-          Responde estas 3 preguntas y MoveSmart ajustará la versión de tu Rutina A según tu tiempo, energía y motivación.
+          Responde estas 3 preguntas y MoveSmart ajustará la versión de tu Rutina A según tu tiempo, energía y estado de rodilla.
         </p>
       </div>
     </section>
@@ -1044,29 +1045,29 @@
         </div>
       </section>
 
-      <section class="question" data-question="motivacion">
+      <section class="question" data-question="personalizada">
         <div class="q-title">
           <div class="q-icon">⭐</div>
           <div>
-            <h4>3. ¿Qué tan motivado te sientes hoy?</h4>
-            <p>Elige la actitud con la que quieres entrenar.</p>
+            <h4>3. ¿Cómo está tu rodilla derecha hoy?</h4>
+            <p>Elige cómo se siente tu rodilla antes de entrenar.</p>
           </div>
         </div>
         <div class="choices">
           <button class="choice" type="button" data-value="baja">
-            <span class="emoji">☹️</span>
-            <strong>Baja</strong>
-            <span>Nada motivado</span>
+            <span class="emoji">🟢</span>
+            <strong>Leve</strong>
+            <span>0–3/10</span>
           </button>
-          <button class="choice" type="button" data-value="media">
-            <span class="emoji">🙂</span>
-            <strong>Media</strong>
-            <span>Motivado</span>
+          <button class="choice" type="button" data-value="moderado">
+            <span class="emoji">🟡</span>
+            <strong>Moderado</strong>
+            <span>4–5/10</span>
           </button>
-          <button class="choice" type="button" data-value="alta">
-            <span class="emoji">😊</span>
-            <strong>Alta</strong>
-            <span>Muy motivado</span>
+          <button class="choice" type="button" data-value="alto">
+            <span class="emoji">🔴</span>
+            <strong>Alto</strong>
+            <span>6/10 o más</span>
           </button>
         </div>
       </section>
@@ -1079,7 +1080,7 @@
       <div class="smart-loading" id="smartLoading" aria-live="polite">
         <div class="smart-orb"></div>
         <h3 id="smartLoadingTitle">Analizando cómo llegas hoy...</h3>
-        <p id="smartLoadingText">MoveSmart está ajustando tu rutina según tu tiempo, energía y motivación.</p>
+        <p id="smartLoadingText">MoveSmart está ajustando tu rutina según tu tiempo, energía y estado de rodilla.</p>
       </div>
 
 
@@ -1314,8 +1315,9 @@
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzw1N8iVnpObbNNP78nEQ05krw6GQqYX95_NiMaKqMkS4ctR3QQa_f8t8WN1rQOgxmBng/exec";
     const CLIENTE = "Fabian Laferte";
+    const PREGUNTA_PERSONALIZADA = "Rodilla derecha";
 
-    const respuestas = { tiempo:null, energia:null, motivacion:null };
+    const respuestas = { tiempo:null, energia:null, personalizada:null };
     const progressFill = document.getElementById('progressFill');
     const progressText = document.getElementById('progressText');
     const resultCard = document.getElementById('resultCard');
@@ -1331,8 +1333,8 @@
     }
 
     function modoSegunEnergia(){
-      if(respuestas.energia === 'baja' || respuestas.motivacion === 'baja') return 'Recovery';
-      if(respuestas.energia === 'alta' && respuestas.motivacion === 'alta') return 'Plus';
+      if(respuestas.energia === 'baja' || respuestas.personalizada === 'alto') return 'Recovery';
+      if(respuestas.energia === 'alta' && respuestas.personalizada === 'leve') return 'Plus';
       return 'Normal';
     }
 
@@ -1348,7 +1350,8 @@
         rutina: "Rutina A",
         tiempo: respuestas.tiempo,
         energia: respuestas.energia,
-        motivacion: respuestas.motivacion,
+        preguntaPersonalizada: PREGUNTA_PERSONALIZADA,
+        respuestaPersonalizada: respuestas.personalizada,
         estructura: estructura,
         modo: modo
       };
@@ -1391,7 +1394,7 @@
     document.getElementById('createRoutine').addEventListener('click', () => {
       const faltan = Object.entries(respuestas).filter(([,v]) => !v).map(([k]) => k);
       if(faltan.length){
-        resultCard.innerHTML = '<strong>Falta responder:</strong> tiempo, energía y motivación para crear la recomendación.';
+        resultCard.innerHTML = '<strong>Falta responder:</strong> tiempo, energía y estado de rodilla para crear la recomendación.';
         resultCard.style.background = 'rgba(255,90,31,.12)';
         resultCard.style.borderColor = 'rgba(255,90,31,.28)';
         resultCard.style.color = '#ffe0d4';
@@ -1405,7 +1408,7 @@
       guardarRespuestaEnSheets(estructura, modo);
 
       const modoTexto = {
-        Recovery: 'Hoy prioriza control, técnica y menor esfuerzo. Puedes descansar más y reducir una serie si aparece molestia.',
+        Recovery: 'Hoy prioriza control, técnica y menor esfuerzo. Reduce rango o una serie si la rodilla se siente más sensible.',
         Normal: 'Sigue la rutina tal como está planificada hoy. Mantén control y buena técnica.',
         Plus: 'Hoy tienes buena energía. Si la rodilla responde bien, puedes agregar una serie extra o disminuir ligeramente los descansos.'
       };
@@ -1416,7 +1419,7 @@
       smartLoading.classList.add('active');
       surveyCard.classList.add('is-processing');
       smartLoadingTitle.textContent = 'Analizando cómo llegas hoy...';
-      smartLoadingText.textContent = 'MoveSmart está revisando tu tiempo, energía y motivación.';
+      smartLoadingText.textContent = 'MoveSmart está revisando tu tiempo, energía y estado de rodilla.';
       smartLoading.scrollIntoView({ behavior:'auto', block:'center' });
 
       setTimeout(() => {
