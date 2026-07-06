@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -1305,194 +1306,172 @@
   
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzw1N8iVnpObbNNP78nEQ05krw6GQqYX95_NiMaKqMkS4ctR3QQa_f8t8WN1rQOgxmBng/exec";
-    const PREGUNTA_PERSONALIZADA = "Motivación";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzw1N8iVnpObbNNP78nEQ05krw6GQqYX95_NiMaKqMkS4ctR3QQa_f8t8WN1rQOgxmBng/exec";
+const PREGUNTA_PERSONALIZADA = "Motivación";
 
-    const respuestas = { tiempo:null, energia:null, motivacion:null };
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
-    const resultCard = document.getElementById('resultCard');
-    const surveyCard = document.querySelector('.survey-card');
-    const smartLoading = document.getElementById('smartLoading');
-    const smartLoadingTitle = document.getElementById('smartLoadingTitle');
-    const smartLoadingText = document.getElementById('smartLoadingText');
+const respuestas = { tiempo:null, energia:null, motivacion:null };
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const resultCard = document.getElementById('resultCard');
+const surveyCard = document.querySelector('.survey-card');
+const smartLoading = document.getElementById('smartLoading');
+const smartLoadingTitle = document.getElementById('smartLoadingTitle');
+const smartLoadingText = document.getElementById('smartLoadingText');
 
-    function updateProgress(){
-      const answered = Object.values(respuestas).filter(Boolean).length;
-      progressFill.style.width = `${(answered / 3) * 100}%`;
-      progressText.textContent = `Pregunta ${answered} de 3`;
-    }
+function updateProgress(){
+  const answered = Object.values(respuestas).filter(Boolean).length;
+  progressFill.style.width = `${(answered / 3) * 100}%`;
+  progressText.textContent = `Pregunta ${answered} de 3`;
+}
 
-    function modoSegunEnergia(){
-      if(respuestas.energia === 'baja' || respuestas.motivacion === 'baja') return 'Recovery';
-      if(respuestas.energia === 'alta' && respuestas.motivacion === 'alta') return 'Plus';
-      return 'Normal';
-    }
+function modoSegunEnergia(){
+  if(respuestas.energia === 'baja' || respuestas.motivacion === 'baja') return 'Recovery';
+  if(respuestas.energia === 'alta' && respuestas.motivacion === 'alta') return 'Plus';
+  return 'Normal';
+}
 
-    function nombreEstructura(){
-      if(respuestas.tiempo === 'express') return 'Express';
-      if(respuestas.tiempo === 'base') return 'Base';
-      return 'Completa';
-    }
+function nombreEstructura(){
+  // La rutina completa solo se entrega cuando hay tiempo suficiente + energía alta + motivación alta.
+  if(respuestas.tiempo === 'express') return 'Express';
+  if(
+    respuestas.tiempo === 'completa' &&
+    respuestas.energia === 'alta' &&
+    respuestas.motivacion === 'alta'
+  ) return 'Completa';
+  return 'Base';
+}
 
-    function guardarRespuestaEnSheets(estructura, modo){
-      fetch(SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({
-          cliente: "Juan Ugalde",
-          rutina: "Rutina A",
-          tiempo: respuestas.tiempo,
-          energia: respuestas.energia,
-          preguntaPersonalizada: PREGUNTA_PERSONALIZADA,
-          respuestaPersonalizada: respuestas.motivacion,
-          estructura: estructura,
-          modo: modo
-        })
-      }).catch(function(error){
-        console.log("No se pudo guardar en Sheets:", error);
-      });
-    }
+function guardarRespuestaEnSheets(estructura, modo){
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify({
+      cliente: "Juan Ugalde",
+      rutina: "Rutina A",
+      tiempo: respuestas.tiempo,
+      energia: respuestas.energia,
+      preguntaPersonalizada: PREGUNTA_PERSONALIZADA,
+      respuestaPersonalizada: respuestas.motivacion,
+      estructura: estructura,
+      modo: modo
+    })
+  }).catch(function(error){
+    console.log("No se pudo guardar en Sheets:", error);
+  });
+}
 
-    document.querySelectorAll('.choice').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const question = btn.closest('.question').dataset.question;
-        respuestas[question] = btn.dataset.value;
-        btn.closest('.choices').querySelectorAll('.choice').forEach(other => other.classList.remove('selected'));
-        btn.classList.add('selected');
-        resultCard.classList.remove('active');
-        document.querySelectorAll('.routine-container').forEach(r => r.classList.remove('active'));
-        updateProgress();
-      });
-    });
-
-    document.getElementById('createRoutine').addEventListener('click', () => {
-      const faltan = Object.entries(respuestas).filter(([,v]) => !v).map(([k]) => k);
-      if(faltan.length){
-        resultCard.innerHTML = '<strong>Falta responder:</strong> tiempo, energía y motivación para crear la recomendación.';
-        resultCard.style.background = 'rgba(255,90,31,.12)';
-        resultCard.style.borderColor = 'rgba(255,90,31,.28)';
-        resultCard.style.color = '#ffe0d4';
-        resultCard.classList.add('active');
-        return;
-      }
-
-      const estructura = nombreEstructura();
-      const modo = modoSegunEnergia();
-
-      guardarRespuestaEnSheets(estructura, modo);
-
-      const modoTexto = {
-        Recovery: 'Hoy prioriza control, técnica y menor esfuerzo. Puedes descansar más y reducir una serie si aparece molestia.',
-        Normal: 'Sigue la rutina tal como está planificada hoy. Mantén control y buena técnica.',
-        Plus: 'Hoy tienes buena energía. Si la rodilla responde bien, puedes agregar una serie extra o disminuir ligeramente los descansos.'
-      };
-
-      resultCard.classList.remove('active');
-      document.querySelectorAll('.routine-container').forEach(r => r.classList.remove('active'));
-
-      smartLoading.classList.add('active');
-      surveyCard.classList.add('is-processing');
-      smartLoadingTitle.textContent = 'Analizando cómo llegas hoy...';
-      smartLoadingText.textContent = 'MoveSmart está revisando tu tiempo, energía y motivación.';
-      smartLoading.scrollIntoView({ behavior:'auto', block:'center' });
-
-      setTimeout(() => {
-        smartLoadingTitle.textContent = 'Adaptando tu Rutina A...';
-        smartLoadingText.textContent = `Preparando versión ${estructura} con modo ${modo}.`;
-      }, 180);
-
-      setTimeout(() => {
-        smartLoadingTitle.textContent = '✨ Rutina lista';
-        smartLoadingText.textContent = 'Tu sesión personalizada ya está preparada.';
-      }, 380);
-
-      setTimeout(() => {
-        smartLoading.classList.remove('active');
-        surveyCard.classList.remove('is-processing');
-
-        resultCard.style.background = 'rgba(29,191,115,.12)';
-        resultCard.style.borderColor = 'rgba(29,191,115,.28)';
-        resultCard.style.color = '#ddffea';
-        resultCard.innerHTML = `<strong>✨ Recomendación MoveSmart:</strong><br>Rutina A ${estructura} · Modo ${modo}<br><span style="color:rgba(255,255,255,.76)">${modoTexto[modo]}</span>`;
-        resultCard.classList.add('active');
-
-        const idRutina = respuestas.tiempo === 'express' ? 'rutina-express' : respuestas.tiempo === 'base' ? 'rutina-base' : 'rutina-completa';
-        const routineContainer = document.getElementById(idRutina);
-        routineContainer.classList.add('active');
-        routineContainer.scrollIntoView({ behavior:'auto', block:'start' });
-      }, 650);
-    });
-
-    function toEmbedUrl(url) {
-      if (!url) return null;
-      const cleanUrl = String(url).trim();
-      if (!cleanUrl) return null;
-      try {
-        const parsed = new URL(cleanUrl);
-        const host = parsed.hostname.replace('www.', '');
-        let videoId = '';
-        if (cleanUrl.includes('youtube.com/embed/')) {
-          videoId = parsed.pathname.split('/embed/')[1]?.split('/')[0] || '';
-        } else if (host === 'youtu.be') {
-          videoId = parsed.pathname.replace('/', '').trim();
-        } else if (host === 'youtube.com' || host === 'm.youtube.com') {
-          if (parsed.pathname.startsWith('/shorts/')) {
-            videoId = parsed.pathname.split('/shorts/')[1].split('/')[0];
-          } else if (parsed.pathname === '/watch') {
-            videoId = parsed.searchParams.get('v') || '';
-          }
-        }
-        if (!videoId) return null;
-        return 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&mute=1&loop=1&playlist=' + videoId + '&rel=0&playsinline=1';
-      } catch (err) {
-        return null;
-      }
-    }
-
-    const videoModal = document.getElementById('videoModal');
-    const videoFrame = document.getElementById('videoFrame');
-    const closeVideo = document.getElementById('closeVideo');
-    const videoTitle = document.getElementById('videoTitle');
-
-    function showVideo(url, title) {
-      videoTitle.textContent = title || 'Video de ejercicio';
-      videoFrame.src = url;
-      videoModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function hideVideo() {
-      videoModal.classList.remove('active');
-      videoFrame.src = '';
-      document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('.video-btn').forEach(function (button) {
-      button.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const card = button.closest('.exercise-card');
-        const nameEl = card ? card.querySelector('.exercise-name') : null;
-        const title = nameEl ? nameEl.textContent.trim() : 'Video de ejercicio';
-        const rawUrl = button.getAttribute('data-video') || button.getAttribute('href');
-        const embedUrl = toEmbedUrl(rawUrl);
-        if (embedUrl) showVideo(embedUrl, title);
-        else alert('A este ejercicio todavía no se le ha agregado un link de video válido.');
-      });
-    });
-
-    if (closeVideo) closeVideo.addEventListener('click', hideVideo);
-    if (videoModal) {
-      videoModal.addEventListener('click', function (e) {
-        if (e.target === videoModal) hideVideo();
-      });
-    }
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && videoModal && videoModal.classList.contains('active')) hideVideo();
-    });
-
+document.querySelectorAll('.choice').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const question = btn.closest('.question').dataset.question;
+    respuestas[question] = btn.dataset.value;
+    btn.closest('.choices').querySelectorAll('.choice').forEach(other => other.classList.remove('selected'));
+    btn.classList.add('selected');
+    resultCard.classList.remove('active');
+    document.querySelectorAll('.routine-container').forEach(r => r.classList.remove('active'));
     updateProgress();
-  </script>
+  });
+});
+
+document.getElementById('createRoutine').addEventListener('click', () => {
+  const faltan = Object.entries(respuestas).filter(([,v]) => !v).map(([k]) => k);
+  if(faltan.length){
+    resultCard.innerHTML = '<strong>Falta responder:</strong> tiempo, energía y motivación para crear la recomendación.';
+    resultCard.style.background = 'rgba(255,90,31,.12)';
+    resultCard.style.borderColor = 'rgba(255,90,31,.28)';
+    resultCard.style.color = '#ffe0d4';
+    resultCard.classList.add('active');
+    return;
+  }
+
+  const estructura = nombreEstructura();
+  const modo = modoSegunEnergia();
+
+  guardarRespuestaEnSheets(estructura, modo);
+
+  const modoTexto = {
+    Recovery: 'Hoy prioriza control, técnica y menor esfuerzo. Puedes descansar más y reducir una serie si aparece molestia.',
+    Normal: 'Sigue la rutina tal como está planificada hoy. Mantén control y buena técnica.',
+    Plus: 'Hoy tienes buena energía. Si la rodilla responde bien, puedes agregar una serie extra o disminuir ligeramente los descansos.'
+  };
+
+  resultCard.classList.remove('active');
+  document.querySelectorAll('.routine-container').forEach(r => r.classList.remove('active'));
+
+  smartLoading.classList.add('active');
+  surveyCard.classList.add('is-processing');
+  smartLoadingTitle.textContent = 'Analizando cómo llegas hoy...';
+  smartLoadingText.textContent = 'MoveSmart está revisando tu tiempo, energía y motivación.';
+  smartLoading.scrollIntoView({ behavior:'smooth', block:'center' });
+
+  setTimeout(() => {
+    smartLoadingTitle.textContent = 'Adaptando tu Rutina A...';
+    smartLoadingText.textContent = `Preparando versión ${estructura} con modo ${modo}.`;
+  }, 750);
+
+  setTimeout(() => {
+    smartLoadingTitle.textContent = '✨ Rutina lista';
+    smartLoadingText.textContent = 'Tu sesión personalizada ya está preparada.';
+  }, 1450);
+
+  setTimeout(() => {
+    smartLoading.classList.remove('active');
+    surveyCard.classList.remove('is-processing');
+
+    resultCard.style.background = 'rgba(29,191,115,.12)';
+    resultCard.style.borderColor = 'rgba(29,191,115,.28)';
+    resultCard.style.color = '#ddffea';
+    resultCard.innerHTML = `<strong>✨ Recomendación MoveSmart:</strong><br>Rutina A ${estructura} · Modo ${modo}<br><span style="color:rgba(255,255,255,.76)">${modoTexto[modo]}</span>`;
+    resultCard.classList.add('active');
+
+    const idRutina = estructura === 'Express' ? 'rutina-express' : estructura === 'Base' ? 'rutina-base' : 'rutina-completa';
+    const routineContainer = document.getElementById(idRutina);
+    routineContainer.classList.add('active');
+    routineContainer.scrollIntoView({ behavior:'smooth', block:'start' });
+  }, 2200);
+});
+
+function toEmbedUrl(url) {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('youtu.be')) return `https://www.youtube.com/embed/${u.pathname.replace('/', '')}`;
+    if (u.pathname.includes('/shorts/')) return `https://www.youtube.com/embed/${u.pathname.split('/shorts/')[1].split('/')[0]}`;
+    const v = u.searchParams.get('v');
+    if (v) return `https://www.youtube.com/embed/${v}`;
+    if (u.pathname.includes('/embed/')) return url;
+  } catch(e) {}
+  return url;
+}
+
+const videoModal = document.getElementById('videoModal');
+const videoFrame = document.getElementById('videoFrame');
+const closeVideo = document.getElementById('closeVideo');
+
+document.querySelectorAll('.open-video').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const embed = toEmbedUrl(btn.dataset.video);
+    videoFrame.src = embed;
+    videoModal.classList.add('active');
+    videoModal.setAttribute('aria-hidden','false');
+  });
+});
+
+function cerrarVideo(){
+  videoModal.classList.remove('active');
+  videoModal.setAttribute('aria-hidden','true');
+  videoFrame.src = '';
+}
+
+closeVideo.addEventListener('click', cerrarVideo);
+videoModal.addEventListener('click', (e) => {
+  if(e.target === videoModal) cerrarVideo();
+});
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape' && videoModal.classList.contains('active')) cerrarVideo();
+});
+
+updateProgress();
+</script>
 </body>
 </html>
