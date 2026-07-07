@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,23 +6,39 @@
   <title>Check-in rutina | MoveSmart</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
         linear-gradient(180deg, rgba(8,10,18,.40), rgba(8,10,18,.58)),
-        url('../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
+        url('../../../imagenes/fondo-index-realista.webp') center center / cover no-repeat;
       color: #fff;
     }
+
     .rutina-checkin-final {
-      position: relative; min-height: 100vh; padding: 80px 20px; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      min-height: 100vh;
+      padding: 80px 20px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
     .rutina-checkin-overlay {
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       background: linear-gradient(180deg, rgba(8,10,18,.46) 0%, rgba(8,10,18,.78) 100%);
       z-index: 1;
     }
-    .rutina-checkin-contenido { position: relative; z-index: 2; width: 100%; max-width: 860px; }
+
+    .rutina-checkin-contenido {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 860px;
+    }
+
     .rutina-checkin-card {
       background: rgba(24,16,32,.58);
       border: 1px solid rgba(255,255,255,0.08);
@@ -33,210 +48,339 @@
       padding: 34px 28px;
       box-shadow: 0 24px 60px rgba(0,0,0,0.35);
     }
+
     .top-actions { margin-bottom: 18px; }
+
     .back-access-btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 12px 16px; border-radius: 14px; text-decoration: none; color: #fff;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.10);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
       font-weight: 700;
     }
+
     .rutina-checkin-kicker {
-      display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;
-      padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.08); font-size: .82rem; letter-spacing: .08em;
-      text-transform: uppercase; color: #ffb27f; font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.08);
+      font-size: .82rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #ffb27f;
+      font-weight: 700;
     }
+
     .rutina-checkin-title {
-      margin-bottom: 10px; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.02;
-      letter-spacing: -.04em; color: #fff;
+      margin-bottom: 10px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.02;
+      letter-spacing: -.04em;
+      color: #fff;
     }
+
     .rutina-checkin-subtitle {
-      margin-bottom: 22px; color: rgba(255,255,255,0.78); font-size: 1rem; line-height: 1.7;
+      margin-bottom: 22px;
+      color: rgba(255,255,255,0.78);
+      font-size: 1rem;
+      line-height: 1.7;
       max-width: 720px;
     }
-    .word-arrow { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font-weight: 800; }
+
+    .word-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      font-weight: 800;
+    }
+
     .inline-arrow {
-      display: inline-block; color: #ff3b30; font-size: 1.45rem; font-weight: 900;
+      display: inline-block;
+      color: #ff3b30;
+      font-size: 1.45rem;
+      font-weight: 900;
       animation: flechaInline 1s ease-in-out infinite;
     }
+
     @keyframes flechaInline {
       0% { transform: translateY(0) scale(1); opacity: .82; }
       50% { transform: translateY(6px) scale(1.08); opacity: 1; }
       100% { transform: translateY(0) scale(1); opacity: .82; }
     }
-    .recompensa-box {
-      margin-bottom: 34px; padding: 24px 18px 30px; border-radius: 24px;
-      background: rgba(255, 221, 87, 0.10); border: 1px solid rgba(255, 221, 87, 0.30);
-      box-shadow: 0 10px 30px rgba(255, 221, 87, 0.12);
+
+    .seguimiento-box {
+      margin-bottom: 34px;
+      padding: 24px 20px;
+      border-radius: 24px;
+      background: rgba(255, 140, 0, 0.10);
+      border: 1px solid rgba(255, 140, 0, 0.28);
+      box-shadow: 0 10px 30px rgba(255, 140, 0, 0.10);
     }
-    .recompensa-title {
-      margin-bottom: 18px; font-size: 1rem; font-weight: 700; color: #ffe66d; text-align: center;
+
+    .seguimiento-title {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #ffb45c;
+      text-align: center;
     }
-    .ruleta-wrap { display: flex; justify-content: center; align-items: center; margin-top: 8px; }
-    .ruleta-stage {
-      position: relative; width: 460px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+
+    .seguimiento-text {
+      max-width: 680px;
+      margin: 0 auto 18px;
+      color: rgba(255,255,255,0.78);
+      font-size: .98rem;
+      line-height: 1.6;
+      text-align: center;
     }
-    .ruleta-pointer {
-      width: 0; height: 0; border-left: 18px solid transparent; border-right: 18px solid transparent;
-      border-top: 28px solid #ff4d3d; z-index: 3; margin-bottom: -6px;
-      filter: drop-shadow(0 4px 12px rgba(255, 77, 61, 0.45));
+
+    .seguimiento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
     }
-    .ruleta-beneficios {
-      position: relative; width: 420px; height: 420px; border-radius: 50%; overflow: hidden;
-      border: 10px solid rgba(255, 191, 73, 0.45);
-      box-shadow: 0 0 0 6px rgba(255,255,255,0.04), 0 16px 40px rgba(0,0,0,0.30);
-      background:
-        conic-gradient(
-          from -90deg,
-          rgba(255,140,0,0.90) 0deg 51.42deg,
-          rgba(255,120,0,0.72) 51.42deg 102.84deg,
-          rgba(255,177,79,0.88) 102.84deg 154.26deg,
-          rgba(255,106,0,0.72) 154.26deg 205.68deg,
-          rgba(255,140,0,0.88) 205.68deg 257.10deg,
-          rgba(255,120,0,0.72) 257.10deg 308.52deg,
-          rgba(255,177,79,0.88) 308.52deg 360deg
-        );
-      transition: transform 10s cubic-bezier(0.12, 0.75, 0.15, 1);
-      will-change: transform;
+
+    .seguimiento-item {
+      padding: 14px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      text-align: center;
+      font-weight: 700;
+      color: #fff;
     }
-    .ruleta-spin-continuo {
-      animation: giroContinuoRuleta 0.55s linear infinite;
+
+    .rutina-checkin-form {
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
     }
-    @keyframes giroContinuoRuleta {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+
+    .checkin-bloque {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    .ruleta-beneficios::before {
-      content: ""; position: absolute; inset: 0; border-radius: 50%;
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.00) 55%),
-        repeating-conic-gradient(from -90deg, rgba(255,255,255,0.18) 0deg 1deg, transparent 1deg 51.42deg);
-      pointer-events: none;
+
+    .checkin-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
     }
-    .ruleta-beneficios::after {
-      content: ""; position: absolute; inset: 14px; border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.12); box-shadow: inset 0 0 24px rgba(0,0,0,0.14);
-      pointer-events: none;
+
+    .checkin-helper {
+      color: rgba(255,255,255,0.72);
+      font-size: .92rem;
+      line-height: 1.5;
     }
-    .ruleta-label {
-      position: absolute; top: 50%; left: 50%; width: 112px; font-size: .8rem; line-height: 1.18;
-      text-align: center; font-weight: 700; color: #fff; transform-origin: center center; z-index: 2;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.28);
-    }
-    .label-1 { transform: translate(-50%, -50%) rotate(-64.29deg) translateY(-142px) rotate(64.29deg); }
-    .label-2 { transform: translate(-50%, -50%) rotate(-12.87deg) translateY(-142px) rotate(12.87deg); }
-    .label-3 { transform: translate(-50%, -50%) rotate(38.55deg) translateY(-142px) rotate(-38.55deg); }
-    .label-4 { transform: translate(-50%, -50%) rotate(89.97deg) translateY(-142px) rotate(-89.97deg); }
-    .label-5 { transform: translate(-50%, -50%) rotate(141.39deg) translateY(-142px) rotate(-141.39deg); }
-    .label-6 { transform: translate(-50%, -50%) rotate(192.81deg) translateY(-142px) rotate(-192.81deg); }
-    .label-7 { transform: translate(-50%, -50%) rotate(244.23deg) translateY(-142px) rotate(-244.23deg); }
-    .ruleta-centro {
-      position: absolute; top: 50%; left: 50%; width: 132px; height: 132px; transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ffb45c, #ff7a00 70%, #ff6300 100%);
-      display: flex; align-items: center; justify-content: center; text-align: center; padding: 18px;
-      font-weight: 800; font-size: 1rem; line-height: 1.15; color: #fff; z-index: 3;
-      box-shadow: 0 10px 30px rgba(255,140,0,0.32), 0 0 0 8px rgba(255,255,255,0.08);
-    }
-    .ruleta-note { margin-top: 10px; font-size: .86rem; color: rgba(255,255,255,0.70); text-align: center; }
-    .rutina-checkin-form { display: flex; flex-direction: column; gap: 26px; }
-    .checkin-bloque { display: flex; flex-direction: column; gap: 12px; }
-    .checkin-label { font-size: 1rem; font-weight: 600; color: #fff; }
-    .checkin-helper { color: rgba(255,255,255,0.72); font-size: .92rem; line-height: 1.5; }
+
     .checkin-grid { display: grid; gap: 12px; }
     .checkin-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .checkin-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
     .checkin-opcion {
-      display: flex; align-items: center; justify-content: center; min-height: 58px; padding: 14px 12px;
-      text-align: center; border-radius: 16px; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.10); color: #f5f5f5; cursor: pointer; font-size: .96rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      padding: 14px 12px;
+      text-align: center;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #f5f5f5;
+      cursor: pointer;
+      font-size: .96rem;
     }
+
     input[type="radio"]:checked + .checkin-opcion {
-      background: rgba(255,140,0,0.16); border-color: #ff8c00; color: #fff; box-shadow: 0 0 0 1px rgba(255,140,0,0.24);
+      background: rgba(255,140,0,0.16);
+      border-color: #ff8c00;
+      color: #fff;
+      box-shadow: 0 0 0 1px rgba(255,140,0,0.24);
     }
+
     .checkin-range-wrap {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px; padding: 18px 16px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px 16px 16px;
     }
-    .checkin-range-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: .95rem; color: rgba(255,255,255,0.78); }
-    .checkin-slider-hint { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; color: #ffb45c; font-size: .92rem; font-weight: 600; }
-    .checkin-slider-hand { font-size: 1.2rem; animation: moverManito 1.4s ease-in-out infinite; display: inline-block; }
-    @keyframes moverManito { 0% { transform: translateX(0);} 50% { transform: translateX(8px);} 100% { transform: translateX(0);} }
-    .checkin-range { width: 100%; accent-color: #ff8c00; cursor: pointer; }
-    .checkin-scale { display: flex; justify-content: space-between; margin-top: 8px; font-size: .8rem; color: rgba(255,255,255,0.42); }
+
+    .checkin-range-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: .95rem;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .checkin-slider-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: #ffb45c;
+      font-size: .92rem;
+      font-weight: 600;
+    }
+
+    .checkin-slider-hand {
+      font-size: 1.2rem;
+      animation: moverManito 1.4s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes moverManito {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(8px); }
+      100% { transform: translateX(0); }
+    }
+
+    .checkin-range {
+      width: 100%;
+      accent-color: #ff8c00;
+      cursor: pointer;
+    }
+
+    .checkin-scale {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: .8rem;
+      color: rgba(255,255,255,0.42);
+    }
+
     .checkin-textarea {
-      width: 100%; min-height: 96px; padding: 14px 16px; border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.05); color: #fff; resize: vertical;
+      width: 100%;
+      min-height: 96px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      resize: vertical;
     }
+
+    .checkin-textarea::placeholder { color: rgba(255,255,255,0.45); }
+
     .camera-upload-btn {
-      display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 58px; padding: 14px 16px;
-      border-radius: 16px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,140,0,0.55); color: #fff; cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px dashed rgba(255,140,0,0.55);
+      color: #fff;
+      cursor: pointer;
       text-align: center;
     }
-    .foto-nombre { font-size: .9rem; color: #9cffb0; }
-    .preview-foto-wrap {
-      margin-top: 12px; padding: 10px; border-radius: 16px; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08); max-width: 220px;
+
+    .foto-nombre {
+      font-size: .9rem;
+      color: #9cffb0;
     }
+
+    .preview-foto-wrap {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      max-width: 220px;
+    }
+
     .preview-foto-img {
-      width: 100%; max-width: 200px; height: auto; border-radius: 12px; display: block; object-fit: cover;
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      object-fit: cover;
       box-shadow: 0 8px 24px rgba(0,0,0,0.25);
     }
-    .checkin-boton, .claim-premio-btn {
-      width: 100%; padding: 16px 18px; border: none; border-radius: 18px;
-      background: linear-gradient(135deg, #ff8c00, #ff6a00); color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer;
-      box-shadow: 0 12px 32px rgba(255,140,0,0.24); text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+
+    .checkin-boton {
+      width: 100%;
+      padding: 16px 18px;
+      border: none;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ff8c00, #ff6a00);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 32px rgba(255,140,0,0.24);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
-    .checkin-boton:disabled { opacity: .7; cursor: not-allowed; }
-    .checkin-exito { margin-top: 8px; text-align: center; color: #9cffb0; font-weight: 600; }
-    .checkin-error { margin-top: 8px; text-align: center; color: #ffb3b3; font-weight: 600; }
+
+    .checkin-boton:disabled {
+      opacity: .7;
+      cursor: not-allowed;
+    }
+
+    .checkin-exito {
+      margin-top: 8px;
+      text-align: center;
+      color: #9cffb0;
+      font-weight: 600;
+    }
+
+    .checkin-error {
+      margin-top: 8px;
+      text-align: center;
+      color: #ffb3b3;
+      font-weight: 600;
+    }
+
     .checkin-bloque.falta {
       padding: 14px;
       border-radius: 18px;
       border: 1px solid rgba(255, 90, 31, 0.65);
       background: rgba(255, 90, 31, 0.08);
     }
+
     .checkin-bloque.falta .checkin-label::after {
       content: " · Falta completar";
       color: #ffb3b3;
       font-size: .88rem;
       font-weight: 800;
     }
+
     .checkin-bloque.falta .checkin-opcion,
     .checkin-bloque.falta .checkin-range-wrap,
     .checkin-bloque.falta .checkin-textarea {
       border-color: rgba(255, 90, 31, 0.75);
     }
-    .checkin-carga { margin-top: 8px; text-align: center; color: #ffd59c; font-weight: 600; font-size: .95rem; }
-    .hidden { display: none !important; }
 
-    .ruleta-fullscreen {
-      position: fixed; inset: 0; z-index: 9999; background: rgba(8, 10, 18, 0.90);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      display: flex; align-items: center; justify-content: center; padding: 24px;
+    .checkin-carga {
+      margin-top: 8px;
+      text-align: center;
+      color: #ffd59c;
+      font-weight: 600;
+      font-size: .95rem;
     }
-    .ruleta-fullscreen-card, .premio-fullscreen-card {
-      width: 100%; max-width: 700px; text-align: center; padding: 34px 26px; border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,140,0,0.18), rgba(24,16,32,0.95));
-      border: 1px solid rgba(255,180,92,0.35); box-shadow: 0 24px 70px rgba(0,0,0,0.45);
-    }
-    .ruleta-fullscreen-title, .premio-fullscreen-title {
-      font-size: clamp(1.7rem, 4vw, 2.7rem); line-height: 1.15; color: #fff; margin-bottom: 14px;
-    }
-    .ruleta-fullscreen-subtitle, .premio-fullscreen-subtitle {
-      font-size: 1.05rem; line-height: 1.6; color: rgba(255,255,255,0.82); margin-bottom: 24px;
-    }
-    .ruleta-fullscreen-icon, .premio-fullscreen-icon { font-size: 3rem; margin-bottom: 14px; }
-    .premio-fullscreen-box {
-      margin: 18px auto 24px; max-width: 520px; padding: 18px 20px; border-radius: 22px;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-      color: #ffe7bf; font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 800;
-    }
-    .premio-actions { display: grid; gap: 14px; max-width: 360px; margin: 0 auto; }
-    .premio-secundario-btn {
-      width: 100%; padding: 14px 18px; border-radius: 18px; background: rgba(255,255,255,0.08);
-      color: #fff; border: 1px solid rgba(255,255,255,0.12); cursor: pointer; font-weight: 700;
-    }
+
+    .hidden { display: none !important; }
 
     @media (max-width: 768px) {
       .rutina-checkin-final { padding: 50px 16px; }
@@ -245,28 +389,14 @@
       .checkin-grid-2, .checkin-grid-3 { grid-template-columns: 1fr; }
       .preview-foto-wrap, .preview-foto-img { max-width: 100%; }
       .inline-arrow { font-size: 1.55rem; }
-      .ruleta-stage { width: 100%; max-width: 360px; }
-      .ruleta-pointer { border-left-width: 14px; border-right-width: 14px; border-top-width: 22px; }
-      .ruleta-beneficios { width: 340px; height: 340px; }
-      .ruleta-label { width: 82px; font-size: .62rem; }
-      .label-1 { transform: translate(-50%, -50%) rotate(-64.29deg) translateY(-112px) rotate(64.29deg); }
-      .label-2 { transform: translate(-50%, -50%) rotate(-12.87deg) translateY(-112px) rotate(12.87deg); }
-      .label-3 { transform: translate(-50%, -50%) rotate(38.55deg) translateY(-112px) rotate(-38.55deg); }
-      .label-4 { transform: translate(-50%, -50%) rotate(89.97deg) translateY(-112px) rotate(-89.97deg); }
-      .label-5 { transform: translate(-50%, -50%) rotate(141.39deg) translateY(-112px) rotate(-141.39deg); }
-      .label-6 { transform: translate(-50%, -50%) rotate(192.81deg) translateY(-112px) rotate(-192.81deg); }
-      .label-7 { transform: translate(-50%, -50%) rotate(244.23deg) translateY(-112px) rotate(-244.23deg); }
-      .ruleta-centro { width: 104px; height: 104px; font-size: .86rem; padding: 12px; }
-      .ruleta-fullscreen-card, .premio-fullscreen-card { padding: 28px 18px; border-radius: 22px; }
-      .ruleta-fullscreen-title, .premio-fullscreen-title { font-size: 1.55rem; }
-      .ruleta-fullscreen-subtitle, .premio-fullscreen-subtitle { font-size: .98rem; }
-      .ruleta-fullscreen-icon, .premio-fullscreen-icon { font-size: 2.4rem; }
+      .seguimiento-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <section class="rutina-checkin-final">
     <div class="rutina-checkin-overlay"></div>
+
     <div class="rutina-checkin-contenido">
       <div class="rutina-checkin-card">
         <div class="top-actions">
@@ -274,33 +404,25 @@
         </div>
 
         <span class="rutina-checkin-kicker">Cierre de sesión</span>
-        <h2 class="rutina-checkin-title">Tu constancia tiene recompensa</h2>
+        <h2 class="rutina-checkin-title">Registra tu sesión MoveSmart</h2>
 
         <p class="rutina-checkin-subtitle">
           Registra tu sesión acá
           <span class="word-arrow">abajo <span class="inline-arrow">⬇</span></span>
-          y comparte una foto de tu entreno. Cada registro suma avance y, al completar el ciclo, se activa tu ruleta de beneficios MoveSmart.
+          y comparte una foto de tu entreno. Cada registro me ayuda a seguir tu evolución y ajustar tu plan según cómo responde tu cuerpo.
         </p>
 
-        <div class="recompensa-box">
-          <p class="recompensa-title">Cada sesión registrada te acerca a tu premio final.</p>
+        <div class="seguimiento-box">
+          <p class="seguimiento-title">Tu registro ayuda a personalizar tu evolución</p>
+          <p class="seguimiento-text">
+            Cada check-in permite ajustar tu plan según tu esfuerzo, tus sensaciones y cualquier molestia que aparezca.
+            No se trata solo de completar rutinas, sino de avanzar con inteligencia.
+          </p>
 
-          <div class="ruleta-wrap">
-            <div class="ruleta-stage">
-              <div class="ruleta-pointer"></div>
-
-              <div class="ruleta-beneficios">
-                <div class="ruleta-label label-1">15% de descuento</div>
-                <div class="ruleta-label label-2">Rutina bonus</div>
-                <div class="ruleta-label label-3">Guía de hábitos</div>
-                <div class="ruleta-label label-4">Guía de movilidad</div>
-                <div class="ruleta-label label-5">Guía de recuperación</div>
-                <div class="ruleta-label label-6">Guía de motivación</div>
-                <div class="ruleta-label label-7">Doble oportunidad</div>
-                <div class="ruleta-centro">Ruleta MoveSmart</div>
-              </div>
-
-              
+          <div class="seguimiento-grid">
+            <div class="seguimiento-item">📊 Seguimiento</div>
+            <div class="seguimiento-item">🧠 Ajustes personalizados</div>
+            <div class="seguimiento-item">💪 Progreso real</div>
           </div>
         </div>
 
@@ -354,7 +476,7 @@
           </div>
 
           <div class="checkin-bloque">
-            <p class="checkin-label">¿Tuviste molestia o molestia?</p>
+            <p class="checkin-label">¿Tuviste dolor o molestia?</p>
             <div class="checkin-grid checkin-grid-3">
               <input type="radio" name="molestia" id="nomolestia" value="No" hidden required>
               <label for="nomolestia" class="checkin-opcion">✅ No</label>
@@ -392,7 +514,7 @@
 
           <div class="checkin-bloque">
             <label for="comentario" class="checkin-label">Comentario opcional</label>
-            <textarea id="comentario" name="comentario" class="checkin-textarea" placeholder="Ej: me sentí más estable en el lado izquierdo, me costó mantener el equilibrio o apareció una molestia leve en glúteo/lumbar..."></textarea>
+            <textarea id="comentario" name="comentario" class="checkin-textarea" placeholder="Ej: me sentí más estable, me costó mantener el equilibrio o apareció una molestia leve..."></textarea>
           </div>
 
           <div class="checkin-bloque">
@@ -413,7 +535,7 @@
             </div>
           </div>
 
-          <input type="hidden" name="cliente" value="Juany Ugalde">
+          <input type="hidden" name="cliente" value="Juan Ugalde">
           <input type="hidden" name="rutina" id="rutinaHidden" value="">
           <input type="hidden" name="semana" id="semanaCalculada">
           <input type="hidden" name="fecha" id="fechaActual">
@@ -427,28 +549,6 @@
       </div>
     </div>
   </section>
-
-  <div id="ruletaFullscreen" class="ruleta-fullscreen hidden">
-    <div class="ruleta-fullscreen-card">
-      <div class="ruleta-fullscreen-icon">🎉</div>
-      <h3 class="ruleta-fullscreen-title">Por tu disciplina y constancia has desbloqueado la ruleta MoveSmart</h3>
-      <p class="ruleta-fullscreen-subtitle">Aprieta el botón para girarla y descubrir tu premio.</p>
-      <button type="button" id="girarRuletaFullscreenBtn" class="checkin-boton">🎯 Girar ruleta</button>
-    </div>
-  </div>
-
-  <div id="premioFullscreen" class="ruleta-fullscreen hidden">
-    <div class="premio-fullscreen-card">
-      <div class="premio-fullscreen-icon">🏆</div>
-      <h3 class="premio-fullscreen-title">¡Ya tienes tu premio!</h3>
-      <p class="premio-fullscreen-subtitle">Esto fue lo que ganaste:</p>
-      <div id="premioGanadoBox" class="premio-fullscreen-box">Premio</div>
-      <div class="premio-actions">
-        <a id="claimPremioBtn" class="claim-premio-btn" href="#" target="_blank" rel="noopener noreferrer">🎁 Aprieta acá para reclamar tu premio</a>
-        <button type="button" id="cerrarPremioBtn" class="premio-secundario-btn">Cerrar</button>
-      </div>
-    </div>
-  </div>
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_LLxfYHVTos8NyG_ncJuRXMvaDVczVUuRRY-ubgxNtoojDyXgf5EFhG7Ou2bCrMOl/exec";
@@ -606,7 +706,7 @@
       }
 
       if (!form.molestia.value) {
-        faltantes.push("si tuviste molestia o molestia");
+        faltantes.push("si tuviste dolor o molestia");
         primerBloque = primerBloque || marcarFalta('input[name="molestia"]');
       }
 
@@ -698,7 +798,6 @@
         fechaActual.value = obtenerFechaChile();
         rutinaHidden.value = rutinaParam;
         limpiarAlertasFormulario();
-
       } catch (error) {
         mensajeError.textContent = "No se pudo guardar tu sesión. Inténtalo nuevamente.";
         mensajeError.classList.remove("hidden");
