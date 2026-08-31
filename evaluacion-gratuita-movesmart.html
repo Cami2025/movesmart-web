@@ -896,9 +896,10 @@ goToStep(1);
     (() => {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const voiceFieldIds = [
+        "fullName", "age", "heightCm", "weightKg",
         "goalReason", "painDetails", "medicationDetails", "painfulMovement",
         "trainingTypesOther", "timeWithoutTraining", "trainingPlaceOther",
-        "likesDislikes", "consistencyDifficulty"
+        "likesDislikes", "consistencyDifficulty", "emailAddress", "whatsappNumber"
       ];
       let active = null;
 
@@ -943,8 +944,10 @@ goToStep(1);
         const item = {field, button, status, recognition: null, baseText: ""};
 
         if (!SpeechRecognition) {
-          button.hidden = true;
-          status.textContent = "Puedes dictar usando el micrófono del teclado de tu celular.";
+          button.addEventListener("click", () => {
+            status.classList.add("is-error");
+            status.textContent = "Esta vista previa no permite usar el micrófono. Pruébalo en la página publicada con HTTPS o usa el micrófono del teclado de tu celular.";
+          });
           return;
         }
 
