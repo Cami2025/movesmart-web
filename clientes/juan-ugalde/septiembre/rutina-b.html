@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 
 <html lang="es">
@@ -584,6 +585,11 @@ cursor:pointer;
 font-family:inherit;
 font-size:1rem;
 }
+.video-btn:disabled{
+opacity:.5;
+cursor:not-allowed;
+box-shadow:none;
+}
 .simple-card,.note,.finish-session-text{
 background:linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.035));
 border:1px solid rgba(255,255,255,.12);
@@ -845,8 +851,8 @@ font-size:.88rem;
 <div aria-hidden="true" class="hero-image"></div>
 <div class="hero-copy">
 <div class="hello">¡Hola Juan!</div>
-<h2>Prepara tu cuerpo antes de tocar guitarra.</h2>
-<p>Responde estas 3 preguntas y MoveSmart adaptará la preparación según el tiempo que tengas, cómo se sienten tus manos y brazos, y cuánto planeas tocar hoy.</p>
+<h2>Prepara manos, antebrazos y hombros antes de tocar guitarra.</h2>
+<p>Responde estas 3 preguntas y MoveSmart adaptará la preparación según el tiempo que tengas, cómo se sienten hoy tus manos, codos y hombros, y cuánto planeas tocar.</p>
 </div>
 </section>
 <main class="survey-card">
@@ -887,8 +893,8 @@ font-size:.88rem;
 <div class="q-title">
 <div class="q-icon">🤲</div>
 <div>
-<h4>2. ¿Cómo se sienten tus manos y brazos?</h4>
-<p>Piensa en la tensión, rigidez o molestias que sientes ahora.</p>
+<h4>2. ¿Cómo se sienten tus manos, codos y hombros?</h4>
+<p>Piensa en la mano, muñeca, antebrazo, codo y hombro antes de comenzar.</p>
 </div>
 </div>
 <div class="choices">
@@ -934,7 +940,7 @@ font-size:.88rem;
 <div class="routine-container" id="rutina-breve">
 <div class="routine-intro">
 <div class="routine-version-label">⚡ Preparación breve · 3 minutos</div>
-<h2>Activa manos, muñecas y hombros</h2>
+<h2>Prepara mano, antebrazo y hombro sin sobrecargar</h2>
 <p>Una preparación corta para reducir la rigidez y comenzar a tocar de forma progresiva.</p>
 <div class="quick-stats">
 <div class="stat"><small>Duración</small><strong>3 min</strong></div>
@@ -949,34 +955,46 @@ font-size:.88rem;
 <article class="exercise-card">
 <div>
 <div class="exercise-name">Abrir y cerrar las manos</div>
-<p class="exercise-desc">Abre los dedos ampliamente y luego cierra la mano sin apretar con fuerza. Mantén los hombros relajados.</p><button class="video-btn open-video" data-title="Abrir y cerrar las manos" data-video="https://www.youtube.com/shorts/yAwXed7mmH4" type="button">▶ Ver video</button>
+<p class="exercise-desc">Abre los dedos y luego cierra la mano sin apretar. Mantén el movimiento pequeño y cómodo.</p>
+<button class="video-btn open-video" data-title="Abrir y cerrar las manos" data-video="https://www.youtube.com/shorts/yAwXed7mmH4" type="button">▶ Ver video</button>
 </div>
 <div class="exercise-meta">
-<div class="pill"><span>Repeticiones</span>10</div>
+<div class="pill"><span>Repeticiones</span>8–10</div>
 <div class="pill"><span>Ritmo</span>Lento</div>
 </div>
 </article>
 <article class="exercise-card">
 <div>
-<div class="exercise-name">Círculos de muñeca</div>
-<p class="exercise-desc">Haz círculos pequeños y cómodos hacia ambos lados, evitando forzar el rango.</p><button class="video-btn open-video" data-title="Círculos de muñeca" data-video="https://www.youtube.com/shorts/81ymcRwgrD4" type="button">▶ Ver video</button>
+<div class="exercise-name">Pronación–supinación de antebrazo</div>
+<p class="exercise-desc">Con los codos junto al cuerpo, gira lentamente las palmas hacia arriba y hacia abajo.</p>
+<button class="video-btn open-video" data-title="Pronación–supinación de antebrazo" data-video="https://www.youtube.com/shorts/JMxhT-THFdU" type="button">▶ Ver video</button>
 </div>
 <div class="exercise-meta">
-<div class="pill"><span>Repeticiones</span>8 por lado</div>
-<div class="pill"><span>Ritmo</span>Controlado</div>
+<div class="pill"><span>Repeticiones</span>8</div>
+<div class="pill"><span>Rango</span>Cómodo</div>
 </div>
 </article>
 <article class="exercise-card">
 <div>
 <div class="exercise-name">Relajación de hombros</div>
-<p class="exercise-desc">Eleva suavemente los hombros y déjalos caer mientras exhalas. Evita tensar el cuello.</p><button class="video-btn open-video" data-title="Relajación de hombros" data-video="https://www.youtube.com/watch?v=iXCJWDPLIQU" type="button">▶ Ver video</button>
+<p class="exercise-desc">Eleva suavemente los hombros y déjalos caer mientras exhalas. Evita tensar el cuello.</p>
+<button class="video-btn open-video" data-title="Relajación de hombros" data-video="https://www.youtube.com/watch?v=iXCJWDPLIQU" type="button">▶ Ver video</button>
 </div>
 <div class="exercise-meta">
 <div class="pill"><span>Repeticiones</span>6</div>
 <div class="pill"><span>Respiración</span>Lenta</div>
 </div>
 </article>
+<article class="exercise-card">
+<div>
+<div class="exercise-name">Entrada progresiva con la guitarra</div>
+<p class="exercise-desc">Toca durante unos minutos a una intensidad cómoda, sin buscar velocidad ni fuerza, antes de comenzar tu práctica habitual.</p>
 </div>
+<div class="exercise-meta">
+<div class="pill"><span>Duración</span>2 min</div>
+<div class="pill"><span>Intensidad</span>Muy cómoda</div>
+</div>
+</article></div>
 </section>
 <div class="note"><strong>Antes de comenzar:</strong> toca los primeros minutos a una intensidad cómoda y aumenta progresivamente.</div>
 <div class="finish-session-wrap">
@@ -987,7 +1005,7 @@ font-size:.88rem;
 <div class="routine-container" id="rutina-estandar">
 <div class="routine-intro">
 <div class="routine-version-label">🕒 Preparación estándar · 5 minutos</div>
-<h2>Prepara manos, antebrazos y postura</h2>
+<h2>Prepara mano, codo, antebrazo y hombro</h2>
 <p>La opción principal para llegar con menos tensión y comenzar a tocar con mayor comodidad.</p>
 <div class="quick-stats">
 <div class="stat"><small>Duración</small><strong>5 min</strong></div>
@@ -1001,19 +1019,20 @@ font-size:.88rem;
 <div class="section-body">
 <article class="exercise-card">
 <div>
-<div class="exercise-name">Secuencia de dedos</div>
-<p class="exercise-desc">Toca el pulgar con cada dedo de la misma mano, desde el índice hasta el meñique y de regreso.</p><button class="video-btn open-video" data-title="Secuencia de dedos" data-video="https://www.youtube.com/watch?v=H5qap5Ktrlk
-" type="button">▶ Ver video</button>
+<div class="exercise-name">Abrir y cerrar las manos</div>
+<p class="exercise-desc">Abre y cierra los dedos suavemente, sin apretar ni llevar el movimiento al dolor.</p>
+<button class="video-btn open-video" data-title="Abrir y cerrar las manos" data-video="https://www.youtube.com/shorts/yAwXed7mmH4" type="button">▶ Ver video</button>
 </div>
 <div class="exercise-meta">
-<div class="pill"><span>Vueltas</span>3 por mano</div>
+<div class="pill"><span>Repeticiones</span>10</div>
 <div class="pill"><span>Ritmo</span>Controlado</div>
 </div>
 </article>
 <article class="exercise-card">
 <div>
 <div class="exercise-name">Flexión y extensión de muñeca</div>
-<p class="exercise-desc">Mueve las muñecas hacia arriba y abajo dentro de un rango cómodo, sin rebotes.</p><button class="video-btn open-video" data-title="Flexión y extensión de muñeca" data-video="https://www.youtube.com/shorts/vfr30tXFCjA" type="button">▶ Ver video</button>
+<p class="exercise-desc">Mueve la muñeca hacia arriba y abajo dentro de un rango cómodo, sin rebotes.</p>
+<button class="video-btn open-video" data-title="Flexión y extensión de muñeca" data-video="https://www.youtube.com/shorts/vfr30tXFCjA" type="button">▶ Ver video</button>
 </div>
 <div class="exercise-meta">
 <div class="pill"><span>Repeticiones</span>8</div>
@@ -1022,33 +1041,53 @@ font-size:.88rem;
 </article>
 <article class="exercise-card">
 <div>
-<div class="exercise-name">Giro de antebrazos</div>
-<p class="exercise-desc">Con los codos junto al cuerpo, gira las palmas hacia arriba y hacia abajo lentamente.</p><button class="video-btn open-video" data-title="Giro de antebrazos" data-video="https://www.youtube.com/shorts/JMxhT-THFdU" type="button">▶ Ver video</button>
+<div class="exercise-name">Pronación–supinación de antebrazo</div>
+<p class="exercise-desc">Con los codos cerca del cuerpo, gira las palmas hacia arriba y hacia abajo lentamente.</p>
+<button class="video-btn open-video" data-title="Pronación–supinación de antebrazo" data-video="https://www.youtube.com/shorts/JMxhT-THFdU" type="button">▶ Ver video</button>
 </div>
 <div class="exercise-meta">
 <div class="pill"><span>Repeticiones</span>8</div>
 <div class="pill"><span>Postura</span>Codos relajados</div>
 </div>
-</article>
-</div>
+</article></div>
 </section>
 <section class="section">
 <div class="section-head"><h2>Hombros y postura</h2><p>Reduce tensión antes de posicionar la guitarra.</p></div>
 <div class="section-body">
 <article class="exercise-card">
 <div>
-<div class="exercise-name">Círculos de hombros</div>
-<p class="exercise-desc">Realiza círculos amplios hacia atrás, manteniendo el cuello relajado.</p><button class="video-btn open-video" data-title="Círculos de hombros" data-video="https://www.youtube.com/shorts/F-jzIIg4nWw" type="button">▶ Ver video</button>
+<div class="exercise-name">Retracción escapular</div>
+<p class="exercise-desc">Lleva suavemente los hombros hacia atrás y junta las escápulas sin elevarlos.</p>
+<button class="video-btn open-video" data-title="Retracción escapular" data-video="" type="button" disabled>▶ Ver video</button>
 </div>
 <div class="exercise-meta">
 <div class="pill"><span>Repeticiones</span>8</div>
-<div class="pill"><span>Dirección</span>Hacia atrás</div>
+<div class="pill"><span>Ritmo</span>Controlado</div>
 </div>
 </article>
-
+<article class="exercise-card">
+<div>
+<div class="exercise-name">Rotación externa de hombro isométrica</div>
+<p class="exercise-desc">Con los codos junto al cuerpo, realiza una presión suave hacia afuera sin provocar dolor.</p>
+<button class="video-btn open-video" data-title="Rotación externa de hombro isométrica" data-video="" type="button" disabled>▶ Ver video</button>
 </div>
+<div class="exercise-meta">
+<div class="pill"><span>Repeticiones</span>5</div>
+<div class="pill"><span>Duración</span>5 seg</div>
+</div>
+</article>
+<article class="exercise-card">
+<div>
+<div class="exercise-name">Entrada progresiva con la guitarra</div>
+<p class="exercise-desc">Toca lentamente y con poca fuerza antes de comenzar tu práctica habitual.</p>
+</div>
+<div class="exercise-meta">
+<div class="pill"><span>Duración</span>2–3 min</div>
+<div class="pill"><span>Intensidad</span>Cómoda</div>
+</div>
+</article></div>
 </section>
-<div class="note"><strong>Durante la práctica:</strong> cambia de posición y realiza una pausa breve antes de que aparezca tensión.</div>
+<div class="note"><strong>Durante la práctica:</strong> comienza suave, cambia de posición y haz una pausa breve si aumenta la tensión o el dolor.</div>
 <div class="finish-session-wrap">
 <p class="finish-session-text">Cuando termines, registra esta preparación para avanzar en tu meta mensual de 3.</p>
 <a class="finish-session-btn" href="../../registro-sesion.html?cliente=Juan%20Ugalde&amp;rutina=Preparacion%20Guitarra%20Estandar">✅ Registrar preparación</a>
@@ -1057,7 +1096,7 @@ font-size:.88rem;
 <div class="routine-container" id="rutina-completa">
 <div class="routine-intro">
 <div class="routine-version-label">🕘 Preparación completa · 8–10 minutos</div>
-<h2>Preparación integral antes de tocar</h2>
+<h2>Preparación integral del tren superior antes de tocar</h2>
 <p>Recomendada cuando tocarás durante más tiempo o notas mayor rigidez en manos, brazos, hombros o cuello.</p>
 <div class="quick-stats">
 <div class="stat"><small>Duración</small><strong>8–10 min</strong></div>
@@ -1071,36 +1110,47 @@ font-size:.88rem;
 <div class="section-body">
 <article class="exercise-card">
 <div>
-<div class="exercise-name">Abrir, cerrar y separar dedos</div>
-<p class="exercise-desc">Alterna entre cerrar suavemente la mano, abrirla y separar los dedos sin forzar.</p><button class="video-btn open-video" data-title="Abrir, cerrar y separar dedos" data-video="https://www.youtube.com/shorts/yAwXed7mmH4" type="button">▶ Ver video</button>
+<div class="exercise-name">Abrir, cerrar y separar los dedos</div>
+<p class="exercise-desc">Abre, cierra y separa los dedos suavemente, sin apretar ni forzar.</p>
+<button class="video-btn open-video" data-title="Abrir, cerrar y separar los dedos" data-video="https://www.youtube.com/shorts/yAwXed7mmH4" type="button">▶ Ver video</button>
 </div>
 <div class="exercise-meta">
 <div class="pill"><span>Repeticiones</span>10</div>
-<div class="pill"><span>Series</span>2</div>
-</div>
-</article>
-<article class="exercise-card">
-<div>
-<div class="exercise-name">Secuencia pulgar–dedos</div>
-<p class="exercise-desc">Une el pulgar con cada dedo procurando precisión y fluidez, sin apretar.</p><button class="video-btn open-video" data-title="Secuencia pulgar–dedos" data-video="https://www.youtube.com/watch?v=H5qap5Ktrlk
-" type="button">▶ Ver video</button>
-</div>
-<div class="exercise-meta">
-<div class="pill"><span>Vueltas</span>4 por mano</div>
 <div class="pill"><span>Ritmo</span>Lento</div>
 </div>
 </article>
 <article class="exercise-card">
 <div>
-<div class="exercise-name">Movilidad de muñecas y antebrazos</div>
-<p class="exercise-desc">Combina círculos de muñeca con giros de palma hacia arriba y abajo.</p><button class="video-btn open-video" data-title="Movilidad de muñecas y antebrazos" data-video="https://youtu.be/OPBbDBWJyuM?si=4zdUR8zZ_CssBoi7" type="button">▶ Ver video</button>
+<div class="exercise-name">Flexión y extensión de muñeca</div>
+<p class="exercise-desc">Mueve las muñecas arriba y abajo dentro de un rango cómodo.</p>
+<button class="video-btn open-video" data-title="Flexión y extensión de muñeca" data-video="https://www.youtube.com/shorts/vfr30tXFCjA" type="button">▶ Ver video</button>
 </div>
 <div class="exercise-meta">
-<div class="pill"><span>Repeticiones</span>8 de cada uno</div>
+<div class="pill"><span>Repeticiones</span>10</div>
 <div class="pill"><span>Dolor</span>0–2/10</div>
 </div>
 </article>
+<article class="exercise-card">
+<div>
+<div class="exercise-name">Pronación–supinación de antebrazo</div>
+<p class="exercise-desc">Gira las palmas hacia arriba y hacia abajo con los codos relajados.</p>
+<button class="video-btn open-video" data-title="Pronación–supinación de antebrazo" data-video="https://www.youtube.com/shorts/JMxhT-THFdU" type="button">▶ Ver video</button>
 </div>
+<div class="exercise-meta">
+<div class="pill"><span>Repeticiones</span>10</div>
+<div class="pill"><span>Rango</span>Cómodo</div>
+</div>
+</article>
+<article class="exercise-card">
+<div>
+<div class="exercise-name">Flexión y extensión de codo</div>
+<p class="exercise-desc">Dobla y estira los codos lentamente manteniendo los hombros relajados.</p>
+</div>
+<div class="exercise-meta">
+<div class="pill"><span>Repeticiones</span>10</div>
+<div class="pill"><span>Ritmo</span>Suave</div>
+</div>
+</article></div>
 </section>
 <section class="section">
 <div class="section-head"><h2>Cuello, hombros y espalda alta</h2><p>Busca disminuir la tensión asociada a permanecer sentado y sostener el instrumento.</p></div>
@@ -1108,7 +1158,8 @@ font-size:.88rem;
 <article class="exercise-card">
 <div>
 <div class="exercise-name">Rotación cervical suave</div>
-<p class="exercise-desc">Gira la cabeza lentamente hacia cada lado sin llevar el movimiento al dolor.</p><button class="video-btn open-video" data-title="Rotación cervical suave" data-video="https://www.youtube.com/shorts/zcHMG-X2nlQ" type="button">▶ Ver video</button>
+<p class="exercise-desc">Gira la cabeza lentamente hacia cada lado sin llevar el movimiento al dolor.</p>
+<button class="video-btn open-video" data-title="Rotación cervical suave" data-video="https://www.youtube.com/shorts/zcHMG-X2nlQ" type="button">▶ Ver video</button>
 </div>
 <div class="exercise-meta">
 <div class="pill"><span>Repeticiones</span>5 por lado</div>
@@ -1117,28 +1168,39 @@ font-size:.88rem;
 </article>
 <article class="exercise-card">
 <div>
-<div class="exercise-name">Círculos de hombros</div>
-<p class="exercise-desc">Lleva los hombros hacia atrás y abajo, evitando encoger el cuello.</p><button class="video-btn open-video" data-title="Círculos de hombros" data-video="https://www.youtube.com/shorts/F-jzIIg4nWw" type="button">▶ Ver video</button>
+<div class="exercise-name">Retracción escapular</div>
+<p class="exercise-desc">Lleva los hombros hacia atrás y junta suavemente las escápulas.</p>
+<button class="video-btn open-video" data-title="Retracción escapular" data-video="" type="button" disabled>▶ Ver video</button>
 </div>
 <div class="exercise-meta">
 <div class="pill"><span>Repeticiones</span>10</div>
-<div class="pill"><span>Respiración</span>Fluida</div>
+<div class="pill"><span>Ritmo</span>Controlado</div>
 </div>
 </article>
 <article class="exercise-card">
 <div>
-<div class="exercise-name">Apertura de pecho</div>
-<p class="exercise-desc">Lleva suavemente los brazos hacia atrás y abre el pecho sin arquear la zona lumbar.</p><button class="video-btn open-video" data-title="Apertura de pecho" data-video="https://www.youtube.com/watch?v=URceRsgda0g" type="button">▶ Ver video</button>
+<div class="exercise-name">Rotación externa de hombro isométrica</div>
+<p class="exercise-desc">Realiza una presión suave hacia afuera manteniendo los codos junto al cuerpo.</p>
+<button class="video-btn open-video" data-title="Rotación externa de hombro isométrica" data-video="" type="button" disabled>▶ Ver video</button>
 </div>
 <div class="exercise-meta">
-<div class="pill"><span>Repeticiones</span>8</div>
-<div class="pill"><span>Rango</span>Cómodo</div>
+<div class="pill"><span>Repeticiones</span>5</div>
+<div class="pill"><span>Duración</span>5–8 seg</div>
 </div>
 </article>
+<article class="exercise-card">
+<div>
+<div class="exercise-name">Entrada progresiva con la guitarra</div>
+<p class="exercise-desc">Comienza a tocar con poca fuerza y velocidad durante unos minutos antes de pasar a tu práctica habitual.</p>
 </div>
+<div class="exercise-meta">
+<div class="pill"><span>Duración</span>3 min</div>
+<div class="pill"><span>Intensidad</span>Cómoda</div>
+</div>
+</article></div>
 </section>
 
-<div class="note"><strong>Importante:</strong> si aparece dolor agudo, hormigueo o pérdida de fuerza, detén la práctica y registra lo ocurrido.</div>
+<div class="note"><strong>Importante:</strong> si el dolor aumenta claramente, aparece hormigueo o notas pérdida de fuerza, detén la práctica y registra lo ocurrido.</div>
 <div class="finish-session-wrap">
 <p class="finish-session-text">Cuando termines, registra esta preparación para avanzar en tu meta mensual de 3.</p>
 <a class="finish-session-btn" href="../../registro-sesion.html?cliente=Juan%20Ugalde&amp;rutina=Preparacion%20Guitarra%20Completa">✅ Registrar preparación</a>
@@ -1191,7 +1253,7 @@ function mensajeSegunSensacion(){
   if (respuestas.sensacion === 'tensos') {
     return 'Prioriza la movilidad lenta y la relajación de hombros antes de comenzar a tocar.';
   }
-  return 'Tus manos y brazos se sienten bien. Realiza la preparación elegida y comienza a tocar progresivamente.';
+  return 'Tu tren superior se siente bien. Realiza la preparación elegida y comienza a tocar progresivamente.';
 }
 
 function guardarRespuestaEnSheets(estructura){
